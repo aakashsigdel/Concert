@@ -1,0 +1,17 @@
+{
+	loadingContainer: {
+		alignItems: 'center',
+		marginTop: 20
+	},
+	photoThumbContainer: {
+	},
+	photoThumb: {
+		height: 123,
+		width: 123,
+	},
+	listView: {
+		backgroundColor: '#1C1C1C',
+		flexDirection: 'row',
+		flexWrap: 'wrap'
+	}
+}

@@ -11,14 +11,21 @@
 	},
 	navTextReviews: {
 		fontSize: 14,
-		color: 'white'
+		color: 'white',
+		opacity: 0.4
 	},
 	navTextPhotos: {
 		fontSize: 14,
-		color: 'white'
+		color: 'white',
+		opacity: 0.4
 	},
 	navTextConcerts: {
 		fontSize: 14,
-		color: 'white'
+		color: 'white',
+		opacity: 0.4
+	},
+	textOpaque: {
+		color: 'white',
+		opacity: 1 
 	}
 }
