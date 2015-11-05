@@ -1,6 +1,5 @@
 {
 	headerContainer: {
-		marginTop: 50,
 		backgroundColor: '#1C1C1C',
 		position: "relative",
 		flex: 1,
@@ -50,14 +49,14 @@
 		backgroundColor: 'rgba(0, 0, 0, 0.3)',
 		left: 0,
 		right: 0,
-		bottom: 242,
+		bottom: 0,
 		height: 50,
 	},
 	descText: {
 		color: 'white',
 		fontSize: 10,
 		fontWeight: 'bold',
-		flex: 5,
+		flex: 7,
 		marginLeft: 15,
 	},
 	ratingBox: {

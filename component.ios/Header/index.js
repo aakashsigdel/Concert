@@ -28,7 +28,7 @@ export default class Header extends Component {
 					<Text style={styles.descText}>Last Played at Skanderborg Festival • 5 days ago</Text>
 					<View style={styles.ratingBox}>
 						<Text style={styles.ratingNum}>4.5</Text>
-						<Text style={styles.star}> ★</Text>
+						<Text style={styles.star}>★</Text>
 					</View>
 				</View>
 			</View>

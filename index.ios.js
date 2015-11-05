@@ -9,12 +9,16 @@ import {
 	Component
 } from 'react-native';
 import Header from './component.ios/Header';
+import Navigation from './component.ios/Navigation';
 
 
 class ConcertReview extends Component {
 	render() {
 		return(
-			<Header />
+			<View>
+				<Header />
+				<Navigation />
+			</View>
 		);
 	}
 }
