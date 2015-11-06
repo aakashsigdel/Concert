@@ -38,7 +38,9 @@ class ConcertReview extends Component {
 		return(
 			<View>
 				<Header />
-				<Navigation setActiveView={this.setActiveView.bind(this)} />
+				<Navigation 
+					setActiveView={this.setActiveView.bind(this)} 
+					activeView={this.state.activeView} />
 				{
 					(() => {
 						switch(this.state.activeView) {
