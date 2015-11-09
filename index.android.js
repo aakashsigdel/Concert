@@ -8,11 +8,11 @@ import {
 	AppRegistry,
 	Component
 } from 'react-native';
-import Header from './component.ios/Header';
-import Navigation from './component.ios/Navigation';
-import Photos from './component.ios/Photos';
-import Reviews from './component.ios/Reviews';
-import Concerts from './component.ios/Concerts';
+import Header from './component.android/Header';
+import Navigation from './component.android/Navigation';
+import Photos from './component.android/Photos';
+import Reviews from './component.android/Reviews';
+import Concerts from './component.android/Concerts';
 
 var viewConstants = {
 	photos: 'Photos',
