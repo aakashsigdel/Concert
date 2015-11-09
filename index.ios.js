@@ -24,7 +24,7 @@ class ConcertReview extends Component {
 	constructor() {
 		super();
 		this.state = {
-			activeView: viewConstants.photos
+			activeView: viewConstants.concerts
 		};
 	}
 

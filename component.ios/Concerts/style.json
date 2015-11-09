@@ -1,0 +1,70 @@
+{
+	loadingContainer: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#1C1C1C',
+		flex: 1
+	},
+	concertContainer: {
+		paddingLeft: 15,
+		marginBottom: 5,
+		alignItems: 'center',
+		flexDirection: 'row',
+		backgroundColor: '#1C1C1C'
+	},
+	profilePicture: {
+		width: 60,
+		height: 60,
+		marginRight: 15
+	},
+	detailContainer: {
+		flex: 3
+	},
+	title: {
+		color: 'white',
+		fontSize: 17.9,
+		fontWeight: 'bold',
+	},
+	location: {
+		color: 'white',
+		fontSize: 10,
+		fontWeight: 'bold'
+	},
+	calanderContainer: {
+		flex: 1,
+		alignItems: 'center'
+	},
+	calanderHeader: {
+		width: 28.5,
+		height: 9.4,
+		borderColor: 'white',
+		borderWidth: 1,
+		borderBottomWidth: 0,
+		backgroundColor: '#F9B400',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	calanderBody: {
+		width: 28.5,
+		height: 21.7,
+		borderColor: 'white',
+		borderWidth: 1,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	calanderMonth: {
+		fontSize: 7.5,
+		fontWeight: 'bold',
+		color: 'white'
+	},
+	calanderDay: {
+		fontSize: 15.1,
+		color: 'white'
+	},
+	lightBackground: {
+		backgroundColor: '#222222'
+	},
+	listView: {
+		backgroundColor: '#1C1C1C',
+	}
+}
