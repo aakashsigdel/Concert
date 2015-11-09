@@ -1,7 +1,9 @@
 {
 	loadingContainer: {
 		alignItems: 'center',
-		marginTop: 20
+		justifyContent: 'center',
+		backgroundColor: '#1C1C1C',
+		flex: 1
 	},
 	reviewContainer: {
 		flexDirection: 'row',

@@ -9,7 +9,7 @@ import {
 	StyleSheet,
 	TouchableOpacity,
 	ActivityIndicatorIOS,
-	ScrollView,
+	Dimensions,
 	Component
 } from 'react-native';
 
@@ -30,6 +30,14 @@ export default class Photos extends Component {
 		this._fetchPhotos();
 	}
 
+	_calculateImageSize() {
+		var IMAGE_PER_ROW = 3;
+		var TOTAL_MARGINE_BETWEEN_IMAGES = 3 + 3;
+		var {width, height} = Dimensions.get('window');
+		var size  = (width - TOTAL_MARGINE_BETWEEN_IMAGES) / IMAGE_PER_ROW;
+		return {width: size, height: size};
+	}
+
 	_fetchPhotos() {
 		var query = QUERY_URL.replace('concert_id', '12');
 		fetch(query)
@@ -47,7 +55,7 @@ export default class Photos extends Component {
 		return(
 			<TouchableOpacity style={styles.photoThumbContainer}>
 				<Image source={{uri: photo.image.original}}
-					style={styles.photoThumb} />
+					style={[styles.photoThumb, this._calculateImageSize()]} />
 			</TouchableOpacity>
 		);
 	}
@@ -67,7 +75,7 @@ export default class Photos extends Component {
 			<ListView
 				contentContainerStyle={styles.listView}
 				dataSource={this.state.dataSource}
-				renderRow={this._renderPhotoThumbs} />
+				renderRow={this._renderPhotoThumbs.bind(this)} />
 		);
 	}
 }

@@ -1,13 +1,11 @@
 {
 	loadingContainer: {
 		alignItems: 'center',
-		marginTop: 20
-	},
-	photoThumbContainer: {
+		justifyContent: 'center',
+		backgroundColor: '#1C1C1C',
+		flex: 1
 	},
 	photoThumb: {
-		height: 123,
-		width: 123,
 		marginBottom: 3
 	},
 	listView: {

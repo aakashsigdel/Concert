@@ -36,7 +36,7 @@ class ConcertReview extends Component {
 
 	render() {
 		return(
-			<View>
+			<View style={styles.mainContainer}>
 				<Header />
 				<Navigation 
 					setActiveView={this.setActiveView.bind(this)} 
@@ -57,4 +57,11 @@ class ConcertReview extends Component {
 		);
 	}
 }
+
+var styles = StyleSheet.create({
+	mainContainer: {
+		flex: 2
+	}
+});
+
 AppRegistry.registerComponent('ConcertReview', () => ConcertReview);

@@ -2,7 +2,9 @@
 	headerContainer: {
 		backgroundColor: '#1C1C1C',
 		position: "relative",
-		flex: 1,
+	},
+	titleImage: {
+		height: 375,
 	},
 	titleContainer: {
 		position: 'absolute',
@@ -73,6 +75,11 @@
 	ratingNum: {
 		fontSize: 12.5,
 		fontWeight: 'bold'
+	},
+	loadingContainer: {
+		backgroundColor: '#1C1C1C',
+		height: 375,
+		alignItems: 'center',
+		justifyContent: 'center'
 	}
-
 }
