@@ -6,7 +6,8 @@
 		flex: 1
 	},
 	loadingText: {
-		color: 'white'
+		color: 'white',
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	reviewContainer: {
 		flexDirection: 'row',
@@ -36,16 +37,17 @@
 	username: {
 		color: 'white',
 		fontSize: 15,
-		fontWeight: 'bold'
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	locAndTime: {
 		color: 'white',
 		fontSize: 10,
-		fontWeight: 'bold'
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	comment: {
 		color: 'white',
-		fontSize: 10
+		fontSize: 10,
+		fontFamily: 'AvenirNext-Regular'
 	},
 	listView: {
 		backgroundColor: '#1C1C1C',

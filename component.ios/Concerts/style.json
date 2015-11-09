@@ -6,7 +6,8 @@
 		flex: 1
 	},
 	loadingText: {
-		color: 'white'
+		color: 'white',
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	concertContainer: {
 		paddingLeft: 15,
@@ -26,12 +27,12 @@
 	title: {
 		color: 'white',
 		fontSize: 17.9,
-		fontWeight: 'bold',
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	location: {
 		color: 'white',
 		fontSize: 10,
-		fontWeight: 'bold'
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	calanderContainer: {
 		flex: 1,
@@ -39,7 +40,7 @@
 	},
 	calanderHeader: {
 		width: 28.5,
-		height: 9.4,
+		height: 11,
 		borderColor: 'white',
 		borderWidth: 1,
 		borderBottomWidth: 0,
@@ -49,7 +50,7 @@
 	},
 	calanderBody: {
 		width: 28.5,
-		height: 21.7,
+		height: 23,
 		borderColor: 'white',
 		borderWidth: 1,
 		alignItems: 'center',
@@ -57,12 +58,13 @@
 	},
 	calanderMonth: {
 		fontSize: 7.5,
-		fontWeight: 'bold',
+		fontFamily: 'AvenirNext-DemiBold',
 		color: 'white'
 	},
 	calanderDay: {
-		fontSize: 15.1,
-		color: 'white'
+		fontSize: 15,
+		color: 'white',
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	lightBackground: {
 		backgroundColor: '#222222'

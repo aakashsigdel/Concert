@@ -22,7 +22,7 @@
 		marginTop: 29,
 		flex: 2,
 		fontSize: 18,
-		fontWeight: 'bold'
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	navBtnImg: {
 		width: 13,
@@ -57,9 +57,9 @@
 	descText: {
 		color: 'white',
 		fontSize: 10,
-		fontWeight: 'bold',
 		flex: 7,
 		marginLeft: 15,
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	ratingBox: {
 		flexDirection: 'row',
@@ -74,12 +74,16 @@
 	},
 	ratingNum: {
 		fontSize: 12.5,
-		fontWeight: 'bold'
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	loadingContainer: {
 		backgroundColor: '#1C1C1C',
 		height: 375,
 		alignItems: 'center',
 		justifyContent: 'center'
+	},
+	loadingText: {
+		color: 'white',
+		fontFamily: 'AvenirNext-DemiBold'
 	}
 }

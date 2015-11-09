@@ -12,17 +12,20 @@
 	navTextReviews: {
 		fontSize: 14,
 		color: 'white',
-		opacity: 0.4
+		opacity: 0.4,
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	navTextPhotos: {
 		fontSize: 14,
 		color: 'white',
-		opacity: 0.4
+		opacity: 0.4,
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	navTextConcerts: {
 		fontSize: 14,
 		color: 'white',
-		opacity: 0.4
+		opacity: 0.4,
+		fontFamily: 'AvenirNext-DemiBold'
 	},
 	textOpaque: {
 		color: 'white',
