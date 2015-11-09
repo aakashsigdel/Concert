@@ -8,7 +8,11 @@
 	reviewContainer: {
 		flexDirection: 'row',
 		marginLeft: 15,
+		marginBottom: 5,
 		alignItems: 'center'
+	},
+	reviewDetails: {
+		flex: 1
 	},
 	profileImage: {
 		width: 100,
