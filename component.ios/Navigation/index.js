@@ -6,6 +6,7 @@ import {
 	View,
 	StyleSheet,
 	TouchableOpacity,
+	TouchableHighlight,
 	Component
 } from 'react-native';
 
@@ -23,27 +24,30 @@ export default class Navigation extends Component {
 	render() {
 		return(
 			<View style={styles.navContainer}>
-				<TouchableOpacity style={styles.navTextContainer}
+				<TouchableHighlight style={styles.navTextContainer}
+					underlayColor="#FFDD83"
 					onPress={this._setViewAndHighlight.bind(this, viewConstants.reviews)}>
 					<Text style={[styles.navTextReviews, 
 						(this.props.activeView === viewConstants.reviews) && styles.textOpaque]}>
 						REVIEWS
 					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity style={styles.navTextContainer}
+				</TouchableHighlight>
+				<TouchableHighlight style={styles.navTextContainer}
+					underlayColor="#FFDD83"
 					onPress={this._setViewAndHighlight.bind(this, viewConstants.photos)}>
 					<Text style={[styles.navTextPhotos,
 						(this.props.activeView === viewConstants.photos) && styles.textOpaque]}>
 						PHOTOS
 					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity style={styles.navTextContainer}
+				</TouchableHighlight>
+				<TouchableHighlight style={styles.navTextContainer}
+					underlayColor="#FFDD83"
 					onPress={this._setViewAndHighlight.bind(this, viewConstants.concerts)}>
 					<Text style={[styles.navTextConcerts,
 						(this.props.activeView === viewConstants.concerts) && styles.textOpaque]}>
 						CONCERTS
 					</Text>
-				</TouchableOpacity>
+				</TouchableHighlight>
 			</View>
 		);
 	}
