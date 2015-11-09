@@ -24,7 +24,7 @@ class ConcertReview extends Component {
 	constructor() {
 		super();
 		this.state = {
-			activeView: viewConstants.reviews
+			activeView: viewConstants.photos
 		};
 	}
 
@@ -36,9 +36,11 @@ class ConcertReview extends Component {
 
 	render() {
 		return(
-			<View>
+			<View style={styles.mainContainer}>
 				<Header />
-				<Navigation setActiveView={this.setActiveView.bind(this)} />
+				<Navigation 
+					setActiveView={this.setActiveView.bind(this)} 
+					activeView={this.state.activeView} />
 				{
 					(() => {
 						switch(this.state.activeView) {
@@ -55,4 +57,11 @@ class ConcertReview extends Component {
 		);
 	}
 }
+
+var styles = StyleSheet.create({
+	mainContainer: {
+		flex: 1
+	}
+});
+
 AppRegistry.registerComponent('ConcertReview', () => ConcertReview);

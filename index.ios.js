@@ -60,7 +60,7 @@ class ConcertReview extends Component {
 
 var styles = StyleSheet.create({
 	mainContainer: {
-		flex: 2
+		flex: 1
 	}
 });
 
