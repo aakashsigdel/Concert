@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 
 var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id?access_token=abcde';
+var navBtn = "http://aakashsigdel.github.io/Concert/navBtn.png";
+var shareBtn = "http://aakashsigdel.github.io/Concert/share.png";
 export default class Header extends Component {
 	constructor() {
 		super();
@@ -63,13 +65,13 @@ export default class Header extends Component {
 					style={[styles.titleImage, this._calculateImageSize()]} />
 				<View style={styles.titleContainer}>
 					<TouchableOpacity style={styles.navBtn}>
-						<Image source={require('image!navBtn')} style={styles.navBtnImg} />
+						<Image source={{uri: navBtn}} style={styles.navBtnImg} />
 					</TouchableOpacity>
 					<Text style={styles.titleText}>
 						{this.state.concertData.data.artist.name.toUpperCase()}
 					</Text>
 					<TouchableOpacity style={styles.shareBtn}>
-						<Image source={require('image!share')} style={styles.shareBtnImg} />
+						<Image source={{uri: shareBtn}} style={styles.shareBtnImg} />
 					</TouchableOpacity>
 				</View>
 				<View style={styles.descPanel}>
