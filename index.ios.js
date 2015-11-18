@@ -9,7 +9,7 @@ import {
 	Component
 } from 'react-native';
 import Header from './component.ios/Header';
-import Navigation from './component.ios/Navigation';
+import InternalNavigation from './component.ios/InternalNavigation';
 import Photos from './component.ios/Photos';
 import Reviews from './component.ios/Reviews';
 import Concerts from './component.ios/Concerts';
@@ -38,7 +38,7 @@ class ConcertReview extends Component {
 		return(
 			<View style={styles.mainContainer}>
 				<Header />
-				<Navigation 
+				<InternalNavigation 
 					setActiveView={this.setActiveView.bind(this)} 
 					activeView={this.state.activeView} />
 				{

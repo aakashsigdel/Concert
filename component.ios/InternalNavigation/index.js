@@ -16,7 +16,7 @@ var viewConstants = {
 	concerts: 'Concerts'
 };
 
-export default class Navigation extends Component {
+export default class InternalNavigation extends Component {
 	_setViewAndHighlight(view) {
 		this.props.setActiveView(view);
 	}
