@@ -56,8 +56,10 @@ export default class Concerts extends Component {
 					<Text style={styles.location}>{concert.location}</Text>
 				</View>
 				<View style={styles.calanderContainer}>
-					<View style={styles.calanderHeader}>
-						<Text style={styles.calanderMonth}>{concert.date.month.toUpperCase()}</Text>
+        <View style={[styles.calanderHeader, 
+          this.props.calanderHeader && {backgroundColor: 'white'}]}>
+						<Text style={[styles.calanderMonth,
+              this.props.calanderHeader && {color: 'black'}]}>{concert.date.month.toUpperCase()}</Text>
 					</View>
 					<View style={styles.calanderBody}>
 						<Text style={styles.calanderDay}>{concert.date.day}</Text>

@@ -13,6 +13,7 @@ import InternalNavigation from './component.ios/InternalNavigation';
 import Photos from './component.ios/Photos';
 import Reviews from './component.ios/Reviews';
 import Concerts from './component.ios/Concerts';
+import Home from './component.ios/Home';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -35,6 +36,7 @@ class ConcertReview extends Component {
 	}
 
 	render() {
+	  /*
 		return(
 			<View style={styles.mainContainer}>
 				<Header />
@@ -54,6 +56,10 @@ class ConcertReview extends Component {
 					})()
 				}
 			</View>
+		);
+		*/
+		return(
+      <Home />
 		);
 	}
 }
