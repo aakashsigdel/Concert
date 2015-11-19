@@ -41,7 +41,6 @@ export default class Concerts extends Component {
 	}
 
 	_renderConcert(concert) {
-		console.log(this.count, "hero ho aakash");
 		var backgroundStyle = null;
 		if(this.count % 2 === 0)
 			backgroundStyle = null

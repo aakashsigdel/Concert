@@ -40,6 +40,7 @@ export default class Reviews extends Component {
 		}).done();
 	}
 
+	// this function sholud be in a global module
 	_getStars(yellowStars) {
 		var stars = [];
 		for(var i = 0; i < yellowStars; i++) {
