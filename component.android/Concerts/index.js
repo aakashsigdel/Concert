@@ -6,7 +6,7 @@ import {
 	View,
 	Image,
 	Text,
-	ProgressBarAndroid,
+	ActivityIndicatorIOS,
 	StyleSheet,
 	Component
 } from 'react-native';
@@ -19,7 +19,8 @@ export default class Concerts extends Component {
 			dataSource: new ListView.DataSource({
 				rowHasChanged: (row1, row2) => row1.id !== row2.id
 			}),
-			isLoading: true
+      isLoading: true,
+      apiData: null,
 		};
 		this.count = 1;
 	}
@@ -28,20 +29,32 @@ export default class Concerts extends Component {
 		this._fetchData();
 	}
 
+  componentDidUpdate(prevProps){
+    if(this.props.filterText && (prevProps.filterText !== this.props.filterText) && (!this.state.isLoading) && (this.state.apiData)){
+      let that = this;
+      let filteredData = this.state.apiData.filter(function(item, index){
+        return (item.artist.name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1);
+      });
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(filteredData),
+      });
+    }
+  }
+
 	_fetchData() {
 		var query = QUERY_URL;
 		fetch(query)
 			.then((response) => response.json())
 			.then((responseData) => {
 				this.setState({
-					dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-					isLoading: false
+          isLoading: false,
+          apiData: responseData.data,
+          dataSource: this.state.dataSource.cloneWithRows(responseData.data),
 				});
 			}).done();
 	}
 
 	_renderConcert(concert) {
-		console.log(this.count, "hero ho aakash");
 		var backgroundStyle = null;
 		if(this.count % 2 === 0)
 			backgroundStyle = null
@@ -56,8 +69,10 @@ export default class Concerts extends Component {
 					<Text style={styles.location}>{concert.location}</Text>
 				</View>
 				<View style={styles.calanderContainer}>
-					<View style={styles.calanderHeader}>
-						<Text style={styles.calanderMonth}>{concert.date.month.toUpperCase()}</Text>
+        <View style={[styles.calanderHeader, 
+          this.props.calanderHeader && {backgroundColor: 'white'}]}>
+						<Text style={[styles.calanderMonth,
+              this.props.calanderHeader && {color: 'black'}]}>{concert.date.month.toUpperCase()}</Text>
 					</View>
 					<View style={styles.calanderBody}>
 						<Text style={styles.calanderDay}>{concert.date.day}</Text>
@@ -71,8 +86,9 @@ export default class Concerts extends Component {
 		if(this.state.isLoading) {
 			return(
 				<View style={styles.loadingContainer}>
-					<ProgressBarAndroid
-						styleAttr="Inverse" />
+					<ActivityIndicatorIOS
+						hidden="true"
+						size="large" />
 					<Text style={styles.loadingText}>Loading...</Text>
 				</View>
 			);

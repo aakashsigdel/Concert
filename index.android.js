@@ -6,13 +6,14 @@ import {
 	View,
 	StyleSheet,
 	AppRegistry,
-	Component
+	Component,
 } from 'react-native';
 import Header from './component.android/Header';
 import Navigation from './component.android/Navigation';
 import Photos from './component.android/Photos';
 import Reviews from './component.android/Reviews';
 import Concerts from './component.android/Concerts';
+import SearchActive from './component.android/SearchActive';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -35,26 +36,29 @@ class ConcertReview extends Component {
 	}
 
 	render() {
-		return(
-			<View style={styles.mainContainer}>
-				<Header />
-				<Navigation 
-					setActiveView={this.setActiveView.bind(this)} 
-					activeView={this.state.activeView} />
-				{
-					(() => {
-						switch(this.state.activeView) {
-							case viewConstants.photos: 
-								return <Photos />
-							case viewConstants.reviews:
-								return <Reviews />
-							case viewConstants.concerts:
-								return <Concerts />
-						}
-					})()
-				}
-			</View>
-		);
+    return(
+      <SearchActive/>
+    )
+		// return(
+		// 	<View style={styles.mainContainer}>
+		// 		<Header />
+		// 		<Navigation 
+		// 			setActiveView={this.setActiveView.bind(this)} 
+		// 			activeView={this.state.activeView} />
+		// 		{
+		// 			(() => {
+		// 				switch(this.state.activeView) {
+		// 					case viewConstants.photos: 
+		// 						return <Photos />
+		// 					case viewConstants.reviews:
+		// 						return <Reviews />
+		// 					case viewConstants.concerts:
+		// 						return <Concerts />
+		// 				}
+		// 			})()
+		// 		}
+		// 	</View>
+		// );
 	}
 }
 
@@ -65,3 +69,4 @@ var styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('ConcertReview', () => ConcertReview);
+// what
