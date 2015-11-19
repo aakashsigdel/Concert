@@ -1,0 +1,40 @@
+// vim: filetype=javascript
+{
+  container: {
+		backgroundColor: '#1C1C1C',
+    flex: 1,
+  },
+  reviewContainer: {
+    flex: 1,
+  },
+  title: {
+    flexDirection: 'row',
+    flex: 0,
+  },
+  subTitle: {
+    flex: 1,
+    marginLeft: 15,
+    color: 'white',
+    fontSize: 12,
+		fontFamily: 'AvenirNext-Regular',
+  },
+  seeAllLink: {
+    flex: 1,
+    marginRight: 15,
+    color: 'white',
+    fontSize: 11,
+		fontFamily: 'AvenirNext-Regular',
+  },
+  carousel: {
+    height: 123,
+    marginBottom: 20,
+    marginTop: 15,
+  },
+  concertContainer: {
+    flex: 1.45,
+  },
+  concerts: {
+    flex: 6,
+    marginTop: 13,
+  },
+}
