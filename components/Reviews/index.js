@@ -6,10 +6,11 @@ import {
 	View,
 	Image,
 	Text,
-	ProgressBarAndroid,
+	ActivityIndicatorIOS,
 	StyleSheet,
 	Component
 } from 'react-native';
+import Loader from '../../components.ios/Loader';
 
 
 var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id/reviews?access_token=abcde';
@@ -40,6 +41,7 @@ export default class Reviews extends Component {
 		}).done();
 	}
 
+	// this function sholud be in a global module
 	_getStars(yellowStars) {
 		var stars = [];
 		for(var i = 0; i < yellowStars; i++) {
@@ -73,13 +75,7 @@ export default class Reviews extends Component {
 
 	render() {
 		if(this.state.isLoading) {
-			return(
-				<View style={styles.loadingContainer}>
-					<ProgressBarAndroid
-						styleAttr="Inverse" />
-					<Text style={styles.loadingText}>Loading...</Text>	
-				</View>
-			);
+			return <Loader />;
 		}
 		return(
 			<ListView

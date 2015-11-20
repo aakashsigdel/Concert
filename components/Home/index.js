@@ -12,8 +12,8 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-
 import Concerts from '../Concerts';
+import Loader from '../../components.ios/Loader';
 
 var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id/reviews?access_token=abcde';
 export default class Home extends Component {
@@ -76,12 +76,20 @@ export default class Home extends Component {
               <Text style={styles.seeAllLink}>SEE ALL</Text>
             </TouchableHighlight>
           </View>
-          <View style={styles.carousel}>
-            <ListView
-              horizontal={true}
-              dataSource={this.state.dataSource}
-              renderRow={this.renderHotReviews.bind(this)} />
-          </View>
+          {
+            (() => {
+              if(this.state.isLoading)
+               return  <Loader />;
+              return (
+                  <View style={styles.carousel}>
+                    <ListView
+                      horizontal={true}
+                      dataSource={this.state.dataSource}
+                      renderRow={this.renderHotReviews.bind(this)} />
+                  </View>
+              );
+            })()
+          }
         </View>
         <View style={styles.concertContainer}>
           <View style={styles.title}>

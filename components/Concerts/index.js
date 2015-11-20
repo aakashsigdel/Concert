@@ -10,6 +10,7 @@ import {
 	StyleSheet,
 	Component
 } from 'react-native';
+import Loader from '../../components.ios/Loader';
 
 var QUERY_URL = "http://api.revuzeapp.com:80/api/v1/concerts/past?access_token=abcde";
 export default class Concerts extends Component {
@@ -19,8 +20,7 @@ export default class Concerts extends Component {
 			dataSource: new ListView.DataSource({
 				rowHasChanged: (row1, row2) => row1.id !== row2.id
 			}),
-      isLoading: true,
-      apiData: null,
+			isLoading: true
 		};
 		this.count = 1;
 	}
@@ -29,27 +29,14 @@ export default class Concerts extends Component {
 		this._fetchData();
 	}
 
-  componentDidUpdate(prevProps){
-    if(this.props.filterText && (prevProps.filterText !== this.props.filterText) && (!this.state.isLoading) && (this.state.apiData)){
-      let that = this;
-      let filteredData = this.state.apiData.filter(function(item, index){
-        return (item.artist.name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1);
-      });
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(filteredData),
-      });
-    }
-  }
-
 	_fetchData() {
 		var query = QUERY_URL;
 		fetch(query)
 			.then((response) => response.json())
 			.then((responseData) => {
 				this.setState({
-          isLoading: false,
-          apiData: responseData.data,
-          dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+					dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+					isLoading: false
 				});
 			}).done();
 	}
@@ -84,14 +71,7 @@ export default class Concerts extends Component {
 
 	render() {
 		if(this.state.isLoading) {
-			return(
-				<View style={styles.loadingContainer}>
-					<ActivityIndicatorIOS
-						hidden="true"
-						size="large" />
-					<Text style={styles.loadingText}>Loading...</Text>
-				</View>
-			);
+			return <Loader />;
 		}
 		return(
 			<ListView

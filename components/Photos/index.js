@@ -8,10 +8,11 @@ import {
 	Image,
 	StyleSheet,
 	TouchableOpacity,
-	ProgressBarAndroid,
+	ActivityIndicatorIOS,
 	Dimensions,
 	Component
 } from 'react-native';
+import Loader from '../../components.ios/Loader';
 
 
 var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id/photos?access_token=abcde';
@@ -62,13 +63,15 @@ export default class Photos extends Component {
 
 	render() {
 		if(this.state.isLoading) {
-			return(
+			return <Loader />
+			/*return(
 				<View style={styles.loadingContainer}>
-					<ProgressBarAndroid
-						styleAttr="Inverse" />
+					<ActivityIndicatorIOS
+						hidden='true'
+						size='large' />
 					<Text style={styles.loadingText}>Loading...</Text>
 				</View>
-			);
+			);*/
 		}
 		return(
 			<ListView

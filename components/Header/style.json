@@ -76,14 +76,4 @@
 		fontSize: 12.5,
 		fontFamily: 'AvenirNext-DemiBold'
 	},
-	loadingContainer: {
-		backgroundColor: '#1C1C1C',
-		height: 375,
-		alignItems: 'center',
-		justifyContent: 'center'
-	},
-	loadingText: {
-		color: 'white',
-		fontFamily: 'AvenirNext-DemiBold'
-	}
 }

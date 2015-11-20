@@ -1,13 +1,4 @@
 {
-	loadingContainer: {
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#1C1C1C',
-		flex: 1
-	},
-	loadingText: {
-		color: 'white'
-	},
 	photoThumb: {
 		marginBottom: 3
 	},

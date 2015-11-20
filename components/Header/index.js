@@ -11,6 +11,7 @@ import {
 	Component,
 	Dimensions,
 } from 'react-native';
+import Loader from '../../components.ios/Loader';
 
 var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id?access_token=abcde';
 var navBtn = "http://aakashsigdel.github.io/Concert/navBtn.png";
@@ -48,14 +49,7 @@ export default class Header extends Component {
 
 	render() {
 		if(this.state.isLoading) {
-			return(
-				<View style={styles.loadingContainer}>
-					<ActivityIndicatorIOS
-						hidden="true"
-						size="large" />
-					<Text style={styles.loadingText}>Loading...</Text>
-				</View>
-			);
+			return <Loader />;
 		}
 		console.log(this.state.concertData, "aakash sigdel is very good");
 		return(
