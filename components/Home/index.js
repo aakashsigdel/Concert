@@ -7,6 +7,7 @@ import {
   Dimensions,
   Image,
   ListView,
+  Navigator,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -53,7 +54,7 @@ export default class Home extends Component {
 		return stars;
 	}
 
-  renderHotReviews(review) {
+  _renderHotReviews(review) {
     return(
       <View style={styles.listItemConcert}>
         <Image style={styles.listItemConcertImage}
@@ -64,6 +65,14 @@ export default class Home extends Component {
         </View>
       </View>
     );
+  }
+
+  _handelPress() {
+    console.log(this.props);
+    this.props.navigator.push({
+      name: 'concerts',
+      index: 1,
+    });
   }
 
   render() {
@@ -85,7 +94,7 @@ export default class Home extends Component {
                     <ListView
                       horizontal={true}
                       dataSource={this.state.dataSource}
-                      renderRow={this.renderHotReviews.bind(this)} />
+                      renderRow={this._renderHotReviews.bind(this)} />
                   </View>
               );
             })()
@@ -94,7 +103,9 @@ export default class Home extends Component {
         <View style={styles.concertContainer}>
           <View style={styles.title}>
             <Text style={styles.subTitle}>UPCOMMING CONCERTS</Text>
-            <TouchableHighlight>
+            <TouchableHighlight
+              onPress={this._handelPress.bind(this)}
+            >
               <Text style={styles.seeAllLink}>SEE ALL</Text>
             </TouchableHighlight>
           </View>

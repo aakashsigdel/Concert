@@ -2,11 +2,12 @@
 
 import React from 'react-native';
 import {
+	AppRegistry,
+	Component,
+  Navigator,
+	StyleSheet,
 	Text,
 	View,
-	StyleSheet,
-	AppRegistry,
-	Component
 } from 'react-native';
 import Header from './components/Header';
 import InternalNavigation from './components/InternalNavigation';
@@ -14,6 +15,7 @@ import Photos from './components/Photos';
 import Reviews from './components/Reviews';
 import Concerts from './components/Concerts';
 import Home from './components/Home';
+import SearchActive from './components/SearchActive';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -35,8 +37,27 @@ class ConcertReview extends Component {
 		});
 	}
 
+	_renderScene(route, navigator) {
+	  switch(route.name) {
+      case 'home':
+        return (
+          <Home
+          navigator={navigator}
+          />
+        );
+      case 'concerts':
+        return (
+          <SearchActive
+          navigator={navigator}
+          />
+        );
+    }
+	}
+
 	render() {
-		return(
+		/*
+		 * {
+		 return(
 			<View style={styles.mainContainer}>
 				<Header />
 				<InternalNavigation 
@@ -56,11 +77,14 @@ class ConcertReview extends Component {
 				}
 			</View>
 		);
-	 /*
-		return(
-      <Home />
-		);
+		 * }
 		*/
+		return(
+		  <Navigator
+      initialRoute={{name: 'home', index: 0}}
+      renderScene={this._renderScene} 
+      />
+		);
 	}
 }
 
