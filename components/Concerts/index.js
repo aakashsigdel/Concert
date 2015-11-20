@@ -81,5 +81,4 @@ export default class Concerts extends Component {
 		);
 	}
 }
-
 var styles = StyleSheet.create(require('./style.json'));

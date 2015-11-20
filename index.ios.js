@@ -8,12 +8,12 @@ import {
 	AppRegistry,
 	Component
 } from 'react-native';
-import Header from './component.ios/Header';
-import InternalNavigation from './component.ios/InternalNavigation';
-import Photos from './component.ios/Photos';
-import Reviews from './component.ios/Reviews';
-import Concerts from './component.ios/Concerts';
-import Home from './component.ios/Home';
+import Header from './components/Header';
+import InternalNavigation from './components/InternalNavigation';
+import Photos from './components/Photos';
+import Reviews from './components/Reviews';
+import Concerts from './components/Concerts';
+import Home from './components/Home';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -36,7 +36,6 @@ class ConcertReview extends Component {
 	}
 
 	render() {
-	  /*
 		return(
 			<View style={styles.mainContainer}>
 				<Header />
@@ -57,10 +56,11 @@ class ConcertReview extends Component {
 				}
 			</View>
 		);
-		*/
+	 /*
 		return(
       <Home />
 		);
+		*/
 	}
 }
 
