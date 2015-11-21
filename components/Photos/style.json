@@ -6,6 +6,7 @@
 		backgroundColor: '#1C1C1C',
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+    flex: 1,
 	}
 }

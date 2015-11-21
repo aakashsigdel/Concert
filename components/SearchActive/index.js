@@ -83,6 +83,7 @@ export default class SearchActive extends Component {
             <Concerts 
               calanderHeader = {true}
               filterText = {this.state.filterText}
+              navigator={this.props.navigator}
             />
           </View>
         </View>

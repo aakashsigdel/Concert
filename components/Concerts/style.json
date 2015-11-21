@@ -1,4 +1,14 @@
 {
+	loadingContainer: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#1C1C1C',
+		flex: 1
+	},
+	loadingText: {
+		color: 'white',
+		fontFamily: 'AvenirNext-DemiBold'
+	},
 	concertContainer: {
 		paddingLeft: 15,
 		marginBottom: 5,

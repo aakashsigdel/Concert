@@ -17,8 +17,8 @@ import Loader from '../../components.ios/Loader';
 
 var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id/photos?access_token=abcde';
 export default class Photos extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			dataSource: new ListView.DataSource({
 				rowHasChanged: (row1, row2) => row1.id !== row2.id
@@ -40,11 +40,10 @@ export default class Photos extends Component {
 	}
 
 	_fetchPhotos() {
-		var query = QUERY_URL.replace('concert_id', '12');
+		var query = QUERY_URL.replace('concert_id', this.props.concertId);
 		fetch(query)
 			.then((response) => response.json())
 			.then((responseData) => {
-				console.log(responseData);
 				this.setState({
 					dataSource: this.state.dataSource.cloneWithRows(responseData.data),
 					isLoading: false
@@ -81,5 +80,7 @@ export default class Photos extends Component {
 		);
 	}
 }
+
+//Photos.propTypes = { concertId: React.propTypes.string.isRequired };
 
 var styles = StyleSheet.create(require('./style.json'));

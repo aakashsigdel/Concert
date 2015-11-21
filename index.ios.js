@@ -16,6 +16,7 @@ import Reviews from './components/Reviews';
 import Concerts from './components/Concerts';
 import Home from './components/Home';
 import SearchActive from './components/SearchActive';
+import Artist from './components/Artist';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -45,10 +46,17 @@ class ConcertReview extends Component {
           navigator={navigator}
           />
         );
-      case 'concerts':
+      case 'search_active':
         return (
           <SearchActive
           navigator={navigator}
+          />
+        );
+      case 'concert':
+        return (
+          <Artist
+          navigator={navigator}
+          concertId={route.concertId}
           />
         );
     }

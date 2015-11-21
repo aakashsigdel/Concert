@@ -68,9 +68,8 @@ export default class Home extends Component {
   }
 
   _handelPress() {
-    console.log(this.props);
     this.props.navigator.push({
-      name: 'concerts',
+      name: 'search_active',
       index: 1,
     });
   }
@@ -109,7 +108,10 @@ export default class Home extends Component {
               <Text style={styles.seeAllLink}>SEE ALL</Text>
             </TouchableHighlight>
           </View>
-            <Concerts calanderHeader={true}/>
+            <Concerts 
+            calanderHeader={true}
+            navigator={this.props.navigator}
+            />
         </View>
       </View>
     );

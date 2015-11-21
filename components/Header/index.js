@@ -36,10 +36,12 @@ export default class Header extends Component {
 	}
 
 	_fetchData() {
-		var query = QUERY_URL.replace('concert_id', 12);
+	  console.log('rangila', this.props.concertId);
+		var query = QUERY_URL.replace('concert_id', this.props.concertId);
 		fetch(query)
 			.then((response) => response.json())
 			.then((responseData) => {
+				console.log('aakash is a dagerous guy');
 				this.setState({
 					concertData: responseData,
 					isLoading: false
@@ -47,22 +49,35 @@ export default class Header extends Component {
 			});
 	}
 
+	_handelPress() {
+	  this.props.navigator.pop();
+	}
+
 	render() {
 		if(this.state.isLoading) {
 			return <Loader />;
 		}
-		console.log(this.state.concertData, "aakash sigdel is very good");
 		return(
 			<View style={styles.headerContainer}>
 				<Image 
 					source={{uri: this.state.concertData.data.artist.image.original}} 
 					style={[styles.titleImage, this._calculateImageSize()]} />
 				<View style={styles.titleContainer}>
-					<TouchableOpacity style={styles.navBtn}>
+					<TouchableOpacity
+					style={styles.navBtn}
+          onPress={this._handelPress.bind(this)}
+					>
 						<Image source={{uri: navBtn}} style={styles.navBtnImg} />
 					</TouchableOpacity>
 					<Text style={styles.titleText}>
-						{this.state.concertData.data.artist.name.toUpperCase()}
+						{
+						  (() => {
+						    if(this.state.concertData.data.artist.name.length < 20)
+                  return this.state.concertData.data.artist.name.toUpperCase()
+                else
+                  return this.state.concertData.data.artist.name.toUpperCase().slice(0, 20) + '...';
+						  })()
+						}
 					</Text>
 					<TouchableOpacity style={styles.shareBtn}>
 						<Image source={{uri: shareBtn}} style={styles.shareBtnImg} />

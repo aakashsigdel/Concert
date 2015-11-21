@@ -30,7 +30,7 @@ export default class Reviews extends Component {
 	}
 
 	_fetchData() {
-		var query = QUERY_URL.replace('concert_id', '12');
+		var query = QUERY_URL.replace('concert_id', this.props.concertId);
 		fetch(query)
 		.then((response) => response.json())
 		.then((responseData) => {
@@ -85,5 +85,7 @@ export default class Reviews extends Component {
 		)
 	}
 }
+
+//Reviews.propTypes = { concertId: Reaact.propTypes.string.isRequired };
 
 var styles = StyleSheet.create(require('./style.json'));
