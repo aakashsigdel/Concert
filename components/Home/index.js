@@ -1,6 +1,5 @@
 'use strict'
 import React from 'react-native';
-import Carousel from 'react-native-carousel';
 
 import {
   Component,

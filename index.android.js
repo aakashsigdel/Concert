@@ -2,18 +2,21 @@
 
 import React from 'react-native';
 import {
-	Text,
-	View,
-	StyleSheet,
 	AppRegistry,
 	Component,
+  Navigator,
+	StyleSheet,
+	Text,
+	View,
 } from 'react-native';
-import Header from './component.android/Header';
-import Navigation from './component.android/Navigation';
-import Photos from './component.android/Photos';
-import Reviews from './component.android/Reviews';
-import Concerts from './component.android/Concerts';
-import SearchActive from './component.android/SearchActive';
+import Header from './components/Header';
+import InternalNavigation from './components/InternalNavigation';
+import Photos from './components/Photos';
+import Reviews from './components/Reviews';
+import Concerts from './components/Concerts';
+import Home from './components/Home';
+import SearchActive from './components/SearchActive';
+import Artist from './components/Artist';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -25,7 +28,7 @@ class ConcertReview extends Component {
 	constructor() {
 		super();
 		this.state = {
-			activeView: viewConstants.photos
+			activeView: viewConstants.concerts
 		};
 	}
 
@@ -35,30 +38,61 @@ class ConcertReview extends Component {
 		});
 	}
 
+	_renderScene(route, navigator) {
+	  switch(route.name) {
+      case 'home':
+        return (
+          <Home
+          navigator={navigator}
+          />
+        );
+      case 'search_active':
+        return (
+          <SearchActive
+          navigator={navigator}
+          />
+        );
+      case 'concert':
+        return (
+          <Artist
+          navigator={navigator}
+          concertId={route.concertId}
+          />
+        );
+    }
+	}
+
 	render() {
-    return(
-      <SearchActive/>
-    )
-		// return(
-		// 	<View style={styles.mainContainer}>
-		// 		<Header />
-		// 		<Navigation 
-		// 			setActiveView={this.setActiveView.bind(this)} 
-		// 			activeView={this.state.activeView} />
-		// 		{
-		// 			(() => {
-		// 				switch(this.state.activeView) {
-		// 					case viewConstants.photos: 
-		// 						return <Photos />
-		// 					case viewConstants.reviews:
-		// 						return <Reviews />
-		// 					case viewConstants.concerts:
-		// 						return <Concerts />
-		// 				}
-		// 			})()
-		// 		}
-		// 	</View>
-		// );
+		/*
+		 * {
+		 return(
+			<View style={styles.mainContainer}>
+				<Header />
+				<InternalNavigation 
+					setActiveView={this.setActiveView.bind(this)} 
+					activeView={this.state.activeView} />
+				{
+					(() => {
+						switch(this.state.activeView) {
+							case viewConstants.photos: 
+								return <Photos />
+							case viewConstants.reviews:
+								return <Reviews />
+							case viewConstants.concerts:
+								return <Concerts />
+						}
+					})()
+				}
+			</View>
+		);
+		 * }
+		*/
+		return(
+		  <Navigator
+      initialRoute={{name: 'home', index: 0}}
+      renderScene={this._renderScene} 
+      />
+		);
 	}
 }
 
@@ -69,4 +103,3 @@ var styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('ConcertReview', () => ConcertReview);
-// what
