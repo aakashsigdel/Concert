@@ -69,7 +69,7 @@ export default class Home extends Component {
   _handelPress() {
     this.props.navigator.push({
       name: 'search_active',
-      index: 1,
+      index: 2,
     });
   }
 

@@ -17,6 +17,7 @@ import Concerts from './components/Concerts';
 import Home from './components/Home';
 import SearchActive from './components/SearchActive';
 import Artist from './components/Artist';
+import Intro from './components/Intro';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -40,6 +41,12 @@ class ConcertReview extends Component {
 
 	_renderScene(route, navigator) {
 	  switch(route.name) {
+      case 'login':
+        return (
+          <Intro
+          navigator={navigator}
+          />
+        );
       case 'home':
         return (
           <Home
@@ -63,34 +70,16 @@ class ConcertReview extends Component {
 	}
 
 	render() {
-		/*
-		 * {
-		 return(
-			<View style={styles.mainContainer}>
-				<Header />
-				<InternalNavigation 
-					setActiveView={this.setActiveView.bind(this)} 
-					activeView={this.state.activeView} />
-				{
-					(() => {
-						switch(this.state.activeView) {
-							case viewConstants.photos: 
-								return <Photos />
-							case viewConstants.reviews:
-								return <Reviews />
-							case viewConstants.concerts:
-								return <Concerts />
-						}
-					})()
-				}
-			</View>
-		);
-		 * }
-		*/
-		return(
+		//return(
+		  //<Navigator
+      //initialRoute={{name: 'home', index: 0}}
+      //renderScene={this._renderScene} 
+      ///>
+		//);
+		return (
 		  <Navigator
-      initialRoute={{name: 'home', index: 0}}
-      renderScene={this._renderScene} 
+      initialRoute={{name: 'login', index: 0}}
+      renderScene={this._renderScene}
       />
 		);
 	}
