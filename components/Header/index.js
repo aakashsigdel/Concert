@@ -67,7 +67,9 @@ export default class Header extends Component {
 					style={styles.navBtn}
           onPress={this._handelPress.bind(this)}
 					>
-						<Image source={{uri: navBtn}} style={styles.navBtnImg} />
+						<Image
+						source={require('../../assets/images/backIcon.png')}
+						style={styles.navBtnImg} />
 					</TouchableOpacity>
 					<Text style={styles.titleText}>
 						{
@@ -80,7 +82,9 @@ export default class Header extends Component {
 						}
 					</Text>
 					<TouchableOpacity style={styles.shareBtn}>
-						<Image source={{uri: shareBtn}} style={styles.shareBtnImg} />
+						<Image
+						source={require('../../assets/images/shareAlt.png')}
+						style={styles.shareBtnImg} />
 					</TouchableOpacity>
 				</View>
 				<View style={styles.descPanel}>

@@ -9,10 +9,12 @@
   musicStar: {
     width: 30,
     height: 28.7,
+    marginLeft: 15,
   },
   brandIcon: {
     width: 88,
     height: 26.7,
+    resizeMode: 'contain',
   },
   userImage: {
     width: 30,

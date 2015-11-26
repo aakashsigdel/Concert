@@ -128,10 +128,12 @@ export default class Concerts extends Component {
 			);
 		}
 		return(
+      <View style={styles.container}>
 			<ListView
 				dataSource={this.state.dataSource}
 				renderRow={this._renderConcert.bind(this)}
 				style={styles.listView}	/>
+      </View>
 		);
 	}
 }

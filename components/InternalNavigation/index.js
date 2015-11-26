@@ -25,7 +25,7 @@ export default class InternalNavigation extends Component {
 		return(
 			<View style={styles.navContainer}>
 				<TouchableHighlight style={styles.navTextContainer}
-					underlayColor="#FFDD83"
+					underlayColor="grey"
 					onPress={this._setViewAndHighlight.bind(this, viewConstants.reviews)}>
 					<Text style={[styles.navTextReviews, 
 						(this.props.activeView === viewConstants.reviews) && styles.textOpaque]}>
@@ -33,7 +33,7 @@ export default class InternalNavigation extends Component {
 					</Text>
 				</TouchableHighlight>
 				<TouchableHighlight style={styles.navTextContainer}
-					underlayColor="#FFDD83"
+					underlayColor="grey"
 					onPress={this._setViewAndHighlight.bind(this, viewConstants.photos)}>
 					<Text style={[styles.navTextPhotos,
 						(this.props.activeView === viewConstants.photos) && styles.textOpaque]}>
@@ -41,7 +41,7 @@ export default class InternalNavigation extends Component {
 					</Text>
 				</TouchableHighlight>
 				<TouchableHighlight style={styles.navTextContainer}
-					underlayColor="#FFDD83"
+					underlayColor="grey"
 					onPress={this._setViewAndHighlight.bind(this, viewConstants.concerts)}>
 					<Text style={[styles.navTextConcerts,
 						(this.props.activeView === viewConstants.concerts) && styles.textOpaque]}>

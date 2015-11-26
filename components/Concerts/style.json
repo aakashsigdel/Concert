@@ -9,6 +9,12 @@
 		color: 'white',
 		fontFamily: 'AvenirNext-DemiBold'
 	},
+  container: {
+    top: 0,
+    bottom: 0,
+    flex: 1,
+    backgroundColor: '#1C1C1C',
+  },
 	concertContainer: {
 		paddingLeft: 15,
 		marginBottom: 5,
@@ -72,6 +78,6 @@
 	},
 	listView: {
 		backgroundColor: '#1C1C1C',
-    marginBottom: 60,
+    paddingBottom: 60,
 	}
 }

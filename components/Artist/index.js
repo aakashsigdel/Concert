@@ -56,6 +56,7 @@ export default class Artist extends Component {
                   />
 							case viewConstants.concerts:
 								return <Concerts 
+                calanderHeader={true}
                   navigator={this.props.navigator}
                   />
 						}

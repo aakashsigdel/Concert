@@ -14,7 +14,7 @@ export default class HeaderBar extends Component {
     return (
       <View style={styles.container}>
         <Image
-        source={require('../../assets/images/music_star.png')}
+        source={require('../../assets/images/revuze-icon.png')}
         style={styles.musicStar}
         />
         <Image

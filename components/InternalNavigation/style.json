@@ -1,7 +1,7 @@
 {
 	navContainer: {
 		flexDirection: 'row',
-		backgroundColor: '#F9B400',
+		backgroundColor: 'black',
 		height: 48,
 		alignItems: 'stretch',
 	},
