@@ -16,7 +16,7 @@ import InternalNavigation from '../InternalNavigation';
 import Photos from '../Photos';
 import Reviews from '../Reviews';
 
-var QUERY_URL = "http://api.revuzeapp.com:80/api/v1/concerts/past?access_token=abcde";
+var QUERY_URL = "http://api.revuzeapp.com:80/api/v1/concerts/upcoming?access_token=abcde";
 export default class Concerts extends Component {
 	constructor() {
 		super();

@@ -56,19 +56,44 @@ export default class Reviews extends Component {
 	_renderReview(review) {
 		return(
 			<View style={styles.reviewContainer}>
+
 				<Image 
 					source={{uri: review.user.profile_picture}} 
 					style={styles.profileImage} />
+          
+          {/*Calander Component*/}
+        <View style={styles.calanderContainer}>
+        <View style={[styles.calanderHeader, 
+          this.props.calanderHeader && {backgroundColor: 'white'}]}>
+            <Text style={[styles.calanderMonth,
+              this.props.calanderHeader && {color: 'black'}]}>
+              {'sep'.toUpperCase()}
+            </Text>
+          </View>
+          <View style={styles.calanderBody}>
+            <Text style={styles.calanderDay}>{17}</Text>
+          </View>
+        </View>
+
+        {/*Review Details*/}
 				<View style={styles.reviewDetails}>
-					<View style={styles.ratingStars}>
-						{this._getStars(Number(review.rating))}
+
+					<View style={styles.starsAndUser}>
+            <View style={styles.ratingStars}>
+              {this._getStars(Number(review.rating))}
+            </View>
+            <Image 
+            source={require('../../assets/images/userpicCopy.png')}
+            style={styles.userImage} />
 					</View>
-					<Text style={styles.username}>{review.user.full_name.toUpperCase()}</Text>
-					<Text style={styles.locAndTime}>
-						{'Kathmandu Festival ● ' + review.date.split(',')[0] + ' ago'}
-					</Text>
-					<Text style={styles.comment}>{review.comment}</Text>
+					
+					<View style={styles.nameAndComment}>
+            <Text style={styles.username}>{review.user.full_name.toUpperCase()}</Text>
+            <Text style={styles.comment}>{review.comment}</Text>
+					</View>
+
 				</View>
+
 			</View>
 		);
 	}

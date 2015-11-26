@@ -22,8 +22,8 @@ export default class HeaderBar extends Component {
         style={styles.brandIcon}
         />
         <Image
-        source={require('../../assets/images/music_star.png')}
-        style={styles.musicStar}
+        source={require('../../assets/images/userpicCopy.png')}
+        style={styles.userImage}
         />
       </View>
     );
