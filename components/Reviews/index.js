@@ -79,6 +79,7 @@ export default class Reviews extends Component {
 		}
 		return(
 			<ListView
+			  renderHeader={this.props.reviewHeader}
 				dataSource={this.state.dataSource}
 				renderRow={this._renderReview.bind(this)}
 				style={styles.listView} />

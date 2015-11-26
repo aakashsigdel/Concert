@@ -40,7 +40,7 @@ export default class Photos extends Component {
 	}
 
 	_fetchPhotos() {
-		var query = QUERY_URL.replace('concert_id', this.props.concertId);
+		var query = QUERY_URL.replace('concert_id', 12);
 		fetch(query)
 			.then((response) => response.json())
 			.then((responseData) => {
@@ -63,14 +63,6 @@ export default class Photos extends Component {
 	render() {
 		if(this.state.isLoading) {
 			return <Loader />
-			/*return(
-				<View style={styles.loadingContainer}>
-					<ActivityIndicatorIOS
-						hidden='true'
-						size='large' />
-					<Text style={styles.loadingText}>Loading...</Text>
-				</View>
-			);*/
 		}
 		return(
 			<ListView

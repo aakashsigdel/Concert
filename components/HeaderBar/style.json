@@ -1,0 +1,17 @@
+{
+  container: {
+    height: 64,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#111111',
+  },
+  musicStar: {
+    width: 30,
+    height: 28.7,
+  },
+  brandIcon: {
+    width: 88,
+    height: 26.7,
+  }
+}

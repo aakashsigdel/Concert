@@ -3,70 +3,25 @@
 		backgroundColor: '#1C1C1C',
     flex: 1,
   },
-  reviewContainer: {
-    flex: 1,
-    marginTop: 79,
+  backgroundImage: {
+    position: 'absolute'
   },
-  title: {
-    flexDirection: 'row',
-    flex: 0,
-    marginBottom: 15,
-  },
-  subTitle: {
+  wrapper: {
     flex: 1,
-    marginLeft: 15,
-    color: 'white',
-    fontSize: 12,
-		fontFamily: 'AvenirNext-Regular',
-  },
-  seeAllLink: {
-    flex: 1,
-    marginRight: 15,
-    color: 'white',
-    fontSize: 11,
-		fontFamily: 'AvenirNext-Regular',
   },
   carousel: {
-    flex: 1,
-    paddingLeft: 15,
+    backgroundColor: 'transparent',
+    flex: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  concertContainer: {
-    flex: 2.07,
-  },
-  concerts: {
-    flex: 6,
-    marginTop: 13,
-  },
-  listItemConcertImage: {
-    height: 123,
-    width: 123,
-  },
-  listItemConcertName: {
-    position: 'absolute',
-    left: 3.9,
-    bottom: 16,
-    fontSize: 9,
-    fontFamily: 'AvenirNext-DemiBold',
+  carouselText: {
     color: 'white',
-    backgroundColor: 'transparent',
+    fontSize: 24,
+    fontFamily: 'AvenirNext-Regular',
+    marginTop: -20,
   },
-	yellowStar: {
-		fontSize: 12,
-		color: '#F9B400',
-	},
-	whiteStar: {
-		fontSize: 10,
-		color: 'white',
-	},
-	listItemConcertratingStars: {
-    position: 'absolute',
-    left: 3.9,
-    bottom: 5.3,
-		flexDirection: 'row',
-    backgroundColor: 'transparent',
-	},
-  listItemConcert: {
-    position: 'relative',
-    marginRight: 5,
+  lowerView: {
+    flex: 6.6
   },
 }

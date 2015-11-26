@@ -1,117 +1,106 @@
 'use strict'
 import React from 'react-native';
+import Swiper from 'react-native-swiper';
 
 import {
   Component,
   Dimensions,
   Image,
-  ListView,
-  Navigator,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableHighlight,
   View,
 } from 'react-native';
 import Concerts from '../Concerts';
-import Loader from '../../components.ios/Loader';
+import HeaderBar from '../HeaderBar';
+import Reviews from '../Reviews';
+import Photos from '../Photos';
 
-var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id/reviews?access_token=abcde';
+var {width, height} = Dimensions.get('window');
+
 export default class Home extends Component {
-  constructor() {
-    super();
-    this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1.id !== row2.id
-      }),
-      isLoading: true
-    };
-  }
-  componentDidMount() {
-    this._fetchData();
-  }
-
-  _fetchData() {
-		var query = QUERY_URL.replace('concert_id', '12');
-		fetch(query)
-		.then((response) => response.json())
-		.then((responseData) => {
-			this.setState({
-				dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-				isLoading: false
-			});
-		}).done();
-  }
-	// this function sholud be in a global module
-	_getStars(yellowStars) {
-		var stars = [];
-		for(var i = 0; i < yellowStars; i++) {
-			stars.push(<Text style={styles.yellowStar}>★</Text>);
-		}
-		for(var i = 0; i < (5 - yellowStars); i++) {
-			stars.push(<Text style={styles.whiteStar}>★</Text>);
-		}
-		return stars;
-	}
-
-  _renderHotReviews(review) {
-    return(
-      <View style={styles.listItemConcert}>
-        <Image style={styles.listItemConcertImage}
-          source={{uri: review.user.profile_picture}} />
-        <Text style={styles.listItemConcertName}>{review.user.full_name.toUpperCase()}</Text>
-        <View style={styles.listItemConcertratingStars}>
-          {this._getStars(Number(review.rating))}
-        </View>
-      </View>
-    );
-  }
-
-  _handelPress() {
-    this.props.navigator.push({
-      name: 'search_active',
-      index: 2,
-    });
-  }
-
   render() {
+    var paginationHeight =  height / 1.7;
     return(
       <View style={styles.container}>
-        <View style={styles.reviewContainer}>
-          <View style={styles.title}>
-            <Text style={styles.subTitle}>HOT REVIEW</Text>
-            <TouchableHighlight>
-              <Text style={styles.seeAllLink}>SEE ALL</Text>
-            </TouchableHighlight>
+        <HeaderBar />
+        <Image
+        source={require('../../assets/images/background_crowd.png')}
+        style={styles.backgroundImage}
+        />
+        <Swiper showButton={false}
+        activeDot={
+          <View 
+          style={
+            {
+              backgroundColor:'#F9B400',
+              width: 7.5,
+              height: 7.5,
+              borderRadius: 4,
+              marginLeft: 0,
+              marginRight: 0,
+              marginTop: 0,
+              marginBottom: 0,
+            }
+          } />
+        }
+        dot={
+          <View style={
+            {
+              backgroundColor: 'transparent',
+              borderColor: '#F9B400',
+              borderWidth: 1,
+              width: 7.5,
+              height: 7.5,
+              borderRadius: 4,
+              marginLeft: 3,
+              marginRight: 3,
+              marginTop: 3,
+              marginBottom: 3,
+            }
+          } />
+        }
+            paginationStyle={{position: 'absolute', top: -paginationHeight}}
+        >
+          <View style={styles.wrapper}>
+            <View style={styles.carousel}>
+              <Text style={styles.carouselText}>HOT REVIEWS</Text>
+            </View>
+            <View style={styles.lowerView}>
+              <Reviews 
+              concertId={12}
+              calanderHeader={true}
+              navigator={this.props.navigator}
+              />
+            </View>
           </View>
-          {
-            (() => {
-              if(this.state.isLoading)
-               return  <Loader />;
-              return (
-                  <View style={styles.carousel}>
-                    <ListView
-                      horizontal={true}
-                      dataSource={this.state.dataSource}
-                      renderRow={this._renderHotReviews.bind(this)} />
-                  </View>
-              );
-            })()
-          }
-        </View>
-        <View style={styles.concertContainer}>
-          <View style={styles.title}>
-            <Text style={styles.subTitle}>UPCOMMING CONCERTS</Text>
-            <TouchableHighlight
-              onPress={this._handelPress.bind(this)}
-            >
-              <Text style={styles.seeAllLink}>SEE ALL</Text>
-            </TouchableHighlight>
+
+          <View style={styles.wrapper}>
+            <View style={styles.carousel}>
+              <Text style={styles.carouselText}>LATEST PHOTOS</Text>
+            </View>
+            <View style={styles.lowerView}>
+              <Photos 
+              concertId={12}
+              calanderHeader={true}
+              navigator={this.props.navigator}
+              />
+            </View>
           </View>
-            <Concerts 
-            calanderHeader={true}
-            navigator={this.props.navigator}
-            />
-        </View>
+
+          <View style={styles.wrapper}>
+            <View style={styles.carousel}>
+              <Text style={styles.carouselText}>UPCOMMING CONCERTS</Text>
+            </View>
+            <View style={styles.lowerView}>
+              <Concerts 
+              calanderHeader={true}
+              navigator={this.props.navigator}
+              />
+            </View>
+          </View>
+        </Swiper>
       </View>
     );
   }  

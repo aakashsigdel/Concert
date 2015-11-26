@@ -32,7 +32,8 @@
 	location: {
 		color: 'white',
 		fontSize: 10,
-		fontFamily: 'AvenirNext-DemiBold'
+		fontFamily: 'AvenirNext-DemiBold',
+    opacity: 0.5,
 	},
 	calanderContainer: {
 		flex: 1,
@@ -71,5 +72,6 @@
 	},
 	listView: {
 		backgroundColor: '#1C1C1C',
+    paddingBottom: 60,
 	}
 }
