@@ -1,13 +1,25 @@
 {
   container: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#222',
     paddingTop: 10.5,
     paddingBottom: 10.5,
+    height: 53,
   },
+
+	ratingStars: {
+		flexDirection: 'row'
+	},
+	yellowStar: {
+		fontSize: 18,
+		color: '#F9B400'
+	},
+	whiteStar: {
+		fontSize: 18,
+		color: 'white'
+	},
 
   left: {
     marginLeft: 14,

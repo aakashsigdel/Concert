@@ -12,12 +12,12 @@ import {
 import Header from './components/Header';
 import InternalNavigation from './components/InternalNavigation';
 import Photos from './components/Photos';
+import Review from './components/Review';
 import Reviews from './components/Reviews';
 import Concerts from './components/Concerts';
 import Home from './components/Home';
 import SearchActive from './components/SearchActive';
 import Artist from './components/Artist';
-import Intro from './components/Intro';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -41,12 +41,6 @@ class ConcertReview extends Component {
 
 	_renderScene(route, navigator) {
 	  switch(route.name) {
-      case 'login':
-        return (
-          <Intro
-          navigator={navigator}
-          />
-        );
       case 'home':
         return (
           <Home
@@ -70,17 +64,8 @@ class ConcertReview extends Component {
 	}
 
 	render() {
-		//return(
-		  //<Navigator
-      //initialRoute={{name: 'home', index: 0}}
-      //renderScene={this._renderScene} 
-      ///>
-		//);
-		return (
-		  <Navigator
-      initialRoute={{name: 'login', index: 0}}
-      renderScene={this._renderScene}
-      />
+		return(
+      <Review />
 		);
 	}
 }
