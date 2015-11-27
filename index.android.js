@@ -63,30 +63,6 @@ class ConcertReview extends Component {
 	}
 
 	render() {
-		/*
-		 * {
-		 return(
-			<View style={styles.mainContainer}>
-				<Header />
-				<InternalNavigation 
-					setActiveView={this.setActiveView.bind(this)} 
-					activeView={this.state.activeView} />
-				{
-					(() => {
-						switch(this.state.activeView) {
-							case viewConstants.photos: 
-								return <Photos />
-							case viewConstants.reviews:
-								return <Reviews />
-							case viewConstants.concerts:
-								return <Concerts />
-						}
-					})()
-				}
-			</View>
-		);
-		 * }
-		*/
 		return(
 		  <Navigator
       initialRoute={{name: 'home', index: 0}}
