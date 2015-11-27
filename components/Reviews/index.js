@@ -2,13 +2,14 @@
 
 import React from 'react-native';
 import {
-	ListView,
-	View,
-	Image,
-	Text,
 	ActivityIndicatorIOS,
+	Component,
+	Image,
+	ListView,
 	StyleSheet,
-	Component
+	Text,
+	TouchableHighlight,
+	View,
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
 
@@ -53,49 +54,57 @@ export default class Reviews extends Component {
 		return stars;
 	}
 
+	_handelPress() {
+    this.props.navigator.push({name: 'review', index: 4});
+	}
+
 	_renderReview(review) {
 		return(
-			<View style={styles.reviewContainer}>
+			<TouchableHighlight
+			onPress={this._handelPress.bind(this)}
+			>
+        <View style={styles.reviewContainer}>
 
-        {/*need to change this later*/}
-				<Image 
-					source={require('../../assets/images/reviewPlaceholder.png')} 
-					style={styles.profileImage} />
-          
-          {/*Calander Component*/}
-        <View style={styles.calanderContainer}>
-        <View style={[styles.calanderHeader, 
-          this.props.calanderHeader && {backgroundColor: 'white'}]}>
-            <Text style={[styles.calanderMonth,
-              this.props.calanderHeader && {color: 'black'}]}>
-              {'sep'.toUpperCase()}
-            </Text>
-          </View>
-          <View style={styles.calanderBody}>
-            <Text style={styles.calanderDay}>{17}</Text>
-          </View>
-        </View>
-
-        {/*Review Details*/}
-				<View style={styles.reviewDetails}>
-
-					<View style={styles.starsAndUser}>
-            <View style={styles.ratingStars}>
-              {this._getStars(Number(review.rating))}
+          {/*need to change this later*/}
+          <Image 
+            source={require('../../assets/images/reviewPlaceholder.png')} 
+            style={styles.profileImage} />
+            
+            {/*Calander Component*/}
+          <View style={styles.calanderContainer}>
+          <View style={[styles.calanderHeader, 
+            this.props.calanderHeader && {backgroundColor: 'white'}]}>
+              <Text style={[styles.calanderMonth,
+                this.props.calanderHeader && {color: 'black'}]}>
+                {'sep'.toUpperCase()}
+              </Text>
             </View>
-            <Image 
-            source={require('../../assets/images/userpicCopy.png')}
-            style={styles.userImage} />
-					</View>
-					
-					<View style={styles.nameAndComment}>
-            <Text style={styles.username}>{review.user.full_name.toUpperCase()}</Text>
-            <Text style={styles.comment}>{review.comment}</Text>
-					</View>
+            <View style={styles.calanderBody}>
+              <Text style={styles.calanderDay}>{17}</Text>
+            </View>
+          </View>
 
-				</View>
+          {/*Review Details*/}
+          <View style={styles.reviewDetails}>
 
-			</View>
+            <View style={styles.starsAndUser}>
+              <View style={styles.ratingStars}>
+                {this._getStars(Number(review.rating))}
+              </View>
+              <Image 
+              source={require('../../assets/images/userpicCopy.png')}
+              style={styles.userImage} />
+            </View>
+            
+            <View style={styles.nameAndComment}>
+              <Text style={styles.username}>{review.user.full_name.toUpperCase()}</Text>
+              <Text style={styles.comment}>{review.comment}</Text>
+            </View>
+
+          </View>
+
+        </View>
+    </TouchableHighlight>
 		);
 	}
 

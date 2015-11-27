@@ -3,7 +3,6 @@
     backgroundColor: '#222',
     paddingTop: 15,
     paddingRight: 14.5,
-    height: 800,
   },
 
   header: {
@@ -28,6 +27,7 @@
     flex: 1,
     color: '#c1c1c1',
     fontSize: 12,
+    paddingBottom: 60,
     fontFamily: 'AvenirNext-DemiBold',
   },
 

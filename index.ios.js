@@ -43,6 +43,12 @@ class ConcertReview extends Component {
 
 	_renderScene(route, navigator) {
 	  switch(route.name) {
+      case 'login':
+        return (
+          <Intro
+          navigator={navigator}
+          />
+        );
       case 'home':
         return (
           <Home
@@ -63,6 +69,12 @@ class ConcertReview extends Component {
           concert={route.concert}
           />
         );
+      case 'review':
+        return (
+         <Review 
+         navigator={navigator}
+         />
+        );
     }
 	}
 
@@ -73,9 +85,10 @@ class ConcertReview extends Component {
       renderScene={this._renderScene}
       />
     );
+  }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
 	mainContainer: {
 		flex: 1
 	}

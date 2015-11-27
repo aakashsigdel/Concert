@@ -8,6 +8,7 @@ import {
 	StyleSheet,
   ScrollView,
 	Text,
+	TouchableHighlight,
 	View,
 } from 'react-native';
 
@@ -29,14 +30,22 @@ export default class Review extends Component {
 		return stars;
 	}
 
+	_handelPress() {
+	  this.props.navigator.pop();
+	}
+
   render() {
     return (
-      <ScrollView style={{ flex: 1}}>
+      <View style={{ flex: 1}}>
 
         <View style={header.container}> 
-          <Image
-            style={header.left} 
-            source={require('../../assets/images/clearCopy.png')} />
+          <TouchableHighlight
+          onPress={this._handelPress.bind(this)}
+          >
+            <Image
+              style={header.left} 
+              source={require('../../assets/images/clearCopy.png')} />
+          </TouchableHighlight>
           <Text
             style={ header.titleText }> 
             SKO/TORP 
@@ -89,20 +98,19 @@ export default class Review extends Component {
              paddingRight: 15,
            }}
           >
-            <View style={comment.text}>
+            <ScrollView style={comment.text}>
               <Text 
                 style={comment.longText}>
                 Pop artists aren’t often regarded as the best and as the most popular group at the same time. In the English-speaking pop world in the last decade, only maybe Adele, Beyonce and Taylor Swift have earned the same, simultaneous caliber of critical praise and concert tickets sold.{'\n'} 
-                In South Korea, however, there is BigBang. The established quintet is one of the most successful boy bands going in all of K-Pop today, with a sound that spans American hip-hop, R&B balladry with a local twist, and the high-octane electronic dance music that defines pop the world over.{'\n'}
-                  Many of its members have had solo hits and breakthrough combinations with other members (frontman G-Dragon has even collaborated with Diplo, Skrillex and Missy Elliott), and their boundary-pushing videos have laced some sex and violence into typically sugar-sweet K-Pop.{'\n'}
+                In South Korea, however, there is BigBang. The establishedelectronic dance music that defines pop the world over.{'\n'}
 
                 </Text>
-            </View>
+            </ScrollView>
           </View>
 
         </View> 
 
-      </ScrollView> 
+      </View> 
     )
   }
 
