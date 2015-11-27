@@ -1,2 +1,47 @@
-container: {
-},
+{
+  container: {
+    backgroundColor: '#222',
+    paddingTop: 15,
+    paddingRight: 14.5,
+    height: 800,
+  },
+
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 100,
+  },
+
+  headerText: {
+    width: 200,
+  },
+
+  whiteText: {
+    color: 'white',
+    fontFamily: 'AvenirNext-DemiBold',
+  },
+
+  text: {
+    flex: 1,
+  },
+
+  starImage: {
+    width: 45,
+    height: 45,
+    marginLeft: 15,
+    marginRight: 15,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: 'rgb(249, 180, 0)',
+  },
+
+  likeImage: {
+    width: 30,
+    height: 27.5,
+  },
+  
+  starContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+}

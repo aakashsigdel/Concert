@@ -12,6 +12,7 @@ import {
 import Header from './components/Header';
 import InternalNavigation from './components/InternalNavigation';
 import Photos from './components/Photos';
+import Review from './components/Review';
 import Reviews from './components/Reviews';
 import Concerts from './components/Concerts';
 import Home from './components/Home';
@@ -64,10 +65,7 @@ class ConcertReview extends Component {
 
 	render() {
 		return(
-		  <Navigator
-      initialRoute={{name: 'home', index: 0}}
-      renderScene={this._renderScene} 
-      />
+      <Review />
 		);
 	}
 }
