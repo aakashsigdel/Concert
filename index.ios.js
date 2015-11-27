@@ -18,6 +18,7 @@ import Home from './components/Home';
 import SearchActive from './components/SearchActive';
 import Artist from './components/Artist';
 import Intro from './components/Intro';
+import Concert from './components/Concert';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -61,21 +62,16 @@ class ConcertReview extends Component {
         );
       case 'concert':
         return (
-          <Artist
+          <Concert
           navigator={navigator}
           concertId={route.concertId}
+          concert={route.concert}
           />
         );
     }
 	}
 
 	render() {
-		//return(
-		  //<Navigator
-      //initialRoute={{name: 'home', index: 0}}
-      //renderScene={this._renderScene} 
-      ///>
-		//);
 		return (
 		  <Navigator
       initialRoute={{name: 'login', index: 0}}

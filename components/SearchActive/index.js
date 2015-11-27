@@ -19,7 +19,7 @@ import Photos from '../Photos';
 import Reviews from '../Reviews';
 import Home from '../Home';
 
-let styles = StyleSheet.create(require('./styles.json'));
+let styles = StyleSheet.create(require('./style.json'));
 let navBtn = "http://aakashsigdel.github.io/Concert/navBtn.png";
 
 export default class SearchActive extends Component {
@@ -41,15 +41,6 @@ export default class SearchActive extends Component {
     return (
         <View style={styles.container} >
           <View style={styles.header} >
-            <TouchableOpacity 
-            style={styles.nav}
-            onPress={this._handelPress.bind(this)}
-            >
-              <Image 
-                source={{uri: navBtn}}
-                style={styles.navBtn}
-              />
-            </TouchableOpacity>
 
             <View style={styles.inputContainer}>
               <Image

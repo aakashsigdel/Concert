@@ -16,6 +16,7 @@ import Concerts from '../Concerts';
 import HeaderBar from '../HeaderBar';
 import Reviews from '../Reviews';
 import Photos from '../Photos';
+import SearchActive from '../SearchActive';
 
 var {width, height} = Dimensions.get('window');
 
@@ -63,6 +64,7 @@ export default class Home extends Component {
         }
             paginationStyle={{position: 'absolute', top: -paginationHeight}}
         >
+
           <View style={styles.wrapper}>
             <View style={styles.carousel}>
               <Text style={styles.carouselText}>HOT REVIEWS</Text>
@@ -100,6 +102,15 @@ export default class Home extends Component {
               />
             </View>
           </View>
+
+          <View style={styles.wrapper}>
+            <View style={styles.lowerView}>
+              <SearchActive 
+              navigator={this.props.navigator}
+              />
+            </View>
+          </View>
+
         </Swiper>
       </View>
     );

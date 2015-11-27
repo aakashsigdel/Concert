@@ -61,7 +61,6 @@
 		borderColor: 'white',
 		borderWidth: 1,
 		alignItems: 'center',
-		justifyContent: 'center'
 	},
 	calanderMonth: {
 		fontSize: 7.5,
@@ -71,7 +70,7 @@
 	calanderDay: {
 		fontSize: 15,
 		color: 'white',
-		fontFamily: 'AvenirNext-DemiBold'
+		fontFamily: 'AvenirNext-DemiBold',
 	},
 	lightBackground: {
 		backgroundColor: '#222222'

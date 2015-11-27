@@ -1,7 +1,6 @@
 {
 	reviewContainer: {
 		flexDirection: 'row',
-		marginBottom: 5,
 	},
 	reviewDetails: {
 		flex: 1,

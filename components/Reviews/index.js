@@ -13,7 +13,7 @@ import {
 import Loader from '../../components.ios/Loader';
 
 
-var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id/reviews?access_token=abcde';
+var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/12/reviews?access_token=abcde';
 export default class Reviews extends Component {
 	constructor() {
 		super();
@@ -57,8 +57,9 @@ export default class Reviews extends Component {
 		return(
 			<View style={styles.reviewContainer}>
 
+        {/*need to change this later*/}
 				<Image 
-					source={{uri: review.user.profile_picture}} 
+					source={require('../../assets/images/reviewPlaceholder.png')} 
 					style={styles.profileImage} />
           
           {/*Calander Component*/}
