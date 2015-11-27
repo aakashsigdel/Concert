@@ -12,6 +12,7 @@ import {
 import Header from './components/Header';
 import InternalNavigation from './components/InternalNavigation';
 import Photos from './components/Photos';
+import Review from './components/Review';
 import Reviews from './components/Reviews';
 import Concerts from './components/Concerts';
 import Home from './components/Home';
@@ -42,12 +43,6 @@ class ConcertReview extends Component {
 
 	_renderScene(route, navigator) {
 	  switch(route.name) {
-      case 'login':
-        return (
-          <Intro
-          navigator={navigator}
-          />
-        );
       case 'home':
         return (
           <Home
@@ -77,8 +72,7 @@ class ConcertReview extends Component {
       initialRoute={{name: 'login', index: 0}}
       renderScene={this._renderScene}
       />
-		);
-	}
+    );
 }
 
 var styles = StyleSheet.create({

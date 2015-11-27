@@ -12,6 +12,7 @@ import {
 import Header from './components/Header';
 import InternalNavigation from './components/InternalNavigation';
 import Photos from './components/Photos';
+import Review from './components/Review';
 import Reviews from './components/Reviews';
 import Concerts from './components/Concerts';
 import Home from './components/Home';
@@ -63,35 +64,8 @@ class ConcertReview extends Component {
 	}
 
 	render() {
-		/*
-		 * {
-		 return(
-			<View style={styles.mainContainer}>
-				<Header />
-				<InternalNavigation 
-					setActiveView={this.setActiveView.bind(this)} 
-					activeView={this.state.activeView} />
-				{
-					(() => {
-						switch(this.state.activeView) {
-							case viewConstants.photos: 
-								return <Photos />
-							case viewConstants.reviews:
-								return <Reviews />
-							case viewConstants.concerts:
-								return <Concerts />
-						}
-					})()
-				}
-			</View>
-		);
-		 * }
-		*/
 		return(
-		  <Navigator
-      initialRoute={{name: 'home', index: 0}}
-      renderScene={this._renderScene} 
-      />
+      <Review />
 		);
 	}
 }

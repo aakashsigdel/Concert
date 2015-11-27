@@ -1,0 +1,41 @@
+{
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#222',
+    paddingTop: 10.5,
+    paddingBottom: 10.5,
+    height: 53,
+  },
+
+	ratingStars: {
+		flexDirection: 'row'
+	},
+	yellowStar: {
+		fontSize: 18,
+		color: '#F9B400'
+	},
+	whiteStar: {
+		fontSize: 18,
+		color: 'white'
+	},
+
+  left: {
+    marginLeft: 14,
+  },
+
+  titleText: {
+    color: 'white',
+    fontSize: 19, 
+    fontWeight: 'bold', 
+    fontFamily: 'AvenirNext-DemiBold',
+  },
+
+  right: {
+    height: 23,
+    width: 23,
+    padding: 4,
+    marginRight: 14.5,
+  },
+}
