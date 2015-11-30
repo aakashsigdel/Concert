@@ -46,10 +46,22 @@ export default class Reviews extends Component {
 	_getStars(yellowStars) {
 		var stars = [];
 		for(var i = 0; i < yellowStars; i++) {
-			stars.push(<Text style={styles.yellowStar}>★</Text>);
+			//stars.push(<Text style={styles.yellowStar}>★</Text>);
+			stars.push(
+			  <Image
+			  source={require('../../assets/images/star_yellow.png')}
+			  style={styles.yellowStar}
+			  />
+			);
 		}
 		for(var i = 0; i < (5 - yellowStars); i++) {
-			stars.push(<Text style={styles.whiteStar}>★</Text>);
+			//stars.push(<Text style={styles.whiteStar}>★</Text>);
+			stars.push(
+			  <Image
+			  source={require('../../assets/images/star_white.png')}
+			  style={styles.whiteStar}
+			  />
+			);
 		}
 		return stars;
 	}

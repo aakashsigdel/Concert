@@ -54,12 +54,13 @@
   },
   mapview: {
     flex: 1,
+    position: 'absolute',
     height: 300,
+    width: 375,
+    bottom: 0,
+    left: 0,
   },
   attendBtn: {
-    position: 'absolute',
-    bottom: 20,
-    left: 114,
     width: 146.5,
     height: 35,
     backgroundColor: '#F9B400',

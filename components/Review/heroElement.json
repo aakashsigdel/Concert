@@ -1,8 +1,8 @@
 {
   container: {
+    flex: 2,
   },
 
   image: {
-    flex: 1,
   },
 }

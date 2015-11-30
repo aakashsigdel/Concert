@@ -39,10 +39,10 @@ export default class Home extends Component {
               width: 7.5,
               height: 7.5,
               borderRadius: 4,
-              marginLeft: 0,
-              marginRight: 0,
-              marginTop: 0,
-              marginBottom: 0,
+              marginLeft: 3,
+              marginRight: 3,
+              marginTop: 3,
+              marginBottom: 3,
             }
           } />
         }

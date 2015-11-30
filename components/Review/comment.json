@@ -1,5 +1,6 @@
 {
   container: {
+    flex: 1.5,
     backgroundColor: '#222',
     paddingTop: 15,
     paddingRight: 14.5,

@@ -4,6 +4,7 @@ import React from 'react-native';
 import {
 	ActivityIndicatorIOS,
 	Component,
+	Dimensions,
 	Image,
 	StyleSheet,
   ScrollView,
@@ -11,6 +12,8 @@ import {
 	TouchableHighlight,
 	View,
 } from 'react-native';
+
+let {deviceWidth, deviceHeight} = Dimensions.get('window');
 
 export default class Review extends Component {
   constructor() {

@@ -20,8 +20,8 @@ export default class Concert extends Component {
     return (
       <View style={styles.container}>
         <Image
-        source={require('../../assets/images/background_crowd.png')}
-        style={styles.backgrondImage}
+          source={require('../../assets/images/background_crowd.png')}
+          style={styles.backgroundImage}
         />
 
         {/* headerbar should be here*/}
