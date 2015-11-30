@@ -1,0 +1,343 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'react-native-scrollable-tab-view',
+1 verbose cli   '--save' ]
+2 info using npm@2.14.7
+3 info using node@v4.2.0
+4 verbose install initial load of /Users/aakashsigdel/nLocate/ConcertReview/package.json
+5 verbose installManyTop reading scoped package data from /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native/package.json
+6 verbose installManyTop reading scoped package data from /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-carousel/package.json
+7 verbose installManyTop reading scoped package data from /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-looped-carousel/package.json
+8 verbose installManyTop reading scoped package data from /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/package.json
+9 verbose readDependencies loading dependencies from /Users/aakashsigdel/nLocate/ConcertReview/package.json
+10 verbose install react-native-scrollable-tab-view is installed as 0.1.10
+11 silly cache add args [ 'react-native-scrollable-tab-view', null ]
+12 verbose cache add spec react-native-scrollable-tab-view
+13 silly cache add parsed spec Result {
+13 silly cache add   raw: 'react-native-scrollable-tab-view',
+13 silly cache add   scope: null,
+13 silly cache add   name: 'react-native-scrollable-tab-view',
+13 silly cache add   rawSpec: '',
+13 silly cache add   spec: '*',
+13 silly cache add   type: 'range' }
+14 silly addNamed react-native-scrollable-tab-view@*
+15 verbose addNamed "*" is a valid semver range for react-native-scrollable-tab-view
+16 silly addNameRange { name: 'react-native-scrollable-tab-view',
+16 silly addNameRange   range: '*',
+16 silly addNameRange   hasData: false }
+17 silly mapToRegistry name react-native-scrollable-tab-view
+18 silly mapToRegistry using default registry
+19 silly mapToRegistry registry https://registry.npmjs.org/
+20 silly mapToRegistry uri https://registry.npmjs.org/react-native-scrollable-tab-view
+21 verbose addNameRange registry:https://registry.npmjs.org/react-native-scrollable-tab-view not in flight; fetching
+22 verbose request uri https://registry.npmjs.org/react-native-scrollable-tab-view
+23 verbose request no auth needed
+24 info attempt registry request try #1 at 6:58:40 PM
+25 verbose request id 672b4648a66d6afb
+26 verbose etag "471VIP1O0P18G1W79KBPXWRK5"
+27 http request GET https://registry.npmjs.org/react-native-scrollable-tab-view
+28 http 304 https://registry.npmjs.org/react-native-scrollable-tab-view
+29 verbose headers { date: 'Wed, 25 Nov 2015 13:13:26 GMT',
+29 verbose headers   via: '1.1 varnish',
+29 verbose headers   'cache-control': 'max-age=60',
+29 verbose headers   etag: '"471VIP1O0P18G1W79KBPXWRK5"',
+29 verbose headers   age: '0',
+29 verbose headers   connection: 'keep-alive',
+29 verbose headers   'x-served-by': 'cache-ams4135-AMS',
+29 verbose headers   'x-cache': 'MISS',
+29 verbose headers   'x-cache-hits': '0',
+29 verbose headers   'x-timer': 'S1448457206.474604,VS0,VE98',
+29 verbose headers   vary: 'Accept' }
+30 silly get cb [ 304,
+30 silly get   { date: 'Wed, 25 Nov 2015 13:13:26 GMT',
+30 silly get     via: '1.1 varnish',
+30 silly get     'cache-control': 'max-age=60',
+30 silly get     etag: '"471VIP1O0P18G1W79KBPXWRK5"',
+30 silly get     age: '0',
+30 silly get     connection: 'keep-alive',
+30 silly get     'x-served-by': 'cache-ams4135-AMS',
+30 silly get     'x-cache': 'MISS',
+30 silly get     'x-cache-hits': '0',
+30 silly get     'x-timer': 'S1448457206.474604,VS0,VE98',
+30 silly get     vary: 'Accept' } ]
+31 verbose etag https://registry.npmjs.org/react-native-scrollable-tab-view from cache
+32 verbose get saving react-native-scrollable-tab-view to /Users/aakashsigdel/.npm/registry.npmjs.org/react-native-scrollable-tab-view/.cache.json
+33 silly addNameRange number 2 { name: 'react-native-scrollable-tab-view',
+33 silly addNameRange   range: '*',
+33 silly addNameRange   hasData: true }
+34 silly addNameRange versions [ 'react-native-scrollable-tab-view',
+34 silly addNameRange   [ '0.1.0',
+34 silly addNameRange     '0.1.1',
+34 silly addNameRange     '0.1.2',
+34 silly addNameRange     '0.1.3',
+34 silly addNameRange     '0.1.4',
+34 silly addNameRange     '0.1.6',
+34 silly addNameRange     '0.1.7',
+34 silly addNameRange     '0.1.8',
+34 silly addNameRange     '0.1.9',
+34 silly addNameRange     '0.1.10',
+34 silly addNameRange     '0.2.1-alpha',
+34 silly addNameRange     '0.2.2-alpha' ] ]
+35 silly addNamed react-native-scrollable-tab-view@0.1.10
+36 verbose addNamed "0.1.10" is a plain semver version for react-native-scrollable-tab-view
+37 silly cache afterAdd react-native-scrollable-tab-view@0.1.10
+38 verbose afterAdd /Users/aakashsigdel/.npm/react-native-scrollable-tab-view/0.1.10/package/package.json not in flight; writing
+39 verbose afterAdd /Users/aakashsigdel/.npm/react-native-scrollable-tab-view/0.1.10/package/package.json written
+40 silly install resolved [ { name: 'react-native-scrollable-tab-view',
+40 silly install resolved     version: '0.1.10',
+40 silly install resolved     description: 'This is probably my favorite navigation pattern on Android, I wish it were more common on iOS! This is a very simple JavaScript-only implementation of it for React Native. For more information about how the animations behind this work, check out the Rebou',
+40 silly install resolved     main: 'index.js',
+40 silly install resolved     scripts: { test: 'echo "Error: no test specified" && exit 1' },
+40 silly install resolved     repository:
+40 silly install resolved      { type: 'git',
+40 silly install resolved        url: 'git+https://github.com/brentvatne/react-native-scrollable-tab-view.git' },
+40 silly install resolved     keywords:
+40 silly install resolved      [ 'react-native-component',
+40 silly install resolved        'react-component',
+40 silly install resolved        'react-native',
+40 silly install resolved        'ios',
+40 silly install resolved        'tab',
+40 silly install resolved        'scrollable' ],
+40 silly install resolved     author: { name: 'Brent Vatne' },
+40 silly install resolved     license: 'MIT',
+40 silly install resolved     bugs: { url: 'https://github.com/brentvatne/react-native-scrollable-tab-view/issues' },
+40 silly install resolved     homepage: 'https://github.com/brentvatne/react-native-scrollable-tab-view#readme',
+40 silly install resolved     peerDependencies: { 'react-native': '>=0.8.0 || 0.8.0-rc' },
+40 silly install resolved     dependencies: { rebound: '0.0.13' },
+40 silly install resolved     gitHead: '01544f49d8e4af5ba0c646ea43c90ea1e65ab5de',
+40 silly install resolved     _id: 'react-native-scrollable-tab-view@0.1.10',
+40 silly install resolved     _shasum: 'b4a00023e930f15083eae55052bc8797f11f6be3',
+40 silly install resolved     _from: 'react-native-scrollable-tab-view@*',
+40 silly install resolved     _npmVersion: '2.10.1',
+40 silly install resolved     _nodeVersion: '2.3.4',
+40 silly install resolved     _npmUser: { name: 'brentvatne', email: 'brentvatne@gmail.com' },
+40 silly install resolved     dist:
+40 silly install resolved      { shasum: 'b4a00023e930f15083eae55052bc8797f11f6be3',
+40 silly install resolved        tarball: 'http://registry.npmjs.org/react-native-scrollable-tab-view/-/react-native-scrollable-tab-view-0.1.10.tgz' },
+40 silly install resolved     maintainers: [ [Object] ],
+40 silly install resolved     directories: {},
+40 silly install resolved     _resolved: 'https://registry.npmjs.org/react-native-scrollable-tab-view/-/react-native-scrollable-tab-view-0.1.10.tgz',
+40 silly install resolved     readme: 'ERROR: No README data found!' } ]
+41 info install react-native-scrollable-tab-view@0.1.10 into /Users/aakashsigdel/nLocate/ConcertReview
+42 info installOne react-native-scrollable-tab-view@0.1.10
+43 verbose installOne of react-native-scrollable-tab-view to /Users/aakashsigdel/nLocate/ConcertReview not in flight; installing
+44 verbose lock using /Users/aakashsigdel/.npm/_locks/react-native-scrollable--016360c3905583f3.lock for /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view
+45 silly install write writing react-native-scrollable-tab-view 0.1.10 to /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view
+46 verbose unbuild node_modules/react-native-scrollable-tab-view
+47 info preuninstall react-native-scrollable-tab-view@0.1.10
+48 info uninstall react-native-scrollable-tab-view@0.1.10
+49 verbose unbuild rmStuff react-native-scrollable-tab-view@0.1.10 from /Users/aakashsigdel/nLocate/ConcertReview/node_modules
+50 info postuninstall react-native-scrollable-tab-view@0.1.10
+51 silly gentlyRm /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view is being purged from base /Users/aakashsigdel/nLocate/ConcertReview
+52 verbose gentlyRm don't care about contents; nuking /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view
+53 silly vacuum-fs purging /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view
+54 silly vacuum-fs quitting because other entries in /Users/aakashsigdel/nLocate/ConcertReview/node_modules
+55 verbose tar unpack /Users/aakashsigdel/.npm/react-native-scrollable-tab-view/0.1.10/package.tgz
+56 verbose tar unpacking to /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view
+57 silly gentlyRm /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view is being purged
+58 verbose gentlyRm don't care about contents; nuking /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view
+59 silly gunzTarPerm modes [ '755', '644' ]
+60 silly gunzTarPerm extractEntry package.json
+61 silly gunzTarPerm extractEntry .npmignore
+62 silly gunzTarPerm extractEntry README.md
+63 silly gunzTarPerm extractEntry DefaultTabBar.js
+64 silly gunzTarPerm extractEntry index.js
+65 silly gunzTarPerm extractEntry demo-fb.gif
+66 silly gunzTarPerm extractEntry demo.gif
+67 silly gunzTarPerm extractEntry examples/FacebookTabsExample/package.json
+68 silly gunzTarPerm extractEntry examples/FacebookTabsExample/.npmignore
+69 silly gunzTarPerm extractEntry examples/FacebookTabsExample/FacebookTabBar.js
+70 silly gunzTarPerm extractEntry examples/FacebookTabsExample/index.ios.js
+71 silly gunzTarPerm extractEntry examples/FacebookTabsExample/.flowconfig
+72 silly gunzTarPerm extractEntry examples/FacebookTabsExample/FacebookTabsExample.xcodeproj/project.pbxproj
+73 silly gunzTarPerm extractEntry examples/FacebookTabsExample/FacebookTabsExample.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+74 silly gunzTarPerm extractEntry examples/FacebookTabsExample/FacebookTabsExample.xcodeproj/xcshareddata/xcschemes/FacebookTabsExample.xcscheme
+75 silly gunzTarPerm extractEntry examples/FacebookTabsExample/FacebookTabsExampleTests/FacebookTabsExampleTests.m
+76 silly gunzTarPerm extractEntry examples/FacebookTabsExample/FacebookTabsExampleTests/Info.plist
+77 silly gunzTarPerm extractEntry examples/FacebookTabsExample/iOS/AppDelegate.h
+78 silly gunzTarPerm extractEntry examples/FacebookTabsExample/iOS/AppDelegate.m
+79 silly gunzTarPerm extractEntry examples/FacebookTabsExample/iOS/Base.lproj/LaunchScreen.xib
+80 silly gunzTarPerm extractEntry examples/FacebookTabsExample/iOS/Images.xcassets/AppIcon.appiconset/Contents.json
+81 silly gunzTarPerm extractEntry examples/FacebookTabsExample/iOS/Info.plist
+82 silly gunzTarPerm extractEntry examples/FacebookTabsExample/iOS/main.jsbundle
+83 silly gunzTarPerm extractEntry examples/FacebookTabsExample/iOS/main.m
+84 verbose write writing to /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/package.json
+85 info preinstall react-native-scrollable-tab-view@0.1.10
+86 verbose readDependencies loading dependencies from /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/package.json
+87 silly prepareForInstallMany adding rebound@0.0.13 from react-native-scrollable-tab-view dependencies
+88 verbose readDependencies loading dependencies from /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/package.json
+89 silly cache add args [ 'rebound@0.0.13', null ]
+90 verbose cache add spec rebound@0.0.13
+91 silly cache add parsed spec Result {
+91 silly cache add   raw: 'rebound@0.0.13',
+91 silly cache add   scope: null,
+91 silly cache add   name: 'rebound',
+91 silly cache add   rawSpec: '0.0.13',
+91 silly cache add   spec: '0.0.13',
+91 silly cache add   type: 'version' }
+92 silly addNamed rebound@0.0.13
+93 verbose addNamed "0.0.13" is a plain semver version for rebound
+94 silly mapToRegistry name rebound
+95 silly mapToRegistry using default registry
+96 silly mapToRegistry registry https://registry.npmjs.org/
+97 silly mapToRegistry uri https://registry.npmjs.org/rebound
+98 verbose addNameVersion registry:https://registry.npmjs.org/rebound not in flight; fetching
+99 verbose request uri https://registry.npmjs.org/rebound
+100 verbose request no auth needed
+101 info attempt registry request try #1 at 6:58:42 PM
+102 verbose etag "1CXSQLMNES4YIJ6CZOPVBNOW0"
+103 http request GET https://registry.npmjs.org/rebound
+104 http 304 https://registry.npmjs.org/rebound
+105 verbose headers { date: 'Wed, 25 Nov 2015 13:13:29 GMT',
+105 verbose headers   via: '1.1 varnish',
+105 verbose headers   'cache-control': 'max-age=60',
+105 verbose headers   etag: '"1CXSQLMNES4YIJ6CZOPVBNOW0"',
+105 verbose headers   age: '32',
+105 verbose headers   connection: 'keep-alive',
+105 verbose headers   'x-served-by': 'cache-ams4136-AMS',
+105 verbose headers   'x-cache': 'HIT',
+105 verbose headers   'x-cache-hits': '1',
+105 verbose headers   'x-timer': 'S1448457209.097978,VS0,VE0',
+105 verbose headers   vary: 'Accept' }
+106 silly get cb [ 304,
+106 silly get   { date: 'Wed, 25 Nov 2015 13:13:29 GMT',
+106 silly get     via: '1.1 varnish',
+106 silly get     'cache-control': 'max-age=60',
+106 silly get     etag: '"1CXSQLMNES4YIJ6CZOPVBNOW0"',
+106 silly get     age: '32',
+106 silly get     connection: 'keep-alive',
+106 silly get     'x-served-by': 'cache-ams4136-AMS',
+106 silly get     'x-cache': 'HIT',
+106 silly get     'x-cache-hits': '1',
+106 silly get     'x-timer': 'S1448457209.097978,VS0,VE0',
+106 silly get     vary: 'Accept' } ]
+107 verbose etag https://registry.npmjs.org/rebound from cache
+108 verbose get saving rebound to /Users/aakashsigdel/.npm/registry.npmjs.org/rebound/.cache.json
+109 silly cache afterAdd rebound@0.0.13
+110 verbose afterAdd /Users/aakashsigdel/.npm/rebound/0.0.13/package/package.json not in flight; writing
+111 verbose afterAdd /Users/aakashsigdel/.npm/rebound/0.0.13/package/package.json written
+112 silly install resolved [ { name: 'rebound',
+112 silly install resolved     version: '0.0.13',
+112 silly install resolved     description: 'A simple library for modeling spring dynamics',
+112 silly install resolved     main: 'rebound.js',
+112 silly install resolved     author: { name: 'Facebook' },
+112 silly install resolved     license: 'BSD',
+112 silly install resolved     dependencies: {},
+112 silly install resolved     repository:
+112 silly install resolved      { type: 'git',
+112 silly install resolved        url: 'git+ssh://git@github.com/facebook/rebound-js.git' },
+112 silly install resolved     bugs: { url: 'https://github.com/facebook/rebound-js/issues' },
+112 silly install resolved     keywords: [ 'facebook', 'animation' ],
+112 silly install resolved     scripts: { test: 'jasmine-node spec' },
+112 silly install resolved     devDependencies: { 'jasmine-node': '^1.14.5' },
+112 silly install resolved     readme: '[![Build\nStatus](https://travis-ci.org/facebook/rebound-js.svg?branch=master)](https://travis-ci.org/facebook/rebound-js)\n\n###REBOUND\n\nRebound is a simple library that models Spring dynamics for the purpose of\ndriving physical animations.\n\n###ORIGIN\n\nRebound was originally written in Java to provide a lightweight physics system\nfor Facebook Home and Chat Heads on Android. It’s now been adopted by several\nother Android applications. This JavaScript port was written to provide a quick\nway to demonstrate Rebound animations on the web for a conference talk. Since\nthen the JavaScript version has been used to build some really nice interfaces.\nCheck out [brandonwalkin.com](http://brandonwalkin.com) for an example.\n\n###OVERVIEW\n\nThe Library provides a SpringSystem for maintaining a set of Spring objects and\niterating those Springs through a physics solver loop until equilibrium is\nachieved. The Spring class is the basic animation driver provided by Rebound.\nBy attaching a listener to a Spring, you can observe its motion. The observer\nfunction is notified of position changes on the spring as it solves for\nequilibrium. These position updates can be mapped to an animation range to\ndrive animated property updates on your user interface elements (translation,\n    rotation, scale, etc).\n\nCheck out the [docco](http://facebook.github.io/rebound-js/docs/rebound.html),\n[tests](http://facebook.github.io/rebound-js/browser_test/index.html), and\n[examples](http://facebook.github.io/rebound-js/examples) for more details.\n',
+112 silly install resolved     readmeFilename: 'README.md',
+112 silly install resolved     homepage: 'https://github.com/facebook/rebound-js#readme',
+112 silly install resolved     _id: 'rebound@0.0.13',
+112 silly install resolved     _shasum: '4a225254caf7da756797b19c5817bf7a7941fac1',
+112 silly install resolved     _resolved: 'https://registry.npmjs.org/rebound/-/rebound-0.0.13.tgz',
+112 silly install resolved     _from: 'rebound@0.0.13' } ]
+113 info install rebound@0.0.13 into /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view
+114 info installOne rebound@0.0.13
+115 verbose installOne of rebound to /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view not in flight; installing
+116 verbose lock using /Users/aakashsigdel/.npm/_locks/rebound-5ea440eb9818466d.lock for /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound
+117 silly install write writing rebound 0.0.13 to /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound
+118 verbose unbuild node_modules/react-native-scrollable-tab-view/node_modules/rebound
+119 silly gentlyRm /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound is being purged from base /Users/aakashsigdel/nLocate/ConcertReview
+120 verbose gentlyRm don't care about contents; nuking /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound
+121 verbose tar unpack /Users/aakashsigdel/.npm/rebound/0.0.13/package.tgz
+122 verbose tar unpacking to /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound
+123 silly gentlyRm /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound is being purged
+124 verbose gentlyRm don't care about contents; nuking /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound
+125 silly gunzTarPerm modes [ '755', '644' ]
+126 silly gunzTarPerm extractEntry package.json
+127 silly gunzTarPerm extractEntry .npmignore
+128 silly gunzTarPerm extractEntry README.md
+129 silly gunzTarPerm extractEntry LICENSE
+130 silly gunzTarPerm extractEntry rebound.js
+131 silly gunzTarPerm extractEntry rebound.min.js
+132 silly gunzTarPerm extractEntry browser_test/jasmine-1.3.1.js
+133 silly gunzTarPerm extractEntry browser_test/jasmine-html.js
+134 silly gunzTarPerm extractEntry browser_test/index.html
+135 silly gunzTarPerm extractEntry browser_test/jasmine.css
+136 silly gunzTarPerm extractEntry .travis.yml
+137 silly gunzTarPerm extractEntry docs/docco.css
+138 silly gunzTarPerm extractEntry docs/public/fonts/aller-bold.eot
+139 silly gunzTarPerm extractEntry docs/public/fonts/aller-bold.ttf
+140 silly gunzTarPerm extractEntry docs/public/fonts/aller-bold.woff
+141 silly gunzTarPerm extractEntry docs/public/fonts/aller-light.eot
+142 silly gunzTarPerm extractEntry docs/public/fonts/aller-light.ttf
+143 silly gunzTarPerm extractEntry docs/public/fonts/aller-light.woff
+144 silly gunzTarPerm extractEntry docs/public/fonts/roboto-black.eot
+145 silly gunzTarPerm extractEntry docs/public/fonts/roboto-black.ttf
+146 silly gunzTarPerm extractEntry docs/public/fonts/roboto-black.woff
+147 silly gunzTarPerm extractEntry docs/public/stylesheets/normalize.css
+148 silly gunzTarPerm extractEntry docs/rebound.html
+149 silly gunzTarPerm extractEntry examples/util.js
+150 silly gunzTarPerm extractEntry examples/cascadeEffect/main.js
+151 silly gunzTarPerm extractEntry examples/cascadeEffect/main.css
+152 silly gunzTarPerm extractEntry examples/hamburgerButton/main.js
+153 silly gunzTarPerm extractEntry examples/images/favicon.ico
+154 silly gunzTarPerm extractEntry examples/images/rebound.png
+155 silly gunzTarPerm extractEntry examples/images/rebound_2x.png
+156 silly gunzTarPerm extractEntry examples/index.html
+157 silly gunzTarPerm extractEntry examples/main.css
+158 silly gunzTarPerm extractEntry examples/photoScale/main.js
+159 silly gunzTarPerm extractEntry examples/photoScale/landscape.jpg
+160 silly gunzTarPerm extractEntry examples/photoScale/main.css
+161 silly gunzTarPerm extractEntry index.html
+162 silly gunzTarPerm extractEntry PATENTS
+163 silly gunzTarPerm extractEntry spec/reboundSpec.js
+164 silly gunzTarPerm extractEntry bower.json
+165 silly gunzTarPerm extractEntry component.json
+166 verbose write writing to /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound/package.json
+167 info preinstall rebound@0.0.13
+168 verbose readDependencies loading dependencies from /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound/package.json
+169 verbose readDependencies loading dependencies from /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound/package.json
+170 silly install resolved []
+171 verbose about to build /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound
+172 info build /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound
+173 info linkStuff rebound@0.0.13
+174 silly linkStuff rebound@0.0.13 has /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules as its parent node_modules
+175 verbose linkBins rebound@0.0.13
+176 verbose linkMans rebound@0.0.13
+177 verbose rebuildBundles rebound@0.0.13
+178 info install rebound@0.0.13
+179 info postinstall rebound@0.0.13
+180 verbose unlock done using /Users/aakashsigdel/.npm/_locks/rebound-5ea440eb9818466d.lock for /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view/node_modules/rebound
+181 verbose about to build /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view
+182 info build /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view
+183 info linkStuff react-native-scrollable-tab-view@0.1.10
+184 silly linkStuff react-native-scrollable-tab-view@0.1.10 has /Users/aakashsigdel/nLocate/ConcertReview/node_modules as its parent node_modules
+185 verbose linkBins react-native-scrollable-tab-view@0.1.10
+186 verbose linkMans react-native-scrollable-tab-view@0.1.10
+187 verbose rebuildBundles react-native-scrollable-tab-view@0.1.10
+188 verbose rebuildBundles [ 'rebound' ]
+189 info install react-native-scrollable-tab-view@0.1.10
+190 info postinstall react-native-scrollable-tab-view@0.1.10
+191 verbose unlock done using /Users/aakashsigdel/.npm/_locks/react-native-scrollable--016360c3905583f3.lock for /Users/aakashsigdel/nLocate/ConcertReview/node_modules/react-native-scrollable-tab-view
+192 verbose validateInstall loading /Users/aakashsigdel/nLocate/ConcertReview/package.json for validation
+193 verbose stack Error: The package react-native@0.14.2 does not satisfy its siblings' peerDependencies requirements!
+193 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
+193 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:268:7
+193 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+193 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+193 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+193 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+193 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+193 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+193 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+193 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+194 verbose cwd /Users/aakashsigdel/nLocate/ConcertReview/assets/images
+195 error Darwin 15.0.0
+196 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "react-native-scrollable-tab-view" "--save"
+197 error node v4.2.0
+198 error npm  v2.14.7
+199 error code EPEERINVALID
+200 error peerinvalid The package react-native@0.14.2 does not satisfy its siblings' peerDependencies requirements!
+200 error peerinvalid Peer react-native-scrollable-tab-view@0.1.10 wants react-native@>=0.8.0 || 0.8.0-rc
+200 error peerinvalid Peer react-native-carousel@0.4.2 wants react-native@>=0.4 <1.0
+200 error peerinvalid Peer react-native-looped-carousel@0.0.6 wants react-native@^0.13.0
+201 verbose exit [ 1, true ]
