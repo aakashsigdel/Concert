@@ -20,6 +20,7 @@ import SearchActive from './components/SearchActive';
 import Artist from './components/Artist';
 import Intro from './components/Intro';
 import Concert from './components/Concert';
+import ProfileContainer from './components/ProfileContainer';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -75,10 +76,16 @@ class ConcertReview extends Component {
          navigator={navigator}
          />
         );
+      case 'profile':
+        return (
+          <ProfileContainer
+          navigator={navigator}
+          />
+        )
     }
 	}
 
-	render() {
+	render () {
 		return (
 		  <Navigator
       initialRoute={{name: 'login', index: 0}}

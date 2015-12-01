@@ -21,7 +21,7 @@ export default class Concert extends Component {
       <View style={styles.container}>
         <Image
           source={require('../../assets/images/background_crowd.png')}
-          style={styles.backgroundImage}
+          style={styles.backgrondImage}
         />
 
         {/* headerbar should be here*/}

@@ -33,8 +33,13 @@ export default class Review extends Component {
 		return stars;
 	}
 
-	_handelPress() {
+	_handelBackPress() {
 	  this.props.navigator.pop();
+	}
+
+	// navigate to profile page when username is pressed
+	_handelUserPress() {
+    this.props.navigator.push({name: 'profile', index: 5});
 	}
 
   render() {
@@ -43,7 +48,7 @@ export default class Review extends Component {
 
         <View style={header.container}> 
           <TouchableHighlight
-          onPress={this._handelPress.bind(this)}
+          onPress={this._handelBackPress.bind(this)}
           >
             <Image
               style={header.left} 
@@ -72,7 +77,11 @@ export default class Review extends Component {
               source={require('../../assets/images/music_star.png')}
             />
             <View style={comment.headerText}>
-              <Text style={comment.whiteText} >JIMMI ANDERSEN</Text>
+              <TouchableHighlight
+              onPress={this._handelUserPress.bind(this)}
+              >
+                <Text style={comment.whiteText} >JIMMI ANDERSEN</Text>
+              </TouchableHighlight>
               <View style={header.ratingStars} >
                 {this._getStars(3)}
               </View>

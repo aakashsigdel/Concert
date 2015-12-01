@@ -6,22 +6,39 @@
     alignItems: 'center',
     backgroundColor: '#111111',
   },
-  musicStar: {
+  leftImage: {
     width: 30,
     height: 28.7,
     marginLeft: 15,
+    resizeMode: 'contain',
   },
-  brandIcon: {
+  midImage: {
     width: 88,
     height: 26.7,
     resizeMode: 'contain',
   },
-  userImage: {
-    width: 30,
-    height: 30,
+  rightImage: {
+    width: 22,
+    height: 24,
     marginRight: 15,
-    borderColor: '#F9B400',
-    borderWidth: 1,
-    borderRadius: 15,
+    //borderColor: '#F9B400',
+    //borderWidth: 1,
+    //borderRadius: 15,
+    resizeMode: 'contain',
+  },
+  leftText: {
+    color: 'white',
+    fontSize: 18,
+    fontFamily: 'AvenirNext-DemiBold',
+  },
+  midText: {
+    color: 'white',
+    fontSize: 18,
+    fontFamily: 'AvenirNext-DemiBold',
+  },
+  rightText: {
+    color: 'white',
+    fontSize: 18,
+    fontFamily: 'AvenirNext-DemiBold',
   },
 }

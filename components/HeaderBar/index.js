@@ -10,24 +10,51 @@ import {
 } from 'react-native';
 
 export default class HeaderBar extends Component {
-  render() {
+  constructor() {
+    super();
+    this.state ={
+      left: '', // element on the left
+      mid: '',
+      right: '',
+    };
+    this.headerJSX = []; // array of elements to rendered
+  }
+  
+  componentWillMount() {
+    this._formatHeaderBar(this.props.left, 'left');
+    this._formatHeaderBar(this.props.mid, 'mid');
+    this._formatHeaderBar(this.props.right, 'right');
+  }
+
+  // check if image or text should be displayed in HeaderBar
+  _formatHeaderBar (item, styleInitiail) {
+    if(item !== null) {
+      if(typeof(item) === 'string') {
+        this.headerJSX.push (
+          <Text style={styles[styleInitiail + 'Text']}>
+          {item.toUpperCase()}
+          </Text>
+        );
+      } else {
+        this.headerJSX.push(
+          <Image
+          source={item}
+          style={styles[styleInitiail + 'Image']}
+          />
+        );
+      }
+    }
+  }
+
+  render () {
     return (
       <View style={styles.container}>
-        <Image
-        source={require('../../assets/images/revuze-icon.png')}
-        style={styles.musicStar}
-        />
-        <Image
-        source={require('../../assets/images/brand_icon.png')}
-        style={styles.brandIcon}
-        />
-        <Image
-        source={require('../../assets/images/userpicCopy.png')}
-        style={styles.userImage}
-        />
+      {
+        this.headerJSX.map((item) => item)
+      }
       </View>
     );
   }
 }
 
-var styles = StyleSheet.create(require('./style.json'));
+let styles = StyleSheet.create(require('./style.json'));

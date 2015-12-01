@@ -17,6 +17,8 @@
   },
   bottomView: {
     flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
 	calanderContainer: {
     width: 90,
@@ -53,7 +55,6 @@
     fontFamily: 'AvenirNext-DemiBold',
   },
   mapview: {
-    flex: 1,
     position: 'absolute',
     height: 300,
     width: 375,
@@ -65,6 +66,7 @@
     height: 35,
     backgroundColor: '#F9B400',
     borderRadius: 16,
+    marginBottom: 19.5,
   },
   attendTouch: {
     flex: 1,

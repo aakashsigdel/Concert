@@ -25,7 +25,11 @@ export default class Home extends Component {
     var paginationHeight =  height / 1.7;
     return(
       <View style={styles.container}>
-        <HeaderBar />
+        <HeaderBar 
+        left={require('../../assets/images/revuze-icon.png')}
+        mid={require('../../assets/images/brand_icon.png')}
+        right={require('../../assets/images/shareAlt.png')}
+        />
         <Image
         source={require('../../assets/images/background_crowd.png')}
         style={styles.backgroundImage}

@@ -84,10 +84,8 @@ export default class Reviews extends Component {
             
             {/*Calander Component*/}
           <View style={styles.calanderContainer}>
-          <View style={[styles.calanderHeader, 
-            this.props.calanderHeader && {backgroundColor: 'white'}]}>
-              <Text style={[styles.calanderMonth,
-                this.props.calanderHeader && {color: 'black'}]}>
+          <View style={styles.calanderHeader}>
+              <Text style={styles.calanderMonth}>
                 {'sep'.toUpperCase()}
               </Text>
             </View>
