@@ -1,0 +1,35 @@
+{
+	calanderContainer: {
+		alignItems: 'center',
+    bottom: 0,
+    left: 0,
+	},
+	calanderHeader: {
+		width: 28.5,
+		height: 11,
+		borderColor: 'white',
+		borderWidth: 1,
+		borderBottomWidth: 0,
+		backgroundColor: 'white',
+		alignItems: 'center',
+		justifyContent: 'center',
+    overflow: 'hidden',
+	},
+	calanderBody: {
+    backgroundColor: 'black',
+		width: 28.5,
+		height: 23,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	calanderMonth: {
+		fontSize: 7.5,
+		fontFamily: 'AvenirNext-DemiBold',
+		color: 'black'
+	},
+	calanderDay: {
+		fontSize: 15,
+		color: 'white',
+		fontFamily: 'AvenirNext-DemiBold'
+	},
+}

@@ -60,13 +60,12 @@ export default class ProfileContainer extends Component {
   }
 
   render () {
-    console.log(this.state.userName, 'phoneT');
     return (
       <View style={styles.container}>
         <HeaderBar 
         left={require('../../assets/images/backIcon.png')}
         mid={this.state.userName}
-        right={require('../../assets/images/shareAlt.png')}
+        right={require('../../assets/images/settings.png')}
         />
         <View style={styles.topView}>
           <View style={styles.noBio}>

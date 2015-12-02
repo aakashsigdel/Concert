@@ -51,9 +51,25 @@ export default class Photos extends Component {
 			}).done();
 	}
 
+	_handelPress (photoId) {
+    this.props.navigator.push(
+      {
+        name: 'photo',
+        index: 5,
+        photoId: photoId,
+      }
+    );
+	}
+
 	_renderPhotoThumbs(photo) {
+	  let photoDetails = {
+      photoId: photo.id,
+	  }
 		return(
-			<TouchableOpacity style={styles.photoThumbContainer}>
+			<TouchableOpacity
+			onPress={this._handelPress.bind(this, photo.id)}
+			style={styles.photoThumbContainer}
+			>
 				<Image source={{uri: photo.image.original}}
 					style={[styles.photoThumb, this._calculateImageSize()]} />
 			</TouchableOpacity>
