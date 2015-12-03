@@ -27,6 +27,7 @@ const USERS_URL = 'http://api.revuzeapp.com:80/api/v1/users/1/following?access_t
 export default class SearchActive extends Component {
   constructor() {
     super()
+    this.navigator = null;
     this.state = {
       filterText : "text",
       navigator: null,
@@ -53,11 +54,8 @@ export default class SearchActive extends Component {
     }).done();
   }
 
-  _goBack() {
-    this.props.navigator.pop();
-  }
-
   _renderScene (route, navigator)  {
+    this.navigator = navigator;
 	  switch(route.name) {
       case 'reviews' :
         return (
@@ -71,7 +69,7 @@ export default class SearchActive extends Component {
             navigator={this.props.navigator} 
           /> 
         );
-      case 'artists':
+      case 'users':
         return (
           <ListView
             dataSource={this.state.dataSource}
@@ -90,7 +88,7 @@ export default class SearchActive extends Component {
             }>
           </ListView>
         );
-      case 'users':
+      case 'artists':
         return (
           <View></View>
         );
@@ -99,6 +97,10 @@ export default class SearchActive extends Component {
           <View></View>
         );
     }
+  }
+
+  _handlePress(name, index) {
+    this.navigator.push({name: name, index: index});
   }
 
   render() {
@@ -120,23 +122,31 @@ export default class SearchActive extends Component {
           </View>
 
           <View style={styles.tabBar}>
-            <TouchableHighlight>
+            <TouchableHighlight
+            onPress={this._handlePress.bind(this, 'reviews', 0)}
+            >
               <Text style={styles.font}>REVIEWS</Text>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+            onPress={this._handlePress.bind(this, 'concerts', 1)}
+            >
               <Text style={styles.font}>CONCERTS</Text>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+            onPress={this._handlePress.bind(this, 'artists', 2)}
+            >
               <Text style={styles.font}>ARTISTS</Text>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+            onPress={this._handlePress.bind(this, 'users', 3)}
+            >
               <Text style={styles.font}>USERS</Text>
             </TouchableHighlight>
           </View>
 
           <View style={styles.list}>
             <Navigator
-              initialRoute={{name: 'artists', index: 0}}
+              initialRoute={{name: 'concerts', index: 0}}
               renderScene={this._renderScene.bind(this)}
             />
           </View>
