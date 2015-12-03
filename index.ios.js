@@ -23,6 +23,9 @@ import Concert from './components/Concert';
 import ProfileContainer from './components/ProfileContainer';
 import Photo from './components/Photo';
 
+//  just for test purposes
+import Follows from './components/Follows';
+
 var viewConstants = {
 	photos: 'Photos',
 	reviews: 'Reviews',
@@ -95,10 +98,7 @@ class ConcertReview extends Component {
 
 	render () {
 		return (
-		  <Navigator
-      initialRoute={{name: 'login', index: 0}}
-      renderScene={this._renderScene}
-      />
+      <Follows/>
     );
   }
 }

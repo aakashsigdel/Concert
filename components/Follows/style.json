@@ -1,0 +1,62 @@
+{
+  listView: {
+    flex: 1,
+    backgroundColor: '#1a1a1a',
+  },
+
+  listItem: {
+    backgroundColor: 'transparent',
+    padding: 10,
+    justifyContent: 'space-between',
+  },
+
+  displayAsRow: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  image: {
+    marginLeft: 15,
+    marginRight: 15,
+    height: 43,
+    width: 43,
+  },
+
+  text: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+
+  button: {
+    borderColor: 'orange',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderTopWidth: 1.5,
+    padding: 7,
+    width: 124.5,
+    height: 32.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  plus: {
+    fontSize: 32,
+  },
+  
+  doneImage: {
+    width: 17,
+    height: 12.5,
+    marginRight: 5,
+  },
+
+  follow: {
+    backgroundColor: 'rgb(249,180,0)', 
+  },
+
+  followText: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    fontWeight: 'normal',
+  },
+}
