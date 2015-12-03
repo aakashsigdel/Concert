@@ -14,7 +14,7 @@ import {
 import HeaderBar from '../HeaderBar';
 import Reviews from '../Reviews';
 
-const USERS_URL = 'http://api.revuzeapp.com:80/api/v1/users/1/following?access_token=abcde';
+const USERS_URL = 'http://api.revuzeapp.com:80/api/v1/users/userId/following?access_token=abcde';
 const styles = StyleSheet.create(require('./style.json'))
 
 export default class Follows extends Component {
@@ -28,14 +28,19 @@ export default class Follows extends Component {
   }
 
   _fetchData() {
-    fetch(USERS_URL)
+    let query_url = '';
+    if(this.props.type == 'followers')
+      query_url = USERS_URL.replace('following', 'followed-by')  ;
+    else
+      query_url = USERS_URL;
+    query_url = query_url.replace('userId', this.props.userId);
+    fetch(query_url)
     .then((response) => response.json())
     .then((responseData) => {
       this.setState({
         apiData: responseData.data,
         dataSource: this.state.dataSource.cloneWithRows(responseData.data),
       });
-      console.log(responseData.data[0])
     }).done();
   }
 
@@ -43,12 +48,16 @@ export default class Follows extends Component {
     this._fetchData()
   }
 
+  _handlePress(userId) {
+    this.props.navigator.push({name: 'profile', index: 7, userId: userId});
+  }
+
   render () {
     return (
-      <View>
+      <View style={styles.container}>
         <HeaderBar
           left={require('../../assets/images/backIcon@2x.png')}
-          mid="FOLLOWERS"
+          mid={this.props.type.toUpperCase()}
           clickableLeft={true}
           clickFunctionLeft={ () => {
             try{ this.props.navigator.pop(); } catch (ex) {}
@@ -60,17 +69,21 @@ export default class Follows extends Component {
           renderRow={(user) =>
             <View
               style={[ styles.listItem, styles.displayAsRow ]}>
-              <View
-                style={styles.displayAsRow}>
-                <Image
-                  style={styles.image}
-                  source={require('../../assets/images/userpicCopy.png')}
-                />
-                <Text
-                  style={styles.text}>
-                  {user.full_name.toUpperCase()}
-                </Text>
-              </View>
+              <TouchableHighlight
+              onPress={this._handlePress.bind(this, user.id)}
+              >
+                <View
+                  style={styles.displayAsRow}>
+                  <Image
+                    style={styles.image}
+                    source={require('../../assets/images/userpicCopy.png')}
+                  />
+                  <Text
+                    style={styles.text}>
+                    {user.full_name.toUpperCase()}
+                  </Text>
+                </View>
+              </TouchableHighlight>
               {(
                 ()=>{
                   if (user.following === 1){

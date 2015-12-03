@@ -20,7 +20,7 @@ var viewConstants = {
 	reviews: 'Reviews',
 	concerts: 'Concerts'
 };
-let QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/users/12?access_token=abcde';
+let QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/users/userId?access_token=abcde';
 
 export default class ProfileContainer extends Component {
   constructor() {
@@ -31,6 +31,7 @@ export default class ProfileContainer extends Component {
       bio: '',
       profilePic: '',
       userName: '',
+      userId: 1,
       activeView: viewConstants.photos,
     };
   }
@@ -46,7 +47,8 @@ export default class ProfileContainer extends Component {
   }
   
   _fetchData () {
-    fetch (QUERY_URL)
+    let query_url = QUERY_URL.replace('userId', this.props.userId);
+    fetch (query_url)
       .then ((response) => response.json())
       .then ((responseData) => {
         this.setState ({
@@ -55,8 +57,13 @@ export default class ProfileContainer extends Component {
           bio: responseData.data.bio,
           profilePic: responseData.data.profile_picture,
           userName: responseData.data.full_name,
+          userId: responseData.data.id,
         });
       }).done();
+  }
+
+  _handlePress(type, userId) {
+    this.props.navigator.push({name: 'follows', index: 8, type: type, userId: userId});
   }
 
   render () {
@@ -66,25 +73,35 @@ export default class ProfileContainer extends Component {
         left={require('../../assets/images/backIcon.png')}
         mid={this.state.userName}
         right={require('../../assets/images/settings.png')}
+        clickableLeft={true}
+        clickFunctionLeft={() => {this.props.navigator.pop()}}
         />
         <View style={styles.topView}>
           <View style={styles.noBio}>
-            <View style={styles.follow}>
-              <Text style={styles.followNum}>
-                {this.state.followersNum}
-              </Text>
-              <Text style={styles.followText}>FOLLOWERS</Text>
-            </View>
+            <TouchableHighlight
+            onPress={this._handlePress.bind(this, 'followers', this.state.userId)}
+            >
+              <View style={styles.follow}>
+                <Text style={styles.followNum}>
+                  {this.state.followersNum}
+                </Text>
+                <Text style={styles.followText}>FOLLOWERS</Text>
+              </View>
+            </TouchableHighlight>
             <Image 
             source={require('../../assets/images/userpicCopy.png')}
             style={styles.profileImage} 
             />
-            <View style={styles.follow}>
-              <Text style={styles.followNum}>
-              {this.state.followingNum}
-              </Text>
-              <Text style={styles.followText}>FOLLOWERS</Text>
-            </View>
+            <TouchableHighlight
+            onPress={this._handlePress.bind(this, 'following', this.state.userId)}
+            >
+              <View style={styles.follow}>
+                <Text style={styles.followNum}>
+                {this.state.followingNum}
+                </Text>
+                <Text style={styles.followText}>FOLLOWING</Text>
+              </View>
+            </TouchableHighlight>
           </View>
           <Text style={styles.bio}>
             This is who i am. In eum odio menandri, 

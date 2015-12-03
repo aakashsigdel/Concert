@@ -1,4 +1,8 @@
 {
+  container: {
+    flex: 1,
+    backgroundColor: '#1a1a1a',
+  },
   listView: {
     flex: 1,
     backgroundColor: '#1a1a1a',

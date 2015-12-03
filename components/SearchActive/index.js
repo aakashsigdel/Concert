@@ -45,7 +45,7 @@ export default class SearchActive extends Component {
     fetch(USERS_URL)
     .then((response) => response.json())
     .then((responseData) => {
-      const names = responseData.data.map((user) => user.full_name)
+      const names = responseData.data.map((user) => user)
       this.setState({
         apiData: responseData.data,
         dataSource: this.state.dataSource.cloneWithRows(names),
@@ -74,17 +74,22 @@ export default class SearchActive extends Component {
           <ListView
             dataSource={this.state.dataSource}
             style={styles.listView}
-            renderRow={(rowData) => 
-              <View style={styles.listItem}>
-                <Image
-                  source={require('../../assets/images/userpicCopy.png')}
-                  style={styles.listImage}
-                />
-                <Text
-                  style={styles.listText}>
-                  {rowData.toUpperCase()}
-                </Text> 
-              </View>
+            renderRow={(rowData) =>{ 
+              console.log('dommy', rowData);
+              return(<TouchableHighlight
+              onPress={this._handelGlobalNavPress.bind(this, 'profile', 3, rowData.id)}
+              >
+                <View style={styles.listItem}>
+                  <Image
+                    source={require('../../assets/images/userpicCopy.png')}
+                    style={styles.listImage}
+                  />
+                  <Text
+                    style={styles.listText}>
+                    {rowData.full_name.toUpperCase()}
+                  </Text> 
+                </View>
+              </TouchableHighlight>)}
             }>
           </ListView>
         );
@@ -101,6 +106,10 @@ export default class SearchActive extends Component {
 
   _handlePress(name, index) {
     this.navigator.push({name: name, index: index});
+  }
+
+  _handelGlobalNavPress(name, index, userId) {
+    this.props.navigator.push({name: name, index: index, userId: userId});
   }
 
   render() {

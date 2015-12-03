@@ -39,8 +39,8 @@ export default class Photo extends Component {
     }).done();
   }
 
-	_handelUserPress() {
-    this.props.navigator.push({name: 'profile', index: 5});
+	_handelUserPress(userId) {
+    this.props.navigator.push({name: 'profile', index: 5, userId: userId});
 	}
 
   render () {
@@ -84,7 +84,7 @@ export default class Photo extends Component {
               style={styles.profileImage}
               />
               <TouchableHighlight
-              onPress={this._handelUserPress.bind(this)}
+              onPress={this._handelUserPress.bind(this, this.state.photoDetail.user.id)}
               >
                 <Text
                 style={styles.userName}

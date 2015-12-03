@@ -38,8 +38,8 @@ export default class Review extends Component {
 	}
 
 	// navigate to profile page when username is pressed
-	_handelUserPress() {
-    this.props.navigator.push({name: 'profile', index: 5});
+	_handelUserPress(userId) {
+    this.props.navigator.push({name: 'profile', index: 5, userId: userId});
 	}
 
   render() {
@@ -78,7 +78,7 @@ export default class Review extends Component {
             />
             <View style={comment.headerText}>
               <TouchableHighlight
-              onPress={this._handelUserPress.bind(this)}
+              onPress={this._handelUserPress.bind(this, 1)}
               >
                 <Text style={comment.whiteText} >JIMMI ANDERSEN</Text>
               </TouchableHighlight>

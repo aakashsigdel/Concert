@@ -24,7 +24,7 @@ import ProfileContainer from './components/ProfileContainer';
 import Photo from './components/Photo';
 
 //  just for test purposes
-// import Follows from './components/Follows';
+import Follows from './components/Follows';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -84,6 +84,7 @@ class ConcertReview extends Component {
         return (
           <ProfileContainer
           navigator={navigator}
+          userId={route.userId}
           />
         );
       case 'photo':
@@ -91,6 +92,14 @@ class ConcertReview extends Component {
           <Photo
           navigator={navigator}
           photoId={route.photoId}
+          />
+        )
+      case 'follows':
+        return (
+          <Follows
+          navigator={navigator}
+          type={route.type}
+          userId={route.userId}
           />
         )
     }
