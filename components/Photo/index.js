@@ -52,6 +52,12 @@ export default class Photo extends Component {
         left={require('../../assets/images/clearCopy.png')}
         mid={this.state.photoDetail.concert.artist.name}
         right={require('../../assets/images/shareAlt.png')}
+        clickableLeft={true}
+        clickFunctionLeft={
+          () => {
+            this.props.navigator.pop();
+          }
+        }
         />
         <View style={styles.topView}>
           <Image

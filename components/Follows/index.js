@@ -48,8 +48,11 @@ export default class Follows extends Component {
       <View>
         <HeaderBar
           left={require('../../assets/images/backIcon@2x.png')}
-          clickableLeft={true}
           mid="FOLLOWERS"
+          clickableLeft={true}
+          clickFunctionLeft={ () => {
+            try{ this.props.navigator.pop(); } catch (ex) {}
+          }}
         />
         <ListView
           style={styles.listView}
@@ -68,39 +71,39 @@ export default class Follows extends Component {
                   {user.full_name.toUpperCase()}
                 </Text>
               </View>
-                {(
-                  ()=>{
-                    if (user.following === 1){
-                        return(
-                          <TouchableHighlight
-                            style={styles.button}>
-                            <View
-                              style={styles.displayAsRow}>
-                              <Image
-                                style={styles.doneImage}
-                                source={require('../../assets/images/done_colored.png')}/>
-                              <Text style={[styles.text, styles.followText, { color: 'rgb(249,180,0)' }]}>
-                                FOLLOWING
-                              </Text>
-                            </View>
-                          </TouchableHighlight>
-                        )
+              {(
+                ()=>{
+                  if (user.following === 1){
+                    return(
+                      <TouchableHighlight
+                        style={styles.button}>
+                        <View
+                          style={styles.displayAsRow}>
+                          <Image
+                            style={styles.doneImage}
+                            source={require('../../assets/images/done_colored.png')}/>
+                          <Text style={[styles.text, styles.followText, { color: 'rgb(249,180,0)' }]}>
+                            FOLLOWING
+                          </Text>
+                        </View>
+                      </TouchableHighlight>
+                      )
                       }
                       else {
-                      return(
-                        <TouchableHighlight
-                          style={[styles.button, styles.follow]}>
-                          <Text style={[styles.text, styles.followText]}>
-                            ✛   FOLLOW
-                          </Text>
-                        </TouchableHighlight>
-                      )  
-                      }
-                  }
+                        return(
+                          <TouchableHighlight
+                            style={[styles.button, styles.follow]}>
+                            <Text style={[styles.text, styles.followText]}>
+                              ✛   FOLLOW
+                            </Text>
+                          </TouchableHighlight>
+                          )  
+                          }
+                }
 
-                )()}
+              )()}
             </View>
-            }>
+          }>
           </ListView>
         </View>
     )
