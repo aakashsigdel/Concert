@@ -26,7 +26,7 @@
 
   tabBar: {
     backgroundColor: 'rgb(17,17,17)',
-    height: 48,
+    height: 35,
     color: 'white',
     flex: 1,
     paddingTop: 14.5,
@@ -54,10 +54,10 @@
   },
 
   inputBox: {
-    backgroundColor: 'rgba(88,88,88,1)',
+    backgroundColor: 'transparent',
     color: 'white',
     flex: 1,
-    fontSize: 12,
+    fontSize: 14,
     marginBottom: 4.5,
     marginLeft: 8.8,
     marginRight: 4.5,
@@ -68,10 +68,37 @@
   inputContainer: {
     flex: 1,
     flexDirection: 'row', 
-    backgroundColor: 'rgba(88,88,88,1)',
+    backgroundColor: '#333',
+    borderRadius: 4,
     marginTop: 26,
     marginRight: 15,
+    marginLeft: 15,
     height: 30,
   },
 
+  listView: {
+    flex: 1,
+    backgroundColor: '#1a1a1a',
+  },
+
+  listItem: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+
+  listText: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+
+  listImage: {
+    marginLeft: 15,
+    marginRight: 15,
+    height: 45,
+    width: 45,
+  },
 }

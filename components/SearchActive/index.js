@@ -5,6 +5,7 @@ import{
   Component,
   Image,
   ListView,
+  Navigator,
   ProgressBarAndroid,
   StyleSheet,
   Text,
@@ -19,29 +20,91 @@ import Photos from '../Photos';
 import Reviews from '../Reviews';
 import Home from '../Home';
 
-let styles = StyleSheet.create(require('./style.json'));
-let navBtn = "http://aakashsigdel.github.io/Concert/navBtn.png";
+const styles = StyleSheet.create(require('./style.json'));
+const navBtn = "http://aakashsigdel.github.io/Concert/navBtn.png";
+const USERS_URL = 'http://api.revuzeapp.com:80/api/v1/users/1/following?access_token=abcde';
 
 export default class SearchActive extends Component {
   constructor() {
     super()
     this.state = {
-      filterText : "",
+      filterText : "text",
+      navigator: null,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1.id !== row2.id
-      }),
+      })
     };
   }
 
-  _handelPress() {
+  componentDidMount () {
+    this._fetchData();
+  }
+
+  _fetchData() {
+    fetch(USERS_URL)
+    .then((response) => response.json())
+    .then((responseData) => {
+      const names = responseData.data.map((user) => user.full_name)
+      this.setState({
+        apiData: responseData.data,
+        dataSource: this.state.dataSource.cloneWithRows(names),
+      });
+      console.log(responseData)
+    }).done();
+  }
+
+  _goBack() {
     this.props.navigator.pop();
+  }
+
+  _renderScene (route, navigator)  {
+	  switch(route.name) {
+      case 'reviews' :
+        return (
+          <Reviews />
+        );
+      case 'concerts' :
+        return(
+          <Concerts 
+            calanderHeader={true} 
+            filterText={this.state.filterText} 
+            navigator={this.props.navigator} 
+          /> 
+        );
+      case 'artists':
+        return (
+          <ListView
+            dataSource={this.state.dataSource}
+            style={styles.listView}
+            renderRow={(rowData) => 
+              <View style={styles.listItem}>
+                <Image
+                  source={require('../../assets/images/userpicCopy.png')}
+                  style={styles.listImage}
+                />
+                <Text
+                  style={styles.listText}>
+                  {rowData.toUpperCase()}
+                </Text> 
+              </View>
+            }>
+          </ListView>
+        );
+      case 'users':
+        return (
+          <View></View>
+        );
+      default:
+        return (
+          <View></View>
+        );
+    }
   }
 
   render() {
     return (
         <View style={styles.container} >
           <View style={styles.header} >
-
             <View style={styles.inputContainer}>
               <Image
                 source={require('../../assets/images/search_icon.png')}
@@ -51,16 +114,17 @@ export default class SearchActive extends Component {
                 style={styles.inputBox}
                 autoFocus={true}
                 onChangeText={(text) => this.setState({filterText: text})}
-                placeholder="type something.."
+                placeholder="Search and you will find.."
               />
             </View>
           </View>
+
           <View style={styles.tabBar}>
             <TouchableHighlight>
               <Text style={styles.font}>REVIEWS</Text>
             </TouchableHighlight>
             <TouchableHighlight>
-              <Text style={styles.font, styles.active}>CONCERTS</Text>
+              <Text style={styles.font}>CONCERTS</Text>
             </TouchableHighlight>
             <TouchableHighlight>
               <Text style={styles.font}>ARTISTS</Text>
@@ -71,10 +135,9 @@ export default class SearchActive extends Component {
           </View>
 
           <View style={styles.list}>
-            <Concerts 
-              calanderHeader = {true}
-              filterText = {this.state.filterText}
-              navigator={this.props.navigator}
+            <Navigator
+              initialRoute={{name: 'artists', index: 0}}
+              renderScene={this._renderScene.bind(this)}
             />
           </View>
         </View>
