@@ -21,6 +21,7 @@ import Artist from './components/Artist';
 import Intro from './components/Intro';
 import Concert from './components/Concert';
 import ProfileContainer from './components/ProfileContainer';
+import Photo from './components/Photo';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -80,6 +81,13 @@ class ConcertReview extends Component {
         return (
           <ProfileContainer
           navigator={navigator}
+          />
+        );
+      case 'photo':
+        return (
+          <Photo
+          navigator={navigator}
+          photoId={route.photoId}
           />
         )
     }
