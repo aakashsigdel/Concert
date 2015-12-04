@@ -60,6 +60,7 @@ export default class Follows extends Component {
           mid={this.props.type.toUpperCase()}
           clickableLeft={true}
           clickFunctionLeft={ () => {
+            // why try catch?
             try{ this.props.navigator.pop(); } catch (ex) {}
           }}
         />
@@ -80,7 +81,14 @@ export default class Follows extends Component {
                   />
                   <Text
                     style={styles.text}>
-                    {user.full_name.toUpperCase()}
+                    {
+                      (() => {
+                        if(user.full_name.length < 15)
+                          return user.full_name.toUpperCase();
+                        else
+                          return user.full_name.slice(0, 15) + '...';
+                      })()
+                    }
                   </Text>
                 </View>
               </TouchableHighlight>
@@ -110,8 +118,8 @@ export default class Follows extends Component {
                               ✛   FOLLOW
                             </Text>
                           </TouchableHighlight>
-                          )  
-                          }
+                        )  
+                      }
                 }
 
               )()}
