@@ -86,7 +86,7 @@ export default class Follows extends Component {
                         if(user.full_name.length < 15)
                           return user.full_name.toUpperCase();
                         else
-                          return user.full_name.slice(0, 15) + '...';
+                          return user.full_name.toUpperCase().slice(0, 15) + '...';
                       })()
                     }
                   </Text>
@@ -97,7 +97,7 @@ export default class Follows extends Component {
                   if (user.following === 1){
                     return(
                       <TouchableHighlight
-                        style={styles.button}>
+                        style={[styles.button, styles.right]}>
                         <View
                           style={styles.displayAsRow}>
                           <Image
@@ -113,10 +113,18 @@ export default class Follows extends Component {
                       else {
                         return(
                           <TouchableHighlight
-                            style={[styles.button, styles.follow]}>
-                            <Text style={[styles.text, styles.followText]}>
-                              ✛   FOLLOW
-                            </Text>
+                            style={[styles.button, styles.follow, styles.right]}>
+                            <View
+                              style={styles.displayAsRow}>
+                              <Image 
+                                style={{
+                                  marginRight: 12.5,
+                                }}
+                                source={require('../../assets/images/add.png')}/>
+                              <Text style={[styles.text, styles.followText]}>
+                                FOLLOW
+                              </Text>
+                            </View>
                           </TouchableHighlight>
                         )  
                       }
