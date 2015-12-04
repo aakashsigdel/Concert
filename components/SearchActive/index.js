@@ -19,10 +19,9 @@ import InternalNavigation from '../InternalNavigation';
 import Photos from '../Photos';
 import Reviews from '../Reviews';
 import Home from '../Home';
+import Users from '../Users';
 
 const styles = StyleSheet.create(require('./style.json'));
-const navBtn = "http://aakashsigdel.github.io/Concert/navBtn.png";
-const USERS_URL = 'http://api.revuzeapp.com:80/api/v1/users/1/following?access_token=abcde';
 
 export default class SearchActive extends Component {
   constructor() {
@@ -30,28 +29,7 @@ export default class SearchActive extends Component {
     this.navigator = null;
     this.state = {
       filterText : "text",
-      navigator: null,
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1.id !== row2.id
-      })
     };
-  }
-
-  componentDidMount () {
-    this._fetchData();
-  }
-
-  _fetchData() {
-    fetch(USERS_URL)
-    .then((response) => response.json())
-    .then((responseData) => {
-      const names = responseData.data.map((user) => user)
-      this.setState({
-        apiData: responseData.data,
-        dataSource: this.state.dataSource.cloneWithRows(names),
-      });
-      console.log(responseData)
-    }).done();
   }
 
   _renderScene (route, navigator)  {
@@ -59,7 +37,10 @@ export default class SearchActive extends Component {
 	  switch(route.name) {
       case 'reviews' :
         return (
-          <Reviews />
+          <Reviews 
+          filterText={this.state.filterText} 
+          navigator={this.props.navigator}
+          />
         );
       case 'concerts' :
         return(
@@ -71,27 +52,10 @@ export default class SearchActive extends Component {
         );
       case 'users':
         return (
-          <ListView
-            dataSource={this.state.dataSource}
-            style={styles.listView}
-            renderRow={(rowData) =>{ 
-              console.log('dommy', rowData);
-              return(<TouchableHighlight
-              onPress={this._handelGlobalNavPress.bind(this, 'profile', 3, rowData.id)}
-              >
-                <View style={styles.listItem}>
-                  <Image
-                    source={require('../../assets/images/userpicCopy.png')}
-                    style={styles.listImage}
-                  />
-                  <Text
-                    style={styles.listText}>
-                    {rowData.full_name.toUpperCase()}
-                  </Text> 
-                </View>
-              </TouchableHighlight>)}
-            }>
-          </ListView>
+          <Users
+          filterText={this.state.filterText}
+          navigator={this.props.navigator}
+          />
         );
       case 'artists':
         return (
@@ -106,10 +70,6 @@ export default class SearchActive extends Component {
 
   _handlePress(name, index) {
     this.navigator.push({name: name, index: index});
-  }
-
-  _handelGlobalNavPress(name, index, userId) {
-    this.props.navigator.push({name: name, index: index, userId: userId});
   }
 
   render() {

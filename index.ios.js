@@ -85,6 +85,7 @@ class ConcertReview extends Component {
           <ProfileContainer
           navigator={navigator}
           userId={route.userId}
+          userName={route.userName}
           />
         );
       case 'photo':

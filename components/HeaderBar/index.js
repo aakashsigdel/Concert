@@ -20,7 +20,7 @@ export default class HeaderBar extends Component {
     };
     this.headerJSX = []; // array of elements to rendered
   }
-  
+
   componentWillMount() {
     this._formatHeaderBar(
       this.props.left, 'left', 

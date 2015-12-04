@@ -22,13 +22,32 @@ export default class Reviews extends Component {
 			dataSource: new ListView.DataSource({
 				rowHasChanged: (row1, row2) => row1.id !== row2.id
 			}),
-			isLoading: true
+			isLoading: true,
+      apiData: null,
 		};
 	}
 
 	componentDidMount() {
 		this._fetchData();
 	}
+
+  componentDidUpdate(prevProps) {
+    if (this.props.filterText 
+       && (prevProps.filterText !== this.props.filterText) 
+       && (!this.state.isLoading) 
+       && (this.state.apiData)) {
+        let that = this;
+        let filteredData = this.state.apiData.filter(function(item, index){
+          return (item.user.full_name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1);
+        });
+        if(filteredData.length === 0) {
+          filterData = this.state.dataSource.cloneWithRows({user: {full_name: 'Nothing To Show'}});
+        }
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(filteredData),
+        });
+    }
+  }
 
 	_fetchData() {
 		var query = QUERY_URL.replace('concert_id', this.props.concertId);
@@ -37,7 +56,8 @@ export default class Reviews extends Component {
 		.then((responseData) => {
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-				isLoading: false
+				isLoading: false,
+        apiData: responseData.data,
 			});
 		}).done();
 	}

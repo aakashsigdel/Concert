@@ -8,17 +8,23 @@
     paddingBottom: 10.5,
     height: 53,
   },
-
 	ratingStars: {
-		flexDirection: 'row'
+		flexDirection: 'row',
+    flex: 1,
+	},
+	starsAndUser: {
+		flexDirection: 'row',
+    flex: 1,
 	},
 	yellowStar: {
-		fontSize: 18,
-		color: '#F9B400'
+    width: 13.7,
+    height: 13.1,
+    marginRight: 2.8,
 	},
 	whiteStar: {
-		fontSize: 18,
-		color: 'white'
+    width: 13.7,
+    height: 13.1,
+    marginRight: 2.8,
 	},
 
   left: {

@@ -22,13 +22,26 @@ export default class Review extends Component {
     };
   }
 
+	// this function sholud be in a global module
 	_getStars(yellowStars) {
 		var stars = [];
 		for(var i = 0; i < yellowStars; i++) {
-			stars.push(<Text style={header.yellowStar}>★</Text>);
+			//stars.push(<Text style={styles.yellowStar}>★</Text>);
+			stars.push(
+			  <Image
+			  source={require('../../assets/images/star_yellow.png')}
+			  style={header.yellowStar}
+			  />
+			);
 		}
 		for(var i = 0; i < (5 - yellowStars); i++) {
-			stars.push(<Text style={header.whiteStar}>★</Text>);
+			//stars.push(<Text style={styles.whiteStar}>★</Text>);
+			stars.push(
+			  <Image
+			  source={require('../../assets/images/star_white.png')}
+			  style={header.whiteStar}
+			  />
+			);
 		}
 		return stars;
 	}
@@ -38,8 +51,8 @@ export default class Review extends Component {
 	}
 
 	// navigate to profile page when username is pressed
-	_handelUserPress(userId) {
-    this.props.navigator.push({name: 'profile', index: 5, userId: userId});
+	_handelUserPress(userId, userName) {
+    this.props.navigator.push({name: 'profile', index: 5, userId: userId, userName: userName});
 	}
 
   render() {
@@ -78,7 +91,7 @@ export default class Review extends Component {
             />
             <View style={comment.headerText}>
               <TouchableHighlight
-              onPress={this._handelUserPress.bind(this, 1)}
+              onPress={this._handelUserPress.bind(this, 1, 'JIMMI ANDERSEN')}
               >
                 <Text style={comment.whiteText} >JIMMI ANDERSEN</Text>
               </TouchableHighlight>

@@ -1,0 +1,27 @@
+{
+  listView: {
+    flex: 1,
+    backgroundColor: '#1a1a1a',
+  },
+
+  listItem: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+
+  listText: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+
+  listImage: {
+    marginLeft: 15,
+    marginRight: 15,
+    height: 45,
+    width: 45,
+  },
+}
