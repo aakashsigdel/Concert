@@ -30,6 +30,7 @@ export default class SearchActive extends Component {
     this.navigator = null;
     this.state = {
       filterText : "text",
+      activeView: 'reviews',
     };
   }
 
@@ -74,6 +75,9 @@ export default class SearchActive extends Component {
 
   _handlePress(name, index) {
     this.navigator.push({name: name, index: index});
+    this.setState({
+      activeView: name
+    })
   }
 
   render() {
@@ -98,22 +102,47 @@ export default class SearchActive extends Component {
             <TouchableHighlight
             onPress={this._handlePress.bind(this, 'reviews', 0)}
             >
-              <Text style={styles.font}>REVIEWS</Text>
+              {(() => {
+                console.log('activeview', this.state.activeView);
+                if (this.state.activeView == 'reviews')
+                  return <Text style={[styles.font, styles.active]}>REVIEWS</Text>
+                else
+                  return <Text style={styles.font}>REVIEWS</Text>
+              })()}
             </TouchableHighlight>
+
             <TouchableHighlight
             onPress={this._handlePress.bind(this, 'concerts', 1)}
             >
-              <Text style={styles.font}>CONCERTS</Text>
+              {(() => {
+                if (this.state.activeView == 'concerts')
+                  return <Text style={[styles.font, styles.active]}>CONCERTS</Text>
+                else
+                  return <Text style={styles.font}>CONCERTS</Text>
+              })()}
             </TouchableHighlight>
+
             <TouchableHighlight
             onPress={this._handlePress.bind(this, 'artists', 2)}
             >
-              <Text style={styles.font}>ARTISTS</Text>
+              {(() => {
+                if (this.state.activeView == 'artists')
+                  return <Text style={[styles.font, styles.active]}>ARTISTS</Text>
+                else
+                  return <Text style={styles.font}>ARTISTS</Text>
+              })()}
             </TouchableHighlight>
+
             <TouchableHighlight
             onPress={this._handlePress.bind(this, 'users', 3)}
             >
-              <Text style={styles.font}>USERS</Text>
+              {(() => {
+                if (this.state.activeView == 'users')
+                  return <Text style={[styles.font, styles.active]}>USERS</Text>
+                else
+                  return <Text style={styles.font}>USERS</Text>
+              })()}
+
             </TouchableHighlight>
           </View>
 
