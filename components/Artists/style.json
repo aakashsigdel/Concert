@@ -1,0 +1,30 @@
+{
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    backgroundColor: 'orange',
+    marginBottom: 2,
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: '#333',
+  },
+
+  profile_image: {
+    height: 60,
+    width: 60,
+  },
+
+  artist_name: {
+    color: 'red',
+    fontSize: 20,
+  },
+
+  genre: {
+    color: 'red',
+    fontSize: 14,
+  }
+
+}

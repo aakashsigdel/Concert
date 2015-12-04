@@ -19,6 +19,7 @@ import InternalNavigation from '../InternalNavigation';
 import Photos from '../Photos';
 import Reviews from '../Reviews';
 import Home from '../Home';
+import Artists from '../Artists';
 
 const styles = StyleSheet.create(require('./style.json'));
 const navBtn = "http://aakashsigdel.github.io/Concert/navBtn.png";
@@ -95,11 +96,11 @@ export default class SearchActive extends Component {
         );
       case 'artists':
         return (
-          <View></View>
+          <Artists/>
         );
       default:
         return (
-          <View></View>
+          <Artists/>
         );
     }
   }
