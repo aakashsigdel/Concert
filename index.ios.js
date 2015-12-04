@@ -26,24 +26,9 @@ import Photo from './components/Photo';
 //  just for test purposes
 import Follows from './components/Follows';
 
-var viewConstants = {
-	photos: 'Photos',
-	reviews: 'Reviews',
-	concerts: 'Concerts'
-};
-
 class ConcertReview extends Component {
 	constructor() {
 		super();
-		this.state = {
-			activeView: viewConstants.concerts
-		};
-	}
-
-	setActiveView(view) {
-		this.setState({
-			activeView: view
-		});
 	}
 
 	_renderScene(route, navigator) {

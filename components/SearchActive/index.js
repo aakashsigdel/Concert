@@ -20,6 +20,7 @@ import Photos from '../Photos';
 import Reviews from '../Reviews';
 import Home from '../Home';
 import Users from '../Users';
+import Artists from '../Artists';
 
 const styles = StyleSheet.create(require('./style.json'));
 
@@ -59,11 +60,11 @@ export default class SearchActive extends Component {
         );
       case 'artists':
         return (
-          <View></View>
+          <Artists/>
         );
       default:
         return (
-          <View></View>
+          <Artists/>
         );
     }
   }

@@ -21,7 +21,7 @@
     NSLog(@"%@", family);
     for (NSString* name in [UIFont fontNamesForFamilyName: family])
     {
-      NSLog(@" %@", name);
+      /* NSLog(@" %@", name); */
     }
   }
 

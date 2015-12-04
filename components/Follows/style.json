@@ -34,7 +34,7 @@
 
   button: {
     borderColor: 'orange',
-    borderRadius: 14,
+    borderRadius: 16,
     borderWidth: 1,
     borderTopWidth: 1.5,
     padding: 7,
@@ -42,6 +42,11 @@
     height: 32.5,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  right: {
+    position: 'absolute',
+    right: 5,
   },
 
   plus: {
@@ -55,7 +60,7 @@
   },
 
   follow: {
-    backgroundColor: 'rgb(249,180,0)', 
+    backgroundColor: '#FCB23D', 
   },
 
   followText: {
