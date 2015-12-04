@@ -51,7 +51,6 @@ export default class SearchActive extends Component {
         apiData: responseData.data,
         dataSource: this.state.dataSource.cloneWithRows(names),
       });
-      console.log(responseData)
     }).done();
   }
 
@@ -76,7 +75,6 @@ export default class SearchActive extends Component {
             dataSource={this.state.dataSource}
             style={styles.listView}
             renderRow={(rowData) =>{ 
-              console.log('dommy', rowData);
               return(<TouchableHighlight
               onPress={this._handelGlobalNavPress.bind(this, 'profile', 3, rowData.id)}
               >

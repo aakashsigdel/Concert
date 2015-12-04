@@ -8,13 +8,17 @@ import React, {
   View,
 } from 'react-native';
 
-const ARTISTS_URL = 'http://api.revuzeapp.com:80/api/v1/artists/search?name=a&access_token=abcde';
+import Loader from '../../components.ios/Loader';
+
+const ARTISTS_URL = 'http://api.revuzeapp.com:80/api/v1/artists/search?name=ab&access_token=abcde';
 const styles = require('./style.json');
 
 export default class Artists extends Component {
   constructor(){
     super();
+    this.count = 0;
     this.state = {
+      isLoading: true,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1.id !== row2.id
       })
@@ -22,7 +26,7 @@ export default class Artists extends Component {
   }
 
   componentDidMount(){
-    // this._fetchData();
+    this._fetchData();
   }
 
   _fetchData() {
@@ -30,32 +34,56 @@ export default class Artists extends Component {
     .then((response) => response.json())
     .then((responseData) => {
       this.setState({
+        isLoading: false,
         dataSource: this.state.dataSource.cloneWithRows(responseData.data),
       });
     }).done();
   }
 
-  _renderRow(rowData){
-    return(
-      <TouchableHighlight>
-        <View
-          style={styles.row}>
+  _handlePress() {
+    this.props.navigator.push({name: 'artist', index: 6});
+  }
 
-            <Text style={styles.artist_name}>SKO/TORP</Text>
+  _renderRow(rowData){
+    var backgroundStyle = null;
+    console.log(this.count)
+    if(this.count % 2 === 0)
+      backgroundStyle = styles.lightBackground;
+
+    this.count += 1;
+
+    return(
+      <TouchableHighlight
+        onPress={this._handlePress.bind(this)} 
+        >
+        <View
+          style={[styles.row, backgroundStyle]}>
+          <Image
+            source={{uri:rowData.image.original}}
+            style={styles.profile_image}/>
+          <View>
+            <Text style={styles.artist_name}>
+              {(()=> {
+                if (rowData.name.length > 25)
+                  return rowData.name.slice(0,25) + "..."
+                return rowData.name
+              })()}
+            </Text>
             <Text style={styles.genre}>Pop</Text>
-          
-          {/* <View></View> */}
+          </View>
         </View>
       </TouchableHighlight>
     )
   }
 
   render(){
+    if (this.state.isLoading) return <Loader/>
+
     return (
       <ListView
         dataSource={this.state.dataSource}
         style={styles.container}
-        renderRow={this._renderRow}>
+        renderRow={this._renderRow.bind(this)}>
       </ListView>
     )
   }
