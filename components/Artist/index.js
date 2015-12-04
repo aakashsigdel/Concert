@@ -36,7 +36,7 @@ export default class Artist extends Component {
 			<View style={styles.mainContainer}>
 				<Header
 				navigator={this.props.navigator}
-        concertId={this.props.concertId}
+        concertId={this.props.concertId || 12}
 				/>
 				<InternalNavigation 
 					setActiveView={this.setActiveView.bind(this)} 

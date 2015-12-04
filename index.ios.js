@@ -79,7 +79,7 @@ class ConcertReview extends Component {
           navigator={navigator}
           photoId={route.photoId}
           />
-        )
+        );
       case 'follows':
         return (
           <Follows
@@ -87,7 +87,13 @@ class ConcertReview extends Component {
           type={route.type}
           userId={route.userId}
           />
-        )
+        );
+      case 'artist':
+        return (
+          <Artist
+          navigator={navigator}
+          />
+        );
     }
 	}
 

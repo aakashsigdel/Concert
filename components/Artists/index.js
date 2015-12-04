@@ -21,12 +21,31 @@ export default class Artists extends Component {
       isLoading: true,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1.id !== row2.id
-      })
+      }),
+      apiData: null,
     };
   }
 
   componentDidMount(){
     this._fetchData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.filterText 
+       && (prevProps.filterText !== this.props.filterText) 
+       && (!this.state.isLoading) 
+       && (this.state.apiData)) {
+        let that = this;
+        let filteredData = this.state.apiData.filter(function(item, index){
+          return (item.name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1);
+        });
+        if(filteredData.length === 0) {
+          filterData = this.state.dataSource.cloneWithRows({name: 'Nothing To Show'});
+        }
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(filteredData),
+        });
+    }
   }
 
   _fetchData() {
@@ -36,6 +55,7 @@ export default class Artists extends Component {
       this.setState({
         isLoading: false,
         dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+        apiData: responseData.data,
       });
     }).done();
   }

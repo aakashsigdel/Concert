@@ -60,7 +60,10 @@ export default class SearchActive extends Component {
         );
       case 'artists':
         return (
-          <Artists/>
+          <Artists
+          filterText={this.state.filterText} 
+          navigator={this.props.navigator} 
+          />
         );
       default:
         return (
