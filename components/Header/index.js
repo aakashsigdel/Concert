@@ -36,12 +36,10 @@ export default class Header extends Component {
 	}
 
 	_fetchData() {
-	  console.log('rangila', this.props.concertId);
 		var query = QUERY_URL.replace('concert_id', this.props.concertId);
 		fetch(query)
 			.then((response) => response.json())
 			.then((responseData) => {
-				console.log('aakash is a dagerous guy');
 				this.setState({
 					concertData: responseData,
 					isLoading: false

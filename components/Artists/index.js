@@ -66,7 +66,6 @@ export default class Artists extends Component {
 
   _renderRow(rowData){
     var backgroundStyle = null;
-    console.log(this.count)
     if(this.count % 2 === 0)
       backgroundStyle = styles.lightBackground;
 

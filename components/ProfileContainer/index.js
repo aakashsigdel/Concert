@@ -25,7 +25,6 @@ let QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/users/userId?access_token=ab
 export default class ProfileContainer extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props, 'tori lama')
     this.state = {
       followersNum: 0,
       followingNum: 0,
@@ -53,7 +52,6 @@ export default class ProfileContainer extends Component {
     fetch (query_url)
       .then ((response) => response.json())
       .then ((responseData) => {
-        console.log('tori', responseData);
         this.setState ({
           followersNum: responseData.data.followers_count,
           followingNum: responseData.data.following_count,
