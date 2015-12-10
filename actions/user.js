@@ -42,3 +42,25 @@ export function selectUser(user) {
   };
 }
 
+/* users thunks */
+export function fetchUsers(user) {
+  return function(dispatch) {
+    dispatch(requestUsers(user));
+    return fetch('url to fetch users')
+      .then(response => response.json())
+      .then(json => dispatch(
+        receiveUsers(user, json)
+      ));
+  }
+}
+
+export function fetchUser(user) {
+  return function(dispatch) {
+    dispatch(requestUser(user));
+    return fetch('url to fetch user')
+      .then(response => response.json())
+      .then(json => dispatch(
+        receiveUser(user, json)
+      ));
+  }
+}

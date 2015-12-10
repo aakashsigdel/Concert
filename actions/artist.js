@@ -41,4 +41,24 @@ export function selectArtist(artist) {
   };
 }
 
+export function fetchArtists() {
+  return function(dispatch) {
+    dispatch(requestArtists());
+    return fetch('url to fetch artists')
+      .then(response => response.json())
+      .then(json => dispatch(
+        receiveArtists(json);
+      ));
+  }
+}
 
+export function requestArtist(artist) {
+  return function(dispatch) {
+    dispatch(requestArtist(artist));
+    return fetch('url to fetch artist')
+      .then(response => response.json())
+      .then(json => dispatch(
+        receiveArtist(artist, json)
+      ));
+  }
+}

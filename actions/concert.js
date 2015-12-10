@@ -50,7 +50,18 @@ export function fetchConcerts(period) {
     return fetch('url for fetching concerts')
       .then(response => response.json())
       .then(json => dispatch(
-        receiveConcerts(types.RECEIVE_CONCERTS))
-      );
+        receiveConcerts(period, json)
+      ));
+  }
+}
+
+export function fetchConcert(concert) {
+  return function(dispatch) {
+    dispatch(requestConcert(concert));
+    return fetch('url for fetching concert ')
+      .then(response => response.json())
+      .then(json => dispatch(
+        receiveConcert(concert, json)
+      ));
   }
 }

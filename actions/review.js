@@ -42,3 +42,27 @@ export function selectReview(review) {
     review,
   };
 }
+
+/* reviews thunks */
+
+export function fetchReviews(concert) {
+  return function(dispatch) {
+    dispatch(requestReviews(concert));
+    return fetch('url to fetch reviews')
+      .then(response => response.json())
+      .then(json => dispatch(
+        receiveReviews(concert, json)
+      ));
+  }
+}
+
+export function fetchReview(review) {
+  return function(dispatch) {
+    dispatch(requestReview(review));
+    return fetch('url to fetch reveiw')
+      .then(response => response.json())
+      .then(json => dispatch(
+        receiveReview(review, json);
+      ));
+  }
+}
