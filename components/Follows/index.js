@@ -59,10 +59,7 @@ export default class Follows extends Component {
           left={require('../../assets/images/backIcon@2x.png')}
           mid={this.props.type.toUpperCase()}
           clickableLeft={true}
-          clickFunctionLeft={ () => {
-            // why try catch?
-            try{ this.props.navigator.pop(); } catch (ex) {}
-          }}
+          clickFunctionLeft={() => this.props.navigator.jumpBack()}
         />
         <ListView
           style={styles.listView}
