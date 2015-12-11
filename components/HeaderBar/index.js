@@ -57,7 +57,7 @@ export default class HeaderBar extends Component {
         else {
           this.headerJSX.push (
             <Text style={styles[styleInitial + 'Text']}>
-            {item.toUpperCase()}
+              {item.toUpperCase()}
             </Text>
           );
         }

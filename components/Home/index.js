@@ -26,13 +26,20 @@ export default class Home extends Component {
     return(
       <View style={styles.container}>
         <HeaderBar 
-        left={require('../../assets/images/revuze-icon.png')}
-        mid={require('../../assets/images/brand_icon.png')}
-        right={require('../../assets/images/shareAlt.png')}
+          left={require('../../assets/images/revuze-icon.png')}
+          clickableLeft={true}
+          clickableFunctionLeft={()=>{
+            this.props.navigator.push({
+              name: "buttonScreen",
+              index: 19,
+            });
+          }}
+          mid={require('../../assets/images/brand_icon.png')}
+          right={require('../../assets/images/shareAlt.png')}
         />
         <Image
-        source={require('../../assets/images/background_crowd.png')}
-        style={styles.backgroundImage}
+          source={require('../../assets/images/background_crowd.png')}
+          style={styles.backgroundImage}
         />
         <Swiper showButton={false}
         activeDot={

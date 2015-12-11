@@ -37,13 +37,19 @@ class ConcertReview extends Component {
       case 'login':
         return (
           <Intro
-          navigator={navigator}
+            navigator={navigator}
+          />
+        );
+      case 'buttonScreen':
+        return (
+          <ButtonsScreen
+            navigator={navigator}
           />
         );
       case 'home':
         return (
           <Home
-          navigator={navigator}
+            navigator={navigator}
           />
         );
       case 'search_active':
@@ -100,11 +106,10 @@ class ConcertReview extends Component {
 
 	render () {
 		return (
-      <ButtonsScreen />
-		  // <Navigator
-      // initialRoute={{name: 'login', index: 0}}
-      // renderScene={this._renderScene}
-      // />
+		  <Navigator
+        initialRoute={{name: 'login', index: 0}}
+        renderScene={this._renderScene}
+      />
     );
   }
 }
