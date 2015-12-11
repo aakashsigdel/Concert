@@ -82,9 +82,9 @@ export default class Home extends Component {
             </View>
             <View style={styles.lowerView}>
               <Reviews 
-              concertId={12}
-              calanderHeader={true}
-              navigator={this.props.navigator}
+                concertId={12}
+                calanderHeader={true}
+                navigator={this.props.navigator}
               />
             </View>
           </View>
@@ -104,7 +104,7 @@ export default class Home extends Component {
 
           <View style={styles.wrapper}>
             <View style={styles.carousel}>
-              <Text style={styles.carouselText}>UPCOMMING CONCERTS</Text>
+              <Text style={styles.carouselText}>UPCOMING CONCERTS</Text>
             </View>
             <View style={styles.lowerView}>
               <Concerts 

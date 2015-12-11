@@ -58,8 +58,6 @@
 	calanderBody: {
 		width: 28.5,
 		height: 23,
-		borderColor: 'white',
-		borderWidth: 1,
 		alignItems: 'center',
 	},
 	calanderMonth: {

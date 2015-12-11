@@ -103,16 +103,16 @@ export default class Reviews extends Component {
             style={styles.profileImage} />
             
             {/*Calander Component*/}
-          <View style={styles.calanderContainer}>
-          <View style={styles.calanderHeader}>
-              <Text style={styles.calanderMonth}>
-                {'sep'.toUpperCase()}
-              </Text>
+            <View style={styles.calanderContainer}>
+              <View style={styles.calanderHeader}>
+                <Text style={styles.calanderMonth}>
+                  {'sep'.toUpperCase()}
+                </Text>
+              </View>
+              <View style={styles.calanderBody}>
+                <Text style={styles.calanderDay}>{17}</Text>
+              </View>
             </View>
-            <View style={styles.calanderBody}>
-              <Text style={styles.calanderDay}>{17}</Text>
-            </View>
-          </View>
 
           {/*Review Details*/}
           <View style={styles.reviewDetails}>

@@ -91,7 +91,6 @@ export default class SearchActive extends Component {
               />
               <TextInput 
                 style={styles.inputBox}
-                autoFocus={true}
                 onChangeText={(text) => this.setState({filterText: text})}
                 placeholder="Search and you will find.."
               />
