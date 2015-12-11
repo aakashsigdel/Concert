@@ -28,7 +28,7 @@ export default class Home extends Component {
         <HeaderBar 
           left={require('../../assets/images/revuze-icon.png')}
           clickableLeft={true}
-          clickableFunctionLeft={()=>{
+          clickFunctionLeft={()=>{
             this.props.navigator.push({
               name: "buttonScreen",
               index: 19,

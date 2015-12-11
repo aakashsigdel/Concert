@@ -29,11 +29,14 @@ export default class ButtonsScreen extends Component {
 
         <HeaderBar
           left={require('../../assets/images/clearCopy.png')}
+          clickableLeft={true}
+          clickFunctionLeft={()=> this.props.navigator.jumpBack()}
           mid={require('../../assets/images/brand_icon.png')}
         />
         <View
           style={styles.buttons}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}>
             <View
               style={styles.button}>
               <Image
@@ -46,7 +49,8 @@ export default class ButtonsScreen extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}>
             <View
               style={styles.button}>
               <Image
