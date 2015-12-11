@@ -25,6 +25,7 @@ import Photo from './components/Photo';
 
 //  just for test purposes
 import Follows from './components/Follows';
+import ButtonsScreen from './components/ButtonScreen';
 
 class ConcertReview extends Component {
 	constructor() {
@@ -99,10 +100,11 @@ class ConcertReview extends Component {
 
 	render () {
 		return (
-		  <Navigator
-      initialRoute={{name: 'login', index: 0}}
-      renderScene={this._renderScene}
-      />
+      <ButtonsScreen />
+		  // <Navigator
+      // initialRoute={{name: 'login', index: 0}}
+      // renderScene={this._renderScene}
+      // />
     );
   }
 }
