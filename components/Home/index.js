@@ -6,6 +6,7 @@ import {
   Component,
   Dimensions,
   Image,
+  Navigator,
   ScrollView,
   StyleSheet,
   Text,
@@ -32,6 +33,7 @@ export default class Home extends Component {
             this.props.navigator.push({
               name: "buttonScreen",
               index: 19,
+              sceneConfig: Navigator.SceneConfigs.VerticalDownSwipeJump,
             });
           }}
           mid={require('../../assets/images/brand_icon.png')}

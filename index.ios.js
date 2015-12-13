@@ -109,6 +109,12 @@ class ConcertReview extends Component {
 		  <Navigator
         initialRoute={{name: 'login', index: 0}}
         renderScene={this._renderScene}
+        configureScene={(route) => {
+          if (route.sceneConfig) {
+            return route.sceneConfig;
+          }
+          return Navigator.SceneConfigs.FloatFromRight;
+        }}
       />
     );
   }
