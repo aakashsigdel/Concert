@@ -149,6 +149,7 @@ export default class SearchActive extends Component {
             <Navigator
               initialRoute={{name: 'concerts', index: 0}}
               renderScene={this._renderScene.bind(this)}
+              configureScene={(route) => Navigator.SceneConfigs.FadeAndroid}
             />
           </View>
         </View>
