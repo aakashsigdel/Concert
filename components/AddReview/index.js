@@ -13,26 +13,41 @@ const styles = require('./style.json');
 export default class AddReview extends Component {
   constructor(){
     super();
+    this.state = {
+      yellowCount: 1,
+    }
+  }
+
+  _setStars(starCount){
+    this.setState({
+      yellowCount: starCount,
+    });
   }
 
 	_getStars(yellowStars) {
-		var stars = [];
-		for(var i = 0; i < yellowStars; i++) {
-			//stars.push(<Text style={styles.yellowStar}>★</Text>);
+		let stars = [];
+		for(let i = 0; i < yellowStars; i++) {
+      let s = i + 1;
 			stars.push(
-			  <Image
-          source={require('../../assets/images/star_yellow.png')}
-          style={styles.yellowStar}
-			  />
+        <TouchableOpacity
+          onPress={() => this._setStars(s)}>
+          <Image
+            source={require('../../assets/images/star_yellow.png')}
+            style={styles.yellowStar}
+          />
+        </TouchableOpacity>
 			);
 		}
-		for(var i = 0; i < (5 - yellowStars); i++) {
-			//stars.push(<Text style={styles.whiteStar}>★</Text>);
+		for(let i = 0; i < (5 - yellowStars); i++) {
+      let s = i + 1 + yellowStars;
 			stars.push(
-			  <Image
-          source={require('../../assets/images/star_white.png')}
-          style={styles.whiteStar}
-			  />
+        <TouchableOpacity
+          onPress={() => this._setStars(s) }>
+          <Image
+            source={require('../../assets/images/star_white.png')}
+            style={styles.whiteStar}
+          />
+        </TouchableOpacity>
 			);
 		}
 		return stars;
@@ -54,10 +69,11 @@ export default class AddReview extends Component {
         />
         <View style={styles.bottomContainer}>
           <View style={styles.ratingStars}>
-            {this._getStars(3)}
+            {this._getStars.call(this, this.state.yellowCount)}
           </View>
           <Text style={styles.text}>
-            Write about your concert experience
+            Write about your concert experience{'\n'}
+            {this.state.yellowCount}
           </Text>
         </View>
       </View>
