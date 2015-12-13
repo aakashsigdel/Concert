@@ -43,3 +43,24 @@ export function selectPhoto(photo) {
   };
 }
 
+export function fetchPhotos(concert) {
+  return function(dispatch) {
+    dispatch(requestPhotos(concert));
+    return fetch('url to fetch photos')
+      .then(response => response.json())
+      .then(json => dispatch(
+        receivePhotos(concert, json)
+      ));
+  }
+}
+
+export function fetchPhoto(photo) {
+  return function(dispatch) {
+    dispatch(requestPhoto(photo));
+    return fetch('url to fetch photo')
+      .then(response => response.json())
+      .then(json => dispatch(
+        receivePhoto(photo, json)
+      ));
+  }
+}

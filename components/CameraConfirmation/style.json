@@ -1,0 +1,25 @@
+{
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  confirm: {
+    position: 'absolute',
+    bottom: 30,
+    backgroundColor: 'transparent',
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  circle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(136, 136, 136, 0.4)',
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderColor: 'rgba(136, 136, 136, 0.5)',
+    borderWidth: 1,
+  }
+}

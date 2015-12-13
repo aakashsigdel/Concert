@@ -22,6 +22,7 @@ import Intro from './components/Intro';
 import Concert from './components/Concert';
 import ProfileContainer from './components/ProfileContainer';
 import Photo from './components/Photo';
+import CameraContainer from './components/CameraContainer';
 
 //  just for test purposes
 import Follows from './components/Follows';
