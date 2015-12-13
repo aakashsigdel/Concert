@@ -1,0 +1,43 @@
+{
+  container: {
+    flex: 1,
+    backgroundColor: 'rgb(17,17,17)',
+  },
+
+  body:{
+    flex:1,
+  },
+
+  searchHeader:{
+    flexDirection: 'row',
+    height: 36,
+    marginBottom: 2.5,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+
+  inputContainer: {
+    height: 28,
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex:1,
+    paddingTop: 2,
+    backgroundColor: 'rgb(88,88,88)',
+    borderRadius: 2.5,
+    borderBottomRightRadius: 2.5,
+    padding: 1,
+  },
+
+  searchIcon: {
+    width: 13,
+    height: 13,
+    marginLeft: 15,
+  },
+
+  inputBox: {
+    paddingLeft: 15,
+    flex: 1,
+    borderBottomRightRadius: 2.5,
+    color: 'white',
+  }
+}

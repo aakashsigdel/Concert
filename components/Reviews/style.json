@@ -68,7 +68,7 @@
 	calendarContainer: {
     position: 'absolute',
 		alignItems: 'center',
-    backgroundColor: 'black',
+    backgroundColor: 'rgb(17,17,17)',
     borderWidth: 0,
     bottom: 0,
     left: 0,
@@ -88,7 +88,7 @@
 		width: 28.5,
 		height: 23,
     borderWidth: 0,
-    backgroundColor: 'black',
+    backgroundColor: 'rgb(17,17,17)',
 		alignItems: 'center',
 		justifyContent: 'center'
 	},

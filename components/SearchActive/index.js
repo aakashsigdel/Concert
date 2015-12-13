@@ -29,8 +29,12 @@ export default class SearchActive extends Component {
     super()
     this.navigator = null;
     this.state = {
-      filterText : "text",
+      filterText : 'text',
       activeView: 'reviews',
+      reviewSearchText: '',
+      concertSearchText: '',
+      artistsSearchText: '',
+      usersSearchText: '',
     };
   }
 
@@ -99,8 +103,7 @@ export default class SearchActive extends Component {
 
           <View style={styles.tabBar}>
             <TouchableHighlight
-            onPress={this._handlePress.bind(this, 'reviews', 0)}
-            >
+              onPress={this._handlePress.bind(this, 'reviews', 0)}>
               {(() => {
                 console.log('activeview', this.state.activeView);
                 if (this.state.activeView == 'reviews')
@@ -111,8 +114,7 @@ export default class SearchActive extends Component {
             </TouchableHighlight>
 
             <TouchableHighlight
-            onPress={this._handlePress.bind(this, 'concerts', 1)}
-            >
+              onPress={this._handlePress.bind(this, 'concerts', 1)}>
               {(() => {
                 if (this.state.activeView == 'concerts')
                   return <Text style={[styles.font, styles.active]}>CONCERTS</Text>
@@ -122,8 +124,7 @@ export default class SearchActive extends Component {
             </TouchableHighlight>
 
             <TouchableHighlight
-            onPress={this._handlePress.bind(this, 'artists', 2)}
-            >
+              onPress={this._handlePress.bind(this, 'artists', 2)}>
               {(() => {
                 if (this.state.activeView == 'artists')
                   return <Text style={[styles.font, styles.active]}>ARTISTS</Text>
@@ -133,8 +134,7 @@ export default class SearchActive extends Component {
             </TouchableHighlight>
 
             <TouchableHighlight
-            onPress={this._handlePress.bind(this, 'users', 3)}
-            >
+              onPress={this._handlePress.bind(this, 'users', 3)}>
               {(() => {
                 if (this.state.activeView == 'users')
                   return <Text style={[styles.font, styles.active]}>USERS</Text>
@@ -149,7 +149,7 @@ export default class SearchActive extends Component {
             <Navigator
               initialRoute={{name: 'concerts', index: 0}}
               renderScene={this._renderScene.bind(this)}
-              configureScene={(route) => Navigator.SceneConfigs.FadeAndroid}
+              configureScene={(route) => Navigator.SceneConfigs.FloatFromBottom}
             />
           </View>
         </View>

@@ -51,7 +51,7 @@
 		borderColor: 'white',
 		borderWidth: 1,
 		borderBottomWidth: 0,
-		backgroundColor: '#F9B400',
+		backgroundColor: 'white',
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
@@ -59,11 +59,12 @@
 		width: 28.5,
 		height: 23,
 		alignItems: 'center',
+    backgroundColor: 'rgb(17,17,17)',
 	},
 	calanderMonth: {
 		fontSize: 7.5,
 		fontFamily: 'AvenirNext-DemiBold',
-		color: 'white'
+		color: 'black',
 	},
 	calanderDay: {
 		fontSize: 15,

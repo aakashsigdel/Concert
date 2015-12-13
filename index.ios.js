@@ -20,12 +20,12 @@ import SearchActive from './components/SearchActive';
 import Artist from './components/Artist';
 import Intro from './components/Intro';
 import Concert from './components/Concert';
+import ChooseConcert from './components/ChooseConcert';
 import ProfileContainer from './components/ProfileContainer';
 import Photo from './components/Photo';
-
-//  just for test purposes
 import Follows from './components/Follows';
 import ButtonsScreen from './components/ButtonScreen';
+import AddReview from './components/AddReview';
 
 class ConcertReview extends Component {
 	constructor() {
@@ -101,10 +101,27 @@ class ConcertReview extends Component {
           navigator={navigator}
           />
         );
+      case 'chooseConcert':
+        return (
+          <ChooseConcert
+            navigator={navigator}
+          />
+        );
+      case 'addReview':
+        return <AddReview 
+          navigator={navigator}
+        />;
+      default:
+        return (
+          <Intro
+            navigator={navigator}
+          />
+        );
     }
 	}
 
 	render () {
+    return <AddReview />
 		return (
 		  <Navigator
         initialRoute={{name: 'login', index: 0}}
