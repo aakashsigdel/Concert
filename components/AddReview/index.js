@@ -72,8 +72,7 @@ export default class AddReview extends Component {
             {this._getStars.call(this, this.state.yellowCount)}
           </View>
           <Text style={styles.text}>
-            Write about your concert experience{'\n'}
-            {this.state.yellowCount}
+            Write about your concert experience
           </Text>
         </View>
       </View>
