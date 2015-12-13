@@ -13,6 +13,8 @@ import {
 	View,
 } from 'react-native';
 
+import Calander from '../Calander';
+
 let {deviceWidth, deviceHeight} = Dimensions.get('window');
 
 export default class Review extends Component {
@@ -22,7 +24,7 @@ export default class Review extends Component {
     };
   }
 
-	// this function sholud be in a global module
+	// TODO: this function should be in a global module
 	_getStars(yellowStars) {
 		var stars = [];
 		for(var i = 0; i < yellowStars; i++) {
@@ -46,12 +48,12 @@ export default class Review extends Component {
 		return stars;
 	}
 
-	_handelBackPress() {
+	_handleBackPress() {
 	  this.props.navigator.pop();
 	}
 
-	// navigate to profile page when username is pressed
-	_handelUserPress(userId, userName) {
+	_handleUserPress(userId, userName) {
+    // navigate to profile page when username is pressed
     this.props.navigator.push({name: 'profile', index: 5, userId: userId, userName: userName});
 	}
 
@@ -61,8 +63,7 @@ export default class Review extends Component {
 
         <View style={header.container}> 
           <TouchableHighlight
-          onPress={this._handelBackPress.bind(this)}
-          >
+          onPress={this._handleBackPress.bind(this)}>
             <Image
               style={header.left} 
               source={require('../../assets/images/clearCopy.png')} />
@@ -81,17 +82,28 @@ export default class Review extends Component {
           <Image 
             source={require('../../assets/images/review_view.png')} 
             style={heroElement.image} /> 
+          <View
+            style={heroElement.footer}>
+            <Calander
+              month={'SEP'}
+              day={'10'}
+            />
+            <Text
+              style={heroElement.footerText}>
+              SKANDERBORG FESTIVAL
+            </Text>
+          </View>
         </View> 
 
         <View style={comment.container} > 
           <View style={comment.header} >
             <Image
               style={comment.starImage}
-              source={require('../../assets/images/music_star.png')}
+              source={require('../../assets/images/userpicCopy.png')}
             />
             <View style={comment.headerText}>
               <TouchableHighlight
-              onPress={this._handelUserPress.bind(this, 1, 'JIMMI ANDERSEN')}
+              onPress={this._handleUserPress.bind(this, 1, 'JIMMI ANDERSEN')}
               >
                 <Text style={comment.whiteText} >JIMMI ANDERSEN</Text>
               </TouchableHighlight>
@@ -126,8 +138,7 @@ export default class Review extends Component {
             <ScrollView style={comment.text}>
               <Text 
                 style={comment.longText}>
-                Pop artists aren’t often regarded as the best and as the most popular group at the same time. In the English-speaking pop world in the last decade, only maybe Adele, Beyonce and Taylor Swift have earned the same, simultaneous caliber of critical praise and concert tickets sold.{'\n'} 
-                In South Korea, however, there is BigBang. The establishedelectronic dance music that defines pop the world over.{'\n'}
+                Pop artists aren’t often regarded as the best and as the most popular group at the same time. In the English-speaking pop world in the last decade, only maybe Adele, Beyonce and Taylor Swift have earned the same, simultaneous caliber of critical praise and concert tickets sold.{'\n'}{'\n'}In South Korea, however, there is BigBang. The establishedelectronic dance music that defines pop the world over.{'\n'}
 
                 </Text>
             </ScrollView>

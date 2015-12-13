@@ -29,7 +29,12 @@ export default class SearchActive extends Component {
     super()
     this.navigator = null;
     this.state = {
-      filterText : "text",
+      filterText : 'text',
+      activeView: 'reviews',
+      reviewSearchText: '',
+      concertSearchText: '',
+      artistsSearchText: '',
+      usersSearchText: '',
     };
   }
 
@@ -74,6 +79,9 @@ export default class SearchActive extends Component {
 
   _handlePress(name, index) {
     this.navigator.push({name: name, index: index});
+    this.setState({
+      activeView: name
+    })
   }
 
   render() {
@@ -87,7 +95,6 @@ export default class SearchActive extends Component {
               />
               <TextInput 
                 style={styles.inputBox}
-                autoFocus={true}
                 onChangeText={(text) => this.setState({filterText: text})}
                 placeholder="Search and you will find.."
               />
@@ -96,24 +103,45 @@ export default class SearchActive extends Component {
 
           <View style={styles.tabBar}>
             <TouchableHighlight
-            onPress={this._handlePress.bind(this, 'reviews', 0)}
-            >
-              <Text style={styles.font}>REVIEWS</Text>
+              onPress={this._handlePress.bind(this, 'reviews', 0)}>
+              {(() => {
+                console.log('activeview', this.state.activeView);
+                if (this.state.activeView == 'reviews')
+                  return <Text style={[styles.font, styles.active]}>REVIEWS</Text>
+                else
+                  return <Text style={styles.font}>REVIEWS</Text>
+              })()}
             </TouchableHighlight>
+
             <TouchableHighlight
-            onPress={this._handlePress.bind(this, 'concerts', 1)}
-            >
-              <Text style={styles.font}>CONCERTS</Text>
+              onPress={this._handlePress.bind(this, 'concerts', 1)}>
+              {(() => {
+                if (this.state.activeView == 'concerts')
+                  return <Text style={[styles.font, styles.active]}>CONCERTS</Text>
+                else
+                  return <Text style={styles.font}>CONCERTS</Text>
+              })()}
             </TouchableHighlight>
+
             <TouchableHighlight
-            onPress={this._handlePress.bind(this, 'artists', 2)}
-            >
-              <Text style={styles.font}>ARTISTS</Text>
+              onPress={this._handlePress.bind(this, 'artists', 2)}>
+              {(() => {
+                if (this.state.activeView == 'artists')
+                  return <Text style={[styles.font, styles.active]}>ARTISTS</Text>
+                else
+                  return <Text style={styles.font}>ARTISTS</Text>
+              })()}
             </TouchableHighlight>
+
             <TouchableHighlight
-            onPress={this._handlePress.bind(this, 'users', 3)}
-            >
-              <Text style={styles.font}>USERS</Text>
+              onPress={this._handlePress.bind(this, 'users', 3)}>
+              {(() => {
+                if (this.state.activeView == 'users')
+                  return <Text style={[styles.font, styles.active]}>USERS</Text>
+                else
+                  return <Text style={styles.font}>USERS</Text>
+              })()}
+
             </TouchableHighlight>
           </View>
 
@@ -121,6 +149,7 @@ export default class SearchActive extends Component {
             <Navigator
               initialRoute={{name: 'concerts', index: 0}}
               renderScene={this._renderScene.bind(this)}
+              configureScene={(route) => Navigator.SceneConfigs.FloatFromBottom}
             />
           </View>
         </View>

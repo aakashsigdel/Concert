@@ -51,7 +51,7 @@ export default class Photos extends Component {
 			}).done();
 	}
 
-	_handelPress (photoId) {
+	_handlePress (photoId) {
     this.props.navigator.push(
       {
         name: 'photo',
@@ -67,7 +67,7 @@ export default class Photos extends Component {
 	  }
 		return(
 			<TouchableOpacity
-			onPress={this._handelPress.bind(this, photo.id)}
+			onPress={this._handlePress.bind(this, photo.id)}
 			style={styles.photoThumbContainer}
 			>
 				<Image source={{uri: photo.image.original}}

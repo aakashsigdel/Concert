@@ -6,6 +6,7 @@ import {
   Component,
   Dimensions,
   Image,
+  Navigator,
   ScrollView,
   StyleSheet,
   Text,
@@ -26,13 +27,21 @@ export default class Home extends Component {
     return(
       <View style={styles.container}>
         <HeaderBar 
-        left={require('../../assets/images/revuze-icon.png')}
-        mid={require('../../assets/images/brand_icon.png')}
-        right={require('../../assets/images/shareAlt.png')}
+          left={require('../../assets/images/revuze-icon.png')}
+          clickableLeft={true}
+          clickFunctionLeft={()=>{
+            this.props.navigator.push({
+              name: "buttonScreen",
+              index: 19,
+              sceneConfig: Navigator.SceneConfigs.VerticalDownSwipeJump,
+            });
+          }}
+          mid={require('../../assets/images/brand_icon.png')}
+          right={require('../../assets/images/shareAlt.png')}
         />
         <Image
-        source={require('../../assets/images/background_crowd.png')}
-        style={styles.backgroundImage}
+          source={require('../../assets/images/background_crowd.png')}
+          style={styles.backgroundImage}
         />
         <Swiper showButton={false}
         activeDot={
@@ -75,9 +84,9 @@ export default class Home extends Component {
             </View>
             <View style={styles.lowerView}>
               <Reviews 
-              concertId={12}
-              calanderHeader={true}
-              navigator={this.props.navigator}
+                concertId={12}
+                calanderHeader={true}
+                navigator={this.props.navigator}
               />
             </View>
           </View>
@@ -97,7 +106,7 @@ export default class Home extends Component {
 
           <View style={styles.wrapper}>
             <View style={styles.carousel}>
-              <Text style={styles.carouselText}>UPCOMMING CONCERTS</Text>
+              <Text style={styles.carouselText}>UPCOMING CONCERTS</Text>
             </View>
             <View style={styles.lowerView}>
               <Concerts 

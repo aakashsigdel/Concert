@@ -20,12 +20,13 @@ import SearchActive from './components/SearchActive';
 import Artist from './components/Artist';
 import Intro from './components/Intro';
 import Concert from './components/Concert';
+import ChooseConcert from './components/ChooseConcert';
 import ProfileContainer from './components/ProfileContainer';
 import Photo from './components/Photo';
 import CameraContainer from './components/CameraContainer';
-
-//  just for test purposes
 import Follows from './components/Follows';
+import ButtonsScreen from './components/ButtonScreen';
+import AddReview from './components/AddReview';
 
 class ConcertReview extends Component {
 	constructor() {
@@ -37,13 +38,19 @@ class ConcertReview extends Component {
       case 'login':
         return (
           <Intro
-          navigator={navigator}
+            navigator={navigator}
+          />
+        );
+      case 'buttonScreen':
+        return (
+          <ButtonsScreen
+            navigator={navigator}
           />
         );
       case 'home':
         return (
           <Home
-          navigator={navigator}
+            navigator={navigator}
           />
         );
       case 'search_active':
@@ -95,14 +102,36 @@ class ConcertReview extends Component {
           navigator={navigator}
           />
         );
+      case 'chooseConcert':
+        return (
+          <ChooseConcert
+            navigator={navigator}
+          />
+        );
+      case 'addReview':
+        return <AddReview 
+          navigator={navigator}
+        />;
+      default:
+        return (
+          <Intro
+            navigator={navigator}
+          />
+        );
     }
 	}
 
 	render () {
 		return (
 		  <Navigator
-      initialRoute={{name: 'login', index: 0}}
-      renderScene={this._renderScene}
+        initialRoute={{name: 'login', index: 0}}
+        renderScene={this._renderScene}
+        configureScene={(route) => {
+          if (route.sceneConfig) {
+            return route.sceneConfig;
+          }
+          return Navigator.SceneConfigs.FloatFromRight;
+        }}
       />
     );
   }

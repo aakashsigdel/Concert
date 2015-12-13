@@ -40,7 +40,7 @@ export default class HeaderBar extends Component {
   }
 
   // check if image or text should be displayed in HeaderBar
-  _formatHeaderBar (item, styleInitiail, clickable, clickFunction=false) {
+  _formatHeaderBar (item, styleInitial, clickable, clickFunction=false) {
     if(item !== null) {
       if(typeof(item) === 'string') {
         if(clickable) {
@@ -48,7 +48,7 @@ export default class HeaderBar extends Component {
             <TouchableHighlight
             onPress={clickFunction}
             >
-              <Text style={styles[styleInitiail + 'Text']}>
+              <Text style={styles[styleInitial + 'Text']}>
               {item.toUpperCase()}
               </Text>
             </TouchableHighlight>
@@ -56,8 +56,8 @@ export default class HeaderBar extends Component {
         }
         else {
           this.headerJSX.push (
-            <Text style={styles[styleInitiail + 'Text']}>
-            {item.toUpperCase()}
+            <Text style={styles[styleInitial + 'Text']}>
+              {item.toUpperCase()}
             </Text>
           );
         }
@@ -69,7 +69,7 @@ export default class HeaderBar extends Component {
               >
                 <Image
                 source={item}
-                style={styles[styleInitiail + 'Image']}
+                style={styles[styleInitial + 'Image']}
                 />
               </TouchableHighlight>
           );
@@ -77,7 +77,7 @@ export default class HeaderBar extends Component {
           this.headerJSX.push(
             <Image
             source={item}
-            style={styles[styleInitiail + 'Image']}
+            style={styles[styleInitial + 'Image']}
             />
           );
           

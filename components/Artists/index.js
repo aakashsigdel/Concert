@@ -73,14 +73,14 @@ export default class Artists extends Component {
 
     return(
       <TouchableHighlight
-        onPress={this._handlePress.bind(this)} 
-        >
+        onPress={this._handlePress.bind(this)}>
         <View
           style={[styles.row, backgroundStyle]}>
           <Image
             source={{uri:rowData.image.original}}
             style={styles.profile_image}/>
-          <View>
+          <View
+            style={styles.text_container}>
             <Text style={styles.artist_name}>
               {(()=> {
                 if (rowData.name.length > 25)
