@@ -23,9 +23,11 @@ import Concert from './components/Concert';
 import ChooseConcert from './components/ChooseConcert';
 import ProfileContainer from './components/ProfileContainer';
 import Photo from './components/Photo';
+import CameraContainer from './components/CameraContainer';
 import Follows from './components/Follows';
 import ButtonsScreen from './components/ButtonScreen';
 import AddReview from './components/AddReview';
+import PhotoAddComment from './components/PhotoAddComment';
 
 class ConcertReview extends Component {
 	constructor() {
@@ -111,6 +113,14 @@ class ConcertReview extends Component {
         return <AddReview 
           navigator={navigator}
         />;
+      case 'camera':
+        return <CameraContainer
+          navigator={navigator}
+        />;
+      case 'photo_add_comment':
+        return <PhotoAddComment
+          navigator={navigator}
+        />
       default:
         return (
           <Intro
@@ -121,8 +131,8 @@ class ConcertReview extends Component {
 	}
 
 	render () {
-    return <AddReview />
 		return (
+		  // <CameraContainer />
 		  <Navigator
         initialRoute={{name: 'login', index: 0}}
         renderScene={this._renderScene}

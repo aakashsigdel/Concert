@@ -39,6 +39,7 @@
   rightText: {
     color: 'white',
     fontSize: 18,
+    marginRight: 15,
     fontFamily: 'AvenirNext-DemiBold',
   },
 }

@@ -1,0 +1,41 @@
+{
+  container: {
+    flex: 1,
+  },
+  camera: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  bottomView: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingBottom: 20,
+    backgroundColor: 'black',
+  },
+  btnContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  viewPhoto: {
+    height: 35,
+    width: 35,
+    borderWidth: 3,
+    borderColor: 'white',
+  },
+  switchCamera: {
+    width: 30,
+    height: 27,
+  },
+  takePicture: {
+    width: 90,
+    height: 90,
+  },
+  capturedImage: {
+    width: 350,
+    height: 350,
+    resizeMode: 'contain',
+  }
+}
