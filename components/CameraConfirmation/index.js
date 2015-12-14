@@ -16,12 +16,7 @@ var deviceWidth = Dimensions.get('window').width;
 
 export default class CameraConfirmation extends Component {
   _confirm() {
-    CameraRoll.saveImageWithTag(
-      '',
-      () => {console.log('success photo')},
-      () => {console.log('fail photo')}
-    );
-    console.log('confirmed');
+    this.props.navigator.push({name: 'photo_add_comment', index: 22});
   }
 
   _cancel() {
@@ -42,7 +37,7 @@ export default class CameraConfirmation extends Component {
               onPress={this._confirm.bind(this)}
             >
               <View style={styles.circle}>
-                <Text>Yes</Text>
+                <Text style={styles.yesText}>Yes</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity

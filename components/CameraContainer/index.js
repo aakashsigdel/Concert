@@ -25,11 +25,14 @@ export default class CameraContainer extends Component {
   }
 
   render () {
+    console.log(this.props.navigator, 'coffee phalano');
     return (
       <View style={{flex: 1}}>
         <HeaderBar
           left={require('../../assets/images/clearCopy.png')}
           mid="TAKE A PHOTO"
+          clickableLeft={true}
+          clickFunctionLeft={() => this.props.navigator.pop()}
         />
         {(() => {
         if(this.state.captured === null) {
@@ -45,6 +48,7 @@ export default class CameraContainer extends Component {
             <CameraConfirmation
               captured={this.state.captured}
               setCaptured={this.setCaptured.bind(this)}
+              navigator={this.props.navigator}
             />
           );
         }

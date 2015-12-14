@@ -80,7 +80,7 @@ export default class SearchActive extends Component {
   _handlePress(name, index) {
     this.navigator.push({name: name, index: index});
     this.setState({
-      activeView: name
+      activeView: name,
     })
   }
 
@@ -97,6 +97,7 @@ export default class SearchActive extends Component {
                 style={styles.inputBox}
                 onChangeText={(text) => this.setState({filterText: text})}
                 placeholder="Search and you will find.."
+                placeholderTextColor="rgba(255, 255, 255, 0.5)"
               />
             </View>
           </View>

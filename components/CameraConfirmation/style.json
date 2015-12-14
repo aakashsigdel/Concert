@@ -21,5 +21,10 @@
     borderRadius: 40,
     borderColor: 'rgba(136, 136, 136, 0.5)',
     borderWidth: 1,
+  },
+  yesText: {
+    color: '#E9B400',
+    fontFamily: 'AvenirNext-Regular',
+    fontSize: 18, 
   }
 }
