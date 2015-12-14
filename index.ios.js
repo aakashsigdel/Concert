@@ -28,6 +28,7 @@ import Follows from './components/Follows';
 import ButtonsScreen from './components/ButtonScreen';
 import AddReview from './components/AddReview';
 import PhotoAddComment from './components/PhotoAddComment';
+import ActionScreen from './components/ActionScreen';
 
 class ConcertReview extends Component {
 	constructor() {
@@ -120,6 +121,11 @@ class ConcertReview extends Component {
       case 'photo_add_comment':
         return <PhotoAddComment
           navigator={navigator}
+        />
+      case 'actionScreen':
+        return <ActionScreen
+          navigator={navigator}
+          links={route.links}
         />
       default:
         return (

@@ -14,34 +14,32 @@ import {
 } from 'react-native';
 
 import Calander from '../Calander';
+import FAB from '../FAB';
 
 let {deviceWidth, deviceHeight} = Dimensions.get('window');
 
 export default class Review extends Component {
   constructor() {
     super();
-    this.state = {
-    };
+    this.state = {};
   }
 
 	// TODO: this function should be in a global module
 	_getStars(yellowStars) {
-		var stars = [];
-		for(var i = 0; i < yellowStars; i++) {
-			//stars.push(<Text style={styles.yellowStar}>★</Text>);
+		let stars = [];
+		for(let i = 0; i < yellowStars; i++) {
 			stars.push(
 			  <Image
-			  source={require('../../assets/images/star_yellow.png')}
-			  style={header.yellowStar}
+          source={require('../../assets/images/star_yellow.png')}
+          style={header.yellowStar}
 			  />
 			);
 		}
-		for(var i = 0; i < (5 - yellowStars); i++) {
-			//stars.push(<Text style={styles.whiteStar}>★</Text>);
+		for(let i = 0; i < (5 - yellowStars); i++) {
 			stars.push(
 			  <Image
-			  source={require('../../assets/images/star_white.png')}
-			  style={header.whiteStar}
+          source={require('../../assets/images/star_white.png')}
+          style={header.whiteStar}
 			  />
 			);
 		}
@@ -146,6 +144,14 @@ export default class Review extends Component {
 
         </View> 
 
+        <FAB 
+          navigator={this.props.navigator}
+          links={[
+            {
+              name: 'Go to SKO/TORP page'
+            }
+          ]}
+        />
       </View> 
     )
   }

@@ -62,6 +62,20 @@ export default class Artist extends Component {
 						}
 					})()
 				}
+
+        <FAB 
+          navigator={this.props.navigator}
+          links={[
+            {
+              name: 'Add Review',
+              linkFunction: (name) => console.log('what is this life')
+            },
+            {
+              name: 'Add Photo',
+              linkFunction: () => console.log('a;sdlfjas;dlfj')
+            },
+          ]}
+        />
 			</View>
 		);
   }

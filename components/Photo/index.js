@@ -114,6 +114,15 @@ export default class Photo extends Component {
             What a night.
           </Text>
         </View>
+
+        <FAB 
+          navigator={this.props.navigator}
+          links={[
+            {
+              name: 'Go to SKO/TORP page'
+            }
+          ]}
+        />
       </View>
     );
   }

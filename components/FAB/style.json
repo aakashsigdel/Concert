@@ -1,0 +1,11 @@
+{
+  container: {
+    position: 'absolute',
+    bottom: 15,
+    right: 15,
+  },
+  image: {
+    height: 45,
+    width: 45,
+  }
+}

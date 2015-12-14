@@ -1,0 +1,28 @@
+{
+  superContainer: {
+    flex: 1,
+  },
+
+  container: {
+    flex: 1,
+    paddingLeft: 16,
+    backgroundColor: 'black',
+    opacity: 3,
+    paddingRight: 16,
+    justifyContent: 'flex-end',
+  },
+
+  row: {
+    flexDirection: 'row',
+    paddingTop: 30,
+    paddingBottom: 30,
+    borderBottomWidth: 1,
+    borderColor: 'rgba(217,217,217,0.2)',
+  },
+
+  text: {
+    color: 'lightgray',
+    fontFamily: 'AvenirNext-Demibold',
+    fontSize: 20,
+  }
+}

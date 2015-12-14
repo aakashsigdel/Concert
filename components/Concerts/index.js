@@ -2,14 +2,14 @@
 
 import React from 'react-native';
 import {
-	ListView,
-	View,
-	Image,
-	Text,
 	ActivityIndicatorIOS,
+	Component,
+	Image,
+	ListView,
 	StyleSheet,
+	Text,
 	TouchableHighlight,
-	Component
+	View,
 } from 'react-native';
 import Header from '../Header';
 import InternalNavigation from '../InternalNavigation';
