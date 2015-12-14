@@ -11,6 +11,7 @@ import Photos from '../Photos';
 import Reviews from '../Reviews';
 import Concerts from '../Concerts';
 import InternalNavigation from '../InternalNavigation/';
+import FAB from '../FAB';
 
 var viewConstants = {
 	photos: 'Photos',

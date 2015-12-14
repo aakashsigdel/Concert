@@ -12,6 +12,7 @@ import {
 import HeaderBar from '../HeaderBar';
 import Loader from '../../components.ios/Loader';
 import Calander from '../Calander';
+import FAB from '../FAB';
 
 let QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/contents/photos/photoId?access_token=abcde';
 export default class Photo extends Component {
