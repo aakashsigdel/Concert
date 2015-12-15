@@ -25,7 +25,6 @@ export default class CameraContainer extends Component {
   }
 
   render () {
-    console.log(this.props.navigator, 'coffee phalano');
     return (
       <View style={{flex: 1}}>
         <HeaderBar
