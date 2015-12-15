@@ -31,10 +31,6 @@ export default class SearchActive extends Component {
     this.state = {
       filterText : 'text',
       activeView: 'reviews',
-      reviewSearchText: '',
-      concertSearchText: '',
-      artistsSearchText: '',
-      usersSearchText: '',
     };
   }
 
@@ -106,7 +102,6 @@ export default class SearchActive extends Component {
             <TouchableHighlight
               onPress={this._handlePress.bind(this, 'reviews', 0)}>
               {(() => {
-                console.log('activeview', this.state.activeView);
                 if (this.state.activeView == 'reviews')
                   return <Text style={[styles.font, styles.active]}>REVIEWS</Text>
                 else
@@ -148,7 +143,7 @@ export default class SearchActive extends Component {
 
           <View style={styles.list}>
             <Navigator
-              initialRoute={{name: 'concerts', index: 0}}
+              initialRoute={{name: 'reviews', index: 0}}
               renderScene={this._renderScene.bind(this)}
               configureScene={(route) => Navigator.SceneConfigs.FloatFromBottom}
             />
