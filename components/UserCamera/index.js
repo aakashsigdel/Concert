@@ -18,7 +18,6 @@ import CameraConfirmation from '../CameraConfirmation';
 var ImageEditingManager = NativeModules.ImageEditingManager;
 var deviceWidth = Dimensions.get('window').width;
 var deviceHeight = Dimensions.get('window').height;
-console.log(deviceWidth, 'aakash width');
 
 export default class UserCamera extends Component {
   constructor () {
