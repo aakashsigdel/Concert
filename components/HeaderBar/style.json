@@ -21,9 +21,6 @@
     width: 22,
     height: 24,
     marginRight: 15,
-    //borderColor: '#F9B400',
-    //borderWidth: 1,
-    //borderRadius: 15,
     resizeMode: 'contain',
   },
   leftText: {

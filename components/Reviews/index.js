@@ -66,20 +66,20 @@ export default class Reviews extends Component {
 	_getStars(yellowStars) {
 		var stars = [];
 		for(var i = 0; i < yellowStars; i++) {
-			//stars.push(<Text style={styles.yellowStar}>★</Text>);
 			stars.push(
 			  <Image
-			  source={require('../../assets/images/star_yellow.png')}
-			  style={styles.yellowStar}
+			    key={100 - i}
+          source={require('../../assets/images/star_yellow.png')}
+          style={styles.yellowStar}
 			  />
 			);
 		}
 		for(var i = 0; i < (5 - yellowStars); i++) {
-			//stars.push(<Text style={styles.whiteStar}>★</Text>);
 			stars.push(
 			  <Image
-			  source={require('../../assets/images/star_white.png')}
-			  style={styles.whiteStar}
+			    key={i}
+          source={require('../../assets/images/star_white.png')}
+          style={styles.whiteStar}
 			  />
 			);
 		}
@@ -151,7 +151,5 @@ export default class Reviews extends Component {
 		)
 	}
 }
-
-//Reviews.propTypes = { concertId: Reaact.propTypes.string.isRequired };
 
 var styles = StyleSheet.create(require('./style.json'));

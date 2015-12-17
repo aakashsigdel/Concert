@@ -106,7 +106,6 @@ export default class SearchActive extends Component {
             <TouchableHighlight
               onPress={this._handlePress.bind(this, 'reviews', 0)}>
               {(() => {
-                console.log('activeview', this.state.activeView);
                 if (this.state.activeView == 'reviews')
                   return <Text style={[styles.font, styles.active]}>REVIEWS</Text>
                 else

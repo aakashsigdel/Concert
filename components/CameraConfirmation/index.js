@@ -16,7 +16,7 @@ var deviceWidth = Dimensions.get('window').width;
 
 export default class CameraConfirmation extends Component {
   _confirm() {
-    this.props.navigator.push({name: 'photo_add_comment', index: 22});
+    this.props.navigator.push({name: 'photoAddComment', index: 22});
   }
 
   _cancel() {
