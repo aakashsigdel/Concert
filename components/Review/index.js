@@ -30,6 +30,7 @@ export default class Review extends Component {
 		for(let i = 0; i < yellowStars; i++) {
 			stars.push(
 			  <Image
+			    key={100 - i}
           source={require('../../assets/images/star_yellow.png')}
           style={header.yellowStar}
 			  />
@@ -38,6 +39,7 @@ export default class Review extends Component {
 		for(let i = 0; i < (5 - yellowStars); i++) {
 			stars.push(
 			  <Image
+			    key={i}
           source={require('../../assets/images/star_white.png')}
           style={header.whiteStar}
 			  />

@@ -26,27 +26,31 @@ export default class HeaderBar extends Component {
       this.props.left, 'left', 
       this.props.clickableLeft,
       this.props.clickFunctionLeft,
+      0
     );
     this._formatHeaderBar(
       this.props.mid, 'mid',
       this.props.clickableMid,
       this.props.clickFunctionMid,
+      1
     );
     this._formatHeaderBar(
       this.props.right, 'right',
       this.props.clickableRight,
       this.props.clickFunctionRight,
+      2
     );
   }
 
   // check if image or text should be displayed in HeaderBar
-  _formatHeaderBar (item, styleInitial, clickable, clickFunction=false) {
+  _formatHeaderBar (item, styleInitial, clickable, clickFunction=false, index) {
     if(item !== null) {
       if(typeof(item) === 'string') {
         if(clickable) {
           this.headerJSX.push (
             <TouchableHighlight
-            onPress={clickFunction}
+              key={index}
+              onPress={clickFunction}
             >
               <Text style={styles[styleInitial + 'Text']}>
               {item.toUpperCase()}
@@ -56,7 +60,10 @@ export default class HeaderBar extends Component {
         }
         else {
           this.headerJSX.push (
-            <Text style={styles[styleInitial + 'Text']}>
+            <Text 
+              key={index}
+              style={styles[styleInitial + 'Text']}
+            >
               {item.toUpperCase()}
             </Text>
           );
@@ -64,20 +71,22 @@ export default class HeaderBar extends Component {
       } else {
         if(clickable) {
           this.headerJSX.push(
-              <TouchableHighlight
+            <TouchableHighlight
+              key={index}
               onPress={clickFunction}
-              >
-                <Image
-                source={item}
-                style={styles[styleInitial + 'Image']}
-                />
-              </TouchableHighlight>
+            >
+              <Image
+              source={item}
+              style={styles[styleInitial + 'Image']}
+              />
+            </TouchableHighlight>
           );
         } else {
           this.headerJSX.push(
             <Image
-            source={item}
-            style={styles[styleInitial + 'Image']}
+              key={index}
+              source={item}
+              style={styles[styleInitial + 'Image']}
             />
           );
           

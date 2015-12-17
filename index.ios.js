@@ -23,12 +23,13 @@ import Concert from './components/Concert';
 import ChooseConcert from './components/ChooseConcert';
 import ProfileContainer from './components/ProfileContainer';
 import Photo from './components/Photo';
-import CameraContainer from './components/CameraContainer';
 import Follows from './components/Follows';
 import ButtonsScreen from './components/ButtonScreen';
 import AddReview from './components/AddReview';
 import PhotoAddComment from './components/PhotoAddComment';
 import ActionScreen from './components/ActionScreen';
+import UserCamera from './components/UserCamera';
+import CameraConfirmation from './components/CameraConfirmation';
 
 class ConcertReview extends Component {
 	constructor() {
@@ -115,10 +116,10 @@ class ConcertReview extends Component {
           navigator={navigator}
         />;
       case 'camera':
-        return <CameraContainer
+        return <UserCamera
           navigator={navigator}
         />;
-      case 'photo_add_comment':
+      case 'PhotoAddComment':
         return <PhotoAddComment
           navigator={navigator}
         />
@@ -126,6 +127,10 @@ class ConcertReview extends Component {
         return <ActionScreen
           navigator={navigator}
           links={route.links}
+        />
+      case 'cameraConfirmation':
+        return <CameraConfirmation
+          navigator={navigator}
         />
       default:
         return (
@@ -138,7 +143,6 @@ class ConcertReview extends Component {
 
 	render () {
 		return (
-		  // <CameraContainer />
 		  <Navigator
         initialRoute={{name: 'login', index: 0}}
         renderScene={this._renderScene}

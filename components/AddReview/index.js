@@ -30,7 +30,9 @@ export default class AddReview extends Component {
       let s = i + 1;
 			stars.push(
         <TouchableOpacity
-          onPress={() => this._setStars(s)}>
+          key={100 - i}
+          onPress={() => this._setStars(s)}
+        >
           <Image
             source={require('../../assets/images/star_yellow.png')}
             style={styles.yellowStar}
@@ -42,7 +44,9 @@ export default class AddReview extends Component {
       let s = i + 1 + yellowStars;
 			stars.push(
         <TouchableOpacity
-          onPress={() => this._setStars(s) }>
+          key={i}
+          onPress={() => this._setStars(s) }
+        >
           <Image
             source={require('../../assets/images/star_white.png')}
             style={styles.whiteStar}

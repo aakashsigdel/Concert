@@ -56,7 +56,6 @@
 		backgroundColor: '#1C1C1C',
 	},
   userImage: {
-    color: 'white',
     justifyContent: 'flex-end',
     marginRight: 15,
     width: 30,

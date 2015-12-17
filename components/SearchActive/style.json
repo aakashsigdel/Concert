@@ -27,7 +27,6 @@
   tabBar: {
     backgroundColor: 'rgb(17,17,17)',
     height: 35,
-    color: 'white',
     flex: 1,
     paddingTop: 14.5,
     flexDirection: 'row',
