@@ -43,6 +43,7 @@ export default class ChooseConcert extends Component {
           </View>
           <Concerts
             navigator={this.props.navigator}
+            select={true}
           />
         </View>
       </View>

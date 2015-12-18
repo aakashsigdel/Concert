@@ -32,6 +32,7 @@ import UserCamera from './components/UserCamera';
 import CameraConfirmation from './components/CameraConfirmation';
 import EditProfile from './components/EditProfile';
 import CustomAlert from './components/CustomAlert';
+import PhotoEditComment from './components/PhotoEditComment';
 
 class ConcertReview extends Component {
 	constructor() {
@@ -125,10 +126,12 @@ class ConcertReview extends Component {
       case 'camera':
         return <UserCamera
           navigator={navigator}
+          concertId={route.concertId}
         />;
-      case 'PhotoAddComment':
+      case 'photoAddComment':
         return <PhotoAddComment
           navigator={navigator}
+          concertId={route.concertId}
         />;
       case 'actionScreen':
         return <ActionScreen
@@ -138,12 +141,18 @@ class ConcertReview extends Component {
       case 'cameraConfirmation':
         return <CameraConfirmation
           navigator={navigator}
+          imageUrl={route.imageUrl}
+          concertId={route.concertId}
         />;
       case 'customAlert':
         return <CustomAlert
           navigator={navigator}
           text={route.text}
         />;
+      case 'photoEditComment':
+        return <PhotoEditComment
+          navigator={navigator}
+        />
       default:
         return (
           <Intro

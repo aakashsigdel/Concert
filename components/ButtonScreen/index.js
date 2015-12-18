@@ -53,7 +53,7 @@ export default class ButtonsScreen extends Component {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.props.navigator.push({name: 'camera', index: 33})}
+            onPress={() => this.props.navigator.push({name: 'chooseConcert', index: 33})}
             activeOpacity={0.7}>
             <View
               style={styles.button}>

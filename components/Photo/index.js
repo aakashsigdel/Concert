@@ -9,12 +9,15 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  NativeModules,
   View,
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
 import Loader from '../../components.ios/Loader';
 import Calander from '../Calander';
 import FAB from '../FAB';
+
+var Share = NativeModules.KDSocialShare;
 
 let QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/contents/photos/photoId?access_token=abcde';
 export default class Photo extends Component {
@@ -46,6 +49,17 @@ export default class Photo extends Component {
     this.props.navigator.push({name: 'profile', index: 5, userId: userId});
 	}
 
+	_sharePhoto () {
+	  console.log(this.state.photoDetail.image.original);
+	  Share.shareOnFacebook({
+        'text':'Global democratized marketplace for art',
+        'imagelink': this.state.photoDetail.image.original,
+    },
+    (result) => {
+      console.log('aakash hero dai ko', result);
+    });
+  }
+
   render () {
     if(this.state.isLoading)
       return <Loader />
@@ -59,6 +73,12 @@ export default class Photo extends Component {
         clickFunctionLeft={
           () => {
             this.props.navigator.pop();
+          }
+        }
+        clickableRight={true}
+        clickFunctionRight={
+          () => {
+            this._sharePhoto();
           }
         }
         />
@@ -132,6 +152,10 @@ export default class Photo extends Component {
                 text: 'photo',
                 sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
               })
+            },
+            {
+              name: 'Go to SKO/TORP page',
+              clickFunction: () => this.props.navigator.push({name: 'photoEDitComment', index: 52}),
             }
           ]}
         />

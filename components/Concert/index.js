@@ -27,6 +27,7 @@ export default class Concert extends Component {
         {/* headerbar should be here*/}
         <View style={styles.headerContainer}>
         <TouchableHighlight
+        style={styles.clickable}
         onPress={this._handelPress.bind(this)}
         >
           <Image
