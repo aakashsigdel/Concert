@@ -39,4 +39,10 @@
     marginRight: 15,
     fontFamily: 'AvenirNext-DemiBold',
   },
+  clickable: {
+    height: 64,
+    width: 64,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 }

@@ -6,15 +6,19 @@ import {
 	Component,
 	Dimensions,
 	Image,
+	NativeModules,
 	StyleSheet,
   ScrollView,
 	Text,
 	TouchableHighlight,
+	TouchableOpacity,
 	View,
 } from 'react-native';
 
 import Calander from '../Calander';
 import FAB from '../FAB';
+
+var Share = NativeModules.KDSocialShare;
 
 let {deviceWidth, deviceHeight} = Dimensions.get('window');
 
@@ -22,6 +26,17 @@ export default class Review extends Component {
   constructor() {
     super();
     this.state = {};
+  }
+
+	_sharePhoto () {
+	  console.log('clicked toch');
+	  Share.shareOnFacebook({
+        'text':'Global democratized marketplace for art',
+        'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg'
+    },
+    (result) => {
+      console.log('aakash hero dai ko', result);
+    });
   }
 
 	// TODO: this function should be in a global module
@@ -72,10 +87,14 @@ export default class Review extends Component {
             style={ header.titleText }> 
             SKO/TORP 
           </Text> 
-          <Image 
-            style={header.right} 
-            source={require('../../assets/images/shareAlt.png')} 
-          /> 
+          <TouchableOpacity
+            onPress={this._sharePhoto.bind(this)}
+          >
+            <Image 
+              style={header.right} 
+              source={require('../../assets/images/shareAlt.png')} 
+            /> 
+          </TouchableOpacity>
         </View> 
 
         <View style={heroElement.container}> 
@@ -101,16 +120,16 @@ export default class Review extends Component {
               style={comment.starImage}
               source={require('../../assets/images/userpicCopy.png')}
             />
-            <View style={comment.headerText}>
-              <TouchableHighlight
-              onPress={this._handleUserPress.bind(this, 1, 'JIMMI ANDERSEN')}
-              >
+            <TouchableHighlight
+            onPress={this._handleUserPress.bind(this, 1, 'JIMMI ANDERSEN')}
+            >
+              <View style={comment.headerText}>
                 <Text style={comment.whiteText} >JIMMI ANDERSEN</Text>
-              </TouchableHighlight>
-              <View style={header.ratingStars} >
-                {this._getStars(3)}
+                <View style={header.ratingStars} >
+                  {this._getStars(3)}
+                </View>
               </View>
-            </View>
+            </TouchableHighlight>
 
             <View
               style={comment.starContainer} >

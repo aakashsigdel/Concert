@@ -72,6 +72,7 @@ export default class HeaderBar extends Component {
         if(clickable) {
           this.headerJSX.push(
             <TouchableHighlight
+            style={styles.clickable}
               key={index}
               onPress={clickFunction}
             >

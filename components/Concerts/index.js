@@ -66,12 +66,20 @@ export default class Concerts extends Component {
 	}
 	
 	_handelPress(concertId, concert) {
-    this.props.navigator.push({
-      name: "concert",
-      index: 3,
-      concertId: concertId,
-      concert: concert,
-    });
+	  if(this.props.select) {
+	    this.props.navigator.push({
+        name: 'camera',
+        index: 42,
+        concertId: concertId,
+      });
+    } else {
+      this.props.navigator.push({
+        name: "concert",
+        index: 3,
+        concertId: concertId,
+        concert: concert,
+      });
+    }
 	}
 
 	_renderConcert(concert) {

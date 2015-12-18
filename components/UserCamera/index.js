@@ -23,7 +23,7 @@ export default class UserCamera extends Component {
   constructor () {
     super();
     this.state = {
-      cameraType: Camera.constants.Type.front,
+      cameraType: Camera.constants.Type.back,
     };
   }
 
@@ -62,7 +62,12 @@ export default class UserCamera extends Component {
             transformData,
             (croppedImageURI) => {
               console.log('crop success', croppedImageURI);
-              _this.props.navigator.push({ name: 'cameraConfirmation', index: 31 });
+              _this.props.navigator.push({
+                name: 'cameraConfirmation',
+                index: 31,
+                imageUrl: croppedImageURI,
+                concertId: _this.props.concertId
+              });
             },
             (cropError) => console.log('cropMyError', cropError)
           );

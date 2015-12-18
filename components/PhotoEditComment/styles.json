@@ -1,0 +1,15 @@
+{
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  textArea: {
+    color: 'white',
+    fontSize: 18,
+    fontFamily: 'AvenirNext-Regular',
+    paddingLeft: 30,
+    paddingRight: 30,
+    marginTop: 20,
+  },
+}
+

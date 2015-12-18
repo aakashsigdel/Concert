@@ -9,10 +9,21 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+ import { FBSDKLoginButton } from 'react-native-fbsdklogin';
+ import { FBSDKLoginManager } from 'react-native-fbsdklogin';
 
 export default class Intro extends Component {
   _login() {
-    this.props.navigator.push({name: 'home', index: 1});
+    FBSDKLoginManager.logInWithReadPermissions([], (error, result) => {
+      if (error)
+        alert('Error in Login');
+      else {
+        // if (result.isCancelled)
+          // alert('Login Cancelled');
+        // else
+          this.props.navigator.replace({name: 'home', index: 1});
+      }
+    })
   }
 
   render () {
@@ -29,6 +40,7 @@ export default class Intro extends Component {
           source={require('../../assets/images/phone_intro.png')}
           />
         </View>
+
           <TouchableHighlight
           onPress={this._login.bind(this)}
           style={styles.facebookLoginBtn}
@@ -41,6 +53,24 @@ export default class Intro extends Component {
               <Text style={styles.facebookLoginText}>LOGIN WITH FACEBOOK</Text>
             </View>
           </TouchableHighlight>
+          {/*
+        <FBSDKLoginButton
+          style={styles.facebookLoginBtn}
+          onLoginFinished={(error, result) => {
+            if (error) {
+              alert('Error logging in.');
+            } else {
+              if (result.isCancelled) {
+                alert('Login cancelled.');
+              } else {
+                this._login();
+              }
+            }
+          }}
+          onLogoutFinished={() => alert('Logged out.')}
+          readPermissions={[]}
+          publishPermissions={['publish_actions']}/>
+          */}
       </View>
     );
   }
