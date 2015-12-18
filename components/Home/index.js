@@ -37,7 +37,15 @@ export default class Home extends Component {
             });
           }}
           mid={require('../../assets/images/brand_icon.png')}
-          right={require('../../assets/images/shareAlt.png')}
+          right={require('../../assets/images/userpicCopy.png')}
+          clickableRight={true}
+          clickFunctionRight={() => this.props.navigator.push({
+            name: 'profile',
+            index: 20,
+            isLoggedInUser: true,
+            userId: 1,
+            userName: 'JIMMI ANDERSEN'
+          })}
         />
         <Image
           source={require('../../assets/images/background_crowd.png')}

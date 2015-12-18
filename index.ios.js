@@ -30,6 +30,7 @@ import PhotoAddComment from './components/PhotoAddComment';
 import ActionScreen from './components/ActionScreen';
 import UserCamera from './components/UserCamera';
 import CameraConfirmation from './components/CameraConfirmation';
+import EditProfile from './components/EditProfile';
 
 class ConcertReview extends Component {
 	constructor() {
@@ -79,9 +80,10 @@ class ConcertReview extends Component {
       case 'profile':
         return (
           <ProfileContainer
-          navigator={navigator}
-          userId={route.userId}
-          userName={route.userName}
+            navigator={navigator}
+            userId={route.userId}
+            isLoggedInUser={route.isLoggedInUser}
+            userName={route.userName}
           />
         );
       case 'photo':
@@ -111,6 +113,10 @@ class ConcertReview extends Component {
             navigator={navigator}
           />
         );
+      case 'editProfile':
+        return <EditProfile
+          navigator={navigator}
+        />;
       case 'addReview':
         return <AddReview 
           navigator={navigator}

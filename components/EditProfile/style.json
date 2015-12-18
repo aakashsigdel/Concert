@@ -1,0 +1,23 @@
+{
+  container: {
+    flex:1,
+    backgroundColor: 'rgb(21,21,21)',
+  },
+
+  input_container: {
+    backgroundColor: 'rgb(21,21,21)',
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+
+  text_input: {
+    color: 'rgb(214,214,214)',
+    backgroundColor: 'rgb(21,21,21)',
+    fontSize: 17,
+    fontFamily: 'AvenirNext-Medium',
+    fontWeight: '100',
+    marginTop: 25,
+    padding: 5,
+    marginBottom: 11,
+  },
+}

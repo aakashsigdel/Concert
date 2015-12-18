@@ -30,6 +30,7 @@ export default class ProfileContainer extends Component {
       followingNum: 0,
       bio: '',
       profilePic: '',
+      isLoggedInUser: this.props.isLoggedInUser,
       userName: this.props.userName, // not anti-pattern because it is not used for syncing data
       userId: 1,
       activeView: viewConstants.photos,
@@ -71,16 +72,16 @@ export default class ProfileContainer extends Component {
     return (
       <View style={styles.container}>
         <HeaderBar 
-        left={require('../../assets/images/backIcon.png')}
-        mid={this.state.userName}
-        right={require('../../assets/images/settings.png')}
-        clickableLeft={true}
-        clickFunctionLeft={() => {this.props.navigator.pop()}}
+          left={require('../../assets/images/backIcon.png')}
+          mid={this.state.userName}
+          right={require('../../assets/images/settings.png')}
+          clickableLeft={true}
+          clickFunctionLeft={() => {this.props.navigator.pop()}}
         />
         <View style={styles.topView}>
           <View style={styles.noBio}>
             <TouchableHighlight
-            onPress={this._handlePress.bind(this, 'followers', this.state.userId)}
+              onPress={this._handlePress.bind(this, 'followers', this.state.userId)}
             >
               <View style={styles.follow}>
                 <Text style={styles.followNum}>
@@ -90,15 +91,14 @@ export default class ProfileContainer extends Component {
               </View>
             </TouchableHighlight>
             <Image 
-            source={require('../../assets/images/userpicCopy.png')}
-            style={styles.profileImage} 
+              source={require('../../assets/images/userpicCopy.png')}
+              style={styles.profileImage} 
             />
             <TouchableHighlight
-            onPress={this._handlePress.bind(this, 'following', this.state.userId)}
-            >
+              onPress={this._handlePress.bind(this, 'following', this.state.userId)}>
               <View style={styles.follow}>
                 <Text style={styles.followNum}>
-                {this.state.followingNum}
+                  {this.state.followingNum}
                 </Text>
                 <Text style={styles.followText}>FOLLOWING</Text>
               </View>
@@ -111,12 +111,30 @@ export default class ProfileContainer extends Component {
           </Text>
 
           <View style={styles.userBtn}>
-            <TouchableHighlight
-            underlayColor='#F9A000'
-            style={styles.btnTouch} 
-            >
-              <Text style={styles.btnText}>EDIT</Text>
-            </TouchableHighlight>
+            {(()=>{
+              if(this.props.isLoggedInUser){
+                return (
+                  <TouchableHighlight
+                    underlayColor='#F9A000'
+                    style={styles.btnTouch}
+                    onPress={()=> this.props.navigator.push({
+                      name: 'editProfile',
+                      index: 10,
+                    })}>
+                    
+                    <Text style={styles.btnText}>EDIT</Text>
+                  </TouchableHighlight>
+                  )
+                }else{
+                  return(
+                    <TouchableHighlight
+                      underlayColor='#F9A000'
+                      style={styles.btnTouch}>
+                      <Text style={styles.btnText}>FOLLOW</Text>
+                    </TouchableHighlight>
+                    )
+                }
+            })()}
           </View>
         </View>
 
