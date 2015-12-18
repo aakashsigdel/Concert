@@ -14,16 +14,17 @@ import {
 
 export default class Intro extends Component {
   _login() {
-    FBSDKLoginManager.logInWithReadPermissions([], (error, result) => {
-      if (error)
-        alert('Error in Login');
-      else {
-        // if (result.isCancelled)
-          // alert('Login Cancelled');
-        // else
-          this.props.navigator.replace({name: 'home', index: 1});
-      }
-    })
+    // FBSDKLoginManager.logInWithReadPermissions([], (error, result) => {
+    //   if (error)
+    //     alert('Error in Login');
+    //   else {
+    //     // if (result.isCancelled)
+    //       // alert('Login Cancelled');
+    //     // else
+    //       this.props.navigator.replace({name: 'home', index: 1});
+    //   }
+    // })
+           this.props.navigator.replace({name: 'home', index: 1});
   }
 
   render () {

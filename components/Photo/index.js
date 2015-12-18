@@ -51,12 +51,19 @@ export default class Photo extends Component {
 
 	_sharePhoto () {
 	  console.log(this.state.photoDetail.image.original);
+	  this.setState({
+      isLoading: true,
+    });
+
 	  Share.shareOnFacebook({
         'text':'Global democratized marketplace for art',
         'imagelink': this.state.photoDetail.image.original,
     },
     (result) => {
       console.log('aakash hero dai ko', result);
+      this.setState({
+        isLoading: false,
+      });
     });
   }
 

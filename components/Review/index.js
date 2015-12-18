@@ -2,6 +2,7 @@
 
 import React from 'react-native';
 import {
+  AlertIOS,
   NativeModules,
 	ActivityIndicatorIOS,
 	Component,
@@ -17,23 +18,33 @@ import {
 
 import Calander from '../Calander';
 import FAB from '../FAB';
+import Loader from '../../components.ios/Loader';
 
 let {deviceWidth, deviceHeight} = Dimensions.get('window');
 let Share = NativeModules.KDSocialShare;
 
 export default class Review extends Component {
   constructor() {
+    debugger;
     super();
-    this.state = {};
+    this.state = {
+      isLoading: false,
+    };
   }
 
 	_sharePhoto () {
+	  this.setState({
+      isLoading: true,
+    });
 	  Share.shareOnFacebook({
         'text':'Global democratized marketplace for art',
         'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg',
     },
     (result) => {
       console.log('aakash hero dai ko', result);
+      this.setState({
+        isLoading: false,
+      });
     });
   }
 
@@ -71,6 +82,8 @@ export default class Review extends Component {
 	}
 
   render() {
+    if(this.state.isLoading)
+      return <Loader />;
     return (
       <View style={{ flex: 1}}>
 
@@ -86,7 +99,7 @@ export default class Review extends Component {
             SKO/TORP 
           </Text> 
           <TouchableOpacity
-           onPress={this._sharePhoto()}
+           onPress={this._sharePhoto.bind(this)}
            >
 
           <Image 
