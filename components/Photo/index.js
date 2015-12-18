@@ -143,7 +143,7 @@ export default class Photo extends Component {
           links={[
             {
               name: 'Edit',
-              action: () => alert('Go to edit view'),
+              action: () => this.props.navigator.push({name: 'photoEditComment', index: 52}),
             },
             {
               name: 'Delete',
@@ -155,7 +155,6 @@ export default class Photo extends Component {
             },
             {
               name: 'Go to SKO/TORP page',
-              clickFunction: () => this.props.navigator.push({name: 'photoEDitComment', index: 52}),
             }
           ]}
         />

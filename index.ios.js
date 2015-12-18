@@ -113,6 +113,7 @@ class ConcertReview extends Component {
         return (
           <ChooseConcert
             navigator={navigator}
+            review={route.review}
           />
         );
       case 'editProfile':
@@ -127,6 +128,7 @@ class ConcertReview extends Component {
         return <UserCamera
           navigator={navigator}
           concertId={route.concertId}
+          review={route.review}
         />;
       case 'photoAddComment':
         return <PhotoAddComment
@@ -143,6 +145,7 @@ class ConcertReview extends Component {
           navigator={navigator}
           imageUrl={route.imageUrl}
           concertId={route.concertId}
+          review={route.review}
         />;
       case 'customAlert':
         return <CustomAlert

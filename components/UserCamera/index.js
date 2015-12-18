@@ -66,7 +66,8 @@ export default class UserCamera extends Component {
                 name: 'cameraConfirmation',
                 index: 31,
                 imageUrl: croppedImageURI,
-                concertId: _this.props.concertId
+                concertId: _this.props.concertId,
+                review: _this.props.review,
               });
             },
             (cropError) => console.log('cropMyError', cropError)

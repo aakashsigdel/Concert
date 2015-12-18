@@ -2,6 +2,7 @@
 
 import React from 'react-native';
 import {
+  NativeModules,
 	ActivityIndicatorIOS,
 	Component,
 	Dimensions,
@@ -10,6 +11,7 @@ import {
   ScrollView,
 	Text,
 	TouchableHighlight,
+	TouchableOpacity,
 	View,
 } from 'react-native';
 
@@ -17,11 +19,22 @@ import Calander from '../Calander';
 import FAB from '../FAB';
 
 let {deviceWidth, deviceHeight} = Dimensions.get('window');
+let Share = NativeModules.KDSocialShare;
 
 export default class Review extends Component {
   constructor() {
     super();
     this.state = {};
+  }
+
+	_sharePhoto () {
+	  Share.shareOnFacebook({
+        'text':'Global democratized marketplace for art',
+        'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg',
+    },
+    (result) => {
+      console.log('aakash hero dai ko', result);
+    });
   }
 
 	// TODO: this function should be in a global module
@@ -72,10 +85,15 @@ export default class Review extends Component {
             style={ header.titleText }> 
             SKO/TORP 
           </Text> 
+          <TouchableOpacity
+           onPress={this._sharePhoto()}
+           >
+
           <Image 
             style={header.right} 
             source={require('../../assets/images/shareAlt.png')} 
           /> 
+          </TouchableOpacity>
         </View> 
 
         <View style={heroElement.container}> 

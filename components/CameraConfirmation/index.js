@@ -16,11 +16,18 @@ var deviceWidth = Dimensions.get('window').width;
 
 export default class CameraConfirmation extends Component {
   _confirm() {
-    this.props.navigator.push({
-      name: 'photoAddComment',
-      index: 22,
-      concertId: this.props.concertId
-    });
+    if(this.props.review) {
+      this.props.navigator.push({
+        name: 'addReview',
+        index: 55,
+      });
+    } else {
+      this.props.navigator.push({
+        name: 'photoAddComment',
+        index: 22,
+        concertId: this.props.concertId
+      });
+    }
   }
 
   _cancel() {

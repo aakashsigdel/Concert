@@ -66,11 +66,14 @@ export default class AddReview extends Component {
           clickableLeft={true}
           clickFunctionLeft={() => this.props.navigator.jumpBack()}
 
-          mid={'ADD REVIEW 2/3'}
+          mid={'ADD REVIEW'}
 
-          right={'NEXT'}
+          right={'POST'}
           clickableRight={true}
-          clickFunctionRight={() => 1}
+          clickFunctionRight={() => this.props.navigator.push({
+            name: 'home',
+            index: 1,
+          })}
         />
         <View style={styles.bottomContainer}>
           <View style={styles.ratingStars}>

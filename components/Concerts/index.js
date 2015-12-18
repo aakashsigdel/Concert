@@ -71,6 +71,7 @@ export default class Concerts extends Component {
         name: 'camera',
         index: 42,
         concertId: concertId,
+        review: this.props.review,
       });
     } else {
       this.props.navigator.push({

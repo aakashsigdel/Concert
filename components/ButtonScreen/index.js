@@ -38,6 +38,7 @@ export default class ButtonsScreen extends Component {
           <TouchableOpacity
             onPress={() => this.props.navigator.push({
               name: 'chooseConcert',
+              review: true
             })}
             activeOpacity={0.7}>
             <View
