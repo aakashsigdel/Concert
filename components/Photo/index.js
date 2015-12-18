@@ -3,7 +3,9 @@
 import React from 'react-native';
 import {
   Component,
+  Navigator,
   Image,
+  AlertIOS,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -120,7 +122,16 @@ export default class Photo extends Component {
           navigator={this.props.navigator}
           links={[
             {
-              name: 'Go to SKO/TORP page'
+              name: 'Edit',
+              action: () => alert('Go to edit view'),
+            },
+            {
+              name: 'Delete',
+              action: () => this.props.navigator.replace({
+                name: 'customAlert',
+                text: 'photo',
+                sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+              })
             }
           ]}
         />

@@ -17,13 +17,19 @@ export default class ActionScreen extends Component {
   }
 
   _populateRows() {
-    console.log('here in the populaterows', this.props.links);
+    console.log(this.props.links);
     this.props.links.map((child, index) => {
       this.rows.push(
         <TouchableHighlight
           key={index}
           style={styles.row}
-          onPress={() => console.log(child, ' pressed')}>
+          onPress={() => { 
+            try{
+              this.props.links[index].action()
+            } catch (e){
+              this.props.navigator.pop()}
+            }
+          }>
           <Text style={styles.text}>{child}</Text>
         </TouchableHighlight>
       )

@@ -38,7 +38,7 @@
 	},
 
   text: {
-    color: 'grey',
+    color: 'white',
     fontSize: 18,
     font:'AvenirNext-DemiBold',
     textAlign: 'center',

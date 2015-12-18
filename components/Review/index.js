@@ -63,7 +63,7 @@ export default class Review extends Component {
 
         <View style={header.container}> 
           <TouchableHighlight
-          onPress={this._handleBackPress.bind(this)}>
+            onPress={this._handleBackPress.bind(this)}>
             <Image
               style={header.left} 
               source={require('../../assets/images/clearCopy.png')} />
@@ -103,8 +103,8 @@ export default class Review extends Component {
             />
             <View style={comment.headerText}>
               <TouchableHighlight
-              onPress={this._handleUserPress.bind(this, 1, 'JIMMI ANDERSEN')}
-              >
+                onPress={this._handleUserPress.bind(this, 1, 'JIMMI ANDERSEN')}
+                >
                 <Text style={comment.whiteText} >JIMMI ANDERSEN</Text>
               </TouchableHighlight>
               <View style={header.ratingStars} >
@@ -128,19 +128,19 @@ export default class Review extends Component {
           </View>
 
           <View 
-           style={{ 
-             paddingTop: 13,
-             paddingBottom: 10.5,
-             paddingLeft: 15,
-             paddingRight: 15,
-           }}
-          >
+            style={{ 
+              paddingTop: 13,
+              paddingBottom: 10.5,
+              paddingLeft: 15,
+              paddingRight: 15,
+            }}
+            >
             <ScrollView style={comment.text}>
               <Text 
                 style={comment.longText}>
                 Pop artists aren’t often regarded as the best and as the most popular group at the same time. In the English-speaking pop world in the last decade, only maybe Adele, Beyonce and Taylor Swift have earned the same, simultaneous caliber of critical praise and concert tickets sold.{'\n'}{'\n'}In South Korea, however, there is BigBang. The establishedelectronic dance music that defines pop the world over.{'\n'}
 
-                </Text>
+              </Text>
             </ScrollView>
           </View>
 
@@ -150,7 +150,23 @@ export default class Review extends Component {
           navigator={this.props.navigator}
           links={[
             {
-              name: 'Go to SKO/TORP page'
+              name: 'Edit',
+              action: () => this.props.navigator.replace({
+                name: 'addReview'
+              })
+            },
+            {
+              name: 'Delete',
+              action: () => {
+                this.props.navigator.replace({
+                  name: 'customAlert',
+                  text: 'review',
+                })
+              } 
+            },
+            {
+              name: 'Go to SKO/TORP page',
+              action: () => this.props.navigator.pop()
             }
           ]}
         />

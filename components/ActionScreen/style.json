@@ -16,7 +16,7 @@
     flexDirection: 'row',
     paddingTop: 30,
     paddingBottom: 30,
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
     borderColor: 'rgba(217,217,217,0.2)',
   },
 
