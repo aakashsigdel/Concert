@@ -7,6 +7,7 @@ import {
 	ActivityIndicatorIOS,
 	Component,
 	Dimensions,
+	InteractionManager,
 	Image,
 	StyleSheet,
   ScrollView,
@@ -28,8 +29,17 @@ export default class Review extends Component {
     debugger;
     super();
     this.state = {
+      renderPlaceholderOnly: true,
       isLoading: false,
     };
+  }
+
+  componentDidMount () {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        renderPlaceholderOnly: false,
+      });
+    });
   }
 
 	_sharePhoto () {
@@ -81,9 +91,17 @@ export default class Review extends Component {
     this.props.navigator.push({name: 'profile', index: 5, userId: userId, userName: userName});
 	}
 
-  render() {
-    if(this.state.isLoading)
-      return <Loader />;
+  _renderPlaceholder() {
+    return (
+      <View style={{flex:1, backgroundColor: 'black'}}>
+      </View>
+    );
+  }
+
+	render() {
+    if(this.state.renderPlaceholderOnly)
+      return this._renderPlaceholder();
+
     return (
       <View style={{ flex: 1}}>
 
@@ -201,10 +219,9 @@ export default class Review extends Component {
             }
           ]}
         />
-      </View> 
-    )
+      </View>
+    ) ;
   }
-
 }
 
 let header = StyleSheet.create(require('./header.json'));

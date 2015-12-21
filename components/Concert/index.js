@@ -4,6 +4,7 @@ import React from 'react-native';
 import {
   Component,
   Image,
+  InteractionManager,
   MapView,
   StyleSheet,
   Text,
@@ -13,15 +14,40 @@ import {
 import HeaderBar from '../HeaderBar';
 
 export default class Concert extends Component {
+  constructor () {
+    super();
+    this.state = {
+      renderPlaceholder: true,
+    };
+  }
+
+  componentDidMount () {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        renderPlaceholder: false,
+      });
+    });
+  }
+
   _handelPress() {
     this.props.navigator.pop();
   }
+
+  _renderPlaceHolder () {
+    return (
+      <View style={{flex: 1, backgroundColor: 'black'}}></View>
+    );
+  }
+
   render () {
+    if(this.state.renderPlaceholder)
+      return this._renderPlaceHolder();
     return (
       <View style={styles.container}>
+
         <Image
           source={require('../../assets/images/background_crowd.png')}
-          style={styles.backgrondImage}
+          style={styles.backgroundImage}
         />
 
         {/* headerbar should be here*/}

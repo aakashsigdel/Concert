@@ -12,6 +12,7 @@
     flex: 1,
     paddingBottom: 20,
     backgroundColor: 'black',
+    alignItems: 'flex-end',
   },
   btnContainer: {
     flex: 1,

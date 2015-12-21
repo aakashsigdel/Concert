@@ -5,10 +5,11 @@ import {
 	ActivityIndicatorIOS,
 	Component,
 	Image,
+	InteractionManager,
 	ListView,
 	StyleSheet,
 	Text,
-	TouchableHighlight,
+	TouchableOpacity,
 	View,
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
@@ -88,11 +89,16 @@ export default class Reviews extends Component {
 
 	_handelPress() {
     this.props.navigator.push({name: 'review', index: 4});
+    // InteractionManager.runAfterInteractions(() => {
+    //   alert('hello');
+    //   this.props.navigator.push({name: 'review', index: 4});
+    // })
 	}
 
 	_renderReview(review) {
 		return(
-			<TouchableHighlight
+			<TouchableOpacity
+			activeOpacity={0.5}
 			onPress={this._handelPress.bind(this)}
 			>
         <View style={styles.reviewContainer}>
@@ -134,7 +140,7 @@ export default class Reviews extends Component {
           </View>
 
         </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
 		);
 	}
 

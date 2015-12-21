@@ -1,6 +1,7 @@
 {
   container: {
     flex: 2,
+    backgroundColor: 'black',
   },
 
   footer:{

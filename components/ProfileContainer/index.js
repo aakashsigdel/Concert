@@ -4,6 +4,7 @@ import React from 'react-native';
 import {
   Component,
   Image,
+  InteractionManager,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -35,6 +36,7 @@ export default class ProfileContainer extends Component {
       userId: 1,
       activeView: viewConstants.photos,
       userDetails: {data: {full_name: 'aakash'}},
+      renderPlaceholder: true,
     };
   }
 
@@ -46,6 +48,11 @@ export default class ProfileContainer extends Component {
 
   componentDidMount() {
     this._fetchData();
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        renderPlaceholder: false,
+      });
+    });
   }
   
   _fetchData () {
@@ -68,7 +75,15 @@ export default class ProfileContainer extends Component {
     this.props.navigator.push({name: 'follows', index: 8, type: type, userId: userId});
   }
 
+  _renderPlaceholder () {
+    return (
+      <View style={{flex: 1, backgroundColor: 'black'}}></View>
+    );
+  }
+
   render () {
+    if(this.state.renderPlaceholder)
+      return this._renderPlaceholder();
     return (
       <View style={styles.container}>
         <HeaderBar 

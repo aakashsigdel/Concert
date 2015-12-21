@@ -5,6 +5,7 @@ import {
   Component,
   Navigator,
   Image,
+  InteractionManager,
   AlertIOS,
   StyleSheet,
   Text,
@@ -26,11 +27,17 @@ export default class Photo extends Component {
     this.state = {
       photoDetail: null,
       isLoading: true,
+      renderPlaceholder: true,
     };
   }
 
   componentDidMount() {
     this._fetchData();
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        renderPlaceholder: false,
+      });
+    });
   }
 
   _fetchData() {
@@ -56,7 +63,6 @@ export default class Photo extends Component {
     });
 
 	  Share.shareOnFacebook({
-        'text':'Global democratized marketplace for art',
         'imagelink': this.state.photoDetail.image.original,
     },
     (result) => {
@@ -67,7 +73,15 @@ export default class Photo extends Component {
     });
   }
 
+  _renderPlaceHolder() {
+    return (
+      <View style={{flex: 1, backgroundColor: 'black'}}></View>
+    );
+  }
+
   render () {
+    if(this.state.renderPlaceholder)
+      return this._renderPlaceHolder();
     if(this.state.isLoading)
       return <Loader />
     return (

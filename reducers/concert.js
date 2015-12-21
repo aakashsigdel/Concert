@@ -11,7 +11,14 @@ export default function concertReducer(state={}, action) {
       });
     case types.REQUEST_CONCERT : 
       return Object.assign({}, state, {
-        concert: action.concert,
+        isFetching: true,
+      });
+    case types.RECEIVE_CONCERTS :
+      return Object.assign({}, state, {
+        isFetching: false,
+        period: action.period,
+        concerts: action.concerts,
+        lastUpdated: action.receivedAt,
       });
     default:
       return state;
