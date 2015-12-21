@@ -85,6 +85,7 @@ export default class Home extends Component {
         />
         <Swiper showButton={false}
           activeDot={this.state.disabledDot}
+          dot={this.state.disabledDot}
           paginationStyle={{position: 'absolute', top: -paginationHeight}}>
 
           <Reviews 
