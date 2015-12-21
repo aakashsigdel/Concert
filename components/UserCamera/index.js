@@ -81,6 +81,12 @@ export default class UserCamera extends Component {
   render () {
     return (
       <View style={[styles.container, {height: deviceHeight}]}>
+        <HeaderBar
+          left={require('../../assets/images/clearCopy.png')}
+          mid="TAKE A PHOTO"
+          clickableLeft={true}
+          clickFunctionLeft={() => this.props.navigator.pop()}
+        />
         <Camera
           ref="cam"
           aspect={Camera.constants.Aspect.fill}

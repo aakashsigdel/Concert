@@ -24,10 +24,6 @@ export default class ChooseConcert extends Component {
           clickFunctionLeft={() => this.props.navigator.jumpBack()}
           mid={'SELECT CONCERT'}
           right={'NEXT'}
-          clickableRight={true}
-          clickFunctionRight={() => this.props.navigator.push({
-            name: 'addReview',
-          })}
         />
         <View style={styles.body}>
           <View style={styles.searchHeader}>

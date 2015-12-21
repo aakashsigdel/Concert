@@ -33,6 +33,7 @@ import CameraConfirmation from './components/CameraConfirmation';
 import EditProfile from './components/EditProfile';
 import CustomAlert from './components/CustomAlert';
 import PhotoEditComment from './components/PhotoEditComment';
+import BlankLoader from './components/BlankLoader';
 
 class ConcertReview extends Component {
 	constructor() {
@@ -154,6 +155,10 @@ class ConcertReview extends Component {
         />;
       case 'photoEditComment':
         return <PhotoEditComment
+          navigator={navigator}
+        />
+      case 'blankLoader':
+        return <BlankLoader
           navigator={navigator}
         />
       default:

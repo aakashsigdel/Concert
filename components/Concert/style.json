@@ -2,18 +2,18 @@
 {
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
+    position: 'relative',
   },
-  backgrondImage: {
+  backgroundImage: {
     position: 'absolute',
-    top: 20,
+    backgroundColor: 'black',
+    top: 64,
     left: 0,
   },
   topView: {
     flex: 1.15, 
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -35,
   },
   bottomView: {
     flex: 1,
@@ -24,6 +24,7 @@
     width: 90,
     height: 109,
 		alignItems: 'stretch',
+    marginTop: -30
 	},
 	calanderHeader: {
 		backgroundColor: 'white',

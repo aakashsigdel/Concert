@@ -2,10 +2,12 @@
 
 import React from 'react-native';
 import {
+  AlertIOS,
   NativeModules,
 	ActivityIndicatorIOS,
 	Component,
 	Dimensions,
+	InteractionManager,
 	Image,
 	StyleSheet,
   ScrollView,
@@ -17,23 +19,42 @@ import {
 
 import Calander from '../Calander';
 import FAB from '../FAB';
+import Loader from '../../components.ios/Loader';
 
 let {deviceWidth, deviceHeight} = Dimensions.get('window');
 let Share = NativeModules.KDSocialShare;
 
 export default class Review extends Component {
   constructor() {
+    debugger;
     super();
-    this.state = {};
+    this.state = {
+      renderPlaceholderOnly: true,
+      isLoading: false,
+    };
+  }
+
+  componentDidMount () {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        renderPlaceholderOnly: false,
+      });
+    });
   }
 
 	_sharePhoto () {
+	  this.setState({
+      isLoading: true,
+    });
 	  Share.shareOnFacebook({
         'text':'Global democratized marketplace for art',
         'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg',
     },
     (result) => {
       console.log('aakash hero dai ko', result);
+      this.setState({
+        isLoading: false,
+      });
     });
   }
 
@@ -70,7 +91,17 @@ export default class Review extends Component {
     this.props.navigator.push({name: 'profile', index: 5, userId: userId, userName: userName});
 	}
 
-  render() {
+  _renderPlaceholder() {
+    return (
+      <View style={{flex:1, backgroundColor: 'black'}}>
+      </View>
+    );
+  }
+
+	render() {
+    if(this.state.renderPlaceholderOnly)
+      return this._renderPlaceholder();
+
     return (
       <View style={{ flex: 1}}>
 
@@ -86,7 +117,7 @@ export default class Review extends Component {
             SKO/TORP 
           </Text> 
           <TouchableOpacity
-           onPress={this._sharePhoto()}
+           onPress={this._sharePhoto.bind(this)}
            >
 
           <Image 
@@ -188,10 +219,9 @@ export default class Review extends Component {
             }
           ]}
         />
-      </View> 
-    )
+      </View>
+    ) ;
   }
-
 }
 
 let header = StyleSheet.create(require('./header.json'));
