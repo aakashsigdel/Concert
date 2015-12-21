@@ -101,4 +101,17 @@
 		color: 'white',
 		fontFamily: 'AvenirNext-DemiBold'
 	},
+  carousel: {
+    backgroundColor: 'transparent',
+    flex: 3,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  carouselText: {
+    color: 'white',
+    fontSize: 24,
+    fontFamily: 'AvenirNext-Regular',
+    marginTop: -20,
+  },
 }

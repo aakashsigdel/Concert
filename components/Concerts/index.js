@@ -142,6 +142,7 @@ export default class Concerts extends Component {
 			<ListView
 				dataSource={this.state.dataSource}
 				renderRow={this._renderConcert.bind(this)}
+        renderHeader={this.props.header}
 				style={styles.listView}	/>
       </View>
 		);

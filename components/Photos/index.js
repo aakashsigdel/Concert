@@ -84,6 +84,7 @@ export default class Photos extends Component {
 			<ListView
 				contentContainerStyle={styles.listView}
 				dataSource={this.state.dataSource}
+        renderHeader={this.props.header}
 				renderRow={this._renderPhotoThumbs.bind(this)} />
 		);
 	}

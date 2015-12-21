@@ -22,6 +22,42 @@ import SearchActive from '../SearchActive';
 var {width, height} = Dimensions.get('window');
 
 export default class Home extends Component {
+  constructor () {
+    super();
+    this.state = {
+      activeDot: <View style={styles.activeDot}/>,
+      dot: <View style={styles.dot}/>,
+      disabledDot: <View style={styles.disabledDot}/>,
+    };
+  }
+
+  _listHeader (id, title) {
+    return <View style={{
+                height: 200,  
+                justifyContent: 'center',
+                backgroundColor: 'transparent',
+                alignItems: 'center'
+              }}>
+                <Image
+                  source={require('../../assets/images/background_crowd.png')}
+                  style={{
+                    position: 'absolute', 
+                    top: 0,
+                    height: 200,
+                  }}
+                />
+
+                <Text style={styles.carouselText}>{{title}}</Text>
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  width: Dimensions.get('window').width,
+                }}>
+                  {[1,2,3,4].map( n => (n === id) ?  this.state.activeDot : this.state.dot)}
+                </View>
+            </View>
+  }
+
   render() {
     var paginationHeight =  height / 1.7;
     return(
@@ -47,90 +83,34 @@ export default class Home extends Component {
             userName: 'JIMMI ANDERSEN'
           })}
         />
-        <Image
-          source={require('../../assets/images/background_crowd.png')}
-          style={styles.backgroundImage}
-        />
         <Swiper showButton={false}
-        activeDot={
-          <View 
-          style={
-            {
-              backgroundColor:'#F9B400',
-              width: 7.5,
-              height: 7.5,
-              borderRadius: 4,
-              marginLeft: 3,
-              marginRight: 3,
-              marginTop: 3,
-              marginBottom: 3,
-            }
-          } />
-        }
-        dot={
-          <View style={
-            {
-              backgroundColor: 'transparent',
-              borderColor: '#F9B400',
-              borderWidth: 1,
-              width: 7.5,
-              height: 7.5,
-              borderRadius: 4,
-              marginLeft: 3,
-              marginRight: 3,
-              marginTop: 3,
-              marginBottom: 3,
-            }
-          } />
-        }
-            paginationStyle={{position: 'absolute', top: -paginationHeight}}
-        >
+          activeDot={this.state.disabledDot}
+          paginationStyle={{position: 'absolute', top: -paginationHeight}}>
 
-          <View style={styles.wrapper}>
-            <View style={styles.carousel}>
-              <Text style={styles.carouselText}>HOT REVIEWS</Text>
-            </View>
-            <View style={styles.lowerView}>
-              <Reviews 
-                concertId={12}
-                calanderHeader={true}
-                navigator={this.props.navigator}
-              />
-            </View>
-          </View>
+          <Reviews 
+            concertId={12}
+            calanderHeader={true}
+            navigator={this.props.navigator}
+            header={_=> this._listHeader(1, 'HOT REVIEWS')} 
+          />
 
-          <View style={styles.wrapper}>
-            <View style={styles.carousel}>
-              <Text style={styles.carouselText}>LATEST PHOTOS</Text>
-            </View>
-            <View style={styles.lowerView}>
-              <Photos 
-              concertId={12}
-              calanderHeader={true}
-              navigator={this.props.navigator}
-              />
-            </View>
-          </View>
+          <Photos 
+            concertId={12}
+            calanderHeader={true}
+            navigator={this.props.navigator}
+            header={_=> this._listHeader(2, 'LATEST PHOTOS')} 
+          />
 
-          <View style={styles.wrapper}>
-            <View style={styles.carousel}>
-              <Text style={styles.carouselText}>UPCOMING CONCERTS</Text>
-            </View>
-            <View style={styles.lowerView}>
-              <Concerts 
-              calanderHeader={true}
-              navigator={this.props.navigator}
-              />
-            </View>
-          </View>
 
-          <View style={styles.wrapper}>
-            <View style={styles.lowerView}>
-              <SearchActive 
-              navigator={this.props.navigator}
-              />
-            </View>
-          </View>
+          <Concerts 
+            calanderHeader={true}
+            navigator={this.props.navigator}
+            header={_=> this._listHeader(3, 'UPCOMING CONCERTS')} 
+          />
+
+          <SearchActive 
+            navigator={this.props.navigator}
+          />
 
         </Swiper>
       </View>
