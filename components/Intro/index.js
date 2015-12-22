@@ -11,20 +11,20 @@ import {
 } from 'react-native';
  import { FBSDKLoginButton } from 'react-native-fbsdklogin';
  import { FBSDKLoginManager } from 'react-native-fbsdklogin';
+import styles from './style';
 
 export default class Intro extends Component {
   _login() {
-    // FBSDKLoginManager.logInWithReadPermissions([], (error, result) => {
-    //   if (error)
-    //     alert('Error in Login');
-    //   else {
-    //     // if (result.isCancelled)
-    //       // alert('Login Cancelled');
-    //     // else
-    //       this.props.navigator.replace({name: 'home', index: 1});
-    //   }
-    // })
-           this.props.navigator.replace({name: 'home', index: 1});
+    FBSDKLoginManager.logInWithReadPermissions([], (error, result) => {
+      if (error)
+        alert('Error in Login');
+      else {
+        // if (result.isCancelled)
+          // alert('Login Cancelled');
+        // else
+          this.props.navigator.replace({name: 'home', index: 1});
+      }
+    })
   }
 
   render () {
@@ -54,27 +54,8 @@ export default class Intro extends Component {
               <Text style={styles.facebookLoginText}>LOGIN WITH FACEBOOK</Text>
             </View>
           </TouchableHighlight>
-          {/*
-        <FBSDKLoginButton
-          style={styles.facebookLoginBtn}
-          onLoginFinished={(error, result) => {
-            if (error) {
-              alert('Error logging in.');
-            } else {
-              if (result.isCancelled) {
-                alert('Login cancelled.');
-              } else {
-                this._login();
-              }
-            }
-          }}
-          onLogoutFinished={() => alert('Logged out.')}
-          readPermissions={[]}
-          publishPermissions={['publish_actions']}/>
-          */}
       </View>
     );
   }
 }
 
-var styles = StyleSheet.create(require('./style.json'));

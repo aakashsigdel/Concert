@@ -20,6 +20,7 @@ import {
 import Calander from '../Calander';
 import FAB from '../FAB';
 import Loader from '../../components.ios/Loader';
+import HeaderBar from '../../components/HeaderBar';
 import heroElement from './heroElement';
 
 const {deviceWidth, deviceHeight} = Dimensions.get('window');
@@ -118,27 +119,15 @@ export default class Review extends Component {
     return (
       <View style={{ flex: 1}}>
 
-        <View style={header.container}> 
-          <TouchableHighlight
-            onPress={this._handleBackPress.bind(this)}>
-            <Image
-              style={header.left} 
-              source={require('../../assets/images/clearCopy.png')} />
-          </TouchableHighlight>
-          <Text
-            style={ header.titleText }> 
-            SKO/TORP 
-          </Text> 
-          <TouchableOpacity
-           onPress={this._sharePhoto.bind(this)}
-           >
-
-          <Image 
-            style={header.right} 
-            source={require('../../assets/images/shareAlt.png')} 
-          /> 
-          </TouchableOpacity>
-        </View> 
+      <HeaderBar
+        left={require('../../assets/images/clearCopy.png')}
+        clickableLeft={true}
+        clickFunctionLeft={() => this.props.navigator.pop()}
+        mid="SKO/TORP"
+        right={require('../../assets/images/shareAlt.png')}
+        clickableRight={true}
+        clickFunctionRight={this._sharePhoto.bind(this)}
+      />
 
         <View style={heroElement.container}> 
           <Image 

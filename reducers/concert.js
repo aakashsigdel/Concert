@@ -20,6 +20,13 @@ export default function concertReducer(state={}, action) {
         concerts: action.concerts,
         lastUpdated: action.receivedAt,
       });
+    case types.RECEIVE_CONCERT :
+      return Object.assign({}, state, {
+        isFetching: false,
+        concert: action.concert,
+        details: action.details,
+        lastUpdated: action.receivedAt,
+      });
     default:
       return state;
   }

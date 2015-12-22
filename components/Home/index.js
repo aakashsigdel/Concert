@@ -6,6 +6,7 @@ import {
   Component,
   Dimensions,
   Image,
+  InteractionManager,
   Navigator,
   ScrollView,
   StyleSheet,
@@ -18,6 +19,7 @@ import HeaderBar from '../HeaderBar';
 import Reviews from '../Reviews';
 import Photos from '../Photos';
 import SearchActive from '../SearchActive';
+import styles from './style';
 
 var {width, height} = Dimensions.get('window');
 
@@ -28,7 +30,16 @@ export default class Home extends Component {
       activeDot: <View style={styles.activeDot}/>,
       dot: <View style={styles.dot}/>,
       disabledDot: <View style={styles.disabledDot}/>,
+      renderPlaceholder: true,
     };
+  }
+
+  componentDidMount () {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        renderPlaceholder: false,
+      });
+    });
   }
 
   _listHeader (id, title) {
@@ -44,6 +55,7 @@ export default class Home extends Component {
                     position: 'absolute', 
                     top: 0,
                     height: 200,
+                    width: width,
                   }}
                 />
 
@@ -58,8 +70,16 @@ export default class Home extends Component {
             </View>
   }
 
+  _renderPlaceholder () {
+    return (
+      <View style={{flex: 1, backgroundColor: 'black'}}></View>
+    );
+  }
+
   render() {
     var paginationHeight =  height / 1.7;
+    if (this.state.renderPlaceholder)
+      return this._renderPlaceholder();
     return(
       <View style={styles.container}>
         <HeaderBar 
@@ -82,9 +102,11 @@ export default class Home extends Component {
             userId: 1,
             userName: 'JIMMI ANDERSEN'
           })}
+          styleRight={{borderColor: '#F9B400', borderWidth: 1, borderRadius: 11}}
         />
         <Swiper showButton={false}
           activeDot={this.state.disabledDot}
+          dot={this.state.disabledDot}
           paginationStyle={{position: 'absolute', top: -paginationHeight}}>
 
           <Reviews 
@@ -117,5 +139,3 @@ export default class Home extends Component {
     );
   }  
 }
-
-var styles = StyleSheet.create(require('./style.json'));

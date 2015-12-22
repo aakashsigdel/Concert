@@ -17,6 +17,7 @@ import HeaderBar from '../HeaderBar';
 import Loader from '../../components.ios/Loader';
 import Calander from '../Calander';
 import FAB from '../FAB';
+import styles from './style'
 
 var Share = NativeModules.KDSocialShare;
 
@@ -184,4 +185,3 @@ export default class Photo extends Component {
   }
 }
 
-let styles=StyleSheet.create(require('./style.json'));

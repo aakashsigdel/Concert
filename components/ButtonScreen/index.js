@@ -8,9 +8,8 @@ import React, {
   View
 } from 'react-native';
 
-import HeaderBar from '../HeaderBar'
-
-const styles = require('./style.json');
+import HeaderBar from '../HeaderBar';
+import styles from './style';
 
 export default class ButtonsScreen extends Component {
   constructor(){
