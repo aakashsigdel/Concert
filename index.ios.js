@@ -173,7 +173,7 @@ class ConcertReview extends Component {
 	render () {
 		return (
 		  <Navigator
-        initialRoute={{name: 'reviews', index: 0}}
+        initialRoute={{name: 'login', index: 0}}
         renderScene={this._renderScene}
         configureScene={(route) => {
           if (route.sceneConfig) {
@@ -186,7 +186,7 @@ class ConcertReview extends Component {
   }
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
 	mainContainer: {
 		flex: 1
 	}

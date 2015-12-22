@@ -8,6 +8,8 @@ import {
   InteractionManager,
   StyleSheet,
   ListView,
+  StaticContainer,
+  ScrollView,
   Text,
   TouchableHighlight,
   View,
@@ -58,7 +60,7 @@ export default class ProfileContainer extends Component {
   }
   
   _fetchData () {
-    let query_url = QUERY_URL.replace('userId', this.props.userId);
+    let query_url = QUERY_URL.replace('userId', this.props.userId || 1);
     fetch (query_url)
       .then ((response) => response.json())
       .then ((responseData) => {
@@ -73,7 +75,7 @@ export default class ProfileContainer extends Component {
       }).done();
   }
 
-  _handlePress(type, userId) {
+  _handlePress(type, userId=1) {
     this.props.navigator.push({name: 'follows', index: 8, type: type, userId: userId});
   }
 
@@ -84,73 +86,69 @@ export default class ProfileContainer extends Component {
   }
 
   _renderHeader() {
-    return <View style={styles.topView}>
-          <View style={styles.noBio}>
-            <TouchableHighlight
-              onPress={this._handlePress.bind(this, 'followers', this.state.userId)}>
-              <View style={styles.follow}>
-                <Text style={styles.followNum}>
-                  {this.state.followersNum}
-                </Text>
-                <Text style={styles.followText}>FOLLOWERS</Text>
-              </View>
-            </TouchableHighlight>
-            <Image 
-              source={require('../../assets/images/userpicCopy.png')}
-              style={styles.profileImage} 
-            />
-            <TouchableHighlight
-              onPress={this._handlePress.bind(this, 'following', this.state.userId)}>
-              <View style={styles.follow}>
-                <Text style={styles.followNum}>
-                  {this.state.followingNum}
-                </Text>
-                <Text style={styles.followText}>FOLLOWING</Text>
-              </View>
-            </TouchableHighlight>
-          </View>
-          <Text style={styles.bio}>
-            This is who i am. In eum odio menandri, 
-            delenit antiopam pri eu, 
-            falli inter es set at eos Has te novum perpetua.... 
-          </Text>
-
-          <View style={styles.userBtn}>
-            {(()=>{
-              if(this.props.isLoggedInUser){
-                return (
-                  <TouchableHighlight
-                    underlayColor='#F9A000'
-                    style={styles.btnTouch}
-                    onPress={()=> this.props.navigator.push({
-                      name: 'editProfile',
-                      index: 10,
-                    })}>
-
-                    <Text style={styles.btnText}>EDIT</Text>
-                  </TouchableHighlight>
-                  )
-              }else{
-                return(
-                  <TouchableHighlight
-                    underlayColor='#F9A000'
-                    style={styles.btnTouch}>
-                    <Text style={styles.btnText}>FOLLOW</Text>
-                  </TouchableHighlight>
-                  )
-              }
-            })()}
-          </View>
+    return (
+      <View style={styles.topView}>
+        <View style={styles.noBio}>
+          <TouchableHighlight>
+            <View style={styles.follow}>
+              <Text style={styles.followNum}>
+                {this.state.followersNum}
+              </Text>
+              <Text style={styles.followText}>FOLLOWERS</Text>
+            </View>
+          </TouchableHighlight>
+          <Image 
+            source={require('../../assets/images/userpicCopy.png')}
+            style={styles.profileImage} 
+          />
+          <TouchableHighlight
+            onPress={this._handlePress.bind(this, 'following', this.state.userId)}>
+            <View style={styles.follow}>
+              <Text style={styles.followNum}>
+                {this.state.followingNum}
+              </Text>
+              <Text style={styles.followText}>FOLLOWING</Text>
+            </View>
+          </TouchableHighlight>
         </View>
+        <Text style={styles.bio}>
+          This is who i am. In eum odio menandri, 
+          delenit antiopam pri eu, 
+          falli inter es set at eos Has te novum perpetua.... 
+        </Text>
 
+        <View style={styles.userBtn}>
+          {(()=>{
+            if(this.props.isLoggedInUser){
+              return (
+                <TouchableHighlight
+                  underlayColor='#F9A000'
+                  style={styles.btnTouch}
+                  onPress={()=> this.props.navigator.push({
+                    name: 'editProfile',
+                    index: 10,
+                  })}>
+
+                  <Text style={styles.btnText}>EDIT</Text>
+                </TouchableHighlight>
+                )
+            }else{
+              return(
+                <TouchableHighlight
+                  underlayColor='#F9A000'
+                  style={styles.btnTouch}>
+                  <Text style={styles.btnText}>FOLLOW</Text>
+                </TouchableHighlight>
+                )
+            }
+          })()}
+        </View>
+      </View>
+    )
   }
 
   _renderSectionHeader(){
     return <InternalNavigation 
-      style={{
-        height: 40,
-        width: VIEWPORT.width
-      }}
       setActiveView={this.setActiveView.bind(this)} 
       activeView={this.state.activeView}
     />
@@ -168,7 +166,6 @@ export default class ProfileContainer extends Component {
           clickableLeft={true}
           clickFunctionLeft={ _=> {this.props.navigator.pop()}}
         />
-
         {( _ => {
           switch(this.state.activeView) {
             case 'Photos': 
@@ -196,9 +193,7 @@ export default class ProfileContainer extends Component {
               />;
           }
         })()}
-
-      {/* </ListView> */}
-    </View>
+      </View>
     );
   }
 }

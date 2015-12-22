@@ -9,8 +9,9 @@ import {
 	TouchableHighlight,
 	Component
 } from 'react-native';
+import styles from './style';
 
-var viewConstants = {
+const viewConstants = {
 	photos: 'Photos',
 	reviews: 'Reviews',
 	concerts: 'Concerts'
@@ -24,6 +25,7 @@ export default class InternalNavigation extends Component {
 	render() {
 		return(
 			<View style={styles.navContainer}>
+
 				<TouchableHighlight style={styles.navTextContainer}
 					underlayColor="grey"
 					onPress={this._setViewAndHighlight.bind(this, viewConstants.reviews)}>
@@ -32,6 +34,7 @@ export default class InternalNavigation extends Component {
 						REVIEWS
 					</Text>
 				</TouchableHighlight>
+
 				<TouchableHighlight style={styles.navTextContainer}
 					underlayColor="grey"
 					onPress={this._setViewAndHighlight.bind(this, viewConstants.photos)}>
@@ -40,17 +43,16 @@ export default class InternalNavigation extends Component {
 						PHOTOS
 					</Text>
 				</TouchableHighlight>
-				<TouchableHighlight style={styles.navTextContainer}
-					underlayColor="grey"
-					onPress={this._setViewAndHighlight.bind(this, viewConstants.concerts)}>
-					<Text style={[styles.navTextConcerts,
-						(this.props.activeView === viewConstants.concerts) && styles.textOpaque]}>
-						CONCERTS
-					</Text>
-				</TouchableHighlight>
+
+        <TouchableHighlight style={styles.navTextContainer}
+          underlayColor="grey"
+          onPress={this._setViewAndHighlight.bind(this, viewConstants.concerts)}>
+          <Text style={[styles.navTextConcerts,
+            (this.props.activeView === viewConstants.concerts) && styles.textOpaque]}>
+            CONCERTS
+          </Text>
+        </TouchableHighlight>
 			</View>
 		);
 	}
 }
-
-var styles = StyleSheet.create(require('./style.json'));

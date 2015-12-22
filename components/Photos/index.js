@@ -12,10 +12,11 @@ import {
 	Dimensions,
 	Component
 } from 'react-native';
+
 import Loader from '../../components.ios/Loader';
+import styles from './style.js';
 
-
-var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id/photos?access_token=abcde';
+const QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id/photos?access_token=abcde';
 export default class Photos extends Component {
 	constructor(props) {
 		super(props);
@@ -85,7 +86,7 @@ export default class Photos extends Component {
 				contentContainerStyle={styles.listView}
 				dataSource={this.state.dataSource}
         renderHeader={this.props.header}
-        renderSectionHeader={this.props.sectionHeader}
+        renderSectionHeader={this.props.sectionHeader || null}
 				renderRow={this._renderPhotoThumbs.bind(this)} />
 		);
 	}
@@ -93,4 +94,3 @@ export default class Photos extends Component {
 
 //Photos.propTypes = { concertId: React.propTypes.string.isRequired };
 
-var styles = StyleSheet.create(require('./style.json'));

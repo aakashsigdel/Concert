@@ -1,7 +1,13 @@
-{
+'use strict';
+import {Dimensions, StyleSheet} from 'react-native';
+
+const VIEWPORT = Dimensions.get('window');
+
+export default styles = StyleSheet.create({
 	navContainer: {
 		flexDirection: 'row',
 		backgroundColor: 'black',
+    width: VIEWPORT.width,
 		height: 48,
 		alignItems: 'stretch',
 	},
@@ -34,4 +40,4 @@
 		color: 'white',
 		opacity: 1 
 	}
-}
+});
