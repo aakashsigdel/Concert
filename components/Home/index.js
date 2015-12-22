@@ -6,6 +6,7 @@ import {
   Component,
   Dimensions,
   Image,
+  InteractionManager,
   Navigator,
   ScrollView,
   StyleSheet,
@@ -28,7 +29,16 @@ export default class Home extends Component {
       activeDot: <View style={styles.activeDot}/>,
       dot: <View style={styles.dot}/>,
       disabledDot: <View style={styles.disabledDot}/>,
+      renderPlaceholder: true,
     };
+  }
+
+  componentDidMount () {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        renderPlaceholder: false,
+      });
+    });
   }
 
   _listHeader (id, title) {
@@ -58,8 +68,16 @@ export default class Home extends Component {
             </View>
   }
 
+  _renderPlaceholder () {
+    return (
+      <View style={{flex: 1, backgroundColor: 'black'}}></View>
+    );
+  }
+
   render() {
     var paginationHeight =  height / 1.7;
+    if (this.state.renderPlaceholder)
+      return this._renderPlaceholder();
     return(
       <View style={styles.container}>
         <HeaderBar 
