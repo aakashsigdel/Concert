@@ -40,8 +40,8 @@ export default class SearchActive extends Component {
       case 'reviews' :
         return (
           <Reviews 
-          filterText={this.state.filterText} 
-          navigator={this.props.navigator}
+            filterText={this.state.filterText} 
+            navigator={this.props.navigator}
           />
         );
       case 'concerts' :
@@ -55,15 +55,15 @@ export default class SearchActive extends Component {
       case 'users':
         return (
           <Users
-          filterText={this.state.filterText}
-          navigator={this.props.navigator}
+            filterText={this.state.filterText}
+            navigator={this.props.navigator}
           />
         );
       case 'artists':
         return (
           <Artists
-          filterText={this.state.filterText} 
-          navigator={this.props.navigator} 
+            filterText={this.state.filterText} 
+            navigator={this.props.navigator} 
           />
         );
       default:
@@ -74,9 +74,14 @@ export default class SearchActive extends Component {
   }
 
   _handlePress(name, index) {
-    this.navigator.push({name: name, index: index});
+    try{
+      this.navigator.jumpTo({name: name})
+    }catch(e){
+      this.navigator.push({name: name, index: index});
+    }
     this.setState({
       activeView: name,
+      index: index,
     })
   }
 
@@ -144,6 +149,7 @@ export default class SearchActive extends Component {
           <View style={styles.list}>
             <Navigator
               initialRoute={{name: 'reviews', index: 0}}
+              style={{backgroundColor: 'black'}}
               renderScene={this._renderScene.bind(this)}
               configureScene={(route) => Navigator.SceneConfigs.FloatFromBottom}
             />

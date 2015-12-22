@@ -9,6 +9,7 @@
     "react-native": "0.14.2",
     "react-native-cropping": "0.0.4",
     "react-native-linear-gradient": "^1.3.0",
+    "react-native-scrollable-tab-view": "^0.3.3",
     "react-native-social-share": "^0.5.0",
     "react-native-swiper": "^1.3.0",
     "react-native-timer-mixin": "^0.11.0",
