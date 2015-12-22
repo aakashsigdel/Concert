@@ -26,24 +26,27 @@ export default class HeaderBar extends Component {
       this.props.left, 'left', 
       this.props.clickableLeft,
       this.props.clickFunctionLeft,
-      0
+      0,
+      this.props.styleLeft
     );
     this._formatHeaderBar(
       this.props.mid, 'mid',
       this.props.clickableMid,
       this.props.clickFunctionMid,
-      1
+      1,
+      this.props.styleMid
     );
     this._formatHeaderBar(
       this.props.right, 'right',
       this.props.clickableRight,
       this.props.clickFunctionRight,
-      2
+      2,
+      this.props.styleRight
     );
   }
 
   // check if image or text should be displayed in HeaderBar
-  _formatHeaderBar (item, styleInitial, clickable, clickFunction=false, index) {
+  _formatHeaderBar (item, styleInitial, clickable, clickFunction=false, index, style) {
     if(item !== null) {
       if(typeof(item) === 'string') {
         if(clickable) {
@@ -52,7 +55,7 @@ export default class HeaderBar extends Component {
               key={index}
               onPress={clickFunction}
             >
-              <Text style={styles[styleInitial + 'Text']}>
+              <Text style={[styles[styleInitial + 'Text'], style]}>
               {item.toUpperCase()}
               </Text>
             </TouchableHighlight>
@@ -62,7 +65,7 @@ export default class HeaderBar extends Component {
           this.headerJSX.push (
             <Text 
               key={index}
-              style={styles[styleInitial + 'Text']}
+              style={[styles[styleInitial + 'Text'], style]}
             >
               {item.toUpperCase()}
             </Text>
@@ -78,7 +81,7 @@ export default class HeaderBar extends Component {
             >
               <Image
               source={item}
-              style={styles[styleInitial + 'Image']}
+              style={[styles[styleInitial + 'Image'], style]}
               />
             </TouchableHighlight>
           );
@@ -87,7 +90,7 @@ export default class HeaderBar extends Component {
             <Image
               key={index}
               source={item}
-              style={styles[styleInitial + 'Image']}
+              style={[styles[styleInitial + 'Image'], style]}
             />
           );
           

@@ -38,11 +38,6 @@
 		fontSize: 11,
 		fontFamily: 'AvenirNext-DemiBold'
 	},
-	locAndTime: {
-		color: 'white',
-		fontSize: 10,
-		fontFamily: 'AvenirNext-DemiBold'
-	},
 	comment: {
 		color: 'white',
 		fontSize: 11,
@@ -72,46 +67,4 @@
     bottom: 0,
     left: 0,
 	},
-	calendarHeader: {
-		width: 28.5,
-		height: 11,
-		borderColor: 'white',
-		borderWidth: 1,
-		borderBottomWidth: 0,
-		backgroundColor: 'white',
-		alignItems: 'center',
-		justifyContent: 'center',
-    overflow: 'hidden',
-	},
-	calendarBody: {
-		width: 28.5,
-		height: 23,
-    borderWidth: 0,
-    backgroundColor: 'rgb(17,17,17)',
-		alignItems: 'center',
-		justifyContent: 'center'
-	},
-	calendarMonth: {
-		fontSize: 7.5,
-		fontFamily: 'AvenirNext-DemiBold',
-		color: 'black'
-	},
-	calendarDay: {
-		fontSize: 15,
-		color: 'white',
-		fontFamily: 'AvenirNext-DemiBold'
-	},
-  carousel: {
-    backgroundColor: 'transparent',
-    flex: 3,
-    height: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  carouselText: {
-    color: 'white',
-    fontSize: 24,
-    fontFamily: 'AvenirNext-Regular',
-    marginTop: -20,
-  },
 }

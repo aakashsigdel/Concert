@@ -13,6 +13,7 @@ import {
 	View,
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
+import Calander from '../Calander';
 
 
 var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/12/reviews?access_token=abcde';
@@ -110,14 +111,10 @@ export default class Reviews extends Component {
             
             {/*calendar Component*/}
             <View style={styles.calendarContainer}>
-              <View style={styles.calendarHeader}>
-                <Text style={styles.calendarMonth}>
-                  {'sep'.toUpperCase()}
-                </Text>
-              </View>
-              <View style={styles.calendarBody}>
-                <Text style={styles.calendarDay}>{17}</Text>
-              </View>
+              <Calander 
+                month="sep"
+                day={17}
+              />
             </View>
 
           {/*Review Details*/}

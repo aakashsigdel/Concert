@@ -102,6 +102,7 @@ export default class Home extends Component {
             userId: 1,
             userName: 'JIMMI ANDERSEN'
           })}
+          styleRight={{borderColor: '#F9B400', borderWidth: 1, borderRadius: 11}}
         />
         <Swiper showButton={false}
           activeDot={this.state.disabledDot}

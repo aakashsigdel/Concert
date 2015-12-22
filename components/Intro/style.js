@@ -38,7 +38,7 @@ let styles  = {
   },
   facebookLoginBtn: {
     position: 'absolute',
-    height: 60,
+    height: 0.1 * VIEWPORT.height,
     backgroundColor: '#1C1C1C',
     bottom: 0,
     right: 0,
