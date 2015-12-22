@@ -2,36 +2,41 @@
 
 import React from 'react-native';
 import {
-  AlertIOS,
-  NativeModules,
 	ActivityIndicatorIOS,
 	Component,
 	Dimensions,
-	InteractionManager,
 	Image,
+	InteractionManager,
 	StyleSheet,
-  ScrollView,
 	Text,
 	TouchableHighlight,
 	TouchableOpacity,
 	View,
+  AlertIOS,
+  NativeModules,
+  ScrollView,
 } from 'react-native';
 
 import Calander from '../Calander';
 import FAB from '../FAB';
 import Loader from '../../components.ios/Loader';
 import HeaderBar from '../../components/HeaderBar';
+import heroElement from './heroElement';
 
-let {deviceWidth, deviceHeight} = Dimensions.get('window');
-let Share = NativeModules.KDSocialShare;
+const {deviceWidth, deviceHeight} = Dimensions.get('window');
+const Share = NativeModules.KDSocialShare;
+const header = StyleSheet.create(require('./header.json'));
+const comment = StyleSheet.create(require('./comment.json'));
 
 export default class Review extends Component {
   constructor() {
-    debugger;
     super();
     this.state = {
       renderPlaceholderOnly: true,
       isLoading: false,
+      isLiked: false,
+      likeCount: 328,
+      heartImage: require('../../assets/images/like.png'),
     };
   }
 
@@ -57,6 +62,14 @@ export default class Review extends Component {
         isLoading: false,
       });
     });
+  }
+
+  _toggleLike() {
+    this.setState({
+      isLiked: !this.state.isLiked,
+      heartImage: this.state.isLiked?  require('../../assets/images/like.png' ) : require('../../assets/images/liked.png'),
+      likeCount: this.state.isLiked? 328 : 329,
+    })
   }
 
 	// TODO: this function should be in a global module
@@ -135,32 +148,33 @@ export default class Review extends Component {
 
         <View style={comment.container} > 
           <View style={comment.header} >
-            <Image
-              style={comment.starImage}
-              source={require('../../assets/images/userpicCopy.png')}
-            />
-            <View style={comment.headerText}>
-              <TouchableHighlight
-                onPress={this._handleUserPress.bind(this, 1, 'JIMMI ANDERSEN')}
-                >
+            <TouchableOpacity
+              onPress={this._handleUserPress.bind(this, 1, 'JIMMI ANDERSEN')}
+              style={{flex: 1, flexDirection: 'row'}}>
+              <Image
+                style={comment.starImage}
+                source={require('../../assets/images/userpicCopy.png')}
+              />
+              <View style={comment.headerText}>
                 <Text style={comment.whiteText} >JIMMI ANDERSEN</Text>
-              </TouchableHighlight>
-              <View style={header.ratingStars} >
-                {this._getStars(3)}
+                <View style={header.ratingStars} >
+                  {this._getStars(3)}
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
 
-            <View
-              style={comment.starContainer} >
+            <TouchableOpacity
+              onPress={this._toggleLike.bind(this)}
+              style={comment.starContainer}>
               <Image 
-                source={require('../../assets/images/like.png')}
+                source={this.state.heartImage}
                 style={comment.likeImage}
               />
               <Text
                 style={comment.likesText}>
-                329 LIKES
+                {this.state.likeCount} LIKES
               </Text>
-            </View>
+            </TouchableOpacity>
 
 
           </View>
@@ -213,6 +227,3 @@ export default class Review extends Component {
   }
 }
 
-let header = StyleSheet.create(require('./header.json'));
-let heroElement = StyleSheet.create(require('./heroElement.json'));
-let comment = StyleSheet.create(require('./comment.json'));

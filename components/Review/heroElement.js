@@ -1,4 +1,8 @@
-{
+'use strict';
+import React, { Dimensions, StyleSheet } from 'react-native';
+const VIEWPORT = Dimensions.get('window');
+
+export default heroElement = StyleSheet.create({
   container: {
     flex: 2,
     backgroundColor: 'black',
@@ -24,5 +28,6 @@
   },
 
   image: {
+    width: VIEWPORT.width,
   },
-}
+});

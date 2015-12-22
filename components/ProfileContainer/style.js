@@ -1,11 +1,15 @@
-{
+'use strict';
+import React, {Dimensions, StyleSheet} from 'react-native';
+const VIEWPORT = Dimensions.get('window');
+
+export default styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
   },
   topView: {
     marginTop: 15,
-    flex: 2,
+    width: VIEWPORT.width,
     paddingLeft: 15,
     paddingRight: 15,
     alignItems: 'center',
@@ -66,4 +70,7 @@
     fontSize: 12,
     fontFamily: 'AvenirNext-DemiBold',
   },
-}
+  internalNavigation: {
+    width: VIEWPORT.width,
+  },
+});

@@ -31,6 +31,7 @@
 		30EF63DF1C22D71200A5203F /* libRCTFBSDKLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30EF63DE1C22D6F900A5203F /* libRCTFBSDKLogin.a */; };
 		30EF63E11C22D73F00A5203F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30EF63E01C22D73F00A5203F /* FBSDKLoginKit.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		8F7260F91C2810E5005E0CF2 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7260E91C280884005E0CF2 /* libBVLinearGradient.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +140,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		8F7260E81C280884005E0CF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F7260E41C280884005E0CF2 /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = BVLinearGradient;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -173,6 +181,7 @@
 		30EF63E01C22D73F00A5203F /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		8F7260E41C280884005E0CF2 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +214,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				8F7260F91C2810E5005E0CF2 /* libBVLinearGradient.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +370,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8F7260E41C280884005E0CF2 /* BVLinearGradient.xcodeproj */,
 				308C064D1C23D3B1005C5DBC /* KDSocialShare.h */,
 				308C064E1C23D3B1005C5DBC /* KDSocialShare.m */,
 				30EF63D91C22D6F900A5203F /* RCTFBSDKLogin.xcodeproj */,
@@ -407,6 +418,14 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* ConcertReview.app */,
 				00E356EE1AD99517003FC87E /* ConcertReviewTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8F7260E51C280884005E0CF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8F7260E91C280884005E0CF2 /* libBVLinearGradient.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -480,6 +499,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 8F7260E51C280884005E0CF2 /* Products */;
+					ProjectRef = 8F7260E41C280884005E0CF2 /* BVLinearGradient.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -642,6 +665,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8F7260E91C280884005E0CF2 /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 8F7260E81C280884005E0CF2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
