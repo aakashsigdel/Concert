@@ -1,10 +1,19 @@
-{
+import {
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
+
+const VIEWPORT = Dimensions.get('window');
+
+let styles  = {
   container: {
     position: 'relative',
     flex: 1,
   },
   backgroundImage: {
     position: 'absolute',
+    width: VIEWPORT.width,
+    height: VIEWPORT.height,
   },
   subContainer: {
     flex: 1,
@@ -50,3 +59,4 @@
     marginRight: 26.5,
   },
 }
+export default styles = StyleSheet.create(styles);

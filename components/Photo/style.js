@@ -1,4 +1,10 @@
-{
+import {
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
+
+let VIEWPORT = Dimensions.get('window');
+let styles = {
   container: {
     flex: 1,
     backgroundColor: 'black',
@@ -16,7 +22,7 @@
   photoDetail: {
     position: 'absolute',
     bottom: 0,
-    width: 375,
+    width: VIEWPORT.width,
     height: 50,
     backgroundColor: 'rgba(17, 17, 17, 0.5)',
     flexDirection: 'row',
@@ -74,3 +80,5 @@
     paddingLeft: 15,
   }
 }
+
+export default StyleSheet.create(styles);

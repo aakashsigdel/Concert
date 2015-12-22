@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
+import styles from './style';
 
 export default class Concert extends Component {
   constructor () {
@@ -121,4 +122,3 @@ export default class Concert extends Component {
   }
 }
 
-let styles = StyleSheet.create(require('./style.json'));

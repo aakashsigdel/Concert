@@ -11,6 +11,7 @@ import {
 } from 'react-native';
  import { FBSDKLoginButton } from 'react-native-fbsdklogin';
  import { FBSDKLoginManager } from 'react-native-fbsdklogin';
+import styles from './style';
 
 export default class Intro extends Component {
   _login() {
@@ -58,4 +59,3 @@ export default class Intro extends Component {
   }
 }
 
-var styles = StyleSheet.create(require('./style.json'));

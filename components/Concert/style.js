@@ -1,5 +1,12 @@
 // vim: foldlevel=1
-{
+import {
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
+
+let VIEWPORT = Dimensions.get('window');
+
+let styles = {
   container: {
     flex: 1,
     position: 'relative',
@@ -7,6 +14,7 @@
   backgroundImage: {
     position: 'absolute',
     backgroundColor: 'black',
+    width: VIEWPORT.width,
     top: 64,
     left: 0,
   },
@@ -58,7 +66,7 @@
   mapview: {
     position: 'absolute',
     height: 300,
-    width: 375,
+    width: VIEWPORT.width,
     bottom: 0,
     left: 0,
   },
@@ -117,3 +125,5 @@
     alignItems: 'center',
   }
 }
+
+export default styles = StyleSheet.create(styles);

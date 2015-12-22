@@ -19,6 +19,7 @@ import HeaderBar from '../HeaderBar';
 import Reviews from '../Reviews';
 import Photos from '../Photos';
 import SearchActive from '../SearchActive';
+import styles from './style';
 
 var {width, height} = Dimensions.get('window');
 
@@ -54,6 +55,7 @@ export default class Home extends Component {
                     position: 'absolute', 
                     top: 0,
                     height: 200,
+                    width: width,
                   }}
                 />
 
@@ -136,5 +138,3 @@ export default class Home extends Component {
     );
   }  
 }
-
-var styles = StyleSheet.create(require('./style.json'));

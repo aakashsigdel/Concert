@@ -1,4 +1,11 @@
-{
+import {
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
+
+const VIEWPORT = Dimensions.get('window');
+
+let styles = {
   container: {
 		backgroundColor: '#1C1C1C',
     flex: 1,
@@ -51,3 +58,5 @@
     backgroundColor: 'rgba(0,0,0,0)',
   }
 }
+
+export default styles = StyleSheet.create(styles);
