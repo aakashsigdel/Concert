@@ -2,26 +2,26 @@
 
 import React from 'react-native';
 import {
-  AlertIOS,
-  NativeModules,
 	ActivityIndicatorIOS,
 	Component,
 	Dimensions,
-	InteractionManager,
 	Image,
+	InteractionManager,
 	StyleSheet,
-  ScrollView,
 	Text,
 	TouchableHighlight,
 	TouchableOpacity,
 	View,
+  AlertIOS,
+  NativeModules,
+  ScrollView,
 } from 'react-native';
 
 import Calander from '../Calander';
 import FAB from '../FAB';
 import Loader from '../../components.ios/Loader';
-
 import heroElement from './heroElement';
+
 const {deviceWidth, deviceHeight} = Dimensions.get('window');
 const Share = NativeModules.KDSocialShare;
 const header = StyleSheet.create(require('./header.json'));
@@ -29,7 +29,6 @@ const comment = StyleSheet.create(require('./comment.json'));
 
 export default class Review extends Component {
   constructor() {
-    debugger;
     super();
     this.state = {
       renderPlaceholderOnly: true,

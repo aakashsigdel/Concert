@@ -1,11 +1,13 @@
-'use strict'
+'use strict';
 
 import React from 'react-native';
 import {
   Component,
+  Dimensions,
   Image,
   InteractionManager,
   StyleSheet,
+  ListView,
   Text,
   TouchableHighlight,
   View,
@@ -15,18 +17,18 @@ import Reviews from '../Reviews';
 import Concerts from '../Concerts';
 import InternalNavigation from '../InternalNavigation';
 import HeaderBar from '../HeaderBar';
+import styles from './style';
 
-var viewConstants = {
-	photos: 'Photos',
-	reviews: 'Reviews',
-	concerts: 'Concerts'
-};
-let QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/users/userId?access_token=abcde';
+const QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/users/userId?access_token=abcde';
+const VIEWPORT = Dimensions.get('window');
 
 export default class ProfileContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1.id !== row2.id
+      }),
       followersNum: 0,
       followingNum: 0,
       bio: '',
@@ -34,7 +36,7 @@ export default class ProfileContainer extends Component {
       isLoggedInUser: this.props.isLoggedInUser,
       userName: this.props.userName, // not anti-pattern because it is not used for syncing data
       userId: 1,
-      activeView: viewConstants.photos,
+      activeView: 'Photos',
       userDetails: {data: {full_name: 'aakash'}},
       renderPlaceholder: true,
     };
@@ -81,23 +83,11 @@ export default class ProfileContainer extends Component {
     );
   }
 
-  render () {
-    if(this.state.renderPlaceholder)
-      return this._renderPlaceholder();
-    return (
-      <View style={styles.container}>
-        <HeaderBar 
-          left={require('../../assets/images/backIcon.png')}
-          mid={this.state.userName}
-          right={require('../../assets/images/settings.png')}
-          clickableLeft={true}
-          clickFunctionLeft={() => {this.props.navigator.pop()}}
-        />
-        <View style={styles.topView}>
+  _renderHeader() {
+    return <View style={styles.topView}>
           <View style={styles.noBio}>
             <TouchableHighlight
-              onPress={this._handlePress.bind(this, 'followers', this.state.userId)}
-            >
+              onPress={this._handlePress.bind(this, 'followers', this.state.userId)}>
               <View style={styles.follow}>
                 <Text style={styles.followNum}>
                   {this.state.followersNum}
@@ -136,53 +126,79 @@ export default class ProfileContainer extends Component {
                       name: 'editProfile',
                       index: 10,
                     })}>
-                    
+
                     <Text style={styles.btnText}>EDIT</Text>
                   </TouchableHighlight>
                   )
-                }else{
-                  return(
-                    <TouchableHighlight
-                      underlayColor='#F9A000'
-                      style={styles.btnTouch}>
-                      <Text style={styles.btnText}>FOLLOW</Text>
-                    </TouchableHighlight>
-                    )
-                }
+              }else{
+                return(
+                  <TouchableHighlight
+                    underlayColor='#F9A000'
+                    style={styles.btnTouch}>
+                    <Text style={styles.btnText}>FOLLOW</Text>
+                  </TouchableHighlight>
+                  )
+              }
             })()}
           </View>
         </View>
 
-        <View style={styles.bottomView}>
-          <InternalNavigation 
-            setActiveView={this.setActiveView.bind(this)} 
-            activeView={this.state.activeView} />
-          {
-            (() => {
-              switch(this.state.activeView) {
-                case viewConstants.photos: 
-                  return <Photos 
-                    navigator={this.props.navigator}
-                    concertId={this.props.concertId}
-                    />
-                case viewConstants.reviews:
-                  return <Reviews 
-                    navigator={this.props.navigator}
-                    concertId={this.props.concertId}
-                    />
-                case viewConstants.concerts:
-                  return <Concerts 
-                  calanderHeader={true}
-                    navigator={this.props.navigator}
-                    />
-              }
-            })()
-          }
+  }
 
-        </View>
-      </View>
+  _renderSectionHeader(){
+    return <InternalNavigation 
+      style={{
+        height: 40,
+        width: VIEWPORT.width
+      }}
+      setActiveView={this.setActiveView.bind(this)} 
+      activeView={this.state.activeView}
+    />
+  }
+
+  render () {
+    if(this.state.renderPlaceholder)
+      return this._renderPlaceholder();
+    return (
+      <View style={styles.container}>
+        <HeaderBar 
+          left={require('../../assets/images/backIcon.png')}
+          mid={this.state.userName}
+          right={require('../../assets/images/settings.png')}
+          clickableLeft={true}
+          clickFunctionLeft={ _=> {this.props.navigator.pop()}}
+        />
+
+        {( _ => {
+          switch(this.state.activeView) {
+            case 'Photos': 
+              return <Photos 
+                header={this._renderHeader.bind(this)}
+                sectionHeader={this._renderSectionHeader.bind(this)}
+                navigator={this.props.navigator}
+                concertId={this.props.concertId}
+              />;
+
+            case 'Reviews':
+              return <Reviews 
+                header={this._renderHeader.bind(this)}
+                sectionHeader={this._renderSectionHeader.bind(this)}
+                navigator={this.props.navigator}
+                concertId={this.props.concertId}
+              />;
+
+            case 'Concerts':
+              return <Concerts 
+                header={this._renderHeader.bind(this)}
+                sectionHeader={this._renderSectionHeader.bind(this)}
+                calanderHeader={true}
+                navigator={this.props.navigator}
+              />;
+          }
+        })()}
+
+      {/* </ListView> */}
+    </View>
     );
   }
 }
-
-let styles = StyleSheet.create(require('./style.json'));

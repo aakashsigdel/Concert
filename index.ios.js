@@ -92,8 +92,8 @@ class ConcertReview extends Component {
       case 'photo':
         return (
           <Photo
-          navigator={navigator}
-          photoId={route.photoId}
+            navigator={navigator}
+            photoId={route.photoId}
           />
         );
       case 'follows':
@@ -173,7 +173,7 @@ class ConcertReview extends Component {
 	render () {
 		return (
 		  <Navigator
-        initialRoute={{name: 'login', index: 0}}
+        initialRoute={{name: 'reviews', index: 0}}
         renderScene={this._renderScene}
         configureScene={(route) => {
           if (route.sceneConfig) {

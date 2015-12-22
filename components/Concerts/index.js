@@ -139,11 +139,12 @@ export default class Concerts extends Component {
 		}
 		return(
       <View style={styles.container}>
-			<ListView
-				dataSource={this.state.dataSource}
-				renderRow={this._renderConcert.bind(this)}
-        renderHeader={this.props.header}
-				style={styles.listView}	/>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this._renderConcert.bind(this)}
+          renderHeader={this.props.header}
+          renderSectionHeader={this.props.sectionHeader}
+          style={styles.listView}	/>
       </View>
 		);
 	}
