@@ -67,11 +67,15 @@
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
 
+  
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [[UIViewController alloc] init];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
+  [self.window makeKeyAndVisible];UIImageView *launchScreenView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Launch"]];
+  launchScreenView.frame = self.window.bounds;
+  launchScreenView.contentMode = UIViewContentModeScaleToFill;
+  rootView.loadingView = launchScreenView;
   return YES;
 }
 

@@ -53,24 +53,6 @@ export default class Intro extends Component {
               <Text style={styles.facebookLoginText}>LOGIN WITH FACEBOOK</Text>
             </View>
           </TouchableHighlight>
-          {/*
-        <FBSDKLoginButton
-          style={styles.facebookLoginBtn}
-          onLoginFinished={(error, result) => {
-            if (error) {
-              alert('Error logging in.');
-            } else {
-              if (result.isCancelled) {
-                alert('Login cancelled.');
-              } else {
-                this._login();
-              }
-            }
-          }}
-          onLogoutFinished={() => alert('Logged out.')}
-          readPermissions={[]}
-          publishPermissions={['publish_actions']}/>
-          */}
       </View>
     );
   }
