@@ -65,7 +65,7 @@ export default class Concerts extends Component {
 			}).done();
 	}
 	
-	_handelPress(concertId, concert) {
+	_handlePress(concertId, concert) {
 	  if(this.props.select) {
 	    this.props.navigator.push({
         name: 'camera',
@@ -92,7 +92,7 @@ export default class Concerts extends Component {
 		++this.count;
 		return(
 		  <TouchableHighlight
-		  onPress={this._handelPress.bind(this, concert.id, concert)}
+		  onPress={this._handlePress.bind(this, concert.id, concert)}
       >
         <View style={[styles.concertContainer, backgroundStyle]}>
           <Image source={{uri: concert.artist.image.small}} style={styles.profilePicture} />
