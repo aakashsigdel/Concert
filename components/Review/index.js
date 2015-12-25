@@ -22,11 +22,16 @@ import FAB from '../FAB';
 import Loader from '../../components.ios/Loader';
 import HeaderBar from '../../components/HeaderBar';
 import heroElement from './heroElement';
+import { REVIEW } from '../../constants/ApiUrls.js'
 
 const {deviceWidth, deviceHeight} = Dimensions.get('window');
 const Share = NativeModules.KDSocialShare;
 const header = StyleSheet.create(require('./header.json'));
 const comment = StyleSheet.create(require('./comment.json'));
+
+// TODO: handle like image state
+// -> if liked, one image, 
+//   if not, other
 
 export default class Review extends Component {
   constructor() {
@@ -35,17 +40,33 @@ export default class Review extends Component {
       renderPlaceholderOnly: true,
       isLoading: false,
       isLiked: false,
-      likeCount: 328,
+      likeCount: 0,
       heartImage: require('../../assets/images/like.png'),
+      review: {},
     };
   }
 
   componentDidMount () {
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({
-        renderPlaceholderOnly: false,
-      });
-    });
+    this._fetchData();
+  }
+
+  _fetchData() {
+    const url = REVIEW.DETAILURL.replace('{review_id}', this.props.id);
+    fetch(url)
+      .then( res => res.json())
+      .then( res => {
+        console.log(res);
+        this.setState({
+          renderPlaceholderOnly: false,
+          review: res.data,
+        })
+      })
+      .then(_=> {
+        this.setState({
+          renderPlaceholderOnly: false,
+          likeCount: this.state.review.total_likes,
+        })
+      })
   }
 
 	_sharePhoto () {
@@ -57,7 +78,6 @@ export default class Review extends Component {
         'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg',
     },
     (result) => {
-      console.log('aakash hero dai ko', result);
       this.setState({
         isLoading: false,
       });
@@ -68,12 +88,12 @@ export default class Review extends Component {
     this.setState({
       isLiked: !this.state.isLiked,
       heartImage: this.state.isLiked?  require('../../assets/images/like.png' ) : require('../../assets/images/liked.png'),
-      likeCount: this.state.isLiked? 328 : 329,
+      likeCount: this.state.isLiked? this.state.likeCount - 1 : this.state.likeCount + 1 ,
     })
   }
 
-	// TODO: this function should be in a global module
 	_getStars(yellowStars) {
+    // TODO: this function should be in a global module
 		let stars = [];
 		for(let i = 0; i < yellowStars; i++) {
 			stars.push(
@@ -101,13 +121,18 @@ export default class Review extends Component {
 	}
 
 	_handleUserPress(userId, userName) {
-    // navigate to profile page when username is pressed
-    this.props.navigator.push({name: 'profile', index: 5, userId: userId, userName: userName});
+    this.props.navigator.push({
+      name: 'profile',
+      index: 5,
+      userId: this.state.review.user.id, 
+      userName: this.state.review.user.full_name,
+    });
 	}
 
   _renderPlaceholder() {
     return (
-      <View style={{flex:1, backgroundColor: 'black'}}>
+      <View style={{flex:1, backgroundColor: 'black', alignItems: 'center', justifyContent:'center'}}>
+        <Text style={{color: 'lightgray'}}> Loading.. </Text>
       </View>
     );
   }
@@ -123,25 +148,28 @@ export default class Review extends Component {
         left={require('../../assets/images/clearCopy.png')}
         clickableLeft={true}
         clickFunctionLeft={() => this.props.navigator.pop()}
-        mid="SKO/TORP"
+        mid={this.state.review.concert.artist.name}
         right={require('../../assets/images/shareAlt.png')}
         clickableRight={true}
         clickFunctionRight={this._sharePhoto.bind(this)}
       />
 
         <View style={heroElement.container}> 
+            {/* defaultSource={require('../../assets/images/default_artist_page.png' )} */}
+
+            {/* defaultSource={require('../../assets/images/default_artist_page.png' )} */}
           <Image 
-            source={require('../../assets/images/review_view.png')} 
+            source={{uri:this.state.review.concert.artist.image.original}} 
             style={heroElement.image} /> 
           <View
             style={heroElement.footer}>
             <Calander
-              month={'SEP'}
-              day={'10'}
+              month={this.state.review.concert.date.month.toUpperCase()}
+              day={this.state.review.concert.date.day}
             />
             <Text
               style={heroElement.footerText}>
-              SKANDERBORG FESTIVAL
+              {this.state.review.concert.location.toUpperCase()}
             </Text>
           </View>
         </View> 
@@ -149,16 +177,19 @@ export default class Review extends Component {
         <View style={comment.container} > 
           <View style={comment.header} >
             <TouchableOpacity
-              onPress={this._handleUserPress.bind(this, 1, 'JIMMI ANDERSEN')}
+              onPress={this._handleUserPress.bind(this, this.state.review.user.id , this.state.review.user.full_name )}
               style={{flex: 1, flexDirection: 'row'}}>
+                {/* defaultSource={{uri:this.state.review.user.profile_picture}} */}
+                {/* defaultSource={{uri:"https://lh4.ggpht.com/wKrDLLmmxjfRG2-E-k5L5BUuHWpCOe4lWRF7oVs1Gzdn5e5yvr8fj-ORTlBF43U47yI=w300"}} */}
               <Image
                 style={comment.starImage}
-                source={require('../../assets/images/userpicCopy.png')}
+                source={require('../../assets/images/user_default.png')}
+                onError={_=> console.log('error getting image', _)}
               />
               <View style={comment.headerText}>
-                <Text style={comment.whiteText} >JIMMI ANDERSEN</Text>
+                <Text style={comment.whiteText} > {this.state.review.user.full_name}</Text>
                 <View style={header.ratingStars} >
-                  {this._getStars(3)}
+                  {this._getStars(this.state.review.concert.rating)}
                 </View>
               </View>
             </TouchableOpacity>
@@ -190,8 +221,7 @@ export default class Review extends Component {
             <ScrollView style={comment.text}>
               <Text 
                 style={comment.longText}>
-                Pop artists aren’t often regarded as the best and as the most popular group at the same time. In the English-speaking pop world in the last decade, only maybe Adele, Beyonce and Taylor Swift have earned the same, simultaneous caliber of critical praise and concert tickets sold.{'\n'}{'\n'}In South Korea, however, there is BigBang. The establishedelectronic dance music that defines pop the world over.{'\n'}
-
+                {this.state.review.comment}
               </Text>
             </ScrollView>
           </View>
@@ -204,7 +234,9 @@ export default class Review extends Component {
             {
               name: 'Edit',
               action: () => this.props.navigator.replace({
-                name: 'addReview'
+                name: 'addReview',
+                edit: true,
+                concert_id: this.state.review.concert.id,
               })
             },
             {
@@ -217,7 +249,7 @@ export default class Review extends Component {
               } 
             },
             {
-              name: 'Go to SKO/TORP page',
+              name: 'Go to ' + this.state.review.concert.artist.name + '\'s page',
               action: () => this.props.navigator.pop()
             }
           ]}

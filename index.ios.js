@@ -77,7 +77,8 @@ class ConcertReview extends Component {
       case 'review':
         return (
          <Review 
-         navigator={navigator}
+           navigator={navigator}
+           id={route.review_id}
          />
         );
       case 'profile':
@@ -173,7 +174,7 @@ class ConcertReview extends Component {
 	render () {
 		return (
 		  <Navigator
-        initialRoute={{name: 'login', index: 0}}
+        initialRoute={{name: 'home', index: 0}}
         renderScene={this._renderScene}
         configureScene={(route) => {
           if (route.sceneConfig) {
