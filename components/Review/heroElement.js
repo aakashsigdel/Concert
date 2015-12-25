@@ -17,6 +17,7 @@ export default heroElement = StyleSheet.create({
     backgroundColor: 'rgba(17,17,17,0.5)',
     paddingLeft: 15,
     paddingTop: 7,
+    paddingBottom: 4,
     alignItems: 'center',
   },
 
@@ -29,5 +30,6 @@ export default heroElement = StyleSheet.create({
 
   image: {
     width: VIEWPORT.width,
+    height: VIEWPORT.height * 2/3,
   },
 });

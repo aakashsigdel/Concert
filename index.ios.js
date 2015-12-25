@@ -77,7 +77,8 @@ class ConcertReview extends Component {
       case 'review':
         return (
          <Review 
-         navigator={navigator}
+           navigator={navigator}
+           id={route.review_id}
          />
         );
       case 'profile':

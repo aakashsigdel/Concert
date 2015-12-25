@@ -91,19 +91,18 @@ export default class Reviews extends Component {
 		return stars;
 	}
 
-	_handelPress() {
-    this.props.navigator.push({name: 'review', index: 4});
-    // InteractionManager.runAfterInteractions(() => {
-    //   alert('hello');
-    //   this.props.navigator.push({name: 'review', index: 4});
-    // })
+	_handlePress(review) {
+    this.props.navigator.push({
+      name: 'review', 
+      review_id: review.id
+    });
 	}
 
 	_renderReview(review) {
 		return(
 			<TouchableOpacity
-			activeOpacity={0.5}
-			onPress={this._handelPress.bind(this)}
+        activeOpacity={0.5}
+        onPress={this._handlePress.bind(this, review)}
 			>
         <View style={styles.reviewContainer}>
 
@@ -168,4 +167,4 @@ export default class Reviews extends Component {
 	}
 }
 
-var styles = StyleSheet.create(require('./style.json'));
+const styles = StyleSheet.create(require('./style.json'));

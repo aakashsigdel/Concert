@@ -16,7 +16,7 @@ import InternalNavigation from '../InternalNavigation';
 import Photos from '../Photos';
 import Reviews from '../Reviews';
 
-var QUERY_URL = "http://api.revuzeapp.com:80/api/v1/concerts/upcoming?access_token=abcde";
+const QUERY_URL = "http://api.revuzeapp.com:80/api/v1/concerts/upcoming?access_token=abcde";
 export default class Concerts extends Component {
 	constructor() {
 		super();
@@ -65,7 +65,7 @@ export default class Concerts extends Component {
 			}).done();
 	}
 	
-	_handelPress(concertId, concert) {
+	_handlePress(concertId, concert) {
 	  if(this.props.select) {
 	    this.props.navigator.push({
         name: 'camera',
@@ -92,7 +92,7 @@ export default class Concerts extends Component {
 		++this.count;
 		return(
 		  <TouchableHighlight
-		  onPress={this._handelPress.bind(this, concert.id, concert)}
+		  onPress={this._handlePress.bind(this, concert.id, concert)}
       >
         <View style={[styles.concertContainer, backgroundStyle]}>
           <Image source={{uri: concert.artist.image.small}} style={styles.profilePicture} />
@@ -150,4 +150,4 @@ export default class Concerts extends Component {
 	}
 }
 
-var styles = StyleSheet.create(require('./style.json'));
+const styles = StyleSheet.create(require('./style.json'));

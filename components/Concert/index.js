@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
 import styles from './style';
+import { CONCERT } from '../../constants/ApiUrls.js'
 
 export default class Concert extends Component {
   constructor () {
@@ -30,7 +31,7 @@ export default class Concert extends Component {
     });
   }
 
-  _handelPress() {
+  _handlePress() {
     this.props.navigator.pop();
   }
 
@@ -38,6 +39,13 @@ export default class Concert extends Component {
     return (
       <View style={{flex: 1, backgroundColor: 'black'}}></View>
     );
+  }
+
+  _attendConcert(){
+    const url = CONCERT.CHECKINURL.replace('{concert_id}', this.props.concertId);
+    fetch(url, {method: 'POST'}).then( res => {
+      res.ok ? alert('Sucess!') : alert('Nope!')
+    })
   }
 
   render () {
@@ -55,7 +63,7 @@ export default class Concert extends Component {
         <View style={styles.headerContainer}>
         <TouchableHighlight
         style={styles.clickable}
-        onPress={this._handelPress.bind(this)}
+        onPress={this._handlePress.bind(this)}
         >
           <Image
           source={require('../../assets/images/clearCopy.png')}
@@ -109,8 +117,9 @@ export default class Concert extends Component {
           />
           <View style={styles.attendBtn}>
             <TouchableHighlight
-            underlayColor='#F9A000'
-            style={styles.attendTouch} 
+              onPress={this._attendConcert.bind(this)}
+              underlayColor='#F9A000'
+              style={styles.attendTouch} 
             >
               <Text style={styles.attendText}>ATTEND</Text>
             </TouchableHighlight>
