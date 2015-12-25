@@ -52,10 +52,13 @@ export default class Review extends Component {
 
   _fetchData() {
     const url = REVIEW.DETAILURL.replace('{review_id}', this.props.id);
+    console.log(url);
     fetch(url)
       .then( res => res.json())
       .then( res => {
-        console.log(res);
+        res.data.userPic = (res.data.user.profile_picture.trim().length > 0) ? {uri:res.data.user.profile_picture}: require('../../assets/images/user_default.png');
+        res.data.artistPic = (res.data.concert.artist.image.original.trim().length > 0) ? {uri:res.data.concert.artist.image.original}: require('../../assets/images/default_artist_page.png');
+
         this.setState({
           renderPlaceholderOnly: false,
           review: res.data,
@@ -63,7 +66,6 @@ export default class Review extends Component {
       })
       .then(_=> {
         this.setState({
-          renderPlaceholderOnly: false,
           likeCount: this.state.review.total_likes,
         })
       })
@@ -85,6 +87,11 @@ export default class Review extends Component {
   }
 
   _toggleLike() {
+    // const url = REVIEW.LIKEURL.replace('{review_id}', this.state.review.id).replace('{like}', 1);
+    // fetch(url, {method: POST})
+    // .then(res => {
+    //
+    // })
     this.setState({
       isLiked: !this.state.isLiked,
       heartImage: this.state.isLiked?  require('../../assets/images/like.png' ) : require('../../assets/images/liked.png'),
@@ -144,52 +151,51 @@ export default class Review extends Component {
     return (
       <View style={{ flex: 1}}>
 
-      <HeaderBar
-        left={require('../../assets/images/clearCopy.png')}
-        clickableLeft={true}
-        clickFunctionLeft={() => this.props.navigator.pop()}
-        mid={this.state.review.concert.artist.name}
-        right={require('../../assets/images/shareAlt.png')}
-        clickableRight={true}
-        clickFunctionRight={this._sharePhoto.bind(this)}
-      />
+        <HeaderBar
+          left={require('../../assets/images/clearCopy.png')}
+          clickableLeft={true}
+          clickFunctionLeft={() => this.props.navigator.pop()}
+          mid={this.state.review.concert.artist.name}
+          right={require('../../assets/images/shareAlt.png')}
+          clickableRight={true}
+          clickFunctionRight={this._sharePhoto.bind(this)}
+        />
 
-        <View style={heroElement.container}> 
-            {/* defaultSource={require('../../assets/images/default_artist_page.png' )} */}
-
-            {/* defaultSource={require('../../assets/images/default_artist_page.png' )} */}
-          <Image 
-            source={{uri:this.state.review.concert.artist.image.original}} 
-            style={heroElement.image} /> 
-          <View
-            style={heroElement.footer}>
-            <Calander
-              month={this.state.review.concert.date.month.toUpperCase()}
-              day={this.state.review.concert.date.day}
-            />
-            <Text
-              style={heroElement.footerText}>
-              {this.state.review.concert.location.toUpperCase()}
-            </Text>
-          </View>
-        </View> 
+      <View style={heroElement.container}> 
+        <Image 
+          source={this.state.review.artistPic}
+          style={heroElement.image} /> 
+        <View
+          style={heroElement.footer}>
+          <Calander
+            month={this.state.review.concert.date.month.toUpperCase()}
+            day={this.state.review.concert.date.day}
+          />
+          <Text
+            style={heroElement.footerText}>
+            {this.state.review.concert.location.toUpperCase()}
+          </Text>
+        </View>
+      </View> 
 
         <View style={comment.container} > 
           <View style={comment.header} >
             <TouchableOpacity
               onPress={this._handleUserPress.bind(this, this.state.review.user.id , this.state.review.user.full_name )}
               style={{flex: 1, flexDirection: 'row'}}>
-                {/* defaultSource={{uri:this.state.review.user.profile_picture}} */}
-                {/* defaultSource={{uri:"https://lh4.ggpht.com/wKrDLLmmxjfRG2-E-k5L5BUuHWpCOe4lWRF7oVs1Gzdn5e5yvr8fj-ORTlBF43U47yI=w300"}} */}
               <Image
                 style={comment.starImage}
-                source={require('../../assets/images/user_default.png')}
-                onError={_=> console.log('error getting image', _)}
+                source={this.state.review.userPic}
+
+                onError={_=> {
+                  console.log('error getting image', _);
+                  console.log('url-=> ', this.state.review.userPic);
+                }}
               />
               <View style={comment.headerText}>
                 <Text style={comment.whiteText} > {this.state.review.user.full_name}</Text>
                 <View style={header.ratingStars} >
-                  {this._getStars(this.state.review.concert.rating)}
+                  {this._getStars(this.state.review.rating)}
                 </View>
               </View>
             </TouchableOpacity>
