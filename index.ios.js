@@ -125,6 +125,8 @@ class ConcertReview extends Component {
       case 'addReview':
         return <AddReview 
           navigator={navigator}
+          concertId={route.concertId}
+          imageUrl={route.imageUrl}
         />;
       case 'camera':
         return <UserCamera
@@ -136,6 +138,7 @@ class ConcertReview extends Component {
         return <PhotoAddComment
           navigator={navigator}
           concertId={route.concertId}
+          imageUrl={route.imageUrl}
         />;
       case 'actionScreen':
         return <ActionScreen

@@ -61,16 +61,18 @@ export default class UserCamera extends Component {
             photoURI,
             transformData,
             (croppedImageURI) => {
-              console.log('crop success', croppedImageURI);
+              CameraRoll.saveImageWithTag(
+                croppedImageURI,
+              )
               _this.props.navigator.push({
                 name: 'cameraConfirmation',
                 index: 31,
-                imageUrl: croppedImageURI,
+                imageUrl: photoURI,
                 concertId: _this.props.concertId,
                 review: _this.props.review,
               });
             },
-            (cropError) => console.log('cropMyError', cropError)
+            () => undefined,
           );
         },
         (error) => undefined,

@@ -163,6 +163,7 @@ export default class ProfileContainer extends Component {
           left={require('../../assets/images/backIcon.png')}
           mid={this.state.userName}
           right={require('../../assets/images/settings.png')}
+          styleRight={{marginRight: 15}}
           clickableLeft={true}
           clickFunctionLeft={ _=> {this.props.navigator.pop()}}
         />
@@ -182,6 +183,9 @@ export default class ProfileContainer extends Component {
                 sectionHeader={this._renderSectionHeader.bind(this)}
                 navigator={this.props.navigator}
                 concertId={this.props.concertId}
+                fetchFor='userId'
+                userId={this.props.userId}
+                userName={this.props.userName}
               />;
 
             case 'Concerts':

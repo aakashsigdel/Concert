@@ -42,6 +42,7 @@ export default class SearchActive extends Component {
           <Reviews 
             filterText={this.state.filterText} 
             navigator={this.props.navigator}
+            fetchFor="concertId"
           />
         );
       case 'concerts' :

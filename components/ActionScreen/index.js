@@ -17,7 +17,6 @@ export default class ActionScreen extends Component {
   }
 
   _populateRows() {
-    console.log(this.props.links);
     this.props.links.map((child, index) => {
       this.rows.push(
         <TouchableHighlight

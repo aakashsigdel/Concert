@@ -20,12 +20,15 @@ export default class CameraConfirmation extends Component {
       this.props.navigator.push({
         name: 'addReview',
         index: 55,
+        concertId: this.props.concertId,
+        imageUrl: this.props.imageUrl,
       });
     } else {
       this.props.navigator.push({
         name: 'photoAddComment',
         index: 22,
-        concertId: this.props.concertId
+        concertId: this.props.concertId,
+        imageUrl: this.props.imageUrl,
       });
     }
   }

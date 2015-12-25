@@ -21,7 +21,7 @@ import styles from './style'
 
 var Share = NativeModules.KDSocialShare;
 
-let QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/contents/photos/photoId?access_token=abcde';
+let QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/photos/photoId?access_token=abcde';
 export default class Photo extends Component {
   constructor() {
     super();
@@ -58,7 +58,6 @@ export default class Photo extends Component {
 	}
 
 	_sharePhoto () {
-	  console.log(this.state.photoDetail.image.original);
 	  this.setState({
       isLoading: true,
     });
@@ -67,7 +66,6 @@ export default class Photo extends Component {
         'imagelink': this.state.photoDetail.image.original,
     },
     (result) => {
-      console.log('aakash hero dai ko', result);
       this.setState({
         isLoading: false,
       });
@@ -156,7 +154,6 @@ export default class Photo extends Component {
           style={styles.caption}
           >
             {this.state.photoDetail.caption}
-            What a night.
           </Text>
         </View>
 

@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import styles from './style'
 
 export default class HeaderBar extends Component {
   constructor() {
@@ -110,4 +111,3 @@ export default class HeaderBar extends Component {
   }
 }
 
-let styles = StyleSheet.create(require('./style.json'));
