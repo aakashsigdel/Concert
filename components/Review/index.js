@@ -57,7 +57,6 @@ export default class Review extends Component {
         'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg',
     },
     (result) => {
-      console.log('aakash hero dai ko', result);
       this.setState({
         isLoading: false,
       });

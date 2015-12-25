@@ -3,6 +3,7 @@ import React, {
   Component,
   View,
   Image,
+  NativeModules,
   Text,
   TextInput,
   TouchableOpacity,
@@ -14,6 +15,7 @@ const styles = require('./style.json');
 export default class AddReview extends Component {
   constructor(){
     super();
+    this.comment = '';
     this.state = {
       yellowCount: 1,
     }
@@ -58,6 +60,30 @@ export default class AddReview extends Component {
 		return stars;
 	}
 
+  _handlePress () {
+    let REVIEW_POST_URL = 'http://api.revuzeapp.com/api/v1/concerts/12/review?access_token=abcde';
+    let imageObj = {
+      uploadUrl: REVIEW_POST_URL,
+      method: 'POST',
+      fields: {
+        concert_id: 12,
+        comment: this.comment,
+        rating: this.state.yellowCount,
+      },
+      files: [
+        {
+          name: 'image',
+          filename: this.props.imageUrl.split('/')[2],
+          filepath: this.props.imageUrl,
+        },
+      ]
+    };
+    NativeModules.FileUpload.upload(imageObj, (err, result) => {
+    });
+    this.props.navigator.popToTop();
+    
+  }
+
   render(){
     return(
       <View style={styles.container}>
@@ -70,10 +96,7 @@ export default class AddReview extends Component {
 
           right={'POST'}
           clickableRight={true}
-          clickFunctionRight={() => this.props.navigator.push({
-            name: 'home',
-            index: 1,
-          })}
+          clickFunctionRight={this._handlePress.bind(this)}
         />
         <View style={styles.bottomContainer}>
           <View style={styles.ratingStars}>
@@ -93,6 +116,7 @@ export default class AddReview extends Component {
           }]}
           placeholder='Write about your concert experience'
           placeholderTextColor="gray"
+          onChangeText={(text) => {this.comment = text}}
           multiline={true}>
         </TextInput>
       </View>

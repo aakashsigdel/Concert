@@ -124,6 +124,8 @@ class ConcertReview extends Component {
       case 'addReview':
         return <AddReview 
           navigator={navigator}
+          concertId={route.concertId}
+          imageUrl={route.imageUrl}
         />;
       case 'camera':
         return <UserCamera
@@ -135,6 +137,7 @@ class ConcertReview extends Component {
         return <PhotoAddComment
           navigator={navigator}
           concertId={route.concertId}
+          imageUrl={route.imageUrl}
         />;
       case 'actionScreen':
         return <ActionScreen
@@ -173,7 +176,7 @@ class ConcertReview extends Component {
 	render () {
 		return (
 		  <Navigator
-        initialRoute={{name: 'login', index: 0}}
+        initialRoute={{name: 'home', index: 0}}
         renderScene={this._renderScene}
         configureScene={(route) => {
           if (route.sceneConfig) {

@@ -1,15 +1,23 @@
-{
+import {
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
+
+const VIEWPORT = Dimensions.get('window');
+console.log(VIEWPORT.height);
+const HEADERBAR_HEIGHT = 0.096 * VIEWPORT.height;
+
+let styles = {
   container: {
-    height: 64,
+    height: HEADERBAR_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#111111',
   },
   leftImage: {
-    width: 30,
-    height: 28.7,
-    marginLeft: 15,
+    width: 0.54 * HEADERBAR_HEIGHT,
+    height: 0.54 * HEADERBAR_HEIGHT,
     resizeMode: 'contain',
   },
   midImage: {
@@ -18,9 +26,8 @@
     resizeMode: 'contain',
   },
   rightImage: {
-    width: 22,
-    height: 24,
-    marginRight: 15,
+    width: 0.54 * HEADERBAR_HEIGHT,
+    height: 0.54 * HEADERBAR_HEIGHT,
     resizeMode: 'contain',
   },
   leftText: {
@@ -44,5 +51,7 @@
     width: 64,
     justifyContent: 'center',
     alignItems: 'center',
-  }
-}
+  },
+};
+
+export default styles = StyleSheet.create(styles);

@@ -102,7 +102,7 @@ export default class Home extends Component {
             userId: 1,
             userName: 'JIMMI ANDERSEN'
           })}
-          styleRight={{borderColor: '#F9B400', borderWidth: 1, borderRadius: 11}}
+          styleRight={{borderColor: '#F9B400', borderWidth: 1, borderRadius: 16}}
         />
         <Swiper showButton={false}
           activeDot={this.state.disabledDot}
@@ -114,6 +114,7 @@ export default class Home extends Component {
             calanderHeader={true}
             navigator={this.props.navigator}
             header={_=> this._listHeader(1, 'HOT REVIEWS')} 
+            fetchFor="concertId"
           />
 
           <Photos 

@@ -16,7 +16,10 @@ import Loader from '../../components.ios/Loader';
 import Calander from '../Calander';
 
 
-var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/12/reviews?access_token=abcde';
+let QUERY_URL = {
+  concertId: 'http://api.revuzeapp.com:80/api/v1/concerts/12/reviews?access_token=abcde',
+  userId: 'http://api.revuzeapp.com:80/api/v1/users/userId/reviews?access_token=abcde'
+}
 export default class Reviews extends Component {
 	constructor() {
 		super();
@@ -52,7 +55,7 @@ export default class Reviews extends Component {
   }
 
 	_fetchData() {
-		var query = QUERY_URL.replace('concert_id', this.props.concertId);
+		let query = QUERY_URL[this.props.fetchFor].replace(this.props.fetchFor, this.props[this.props.fetchFor]);
 		fetch(query)
 		.then((response) => response.json())
 		.then((responseData) => {
@@ -130,7 +133,16 @@ export default class Reviews extends Component {
             </View>
             
             <View style={styles.nameAndComment}>
-              <Text style={styles.username}>{review.user.full_name.toUpperCase()}</Text>
+              <Text style={styles.username}>
+                {
+                  (() => {
+                    if(this.props.fetchFor === 'concert')
+                      return review.user.full_name.toUpperCase()
+                    else if(this.props.fetchFor === 'user')
+                      return this.props.userName.toUpperCase()
+                  })()
+                }
+              </Text>
               <Text style={styles.comment}>{review.comment}</Text>
             </View>
 
