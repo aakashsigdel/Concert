@@ -39,9 +39,9 @@ export default class Review extends Component {
     this.state = {
       renderPlaceholderOnly: true,
       isLoading: false,
+      total_likes: 0,
       isLiked: false,
-      likeCount: 0,
-      heartImage: require('../../assets/images/like.png'),
+      heartImage: null,
       review: {},
     };
   }
@@ -62,13 +62,13 @@ export default class Review extends Component {
         this.setState({
           renderPlaceholderOnly: false,
           review: res.data,
+          heartImage: (res.data.liked === 0)
+            ? require('../../assets/images/like.png' ) 
+            : require('../../assets/images/liked.png'),
+          isLiked: (res.data.liked === 0)? false : true,
+          total_likes: res.data.total_likes,
         })
-      })
-      .then(_=> {
-        this.setState({
-          likeCount: this.state.review.total_likes,
-        })
-      })
+      }).then(_=> console.log('got data', this.state))
   }
 
 	_sharePhoto () {
@@ -87,16 +87,30 @@ export default class Review extends Component {
   }
 
   _toggleLike() {
-    // const url = REVIEW.LIKEURL.replace('{review_id}', this.state.review.id).replace('{like}', 1);
-    // fetch(url, {method: POST})
-    // .then(res => {
-    //
-    // })
-    this.setState({
-      isLiked: !this.state.isLiked,
-      heartImage: this.state.isLiked?  require('../../assets/images/like.png' ) : require('../../assets/images/liked.png'),
-      likeCount: this.state.isLiked? this.state.likeCount - 1 : this.state.likeCount + 1 ,
-    })
+    // action == 0 -> unlike
+    // action == 1 -> like
+    const action = this.state.isLiked ? '0': '1';
+
+    const url = REVIEW.LIKEURL.replace(
+      '{review_id}',
+      this.state.review.id
+    ).replace( '{like}', action);
+
+    console.log(action, url)
+    fetch(url, {method: 'POST'})
+      .then(res => {
+        this.setState({
+          isLiked: !this.state.isLiked,
+          
+          total_likes: (action === '1')
+            ? this.state.total_likes + 1
+            : this.state.total_likes - 1,
+
+          heartImage: (action === '0')
+            ? require('../../assets/images/like.png' ) 
+            : require('../../assets/images/liked.png'),
+        })
+      }).then(_=> console.log('state', this.state))
   }
 
 	_getStars(yellowStars) {
@@ -209,7 +223,9 @@ export default class Review extends Component {
               />
               <Text
                 style={comment.likesText}>
-                {this.state.likeCount} LIKES
+                {this.state.total_likes} 
+
+                {this.state.total_likes === 1 ? ' LIKE' : ' LIKES ' }
               </Text>
             </TouchableOpacity>
 

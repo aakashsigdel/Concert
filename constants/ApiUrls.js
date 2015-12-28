@@ -8,7 +8,7 @@ const CONCERT = {
 
 const REVIEW = {
   DETAILURL: API_BASE + '/reviews/{review_id}' + suffix,
-  LIKEURL: API_BASE + '/reviews/{review_id}/likes/' + suffix + '&like={like}',
+  LIKEURL: API_BASE + '/reviews/{review_id}/likes' + suffix + '&like={like}',
 }
 
 export {CONCERT, REVIEW}
