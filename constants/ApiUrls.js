@@ -2,8 +2,9 @@
 const API_BASE = "http://api.revuzeapp.com:80/api/v1"
 const TOKEN_SUFFIX = "?access_token=abcde"
 
-const CONCERT = {
-  CHECKINURL: API_BASE + '/concerts/{concert_id}/checkin' + TOKEN_SUFFIX,
+const CONCERTS = {
+  CHECKINURL: API_BASE + '/concerts/{concert_id}/checkins' + TOKEN_SUFFIX,
+  DETAIL_URL: API_BASE + '/concerts/{concert_id}' + TOKEN_SUFFIX,
 }
 
 const REVIEW = {
@@ -16,7 +17,7 @@ const PHOTOS = {
 }
 
 export {
-  CONCERT,
+  CONCERTS,
   REVIEW,
-  PHOTOS
+  PHOTOS,
 }
