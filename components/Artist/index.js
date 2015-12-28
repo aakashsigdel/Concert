@@ -56,10 +56,12 @@ export default class Artist extends Component {
                   concertId={this.props.concertId}
                   />
 							case viewConstants.concerts:
-								return <Concerts 
-                calanderHeader={true}
+                return <Concerts 
+                  fetchURL={CONCERTS.ARTIST_UPCOMING_URL.replace('{artist_id}',
+                                                                 this.props.artistId )}
+                  calanderHeader={true}
                   navigator={this.props.navigator}
-                  />
+                />
 						}
 					})()
 				}

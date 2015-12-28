@@ -37,26 +37,19 @@ export default class Concerts extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.filterText 
        && (prevProps.filterText !== this.props.filterText) 
-       && (!this.state.isLoading) 
+       && (!this.state.isLoading)
        && (this.state.apiData)) {
-        let that = this;
-        let filteredData = this.state.apiData.filter(function(item, index){
-          return (item.artist.name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1);
-        });
-        if(filteredData.length === 0) {
-          filterData = this.state.dataSource.cloneWithRows({artist: {name: 'Nothing To Show'}});
-        }
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(filteredData),
-        });
+         this._fetchData();
     }
   }
 
 	_fetchData() {
-		var query = QUERY_URL;
+		let query = this.props.fetchURL;
+		console.log(query);
 		fetch(query)
 			.then((response) => response.json())
 			.then((responseData) => {
+				console.log(responseData);
 				this.setState({
           isLoading: false,
           apiData: responseData.data,

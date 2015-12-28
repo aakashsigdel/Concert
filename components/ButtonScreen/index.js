@@ -2,6 +2,7 @@
 import React, {
   Component, 
   Image,
+  InteractionManager,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,9 +15,28 @@ import styles from './style';
 export default class ButtonsScreen extends Component {
   constructor(){
     super();
+    this.state = {
+      renderPlaceHolder: true,
+    };
+  }
+
+  componentDidMount () {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        renderPlaceHolder: false,
+      });
+    });
+  }
+
+  _renderPlaceHolder () {
+    return (
+      <View style={{flex: 1, backgroundColor: 'black'}}></View>
+    );
   }
 
   render(){
+    if(this.state.renderPlaceHolder)
+      return this._renderPlaceHolder();
     return(
       <View
         style={styles.container}>

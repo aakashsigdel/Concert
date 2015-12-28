@@ -20,6 +20,7 @@ import Reviews from '../Reviews';
 import Photos from '../Photos';
 import SearchActive from '../SearchActive';
 import styles from './style';
+import { CONCERTS, REVIEWS } from '../../constants/ApiUrls';
 
 var {width, height} = Dimensions.get('window');
 
@@ -93,7 +94,7 @@ export default class Home extends Component {
             });
           }}
           mid={require('../../assets/images/brand_icon.png')}
-          right={require('../../assets/images/userpicCopy.png')}
+          right={require('../../assets/images/user_default.png')}
           clickableRight={true}
           clickFunctionRight={() => this.props.navigator.push({
             name: 'profile',
@@ -114,7 +115,8 @@ export default class Home extends Component {
             calanderHeader={true}
             navigator={this.props.navigator}
             header={_=> this._listHeader(1, 'HOT REVIEWS')} 
-            fetchFor="concertId"
+            fetchFor="latest"
+            fetchURL={REVIEWS.LATEST_URL}
           />
 
           <Photos 
@@ -129,6 +131,7 @@ export default class Home extends Component {
             calanderHeader={true}
             navigator={this.props.navigator}
             header={_=> this._listHeader(3, 'UPCOMING CONCERTS')} 
+            fetchURL={CONCERTS.UPCOMING_URL}
           />
 
           <SearchActive 

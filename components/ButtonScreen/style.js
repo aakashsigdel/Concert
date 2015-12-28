@@ -13,6 +13,7 @@ let styles = {
   
   background: {
     position: 'absolute',
+    backgroundColor: 'black',
     width: VIEWPORT.width,
     height: VIEWPORT.height,
     top: 0,

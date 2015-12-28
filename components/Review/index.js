@@ -74,7 +74,6 @@ export default class Review extends Component {
       isLoading: true,
     });
 	  Share.shareOnFacebook({
-        'text':'Global democratized marketplace for art',
         'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg',
     },
     (result) => {

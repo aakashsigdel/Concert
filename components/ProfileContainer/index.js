@@ -2,6 +2,7 @@
 
 import React from 'react-native';
 import {
+  AsyncStorage,
   Component,
   Dimensions,
   Image,
@@ -20,6 +21,8 @@ import Concerts from '../Concerts';
 import InternalNavigation from '../InternalNavigation';
 import HeaderBar from '../HeaderBar';
 import styles from './style';
+import { CONCERTS, REVIEWS, USERS, ASYNC_STORAGE_KEY } from '../../constants/ApiUrls';
+
 
 const QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/users/userId?access_token=abcde';
 const VIEWPORT = Dimensions.get('window');
@@ -41,7 +44,9 @@ export default class ProfileContainer extends Component {
       activeView: 'Photos',
       userDetails: {data: {full_name: 'aakash'}},
       renderPlaceholder: true,
+      following: 0,
     };
+    this.loggedInUser = 0;
   }
 
 	setActiveView(view) {
@@ -57,6 +62,7 @@ export default class ProfileContainer extends Component {
         renderPlaceholder: false,
       });
     });
+    this._getLoggedInUserId();
   }
   
   _fetchData () {
@@ -71,6 +77,7 @@ export default class ProfileContainer extends Component {
           profilePic: responseData.data.profile_picture,
           userName: responseData.data.full_name,
           userId: responseData.data.id,
+          following: responseData.data.following,
         });
       }).done();
   }
@@ -85,6 +92,31 @@ export default class ProfileContainer extends Component {
     );
   }
 
+  _followPress () {
+    console.log(this.state.following);
+    let query = '';
+    if(this.state.following === 1)
+      query = USERS.UNFOLLOW_URL.replace('{user_id}', this.state.userId);
+    else
+      query = USERS.FOLLOW_URL.replace('{user_id}', this.state.userId);
+    console.log(query);
+
+    fetch(query, {method: 'POST'})
+      .then(response => {
+        this.setState({
+          following: this.state.following === 0 ? 1 : 0,
+        });
+        console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
+      })
+      .done();
+    
+  }
+
+  async _getLoggedInUserId() {
+    await AsyncStorage.getItem(ASYNC_STORAGE_KEY).then(
+      (value) => {this.loggedInUser = Number(value)}
+    );
+  }
   _renderHeader() {
     return (
       <View style={styles.topView}>
@@ -119,7 +151,8 @@ export default class ProfileContainer extends Component {
 
         <View style={styles.userBtn}>
           {(()=>{
-            if(this.props.isLoggedInUser){
+            console.log('boottle bhitra bottle', this.state.userId, this.loggedInUser)
+            if(this.loggedInUser === this.state.userId){
               return (
                 <TouchableHighlight
                   underlayColor='#F9A000'
@@ -136,8 +169,11 @@ export default class ProfileContainer extends Component {
               return(
                 <TouchableHighlight
                   underlayColor='#F9A000'
+                  onPress={this._followPress.bind(this)}
                   style={styles.btnTouch}>
-                  <Text style={styles.btnText}>FOLLOW</Text>
+                  <Text style={styles.btnText}>
+                    {this.state.following === 1 ? 'UNFOLLOW' : 'FOLLOW'}
+                  </Text>
                 </TouchableHighlight>
                 )
             }
@@ -155,6 +191,7 @@ export default class ProfileContainer extends Component {
   }
 
   render () {
+    console.log(this.state.following);
     if(this.state.renderPlaceholder)
       return this._renderPlaceholder();
     return (
@@ -184,6 +221,7 @@ export default class ProfileContainer extends Component {
                 navigator={this.props.navigator}
                 concertId={this.props.concertId}
                 fetchFor='userId'
+                fetchURL={REVIEWS.USER_URL.replace('{user_id}', this.props.userId)}
                 userId={this.props.userId}
                 userName={this.props.userName}
               />;
@@ -193,6 +231,7 @@ export default class ProfileContainer extends Component {
                 header={this._renderHeader.bind(this)}
                 sectionHeader={this._renderSectionHeader.bind(this)}
                 calanderHeader={true}
+                fetchURL={CONCERTS.CHECKINS_URL.replace('{user_id}', this.props.userId)}
                 navigator={this.props.navigator}
               />;
           }
