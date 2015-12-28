@@ -78,7 +78,12 @@ let styles = {
     fontFamily: 'AvenirNext-Regular',
     lineHeight: 16,
     paddingLeft: 15,
-  }
+  },
+
+  likeImage: {
+    width: 30,
+    height: 27.5,
+  },
 }
 
 export default StyleSheet.create(styles);

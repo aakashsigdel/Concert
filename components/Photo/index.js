@@ -10,6 +10,7 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   NativeModules,
   View,
 } from 'react-native';
@@ -18,6 +19,7 @@ import Loader from '../../components.ios/Loader';
 import Calander from '../Calander';
 import FAB from '../FAB';
 import styles from './style'
+import { PHOTOS } from '../../constants/ApiUrls.js'
 
 var Share = NativeModules.KDSocialShare;
 
@@ -29,6 +31,9 @@ export default class Photo extends Component {
       photoDetail: null,
       isLoading: true,
       renderPlaceholder: true,
+      total_likes: 0,
+      isLiked: false,
+      heartImage: null,
     };
   }
 
@@ -46,9 +51,15 @@ export default class Photo extends Component {
     fetch(query)
     .then((response) => response.json())
     .then((responseData) => {
+      console.log('photo res data', responseData);
       this.setState({
         photoDetail: responseData.data,
         isLoading: false,
+        isLiked: (responseData.data.liked === 0)? false : true,
+        total_likes: responseData.data.total_likes,
+        heartImage: (responseData.data.liked === 0)
+          ? require('../../assets/images/like.png' ) 
+          : require('../../assets/images/liked.png'),
       });
     }).done();
   }
@@ -76,6 +87,33 @@ export default class Photo extends Component {
     return (
       <View style={{flex: 1, backgroundColor: 'black'}}></View>
     );
+  }
+
+  _toggleLike() {
+    // action == 0 -> unlike
+    // action == 1 -> like
+    const action = this.state.isLiked ? '0': '1';
+
+    const url = PHOTOS.LIKEURL
+      .replace( '{photo_id}', this.state.photoDetail.id)
+      .replace( '{like}', action);
+
+    console.log(action, url)
+
+    fetch(url, {method: 'POST'})
+      .then(res => {
+        this.setState({
+          isLiked: !this.state.isLiked,
+          
+          total_likes: (action === '1')
+            ? this.state.total_likes + 1
+            : this.state.total_likes - 1,
+
+          heartImage: (action === '0')
+            ? require('../../assets/images/like.png' ) 
+            : require('../../assets/images/liked.png'),
+        })
+      }).then(_=> console.log('state', this.state))
   }
 
   render () {
@@ -138,15 +176,20 @@ export default class Photo extends Component {
             </View>
 
             <View style={styles.likes}>
-              <Image
-              source={require('../../assets/images/like.png')}
-              style={styles.heart}
-              />
-              <Text
-              style={styles.likeCount}
-              >
-                {this.state.photoDetail.total_likes} LIKES
-              </Text>
+              <TouchableOpacity
+                onPress={this._toggleLike.bind(this)}
+                style={styles.starContainer}>
+                <Image 
+                  source={this.state.heartImage}
+                  style={styles.likeImage}
+                />
+                <Text
+                  style={styles.likeCount}>
+                  {this.state.total_likes} 
+
+                  {this.state.total_likes === 1 ? ' LIKE' : ' LIKES ' }
+                </Text>
+              </TouchableOpacity>
             </View>
 
           </View>

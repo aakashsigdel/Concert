@@ -1,14 +1,22 @@
 'use strict';
 const API_BASE = "http://api.revuzeapp.com:80/api/v1"
-const suffix = "?access_token=abcde"
+const TOKEN_SUFFIX = "?access_token=abcde"
 
 const CONCERT = {
-  CHECKINURL: API_BASE + '/concerts/{concert_id}/checkin' + suffix,
+  CHECKINURL: API_BASE + '/concerts/{concert_id}/checkin' + TOKEN_SUFFIX,
 }
 
 const REVIEW = {
-  DETAILURL: API_BASE + '/reviews/{review_id}' + suffix,
-  LIKEURL: API_BASE + '/reviews/{review_id}/likes' + suffix + '&like={like}',
+  DETAILURL: API_BASE + '/reviews/{review_id}' + TOKEN_SUFFIX,
+  LIKEURL: API_BASE + '/reviews/{review_id}/likes' + TOKEN_SUFFIX + '&like={like}',
 }
 
-export {CONCERT, REVIEW}
+const PHOTOS = {
+  LIKEURL: API_BASE + '/photos/{photo_id}/likes' + TOKEN_SUFFIX + '&like={like}',
+}
+
+export {
+  CONCERT,
+  REVIEW,
+  PHOTOS
+}

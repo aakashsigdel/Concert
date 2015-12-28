@@ -62,11 +62,11 @@ export default class Review extends Component {
         this.setState({
           renderPlaceholderOnly: false,
           review: res.data,
+          isLiked: (res.data.liked === 0)? false : true,
+          total_likes: res.data.total_likes,
           heartImage: (res.data.liked === 0)
             ? require('../../assets/images/like.png' ) 
             : require('../../assets/images/liked.png'),
-          isLiked: (res.data.liked === 0)? false : true,
-          total_likes: res.data.total_likes,
         })
       }).then(_=> console.log('got data', this.state))
   }
