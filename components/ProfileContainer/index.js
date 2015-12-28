@@ -20,8 +20,8 @@ import Concerts from '../Concerts';
 import InternalNavigation from '../InternalNavigation';
 import HeaderBar from '../HeaderBar';
 import styles from './style';
+import { USERS } from '../../constants/ApiUrls.js'
 
-const QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/users/userId?access_token=abcde';
 const VIEWPORT = Dimensions.get('window');
 
 export default class ProfileContainer extends Component {
@@ -52,25 +52,25 @@ export default class ProfileContainer extends Component {
 
   componentDidMount() {
     this._fetchData();
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({
-        renderPlaceholder: false,
-      });
-    });
   }
   
   _fetchData () {
-    let query_url = QUERY_URL.replace('userId', this.props.userId || 1);
-    fetch (query_url)
+    let url = USERS.USER_DETAIL_URL.replace('{user_id}', this.props.userId);
+    fetch (url)
       .then ((response) => response.json())
       .then ((responseData) => {
-        this.setState ({
-          followersNum: responseData.data.followers_count,
-          followingNum: responseData.data.following_count,
-          bio: responseData.data.bio,
-          profilePic: responseData.data.profile_picture,
-          userName: responseData.data.full_name,
-          userId: responseData.data.id,
+        console.log(responseData);
+        InteractionManager.runAfterInteractions(() => {
+          this.setState ({
+            renderPlaceholder: false,
+            userData: responseData.data,
+            followersNum: responseData.data.followers_count,
+            followingNum: responseData.data.following_count,
+            bio: responseData.data.bio,
+            profilePic: responseData.data.profile_picture,
+            userName: responseData.data.full_name,
+            userId: responseData.data.id,
+          });
         });
       }).done();
   }
@@ -89,7 +89,8 @@ export default class ProfileContainer extends Component {
     return (
       <View style={styles.topView}>
         <View style={styles.noBio}>
-          <TouchableHighlight>
+          <TouchableHighlight
+            onPress={this._handlePress.bind(this, 'followers', this.state.userId)}>
             <View style={styles.follow}>
               <Text style={styles.followNum}>
                 {this.state.followersNum}
@@ -111,11 +112,7 @@ export default class ProfileContainer extends Component {
             </View>
           </TouchableHighlight>
         </View>
-        <Text style={styles.bio}>
-          This is who i am. In eum odio menandri, 
-          delenit antiopam pri eu, 
-          falli inter es set at eos Has te novum perpetua.... 
-        </Text>
+        <Text style={styles.bio}>{this.state.userData.bio}</Text>
 
         <View style={styles.userBtn}>
           {(()=>{
@@ -124,9 +121,10 @@ export default class ProfileContainer extends Component {
                 <TouchableHighlight
                   underlayColor='#F9A000'
                   style={styles.btnTouch}
-                  onPress={()=> this.props.navigator.push({
+                  onPress={()=> this.props.navigator.replace({
                     name: 'editProfile',
                     index: 10,
+                    userData: this.state.userData,
                   })}>
 
                   <Text style={styles.btnText}>EDIT</Text>
@@ -161,9 +159,7 @@ export default class ProfileContainer extends Component {
       <View style={styles.container}>
         <HeaderBar 
           left={require('../../assets/images/backIcon.png')}
-          mid={this.state.userName}
-          right={require('../../assets/images/settings.png')}
-          styleRight={{marginRight: 15}}
+          mid={this.state.userData.full_name}
           clickableLeft={true}
           clickFunctionLeft={ _=> {this.props.navigator.pop()}}
         />

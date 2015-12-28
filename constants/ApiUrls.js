@@ -16,8 +16,14 @@ const PHOTOS = {
   LIKEURL: API_BASE + '/photos/{photo_id}/likes' + TOKEN_SUFFIX + '&like={like}',
 }
 
+const USERS = {
+  USER_DETAIL_URL : API_BASE + '/users/{user_id}' + TOKEN_SUFFIX,
+  PROFILE_EDIT_URL: API_BASE + '/users/me' + TOKEN_SUFFIX,
+}
+
 export {
   CONCERTS,
   REVIEW,
   PHOTOS,
+  USERS,
 }

@@ -121,6 +121,7 @@ class ConcertReview extends Component {
       case 'editProfile':
         return <EditProfile
           navigator={navigator}
+          userData={route.userData}
         />;
       case 'addReview':
         return <AddReview 
