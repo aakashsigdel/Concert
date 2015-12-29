@@ -12,6 +12,7 @@ import {
 	Dimensions,
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
+import { callOnFetchError } from '../../utils.js';
 
 var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id?access_token=abcde';
 var navBtn = "http://aakashsigdel.github.io/Concert/navBtn.png";
@@ -35,17 +36,20 @@ export default class Header extends Component {
 		return {width: width, height: size};
 	}
 
-	_fetchData() {
-		var query = QUERY_URL.replace('concert_id', this.props.concertId);
-		fetch(query)
-			.then((response) => response.json())
-			.then((responseData) => {
-				this.setState({
-					concertData: responseData,
-					isLoading: false
-				});
-			});
-	}
+  _fetchData() {
+    var query = QUERY_URL.replace('concert_id', this.props.concertId);
+    fetch(query)
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({
+        concertData: responseData,
+        isLoading: false
+      });
+    })
+    .catch((error) => {
+      callOnFetchError(error, query);
+    }).done();
+  }
 
 	_handelPress() {
 	  this.props.navigator.pop();

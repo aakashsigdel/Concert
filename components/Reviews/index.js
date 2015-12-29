@@ -14,6 +14,8 @@ import {
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
 import Calander from '../Calander';
+import { callOnFetchError } from '../../utils.js';
+
 
 
 let QUERY_URL = {
@@ -64,7 +66,10 @@ export default class Reviews extends Component {
 				isLoading: false,
         apiData: responseData.data,
 			});
-		}).done();
+    })
+    .catch((error) => {
+      callOnFetchError(error, query);
+    }).done();
 	}
 
 	// this function sholud be in a global module

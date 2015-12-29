@@ -15,6 +15,7 @@ import {
 
 import Loader from '../../components.ios/Loader';
 import styles from './style.js';
+import { callOnFetchError } from '../../utils.js';
 
 const QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id/photos?access_token=abcde';
 export default class Photos extends Component {
@@ -49,7 +50,10 @@ export default class Photos extends Component {
 					dataSource: this.state.dataSource.cloneWithRows(responseData.data),
 					isLoading: false
 				});
-			}).done();
+      })
+      .catch((error) => {
+        callOnFetchError(error, query);
+      }).done();
 	}
 
 	_handlePress (photoId) {

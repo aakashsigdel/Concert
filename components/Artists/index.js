@@ -9,6 +9,7 @@ import React, {
 } from 'react-native';
 
 import Loader from '../../components.ios/Loader';
+import { callOnFetchError } from '../../utils.js';
 
 const ARTISTS_URL = 'http://api.revuzeapp.com:80/api/v1/artists/search?name=ab&access_token=abcde';
 const styles = require('./style.json');
@@ -57,6 +58,9 @@ export default class Artists extends Component {
         dataSource: this.state.dataSource.cloneWithRows(responseData.data),
         apiData: responseData.data,
       });
+    })
+    .catch((error) => {
+      callOnFetchError(error);
     }).done();
   }
 

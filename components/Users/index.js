@@ -10,6 +10,8 @@ import React, {
   View,
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
+import { callOnFetchError } from '../../utils.js';
+
 
 const USERS_URL = 'http://api.revuzeapp.com:80/api/v1/users/1/following?access_token=abcde';
 export default class Users extends Component {
@@ -55,6 +57,9 @@ export default class Users extends Component {
         dataSource: this.state.dataSource.cloneWithRows(responseData.data),
         isLoading: false,
       });
+    })
+    .catch((error) => {
+      callOnFetchError(error, USERS_URL);
     }).done();
   }
 

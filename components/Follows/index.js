@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
 import Reviews from '../Reviews';
+import { callOnFetchError } from '../../utils.js';
+
 
 const USERS_URL = 'http://api.revuzeapp.com:80/api/v1/users/userId/following?access_token=abcde';
 const styles = StyleSheet.create(require('./style.json'))
@@ -41,6 +43,9 @@ export default class Follows extends Component {
         apiData: responseData.data,
         dataSource: this.state.dataSource.cloneWithRows(responseData.data),
       });
+    })
+    .catch((error) => {
+      callOnFetchError(error, query_url);
     }).done();
   }
 

@@ -9,7 +9,7 @@ import React, {
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
 import { USERS } from '../../constants/ApiUrls.js'
-import { serializeJSON } from '../../utils.js'
+import { serializeJSON, callOnFetchError } from '../../utils.js'
 
 const styles = StyleSheet.create(require('./style.json'));
 
@@ -54,7 +54,10 @@ export default class EditProfile extends Component {
         name: 'profile',
         userId: this.state.userData.id,
       })
-    });
+    })
+    .catch((error) => {
+      callOnFetchError(error, USERS.PROFILE_EDIT_URL);
+    }).done();
   }
 
   render(){

@@ -23,6 +23,8 @@ import Loader from '../../components.ios/Loader';
 import HeaderBar from '../../components/HeaderBar';
 import heroElement from './heroElement';
 import { REVIEW } from '../../constants/ApiUrls.js'
+import { callOnFetchError } from '../../utils.js';
+
 
 const {deviceWidth, deviceHeight} = Dimensions.get('window');
 const Share = NativeModules.KDSocialShare;
@@ -68,7 +70,11 @@ export default class Review extends Component {
             ? require('../../assets/images/like.png' ) 
             : require('../../assets/images/liked.png'),
         })
-      }).then(_=> console.log('got data', this.state))
+      })
+      .then(_=> console.log('got data', this.state))
+      .catch((error) => {
+        callOnFetchError(error, url);
+      }).done();
   }
 
 	_sharePhoto () {
@@ -110,7 +116,11 @@ export default class Review extends Component {
             ? require('../../assets/images/like.png' ) 
             : require('../../assets/images/liked.png'),
         })
-      }).then(_=> console.log('state', this.state))
+      })
+      .then(_=> console.log('state', this.state))
+      .catch((error) => {
+        callOnFetchError(error, url);
+      }).done();
   }
 
 	_getStars(yellowStars) {

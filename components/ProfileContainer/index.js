@@ -21,6 +21,8 @@ import InternalNavigation from '../InternalNavigation';
 import HeaderBar from '../HeaderBar';
 import styles from './style';
 import { USERS } from '../../constants/ApiUrls.js'
+import { callOnFetchError } from '../../utils.js';
+
 
 const VIEWPORT = Dimensions.get('window');
 
@@ -56,7 +58,7 @@ export default class ProfileContainer extends Component {
   
   _fetchData () {
     let url = USERS.USER_DETAIL_URL.replace('{user_id}', this.props.userId);
-    fetch (url)
+    fetch(url)
       .then ((response) => response.json())
       .then ((responseData) => {
         console.log(responseData);
@@ -72,6 +74,9 @@ export default class ProfileContainer extends Component {
             userId: responseData.data.id,
           });
         });
+      })
+      .catch((error) => {
+        callOnFetchError(error, query);
       }).done();
   }
 

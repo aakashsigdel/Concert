@@ -20,6 +20,8 @@ import Calander from '../Calander';
 import FAB from '../FAB';
 import styles from './style'
 import { PHOTOS } from '../../constants/ApiUrls.js'
+import { callOnFetchError } from '../../utils.js';
+
 
 var Share = NativeModules.KDSocialShare;
 
@@ -61,6 +63,9 @@ export default class Photo extends Component {
           ? require('../../assets/images/like.png' ) 
           : require('../../assets/images/liked.png'),
       });
+    })
+    .catch((error) => {
+      callOnFetchError(error, query);
     }).done();
   }
 
@@ -113,7 +118,11 @@ export default class Photo extends Component {
             ? require('../../assets/images/like.png' ) 
             : require('../../assets/images/liked.png'),
         })
-      }).then(_=> console.log('state', this.state))
+      })
+      .then(_=> console.log('state', this.state))
+      .catch((error) => {
+        callOnFetchError(error, url);
+      }).done();
   }
 
   render () {

@@ -15,6 +15,7 @@ import Header from '../Header';
 import InternalNavigation from '../InternalNavigation';
 import Photos from '../Photos';
 import Reviews from '../Reviews';
+import { callOnFetchError } from '../../utils.js';
 
 const QUERY_URL = "http://api.revuzeapp.com:80/api/v1/concerts/upcoming?access_token=abcde";
 export default class Concerts extends Component {
@@ -62,7 +63,10 @@ export default class Concerts extends Component {
           apiData: responseData.data,
           dataSource: this.state.dataSource.cloneWithRows(responseData.data),
 				});
-			}).done();
+      })
+    .catch((error) => {
+      callOnFetchError(error, QUERY_URL);
+    }).done();
 	}
 	
 	_handlePress(concertId, concert) {

@@ -15,7 +15,7 @@ import {
 import HeaderBar from '../HeaderBar';
 import styles from './style';
 import { CONCERTS } from '../../constants/ApiUrls.js'
-import { serializeJSON } from '../../utils.js'
+import { serializeJSON, callOnFetchError  } from '../../utils.js'
 
 export default class Concert extends Component {
   constructor () {
@@ -65,6 +65,9 @@ export default class Concert extends Component {
         concert: Object.assign({}, this.state.concert, {checked_in: c})
       })
     })
+    .catch((error) => {
+      callOnFetchError(error);
+    }).done();
   }
 
   render () {
