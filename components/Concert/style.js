@@ -15,6 +15,7 @@ let styles = {
     position: 'absolute',
     backgroundColor: 'black',
     width: VIEWPORT.width,
+    height: VIEWPORT.height / 2,
     top: 64,
     left: 0,
   },
@@ -77,8 +78,16 @@ let styles = {
     borderRadius: 16,
     marginBottom: 19.5,
   },
+  attending: {
+    backgroundColor:' rgba(0, 0, 0,0.7)',
+    borderColor: '#F9B400',
+    borderWidth: 2,
+    borderRadius: 16,
+  },
   attendTouch: {
     flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 16,
@@ -87,6 +96,14 @@ let styles = {
     color: 'white',
     fontSize: 12,
     fontFamily: 'AvenirNext-DemiBold',
+  },
+  attendingText:{
+    color: '#F9B400',
+  },
+  doneImage: {
+    width: 17,
+    height: 12.5,
+    marginRight: 5,
   },
   headerContainer: {
     height: 64,

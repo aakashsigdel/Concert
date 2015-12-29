@@ -9,11 +9,13 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
 import styles from './style';
 import { CONCERTS } from '../../constants/ApiUrls.js'
+import { serializeJSON } from '../../utils.js'
 
 export default class Concert extends Component {
   constructor () {
@@ -45,9 +47,23 @@ export default class Concert extends Component {
 
   _attendConcert(){
     const url = CONCERTS.CHECKINURL.replace('{concert_id}', this.props.concertId);
-    fetch(url, {method: 'POST'}).then( res => {
-      console.log(url, res);
-      res.ok ? alert('Sucess!') : alert('Nope!')
+    console.log('before', this.state)
+    const params = {
+      checkin: this.state.concert.checked_in === 1 ? 0 : 1,
+    }
+
+    fetch(
+      url,
+      { 
+        method: 'POST',
+        json: true,
+        body: serializeJSON(params)
+      }
+    ).then( res => {
+      const c = this.state.concert.checked_in === 0? 1 : 0;
+      this.setState({
+        concert: Object.assign({}, this.state.concert, {checked_in: c})
+      })
     })
   }
 
@@ -58,7 +74,7 @@ export default class Concert extends Component {
       <View style={styles.container}>
 
         <Image
-          source={require('../../assets/images/background_crowd.png')}
+          source={{uri:this.state.concert.artist.image.original}}
           style={styles.backgroundImage}
         />
 
@@ -117,17 +133,29 @@ export default class Concert extends Component {
         <MapView
           style={styles.mapview}
         />
-        <View style={styles.attendBtn}>
-          <TouchableHighlight
-            onPress={this._attendConcert.bind(this)}
-            underlayColor='#F9A000'
-            style={styles.attendTouch} 
-            >
-            <Text style={styles.attendText}>
-              {this.state.concert.checked_in === 1 ? '√ ATTENDING' : 'ATTEND'}
+        <TouchableOpacity
+          onPress={this._attendConcert.bind(this)}
+          activeOpacity={0.6}
+          underlayColor='#F9A000'
+          style={[styles.attendBtn, 
+            this.state.concert.checked_in === 1  ? styles.attending : null
+          ]} 
+          >
+          <View style={styles.attendTouch}>
+            {
+              this.state.concert.checked_in === 1 ? 
+              <Image
+                style={styles.doneImage}
+                source={require('../../assets/images/done_colored.png')}/>
+              : null
+            }
+              <Text style={[styles.attendText, 
+                this.state.concert.checked_in === 1  ? styles.attendingText : null
+              ]}>
+              {this.state.concert.checked_in === 1 ? 'ATTENDING' : 'ATTEND'}
             </Text>
-          </TouchableHighlight>
-        </View>
+          </View>
+        </TouchableOpacity>
 
       </View>
     </View>
