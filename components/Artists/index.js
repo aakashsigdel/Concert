@@ -34,23 +34,16 @@ export default class Artists extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.filterText 
        && (prevProps.filterText !== this.props.filterText) 
-       && (!this.state.isLoading) 
+       && (!this.state.isLoading)
        && (this.state.apiData)) {
-        let that = this;
-        let filteredData = this.state.apiData.filter(function(item, index){
-          return (item.name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1);
-        });
-        if(filteredData.length === 0) {
-          filterData = this.state.dataSource.cloneWithRows({name: 'Nothing To Show'});
-        }
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(filteredData),
-        });
+         this._fetchData();
     }
   }
 
   _fetchData() {
-    fetch(ARTISTS_URL)
+    let query = this.props.fetchURL;
+    console.log(query);
+    fetch(query)
     .then((response) => response.json())
     .then((responseData) => {
       this.setState({
@@ -64,8 +57,8 @@ export default class Artists extends Component {
     }).done();
   }
 
-  _handlePress() {
-    this.props.navigator.push({name: 'artist', index: 6});
+  _handlePress(artistId) {
+    this.props.navigator.push({name: 'artist', index: 6, artistId: artistId});
   }
 
   _renderRow(rowData){
@@ -77,7 +70,7 @@ export default class Artists extends Component {
 
     return(
       <TouchableHighlight
-        onPress={this._handlePress.bind(this)}>
+        onPress={this._handlePress.bind(this, rowData.id)}>
         <View
           style={[styles.row, backgroundStyle]}>
           <Image

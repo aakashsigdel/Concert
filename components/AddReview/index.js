@@ -9,6 +9,7 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
+import { REVIEW } from '../../constants/ApiUrls';
 
 const styles = require('./style.json');
 
@@ -61,12 +62,16 @@ export default class AddReview extends Component {
 	}
 
   _handlePress () {
-    let REVIEW_POST_URL = 'http://api.revuzeapp.com/api/v1/concerts/12/review?access_token=abcde';
+    if(this.comment.trim() === '') {
+      alert('ERROR: Please Input Comment');
+      return;
+    }
+    let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
     let imageObj = {
       uploadUrl: REVIEW_POST_URL,
       method: 'POST',
       fields: {
-        concert_id: 12,
+        concert_id: this.props.concertId,
         comment: this.comment,
         rating: this.state.yellowCount,
       },
@@ -79,6 +84,7 @@ export default class AddReview extends Component {
       ]
     };
     NativeModules.FileUpload.upload(imageObj, (err, result) => {
+      console.log(result, 'posted by posted');
     });
     this.props.navigator.popToTop();
     

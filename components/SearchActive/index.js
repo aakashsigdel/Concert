@@ -21,6 +21,7 @@ import Reviews from '../Reviews';
 import Home from '../Home';
 import Users from '../Users';
 import Artists from '../Artists';
+import { SEARCH } from '../../constants/ApiUrls';
 
 const styles = StyleSheet.create(require('./style.json'));
 
@@ -29,7 +30,7 @@ export default class SearchActive extends Component {
     super()
     this.navigator = null;
     this.state = {
-      filterText : 'text',
+      filterText : 'abc',
       activeView: 'reviews',
     };
   }
@@ -43,6 +44,7 @@ export default class SearchActive extends Component {
             filterText={this.state.filterText} 
             navigator={this.props.navigator}
             fetchFor="concertId"
+            fetchURL={SEARCH.REVIEWS_URL.replace('{search_token}', this.state.filterText)}
           />
         );
       case 'concerts' :
@@ -51,6 +53,7 @@ export default class SearchActive extends Component {
             calanderHeader={true} 
             filterText={this.state.filterText} 
             navigator={this.props.navigator} 
+            fetchURL={SEARCH.CONCERTS_URL.replace('{search_token}', this.state.filterText)}
           /> 
         );
       case 'users':
@@ -58,6 +61,7 @@ export default class SearchActive extends Component {
           <Users
             filterText={this.state.filterText}
             navigator={this.props.navigator}
+            fetchURL={SEARCH.USERS_URL.replace('{search_token}', this.state.filterText)}
           />
         );
       case 'artists':
@@ -65,6 +69,7 @@ export default class SearchActive extends Component {
           <Artists
             filterText={this.state.filterText} 
             navigator={this.props.navigator} 
+            fetchURL={SEARCH.ARTISTS_URL.replace('{search_token}', this.state.filterText)}
           />
         );
       default:

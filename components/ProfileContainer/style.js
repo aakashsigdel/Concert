@@ -41,6 +41,7 @@ export default styles = StyleSheet.create({
   profileImage: {
     width: 150,
     height: 150,
+    borderRadius: 75,
   },
   bio: {
     color: 'white',
@@ -72,5 +73,21 @@ export default styles = StyleSheet.create({
   },
   internalNavigation: {
     width: VIEWPORT.width,
+  },
+  unfollowButton: {
+    backgroundColor: 'black',
+    borderColor: 'orange',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderTopWidth: 1.5,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  doneImage: {
+    width: 17,
+    height: 12.5,
+    marginLeft: -15,
+    marginRight: 5
   },
 });

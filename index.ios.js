@@ -48,15 +48,15 @@ class ConcertReview extends Component {
             navigator={navigator}
           />
         );
-      case 'buttonScreen':
-        return (
-          <ButtonsScreen
-            navigator={navigator}
-          />
-        );
       case 'home':
         return (
           <Home
+            navigator={navigator}
+          />
+        );
+      case 'buttonScreen':
+        return (
+          <ButtonsScreen
             navigator={navigator}
           />
         );
@@ -108,7 +108,8 @@ class ConcertReview extends Component {
       case 'artist':
         return (
           <Artist
-          navigator={navigator}
+            artistId={route.artistId}
+            navigator={navigator}
           />
         );
       case 'chooseConcert':

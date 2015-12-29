@@ -19,6 +19,7 @@ import { callOnFetchError } from '../../utils.js';
 
 
 let QUERY_URL = {
+  latest: 'http://api.revuzeapp.com:80/api/v1/reviews/latest?access_token=abcde',
   concertId: 'http://api.revuzeapp.com:80/api/v1/concerts/12/reviews?access_token=abcde',
   userId: 'http://api.revuzeapp.com:80/api/v1/users/userId/reviews?access_token=abcde'
 }
@@ -41,41 +42,32 @@ export default class Reviews extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.filterText 
        && (prevProps.filterText !== this.props.filterText) 
-       && (!this.state.isLoading) 
+       && (!this.state.isLoading)
        && (this.state.apiData)) {
-        let that = this;
-        let filteredData = this.state.apiData.filter(function(item, index){
-          return (item.user.full_name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1);
-        });
-        if(filteredData.length === 0) {
-          filterData = this.state.dataSource.cloneWithRows({user: {full_name: 'Nothing To Show'}});
-        }
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(filteredData),
-        });
+         this._fetchData();
     }
   }
 
-	_fetchData() {
-		let query = QUERY_URL[this.props.fetchFor].replace(this.props.fetchFor, this.props[this.props.fetchFor]);
-		fetch(query)
-		.then((response) => response.json())
-		.then((responseData) => {
-			this.setState({
-				dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-				isLoading: false,
+  _fetchData() {
+    let query = this.props.fetchURL;
+    fetch(query)
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+        isLoading: false,
         apiData: responseData.data,
-			});
+      });
     })
     .catch((error) => {
       callOnFetchError(error, query);
     }).done();
-	}
+  }
 
 	// this function sholud be in a global module
 	_getStars(yellowStars) {
-		var stars = [];
-		for(var i = 0; i < yellowStars; i++) {
+		let stars = [];
+		for(let i = 0; i < yellowStars; i++) {
 			stars.push(
 			  <Image
 			    key={100 - i}
@@ -84,7 +76,7 @@ export default class Reviews extends Component {
 			  />
 			);
 		}
-		for(var i = 0; i < (5 - yellowStars); i++) {
+		for(let i = 0; i < (5 - yellowStars); i++) {
 			stars.push(
 			  <Image
 			    key={i}
@@ -104,6 +96,12 @@ export default class Reviews extends Component {
 	}
 
 	_renderReview(review) {
+    // artist image if there is no review image
+		let image = null;
+		if(review.image)
+		  image = review.image;
+    else
+      image = review.concert.artist.image;
 		return(
 			<TouchableOpacity
         activeOpacity={0.5}
@@ -113,7 +111,7 @@ export default class Reviews extends Component {
 
           {/*need to change this later*/}
           <Image 
-            source={require('../../assets/images/reviewPlaceholder.png')} 
+          source={{uri: image.original}}
             style={styles.profileImage} />
             
             {/*calendar Component*/}
@@ -132,7 +130,7 @@ export default class Reviews extends Component {
                 {this._getStars(Number(review.rating))}
               </View>
               <Image 
-              source={require('../../assets/images/userpicCopy.png')}
+              source={require('../../assets/images/user_default.png')}
               style={styles.userImage} />
             </View>
             
@@ -144,6 +142,8 @@ export default class Reviews extends Component {
                       return review.user.full_name.toUpperCase()
                     else if(this.props.fetchFor === 'user')
                       return this.props.userName.toUpperCase()
+                    else if(this.props.fetchFor === 'latest')
+                      return review.user.full_name.toUpperCase()
                   })()
                 }
               </Text>

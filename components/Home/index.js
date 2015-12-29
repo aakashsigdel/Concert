@@ -3,6 +3,7 @@ import React from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import {
+  AsyncStorage,
   Component,
   Dimensions,
   Image,
@@ -20,6 +21,7 @@ import Reviews from '../Reviews';
 import Photos from '../Photos';
 import SearchActive from '../SearchActive';
 import styles from './style';
+import { CONCERTS, REVIEWS, USER_DETAILS } from '../../constants/ApiUrls';
 
 var {width, height} = Dimensions.get('window');
 
@@ -35,10 +37,23 @@ export default class Home extends Component {
   }
 
   componentDidMount () {
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({
-        renderPlaceholder: false,
-      });
+    InteractionManager.runAfterInteractions( async () => {
+      console.log('k ho ta userdetail', this.userDetails);
+      await (async () => {
+        try {
+          await AsyncStorage.getItem(USER_DETAILS)
+          .then(userDetails => {
+            console.log('khassai ta kehi hoina', userDetails);
+            this.userDetails = JSON.parse(userDetails);
+            this.setState({
+              renderPlaceholder: false,
+            });
+          });
+        } catch (error) {
+          console.log('lau aayo aayo error', error)
+          this.props.navigator.replace({name: 'login'});
+        }
+      })();
     });
   }
 
@@ -93,14 +108,14 @@ export default class Home extends Component {
             });
           }}
           mid={require('../../assets/images/brand_icon.png')}
-          right={require('../../assets/images/userpicCopy.png')}
+          right={{uri: this.userDetails.profile_picture}}
           clickableRight={true}
           clickFunctionRight={() => this.props.navigator.push({
             name: 'profile',
             index: 20,
             isLoggedInUser: true,
-            userId: 1,
-            userName: 'JIMMI ANDERSEN'
+            userId: this.userDetails.id,
+            userName: this.userDetails.full_name,
           })}
           styleRight={{borderColor: '#F9B400', borderWidth: 1, borderRadius: 16}}
         />
@@ -114,7 +129,8 @@ export default class Home extends Component {
             calanderHeader={true}
             navigator={this.props.navigator}
             header={_=> this._listHeader(1, 'HOT REVIEWS')} 
-            fetchFor="concertId"
+            fetchFor="latest"
+            fetchURL={REVIEWS.LATEST_URL}
           />
 
           <Photos 
@@ -129,6 +145,7 @@ export default class Home extends Component {
             calanderHeader={true}
             navigator={this.props.navigator}
             header={_=> this._listHeader(3, 'UPCOMING CONCERTS')} 
+            fetchURL={CONCERTS.UPCOMING_URL}
           />
 
           <SearchActive 

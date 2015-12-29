@@ -2,6 +2,7 @@
 
 import React from 'react-native';
 import {
+  AsyncStorage,
   Component,
   Dimensions,
   Image,
@@ -12,6 +13,7 @@ import {
   ScrollView,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import Photos from '../Photos';
@@ -22,6 +24,7 @@ import HeaderBar from '../HeaderBar';
 import styles from './style';
 import { USERS } from '../../constants/ApiUrls.js'
 import { callOnFetchError } from '../../utils.js';
+import { CONCERTS, REVIEWS, USER, ASYNC_STORAGE_KEY } from '../../constants/ApiUrls';
 
 
 const VIEWPORT = Dimensions.get('window');
@@ -43,7 +46,9 @@ export default class ProfileContainer extends Component {
       activeView: 'Photos',
       userDetails: {data: {full_name: 'aakash'}},
       renderPlaceholder: true,
+      following: 0,
     };
+    this.loggedInUser = 0;
   }
 
 	setActiveView(view) {
@@ -53,7 +58,13 @@ export default class ProfileContainer extends Component {
 	}
 
   componentDidMount() {
-    this._fetchData();
+    InteractionManager.runAfterInteractions(() => {
+      this._fetchData();
+      this.setState({
+        renderPlaceholder: false,
+      });
+    });
+    this._getLoggedInUserId();
   }
   
   _fetchData () {
@@ -62,17 +73,20 @@ export default class ProfileContainer extends Component {
       .then ((response) => response.json())
       .then ((responseData) => {
         console.log(responseData);
-        InteractionManager.runAfterInteractions(() => {
           this.setState ({
+            bio: responseData.data.bio,
+            followersNum: responseData.data.followers_count,
+            following: responseData.data.following,
+            followingNum: responseData.data.following_count,
+            profilePic: responseData.data.profile_picture,
             renderPlaceholder: false,
             userData: responseData.data,
-            followersNum: responseData.data.followers_count,
-            followingNum: responseData.data.following_count,
-            bio: responseData.data.bio,
-            profilePic: responseData.data.profile_picture,
-            userName: responseData.data.full_name,
             userId: responseData.data.id,
-          });
+            userName: responseData.data.full_name,
+            profilePic: 
+              responseData.data.profile_picture.trim() === ''
+                ?  require('../../assets/images/user_default.png')
+                : {uri: responseData.data.profile_picture},
         });
       })
       .catch((error) => {
@@ -90,6 +104,33 @@ export default class ProfileContainer extends Component {
     );
   }
 
+  _followPress () {
+    console.log(this.state.following);
+    let query = '';
+    if(this.state.following === 1)
+      query = USER.UNFOLLOW_URL.replace('{user_id}', this.state.userId);
+    else
+      query = USER.FOLLOW_URL.replace('{user_id}', this.state.userId);
+    console.log(query);
+
+    fetch(query, {method: 'POST'})
+      .then(response => {
+        this.setState({
+          following: this.state.following === 0 ? 1 : 0,
+          followersNum: this.state.following === 0 ? 
+              this.state.followersNum + 1 : this.state.followersNum - 1
+        });
+        console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
+      })
+      .done();
+    
+  }
+
+  async _getLoggedInUserId() {
+    await AsyncStorage.getItem(ASYNC_STORAGE_KEY).then(
+      (value) => {this.loggedInUser = Number(value)}
+    );
+  }
   _renderHeader() {
     return (
       <View style={styles.topView}>
@@ -104,7 +145,7 @@ export default class ProfileContainer extends Component {
             </View>
           </TouchableHighlight>
           <Image 
-            source={require('../../assets/images/userpicCopy.png')}
+            source={this.state.profilePic}
             style={styles.profileImage} 
           />
           <TouchableHighlight
@@ -121,7 +162,8 @@ export default class ProfileContainer extends Component {
 
         <View style={styles.userBtn}>
           {(()=>{
-            if(this.props.isLoggedInUser){
+            console.log('boottle bhitra bottle', this.state.userId, this.loggedInUser)
+            if(this.loggedInUser === this.state.userId){
               return (
                 <TouchableHighlight
                   underlayColor='#F9A000'
@@ -136,12 +178,21 @@ export default class ProfileContainer extends Component {
                 </TouchableHighlight>
                 )
             }else{
+              let underlayColor = this.props.following === 1 ? 'grey' : '#F9A000';
               return(
-                <TouchableHighlight
-                  underlayColor='#F9A000'
-                  style={styles.btnTouch}>
-                  <Text style={styles.btnText}>FOLLOW</Text>
-                </TouchableHighlight>
+                <TouchableOpacity
+                  onPress={this._followPress.bind(this)}
+                  style={[
+                  this.state.following === 1 ? styles.unfollowButton : styles.btnTouch,
+                  {flexDirection: 'row'}
+                  ]}>
+                  <Image
+                    style={styles.doneImage}
+                    source={require('../../assets/images/done_colored.png')}/>
+                  <Text style={styles.btnText}>
+                    {this.state.following === 1 ? 'Following' : 'FOLLOW'}
+                  </Text>
+                </TouchableOpacity>
                 )
             }
           })()}
@@ -158,6 +209,7 @@ export default class ProfileContainer extends Component {
   }
 
   render () {
+    console.log(this.state.following);
     if(this.state.renderPlaceholder)
       return this._renderPlaceholder();
     return (
@@ -185,6 +237,7 @@ export default class ProfileContainer extends Component {
                 navigator={this.props.navigator}
                 concertId={this.props.concertId}
                 fetchFor='userId'
+                fetchURL={REVIEWS.USER_URL.replace('{user_id}', this.props.userId)}
                 userId={this.props.userId}
                 userName={this.props.userName}
               />;
@@ -194,6 +247,7 @@ export default class ProfileContainer extends Component {
                 header={this._renderHeader.bind(this)}
                 sectionHeader={this._renderSectionHeader.bind(this)}
                 calanderHeader={true}
+                fetchURL={CONCERTS.CHECKINS_URL.replace('{user_id}', this.props.userId)}
                 navigator={this.props.navigator}
               />;
           }

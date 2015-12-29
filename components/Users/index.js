@@ -33,23 +33,16 @@ export default class Users extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.filterText 
        && (prevProps.filterText !== this.props.filterText) 
-       && (!this.state.isLoading) 
+       && (!this.state.isLoading)
        && (this.state.apiData)) {
-        let that = this;
-        let filteredData = this.state.apiData.filter(function(item, index){
-          return (item.full_name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1);
-        });
-        if(filteredData.length === 0) {
-          filterData = this.state.dataSource.cloneWithRows({full_name: 'Nothing To Show'});
-        }
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(filteredData),
-        });
+         this._fetchData();
     }
   }
 
   _fetchData() {
-    fetch(USERS_URL)
+		let query = this.props.fetchURL;
+		console.log(query);
+    fetch(query)
     .then((response) => response.json())
     .then((responseData) => {
       this.setState({
