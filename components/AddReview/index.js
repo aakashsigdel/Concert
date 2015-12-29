@@ -62,6 +62,10 @@ export default class AddReview extends Component {
 	}
 
   _handlePress () {
+    if(this.comment.trim() === '') {
+      alert('ERROR: Please Input Comment');
+      return;
+    }
     let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
     let imageObj = {
       uploadUrl: REVIEW_POST_URL,

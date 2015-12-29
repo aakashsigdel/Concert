@@ -41,6 +41,7 @@ export default styles = StyleSheet.create({
   profileImage: {
     width: 150,
     height: 150,
+    borderRadius: 75,
   },
   bio: {
     color: 'white',

@@ -178,7 +178,7 @@ class ConcertReview extends Component {
 	render () {
 		return (
 		  <Navigator
-        initialRoute={{name: 'intro', index: 0}}
+        initialRoute={{name: 'home', index: 0}}
         renderScene={this._renderScene}
         configureScene={(route) => {
           if (route.sceneConfig) {

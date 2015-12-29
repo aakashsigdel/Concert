@@ -22,7 +22,7 @@ import Concerts from '../Concerts';
 import InternalNavigation from '../InternalNavigation';
 import HeaderBar from '../HeaderBar';
 import styles from './style';
-import { CONCERTS, REVIEWS, USERS, ASYNC_STORAGE_KEY } from '../../constants/ApiUrls';
+import { CONCERTS, REVIEWS, USER, ASYNC_STORAGE_KEY } from '../../constants/ApiUrls';
 
 
 const QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/users/userId?access_token=abcde';
@@ -75,7 +75,10 @@ export default class ProfileContainer extends Component {
           followersNum: responseData.data.followers_count,
           followingNum: responseData.data.following_count,
           bio: responseData.data.bio,
-          profilePic: responseData.data.profile_picture,
+          profilePic: 
+            responseData.data.profile_picture.trim() === '' ?
+              require('../../assets/images/user_default.png') :
+                {uri: responseData.data.profile_picture},
           userName: responseData.data.full_name,
           userId: responseData.data.id,
           following: responseData.data.following,
@@ -97,9 +100,9 @@ export default class ProfileContainer extends Component {
     console.log(this.state.following);
     let query = '';
     if(this.state.following === 1)
-      query = USERS.UNFOLLOW_URL.replace('{user_id}', this.state.userId);
+      query = USER.UNFOLLOW_URL.replace('{user_id}', this.state.userId);
     else
-      query = USERS.FOLLOW_URL.replace('{user_id}', this.state.userId);
+      query = USER.FOLLOW_URL.replace('{user_id}', this.state.userId);
     console.log(query);
 
     fetch(query, {method: 'POST'})
@@ -133,7 +136,7 @@ export default class ProfileContainer extends Component {
             </View>
           </TouchableHighlight>
           <Image 
-            source={require('../../assets/images/userpicCopy.png')}
+            source={this.state.profilePic}
             style={styles.profileImage} 
           />
           <TouchableHighlight
