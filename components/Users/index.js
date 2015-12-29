@@ -11,6 +11,7 @@ import React, {
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
 import { callOnFetchError } from '../../utils.js';
+import { USERS } from '../../constants/ApiUrls';
 
 
 const USERS_URL = 'http://api.revuzeapp.com:80/api/v1/users/1/following?access_token=abcde';
@@ -52,18 +53,24 @@ export default class Users extends Component {
       });
     })
     .catch((error) => {
-      callOnFetchError(error, USERS_URL);
+      callOnFetchError(error, query);
     }).done();
   }
 
-  _handelGlobalNavPress(name, index, userId) {
-    this.props.navigator.push({name: name, index: index, userId: userId});
+  _handelGlobalNavPress(name, index, userId, userName) {
+    this.props.navigator.push({
+        name: name,
+        index: index,
+        userId: userId,
+        userName: userName,
+        fetchURL: USERS.USER_DETAIL_URL.replace('{user_id}', userId),
+      });
   }
 
   _renderRow (rowData) {
     return(
       <TouchableHighlight
-      onPress={this._handelGlobalNavPress.bind(this, 'profile', 3, rowData.id)}
+      onPress={this._handelGlobalNavPress.bind(this, 'profile', 3, rowData.id, rowData.full_name)}
       >
         <View style={styles.listItem}>
           <Image

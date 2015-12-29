@@ -7,5 +7,10 @@ export const serializeJSON = ( json ) => {
 }
 
 export const callOnFetchError = (error, url="not specified") => {
-  console.log('FETCH ERROR! url -> ', url, error);
+  try {
+    console.log('FETCH ERROR! url -> ', url, error);
+  } catch (error) {
+    console.log(error, 'utils error');
+    throw error;
+  }
 }

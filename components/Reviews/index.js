@@ -97,11 +97,8 @@ export default class Reviews extends Component {
 
 	_renderReview(review) {
     // artist image if there is no review image
-		let image = null;
-		if(review.image)
-		  image = review.image;
-    else
-      image = review.concert.artist.image;
+    console.log(review)
+		let image = review.image ? review.image : review.concert.artist.image
 		return(
 			<TouchableOpacity
         activeOpacity={0.5}
@@ -111,7 +108,7 @@ export default class Reviews extends Component {
 
           {/*need to change this later*/}
           <Image 
-          source={{uri: image.original}}
+            source={{uri: image.original}}
             style={styles.profileImage} />
             
             {/*calendar Component*/}
@@ -143,6 +140,8 @@ export default class Reviews extends Component {
                     else if(this.props.fetchFor === 'user')
                       return this.props.userName.toUpperCase()
                     else if(this.props.fetchFor === 'latest')
+                      return review.user.full_name.toUpperCase()
+                    else
                       return review.user.full_name.toUpperCase()
                   })()
                 }

@@ -22,7 +22,6 @@ import styles from './style'
 import { PHOTOS } from '../../constants/ApiUrls.js'
 import { callOnFetchError } from '../../utils.js';
 
-
 var Share = NativeModules.KDSocialShare;
 
 let QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/photos/photoId?access_token=abcde';
@@ -59,6 +58,9 @@ export default class Photo extends Component {
         isLoading: false,
         isLiked: (responseData.data.liked === 0)? false : true,
         total_likes: responseData.data.total_likes,
+        profile_picture: responseData.data.user.profile_picture.trim().length === 0
+          ? require('../../assets/images/user_default.png')
+          : responseData.data.user.profile_picture,
         heartImage: (responseData.data.liked === 0)
           ? require('../../assets/images/like.png' ) 
           : require('../../assets/images/liked.png'),
@@ -70,7 +72,12 @@ export default class Photo extends Component {
   }
 
 	_handelUserPress(userId) {
-    this.props.navigator.push({name: 'profile', index: 5, userId: userId});
+    this.props.navigator.push({
+      name: 'profile',
+      index: 5,
+      userId: userId,
+      userName: this.state.photoDetail.user.full_name,
+    });
 	}
 
 	_sharePhoto () {
@@ -151,8 +158,8 @@ export default class Photo extends Component {
         />
         <View style={styles.topView}>
           <Image
-          source={{uri: this.state.photoDetail.image.original}}
-          style={styles.mainPhoto}
+            source={{uri: this.state.photoDetail.image.original}}
+            style={styles.mainPhoto}
           />
           <View style={styles.photoDetail}>
             <Calander
@@ -170,8 +177,8 @@ export default class Photo extends Component {
 
             <View style={styles.user}>
               <Image
-              source={require('../../assets/images/userpicCopy.png')}
-              style={styles.profileImage}
+                source={this.state.profile_picture}
+                style={styles.profileImage}
               />
               <TouchableHighlight
               onPress={this._handelUserPress.bind(this, this.state.photoDetail.user.id)}

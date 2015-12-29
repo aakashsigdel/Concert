@@ -2,8 +2,8 @@
 const ACCESS_TOKEN = 'abcde';
 const API_BASE = "http://api.revuzeapp.com:80/api/v1"
 const LOGIN_DETAILS = '@Revuze:loginDetails';
-const SEARCH_SUFFIX = SUFFIX + '&q={search_token}';
 const SUFFIX = "?access_token=" + ACCESS_TOKEN;
+const SEARCH_SUFFIX = SUFFIX + '&q={search_token}';
 const USER_DETAILS = '@Revuze:userDetails';
 
 const CONCERT = {

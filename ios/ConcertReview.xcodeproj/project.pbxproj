@@ -22,6 +22,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		3059D9181C3246D0005879C6 /* libRCTFBSDKCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3059D90C1C3246C2005879C6 /* libRCTFBSDKCore.a */; };
+		3059D93A1C32A2D2005879C6 /* FileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3059D9391C32A2D2005879C6 /* FileUpload.m */; };
 		308C064F1C23D3B1005C5DBC /* KDSocialShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 308C064E1C23D3B1005C5DBC /* KDSocialShare.m */; };
 		308C065F1C23D3D9005C5DBC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308C065E1C23D3D9005C5DBC /* Social.framework */; };
 		30BB559E1C229E27009EA397 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BB559D1C229E27009EA397 /* FBSDKShareKit.framework */; };
@@ -178,6 +179,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ConcertReview/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		3059D9031C3246C2005879C6 /* RCTFBSDKCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDKCore.xcodeproj; path = "../node_modules/react-native-fbsdkcore/RCTFBSDKCore.xcodeproj"; sourceTree = "<group>"; };
+		3059D9391C32A2D2005879C6 /* FileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileUpload.m; path = "../node_modules/react-native-file-upload/FileUpload.m"; sourceTree = "<group>"; };
 		308C064D1C23D3B1005C5DBC /* KDSocialShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KDSocialShare.h; path = "../node_modules/react-native-social-share/iOS/KDSocialShare.h"; sourceTree = "<group>"; };
 		308C064E1C23D3B1005C5DBC /* KDSocialShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KDSocialShare.m; path = "../node_modules/react-native-social-share/iOS/KDSocialShare.m"; sourceTree = "<group>"; };
 		308C065E1C23D3D9005C5DBC /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -307,6 +309,7 @@
 		13B07FAE1A68108700A75B9A /* ConcertReview */ = {
 			isa = PBXGroup;
 			children = (
+				3059D9391C32A2D2005879C6 /* FileUpload.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -755,6 +758,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3059D93A1C32A2D2005879C6 /* FileUpload.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				308C064F1C23D3B1005C5DBC /* KDSocialShare.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,

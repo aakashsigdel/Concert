@@ -60,11 +60,8 @@ export default class ProfileContainer extends Component {
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       this._fetchData();
-      this.setState({
-        renderPlaceholder: false,
-      });
+      this._getLoggedInUserId();
     });
-    this._getLoggedInUserId();
   }
   
   _fetchData () {
@@ -72,9 +69,10 @@ export default class ProfileContainer extends Component {
     fetch(url)
       .then ((response) => response.json())
       .then ((responseData) => {
-        console.log(responseData);
-          this.setState ({
+        console.log(responseData.data);
+        this.setState ({
             bio: responseData.data.bio,
+            renderPlaceholder: false,
             followersNum: responseData.data.followers_count,
             following: responseData.data.following,
             followingNum: responseData.data.following_count,
@@ -90,7 +88,8 @@ export default class ProfileContainer extends Component {
         });
       })
       .catch((error) => {
-        callOnFetchError(error, query);
+        callOnFetchError(error, url);
+        throw error;
       }).done();
   }
 
@@ -216,7 +215,7 @@ export default class ProfileContainer extends Component {
       <View style={styles.container}>
         <HeaderBar 
           left={require('../../assets/images/backIcon.png')}
-          mid={this.state.userData.full_name}
+          mid={this.props.userName || this.state.userData.user.full_name}
           clickableLeft={true}
           clickFunctionLeft={ _=> {this.props.navigator.pop()}}
         />
