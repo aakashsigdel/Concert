@@ -35,6 +35,7 @@ const REVIEWS = {
 const PHOTOS = {
   LATEST_URL: API_BASE + '/photos/latest' + SUFFIX,
   LIKEURL: API_BASE + '/photos/{photo_id}/likes' + SUFFIX + '&like={like}',
+  USER_URL: API_BASE + '/users/{user_id}/photos' + SUFFIX,
 }; 
 
 const PHOTO ={

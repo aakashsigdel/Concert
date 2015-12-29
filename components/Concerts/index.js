@@ -50,7 +50,6 @@ export default class Concerts extends Component {
 		fetch(query)
 			.then((response) => response.json())
 			.then((responseData) => {
-				console.log(responseData);
 				this.setState({
           isLoading: false,
           apiData: responseData.data,

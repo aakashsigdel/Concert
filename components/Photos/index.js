@@ -42,7 +42,8 @@ export default class Photos extends Component {
 	}
 
 	_fetchPhotos() {
-		var query = QUERY_URL.replace('concert_id', 12);
+		// var query = QUERY_URL.replace('concert_id', 12);
+		let query = this.props.fetchURL;
 		fetch(query)
 			.then((response) => response.json())
 			.then((responseData) => {
@@ -90,7 +91,7 @@ export default class Photos extends Component {
 				contentContainerStyle={styles.listView}
 				dataSource={this.state.dataSource}
         renderHeader={this.props.header}
-        renderSectionHeader={this.props.sectionHeader || null}
+        renderSectionHeader={this.props.sectionHeader}
 				renderRow={this._renderPhotoThumbs.bind(this)} />
 		);
 	}

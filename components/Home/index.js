@@ -95,6 +95,7 @@ export default class Home extends Component {
     var paginationHeight =  height / 1.7;
     if (this.state.renderPlaceholder)
       return this._renderPlaceholder();
+    console.log(this.userDetails, 'tauko ko full');
     return(
       <View style={styles.container}>
         <HeaderBar 
