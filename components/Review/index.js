@@ -78,11 +78,12 @@ export default class Review extends Component {
   }
 
 	_sharePhoto () {
+	  console.log(this.state.review, 'ho hai ho');
 	  this.setState({
       isLoading: true,
     });
 	  Share.shareOnFacebook({
-        'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg',
+        'imagelink': this.state.review.image.original,
     },
     (result) => {
       this.setState({
@@ -168,9 +169,13 @@ export default class Review extends Component {
   }
 
 	render() {
+    if(this.state.isLoading)
+      return <Loader />;
     if(this.state.renderPlaceholderOnly)
       return this._renderPlaceholder();
-
+    let midText = this.state.review.concert.artist.name.length < 15 ?
+      this.state.review.concert.artist.name :
+      this.state.review.concert.artist.name.slice(0, 15) + '...';
     return (
       <View style={{ flex: 1}}>
 
@@ -178,7 +183,7 @@ export default class Review extends Component {
           left={require('../../assets/images/clearCopy.png')}
           clickableLeft={true}
           clickFunctionLeft={() => this.props.navigator.pop()}
-          mid={this.state.review.concert.artist.name}
+          mid={midText}
           right={require('../../assets/images/shareAlt.png')}
           clickableRight={true}
           clickFunctionRight={this._sharePhoto.bind(this)}

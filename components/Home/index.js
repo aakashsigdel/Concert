@@ -21,7 +21,7 @@ import Reviews from '../Reviews';
 import Photos from '../Photos';
 import SearchActive from '../SearchActive';
 import styles from './style';
-import { CONCERTS, REVIEWS, USER_DETAILS } from '../../constants/ApiUrls';
+import { CONCERTS, REVIEWS, USER_DETAILS, PHOTOS } from '../../constants/ApiUrls';
 
 var {width, height} = Dimensions.get('window');
 
@@ -138,6 +138,7 @@ export default class Home extends Component {
             calanderHeader={true}
             navigator={this.props.navigator}
             header={_=> this._listHeader(2, 'LATEST PHOTOS')} 
+            fetchURL={PHOTOS.LATEST_URL}
           />
 
 

@@ -33,8 +33,13 @@ const REVIEWS = {
 }
 
 const PHOTOS = {
+  LATEST_URL: API_BASE + '/photos/latest' + SUFFIX,
   LIKEURL: API_BASE + '/photos/{photo_id}/likes' + SUFFIX + '&like={like}',
 }; 
+
+const PHOTO ={
+  POST_URL: API_BASE + '/concerts/{concert_id}/photos' + SUFFIX,
+};
 
 const USER = {
   FOLLOW_URL: API_BASE + '/users/{user_id}/follow' + SUFFIX,
@@ -59,6 +64,7 @@ export {
   CONCERT,
   CONCERTS,
   LOGIN_DETAILS,
+  PHOTO,
   PHOTOS,
   REVIEW,
   REVIEWS,

@@ -8,6 +8,7 @@ import React, {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import Loader from '../../components.ios/Loader';
 import HeaderBar from '../HeaderBar';
 import { REVIEW } from '../../constants/ApiUrls';
 
@@ -19,6 +20,7 @@ export default class AddReview extends Component {
     this.comment = '';
     this.state = {
       yellowCount: 1,
+      isLoading: false,
     }
   }
 
@@ -66,6 +68,9 @@ export default class AddReview extends Component {
       alert('ERROR: Please Input Comment');
       return;
     }
+    this.setState({
+      isLoading: true,
+    });
     let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
     let imageObj = {
       uploadUrl: REVIEW_POST_URL,
@@ -85,12 +90,17 @@ export default class AddReview extends Component {
     };
     NativeModules.FileUpload.upload(imageObj, (err, result) => {
       console.log(result, 'posted by posted');
+      this.setState({
+        isLoading: false,
+      });
+      this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
     });
-    this.props.navigator.popToTop();
     
   }
 
   render(){
+    if (this.state.isLoading)
+      return <Loader />
     return(
       <View style={styles.container}>
         <HeaderBar

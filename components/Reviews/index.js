@@ -97,7 +97,6 @@ export default class Reviews extends Component {
 
 	_renderReview(review) {
     // artist image if there is no review image
-    console.log(review)
 		let image = review.image ? review.image : review.concert.artist.image
 		return(
 			<TouchableOpacity

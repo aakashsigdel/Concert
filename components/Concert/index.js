@@ -6,22 +6,28 @@ import {
   Image,
   InteractionManager,
   MapView,
+  NativeModules,
   StyleSheet,
   Text,
   TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
+import Loader from '../../components.ios/Loader';
 import HeaderBar from '../HeaderBar';
 import styles from './style';
 import { CONCERTS } from '../../constants/ApiUrls.js'
 import { serializeJSON, callOnFetchError  } from '../../utils.js'
+
+const Share = NativeModules.KDSocialShare;
 
 export default class Concert extends Component {
   constructor () {
     super();
     this.state = {
       renderPlaceholder: true,
+      isLoading: false,
+      concert: null,
     };
   }
 
@@ -70,7 +76,23 @@ export default class Concert extends Component {
     }).done();
   }
 
+	_sharePhoto () {
+	  this.setState({
+      isLoading: true,
+    });
+	  Share.shareOnFacebook({
+        'imagelink': this.state.concert.artist.image.original,
+    },
+    (result) => {
+      this.setState({
+        isLoading: false,
+      });
+    });
+  }
+
   render () {
+    if (this.state.isLoading)
+      return <Loader />;
     if(this.state.renderPlaceholder)
       return this._renderPlaceHolder();
     return (
@@ -107,10 +129,14 @@ export default class Concert extends Component {
           </Text>
         </View>
 
-        <Image
-          source={require('../../assets/images/shareAlt.png')}
-          style={styles.shareAlt}
-        />
+        <TouchableOpacity
+          onPress={this._sharePhoto.bind(this)}
+        >
+          <Image
+            source={require('../../assets/images/shareAlt.png')}
+            style={styles.shareAlt}
+          />
+        </TouchableOpacity>
       </View>
 
       {/*Calander module*/}

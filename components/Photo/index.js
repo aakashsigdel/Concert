@@ -137,11 +137,15 @@ export default class Photo extends Component {
       return this._renderPlaceHolder();
     if(this.state.isLoading)
       return <Loader />
+    let midText = this.state.photoDetail.concert.artist.name.length < 15 ?
+      this.state.photoDetail.concert.artist.name :
+      this.state.photoDetail.concert.artist.name.slice(0, 15) + '...';
+
     return (
       <View style={styles.container}>
         <HeaderBar
         left={require('../../assets/images/clearCopy.png')}
-        mid={this.state.photoDetail.concert.artist.name}
+        mid={midText}
         right={require('../../assets/images/shareAlt.png')}
         clickableLeft={true}
         clickFunctionLeft={
