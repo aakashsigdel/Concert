@@ -23,7 +23,7 @@ import InternalNavigation from '../InternalNavigation';
 import HeaderBar from '../HeaderBar';
 import styles from './style';
 import { USERS } from '../../constants/ApiUrls.js'
-import { callOnFetchError } from '../../utils.js';
+import { callOnFetchError, getUserDetails } from '../../utils.js';
 import { CONCERTS, REVIEWS, USER, ASYNC_STORAGE_KEY } from '../../constants/ApiUrls';
 
 
@@ -59,32 +59,38 @@ export default class ProfileContainer extends Component {
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
-      this._fetchData();
-      this._getLoggedInUserId();
+      getUserDetails
+        .then( res => {
+          this._fetchData(res);
+          this.setState({
+            loggedInUser: res.id
+          })
+        })
     });
   }
   
-  _fetchData () {
+  _fetchData ( userObject ) {
     let url = USERS.USER_DETAIL_URL.replace('{user_id}', this.props.userId);
     fetch(url)
       .then ((response) => response.json())
       .then ((responseData) => {
         console.log(responseData.data);
         this.setState ({
-            bio: responseData.data.bio,
-            renderPlaceholder: false,
-            followersNum: responseData.data.followers_count,
-            following: responseData.data.following,
-            followingNum: responseData.data.following_count,
-            profilePic: responseData.data.profile_picture,
-            renderPlaceholder: false,
-            userData: responseData.data,
-            userId: responseData.data.id,
-            userName: responseData.data.full_name,
-            profilePic: 
-              responseData.data.profile_picture.trim() === ''
-                ?  require('../../assets/images/user_default.png')
-                : {uri: responseData.data.profile_picture},
+          loggedInUser: userObject.id,
+          bio: responseData.data.bio,
+          renderPlaceholder: false,
+          followersNum: responseData.data.followers_count,
+          following: responseData.data.following,
+          followingNum: responseData.data.following_count,
+          profilePic: responseData.data.profile_picture,
+          renderPlaceholder: false,
+          userData: responseData.data,
+          userId: responseData.data.id,
+          userName: responseData.data.full_name,
+          profilePic: 
+            responseData.data.profile_picture.trim() === ''
+              ?  require('../../assets/images/user_default.png')
+              : {uri: responseData.data.profile_picture},
         });
       })
       .catch((error) => {
@@ -125,11 +131,6 @@ export default class ProfileContainer extends Component {
     
   }
 
-  async _getLoggedInUserId() {
-    await AsyncStorage.getItem(ASYNC_STORAGE_KEY).then(
-      (value) => {this.loggedInUser = Number(value)}
-    );
-  }
   _renderHeader() {
     return (
       <View style={styles.topView}>
@@ -161,7 +162,6 @@ export default class ProfileContainer extends Component {
 
         <View style={styles.userBtn}>
           {(()=>{
-            console.log('boottle bhitra bottle', this.state.userId, this.loggedInUser)
             if(this.loggedInUser === this.state.userId){
               return (
                 <TouchableHighlight

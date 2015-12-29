@@ -16,8 +16,6 @@ import Loader from '../../components.ios/Loader';
 import Calander from '../Calander';
 import { callOnFetchError } from '../../utils.js';
 
-
-
 let QUERY_URL = {
   latest: 'http://api.revuzeapp.com:80/api/v1/reviews/latest?access_token=abcde',
   concertId: 'http://api.revuzeapp.com:80/api/v1/concerts/12/reviews?access_token=abcde',
@@ -50,6 +48,7 @@ export default class Reviews extends Component {
 
   _fetchData() {
     let query = this.props.fetchURL;
+    console.log('honey singh', query);
     fetch(query)
     .then((response) => response.json())
     .then((responseData) => {
@@ -60,12 +59,12 @@ export default class Reviews extends Component {
       });
     })
     .catch((error) => {
-      callOnFetchError(error, query);
+      callOnFetchError(error, query+'yo yo honey singha');
     }).done();
   }
 
-	// this function sholud be in a global module
 	_getStars(yellowStars) {
+    // this function sholud be in a global module
 		let stars = [];
 		for(let i = 0; i < yellowStars; i++) {
 			stars.push(
@@ -97,7 +96,6 @@ export default class Reviews extends Component {
 
 	_renderReview(review) {
     // artist image if there is no review image
-    console.log(review)
 		let image = review.image ? review.image : review.concert.artist.image
 		return(
 			<TouchableOpacity
@@ -135,6 +133,7 @@ export default class Reviews extends Component {
               <Text style={styles.username}>
                 {
                   (() => {
+                    try{
                     if(this.props.fetchFor === 'concert')
                       return review.user.full_name.toUpperCase()
                     else if(this.props.fetchFor === 'user')
@@ -143,6 +142,7 @@ export default class Reviews extends Component {
                       return review.user.full_name.toUpperCase()
                     else
                       return review.user.full_name.toUpperCase()
+                    } catch (e){console.log('full name not provided in reviews/index.js') }
                   })()
                 }
               </Text>
