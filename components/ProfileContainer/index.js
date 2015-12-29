@@ -13,6 +13,7 @@ import {
   ScrollView,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import Photos from '../Photos';
@@ -105,6 +106,8 @@ export default class ProfileContainer extends Component {
       .then(response => {
         this.setState({
           following: this.state.following === 0 ? 1 : 0,
+          followersNum: this.state.following === 0 ? 
+              this.state.followersNum + 1 : this.state.followersNum - 1
         });
         console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
       })
@@ -166,15 +169,21 @@ export default class ProfileContainer extends Component {
                 </TouchableHighlight>
                 )
             }else{
+              let underlayColor = this.props.following === 1 ? 'grey' : '#F9A000';
               return(
-                <TouchableHighlight
-                  underlayColor='#F9A000'
+                <TouchableOpacity
                   onPress={this._followPress.bind(this)}
-                  style={styles.btnTouch}>
+                  style={[
+                  this.state.following === 1 ? styles.unfollowButton : styles.btnTouch,
+                  {flexDirection: 'row'}
+                  ]}>
+                  <Image
+                    style={styles.doneImage}
+                    source={require('../../assets/images/done_colored.png')}/>
                   <Text style={styles.btnText}>
-                    {this.state.following === 1 ? 'UNFOLLOW' : 'FOLLOW'}
+                    {this.state.following === 1 ? 'Following' : 'FOLLOW'}
                   </Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
                 )
             }
           })()}
