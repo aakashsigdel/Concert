@@ -2,12 +2,13 @@
 
 import React from 'react-native';
 import {
-	AppRegistry,
-	Component,
+  AppRegistry,
+  Component,
   Navigator,
-	StyleSheet,
-	Text,
-	View,
+  StatusBarIOS,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 import Header from './components/Header';
 import InternalNavigation from './components/InternalNavigation';
@@ -34,11 +35,16 @@ import EditProfile from './components/EditProfile';
 import CustomAlert from './components/CustomAlert';
 import PhotoEditComment from './components/PhotoEditComment';
 import BlankLoader from './components/BlankLoader';
+import CameraRollPhotos from './components/CameraRollPhotos';
 
 class ConcertReview extends Component {
 	constructor() {
 		super();
 	}
+
+  componentDidMount () {
+    StatusBarIOS.setHidden(true);
+  }
 
 	_renderScene(route, navigator) {
 	  switch(route.name) {
@@ -128,7 +134,7 @@ class ConcertReview extends Component {
         return <AddReview 
           navigator={navigator}
           concertId={route.concertId}
-          imageUrl={route.imageUrl}
+          imageData={route.imageData}
         />;
       case 'camera':
         return <UserCamera
@@ -140,7 +146,7 @@ class ConcertReview extends Component {
         return <PhotoAddComment
           navigator={navigator}
           concertId={route.concertId}
-          imageUrl={route.imageUrl}
+          imageData={route.imageData}
         />;
       case 'actionScreen':
         return <ActionScreen
@@ -150,7 +156,7 @@ class ConcertReview extends Component {
       case 'cameraConfirmation':
         return <CameraConfirmation
           navigator={navigator}
-          imageUrl={route.imageUrl}
+          imageData={route.imageData}
           concertId={route.concertId}
           review={route.review}
         />;
@@ -166,6 +172,12 @@ class ConcertReview extends Component {
       case 'blankLoader':
         return <BlankLoader
           navigator={navigator}
+        />
+      case 'cameraroll':
+        return <CameraRollPhotos
+          navigator={navigator}
+          concertId={route.concertId}
+          review={route.review}
         />
       default:
         return (

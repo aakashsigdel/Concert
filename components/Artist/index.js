@@ -12,6 +12,7 @@ import Reviews from '../Reviews';
 import Concerts from '../Concerts';
 import InternalNavigation from '../InternalNavigation/';
 import FAB from '../FAB';
+import { PHOTOS, REVIEWS } from '../../constants/ApiUrls';
 
 var viewConstants = {
 	photos: 'Photos',
@@ -49,11 +50,13 @@ export default class Artist extends Component {
 								return <Photos 
                   navigator={this.props.navigator}
                   concertId={this.props.concertId}
+                  fetchURL={PHOTOS.LATEST_URL}
 								  />
 							case viewConstants.reviews:
 								return <Reviews 
                   navigator={this.props.navigator}
                   concertId={this.props.concertId}
+                  fetchURL={REVIEWS.USER_URL.replace('{user_id}', this.props.userId)}
                   />
 							case viewConstants.concerts:
                 return <Concerts 

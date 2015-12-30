@@ -21,14 +21,14 @@ export default class CameraConfirmation extends Component {
         name: 'addReview',
         index: 55,
         concertId: this.props.concertId,
-        imageUrl: this.props.imageUrl,
+        imageData: this.props.imageData,
       });
     } else {
       this.props.navigator.push({
         name: 'photoAddComment',
         index: 22,
         concertId: this.props.concertId,
-        imageUrl: this.props.imageUrl,
+        imageData: this.props.imageData,
       });
     }
   }
@@ -38,10 +38,11 @@ export default class CameraConfirmation extends Component {
   }
 
   render () {
+    console.log('props is the drops', this.props.imageData);
     return (
       <View style={styles.container}>
         <Image 
-          source={{uri: this.props.imageUrl}} 
+          source={{uri: this.props.imageData.image.uri}} 
           style={[styles.capturedImage, {width: deviceWidth, height: deviceWidth}]} 
           />
           <View style={[styles.confirm, {width: deviceWidth}]}>

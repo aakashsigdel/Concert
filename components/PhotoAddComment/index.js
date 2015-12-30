@@ -1,6 +1,7 @@
 'user strict';
 
 import React, {
+  CameraRoll,
   Component,
   Dimensions,
   NativeModules,
@@ -13,7 +14,10 @@ import Loader from '../../components.ios/Loader';
 import HeaderBar from '../HeaderBar';
 import { PHOTO } from '../../constants/ApiUrls';
 
-deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get('window').width;
+let deviceHeight = Dimensions.get('window').height;
+
+let ImageEditingManager = NativeModules.ImageEditingManager;
 
 export default class PhotoAddComment extends Component {
   constructor () {
@@ -24,6 +28,34 @@ export default class PhotoAddComment extends Component {
     this.caption = '';
   }
 
+  _imageCrop () {
+    let imageOffset = {};
+    let imageSize = {};
+    imageSize.height = this.props.imageData.image.height - 
+      ((this.props.imageData.image.width / deviceWidth ) * 
+      (deviceHeight/ 4));
+    imageSize.width = this.props.imageData.image.width;
+    let headerBarHeight = 64;
+    imageOffset.x = 0;
+    imageOffset.y = (imageSize.width / deviceWidth) * headerBarHeight;;
+    let transformData = {
+      offset: imageOffset,
+      size: imageSize
+    };
+
+    ImageEditingManager.cropImage(
+      this.props.imageData.image.uri,
+      transformData,
+      (croppedImageURI) => {
+        console.log('inside editing manager');
+        CameraRoll.saveImageWithTag(
+          croppedImageURI,
+        )
+      },
+      () => undefined,
+    );
+  }
+
   _handlePress() {
     if(this.caption.trim() === '') {
       alert('ERROR: Please Input Photo Caption');
@@ -32,29 +64,82 @@ export default class PhotoAddComment extends Component {
     this.setState({
       isLoading: true,
     });
-    let POHOTO_POST_URL = PHOTO.POST_URL.replace('{concert_id}', this.props.concertId);
-    let imageObj = {
-      uploadUrl: POHOTO_POST_URL,
-      method: 'POST',
-      fields: {
-        concert_id: this.props.concertId,
-        caption: this.caption,
-      },
-      files: [
-        {
-          name: 'image',
-          filename: this.props.imageUrl.split('/')[2],
-          filepath: this.props.imageUrl,
-        },
-      ]
-    };
-    NativeModules.FileUpload.upload(imageObj, (err, result) => {
-      console.log('flex the bottle', err, result);
-      this.setState({
-        isLoading: false,
-      });
-      this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
-    });
+
+    /* need to put this in another function */
+    let imageOffset = {};
+    let imageSize = {};
+    imageSize.height = this.props.imageData.image.height - 
+      ((this.props.imageData.image.width / deviceWidth ) * 
+       (deviceHeight/ 4));
+       imageSize.width = this.props.imageData.image.width;
+       let headerBarHeight = 64;
+       imageOffset.x = 0;
+       imageOffset.y = (imageSize.width / deviceWidth) * headerBarHeight;;
+       let transformData = {
+         offset: imageOffset,
+         size: imageSize
+       };
+
+       ImageEditingManager.cropImage(
+         this.props.imageData.image.uri,
+         transformData,
+         (croppedImageURI) => {
+           console.log('inside editing manager');
+           CameraRoll.saveImageWithTag(
+             croppedImageURI,
+             (data) => {
+               let POHOTO_POST_URL = PHOTO.POST_URL.replace('{concert_id}', this.props.concertId);
+               let imageObj = {
+                 uploadUrl: POHOTO_POST_URL,
+                 method: 'POST',
+                 fields: {
+                   concert_id: this.props.concertId,
+                   caption: this.caption,
+                 },
+                 files: [
+                   {
+                     name: 'image',
+                     filename: data.split('/')[2] + '.JPG',
+                     filepath: data,
+                   },
+                 ]
+               };
+               NativeModules.FileUpload.upload(imageObj, (err, result) => {
+                 console.log('flex the bottle', err, result);
+                 this.setState({
+                   isLoading: false,
+                 });
+                 this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
+               });
+             }
+           )
+         },
+         () => undefined,
+       );
+
+    // let POHOTO_POST_URL = PHOTO.POST_URL.replace('{concert_id}', this.props.concertId);
+    // let imageObj = {
+    //   uploadUrl: POHOTO_POST_URL,
+    //   method: 'POST',
+    //   fields: {
+    //     concert_id: this.props.concertId,
+    //     caption: this.caption,
+    //   },
+    //   files: [
+    //     {
+    //       name: 'image',
+    //       filename: this.props.imageUrl.split('/')[2],
+    //       filepath: this.props.imageUrl,
+    //     },
+    //   ]
+    // };
+    // NativeModules.FileUpload.upload(imageObj, (err, result) => {
+    //   console.log('flex the bottle', err, result);
+    //   this.setState({
+    //     isLoading: false,
+    //   });
+    //   this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
+    // });
   }
 
   render () {
