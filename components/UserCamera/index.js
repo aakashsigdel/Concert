@@ -57,23 +57,12 @@ export default class UserCamera extends Component {
             size: imageSize
           };
           let photoURI = data.edges[0].node.image.uri;
-          ImageEditingManager.cropImage(
-            photoURI,
-            transformData,
-            (croppedImageURI) => {
-              CameraRoll.saveImageWithTag(
-                croppedImageURI,
-              )
-              _this.props.navigator.push({
-                name: 'cameraConfirmation',
-                index: 31,
-                imageUrl: photoURI,
-                concertId: _this.props.concertId,
-                review: _this.props.review,
-              });
-            },
-            () => undefined,
-          );
+          _this.props.navigator.push({
+            name: 'cameraConfirmation',
+            imageData: data.edges[0].node,
+            concertId: _this.props.concertId,
+            review: _this.props.review,
+          });
         },
         (error) => undefined,
       );

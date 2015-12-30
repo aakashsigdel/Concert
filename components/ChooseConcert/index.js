@@ -26,25 +26,12 @@ export default class ChooseConcert extends Component {
           mid={'SELECT CONCERT'}
           right={'NEXT'}
         />
-        <View style={styles.body}>
-          <View style={styles.searchHeader}>
-            <View style={styles.inputContainer}>
-              <Image
-                style={styles.searchIcon}
-                source={require('../../assets/images/search_icon.png')}
-              />
-              <TextInput
-                style={styles.inputBox}
-              />
-            </View>
-          </View>
-          <Concerts
-            navigator={this.props.navigator}
-            select={true}
-            review={this.props.review}
-            fetchURL={CONCERTS.UPCOMING_URL}
-          />
-        </View>
+        <Concerts
+          navigator={this.props.navigator}
+          select={true}
+          review={this.props.review}
+          fetchURL={CONCERTS.PAST_URL}
+        />
       </View>
     )
   }

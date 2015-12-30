@@ -34,6 +34,7 @@ import EditProfile from './components/EditProfile';
 import CustomAlert from './components/CustomAlert';
 import PhotoEditComment from './components/PhotoEditComment';
 import BlankLoader from './components/BlankLoader';
+import CameraRollPhotos from './components/CameraRollPhotos';
 
 class ConcertReview extends Component {
 	constructor() {
@@ -128,7 +129,7 @@ class ConcertReview extends Component {
         return <AddReview 
           navigator={navigator}
           concertId={route.concertId}
-          imageUrl={route.imageUrl}
+          imageData={route.imageData}
         />;
       case 'camera':
         return <UserCamera
@@ -140,7 +141,7 @@ class ConcertReview extends Component {
         return <PhotoAddComment
           navigator={navigator}
           concertId={route.concertId}
-          imageUrl={route.imageUrl}
+          imageData={route.imageData}
         />;
       case 'actionScreen':
         return <ActionScreen
@@ -150,7 +151,7 @@ class ConcertReview extends Component {
       case 'cameraConfirmation':
         return <CameraConfirmation
           navigator={navigator}
-          imageUrl={route.imageUrl}
+          imageData={route.imageData}
           concertId={route.concertId}
           review={route.review}
         />;
@@ -167,6 +168,8 @@ class ConcertReview extends Component {
         return <BlankLoader
           navigator={navigator}
         />
+      case 'cameraroll':
+        return <CameraRollPhotos />
       default:
         return (
           <Intro

@@ -1,6 +1,8 @@
 'use strict';
 import React, {
+  CameraRoll,
   Component,
+  Dimensions,
   View,
   Image,
   NativeModules,
@@ -13,6 +15,9 @@ import HeaderBar from '../HeaderBar';
 import { REVIEW } from '../../constants/ApiUrls';
 
 const styles = require('./style.json');
+
+let deviceWidth = Dimensions.get('window').width;
+let ImageEditingManager = NativeModules.ImageEditingManager;
 
 export default class AddReview extends Component {
   constructor(){
@@ -71,30 +76,59 @@ export default class AddReview extends Component {
     this.setState({
       isLoading: true,
     });
-    let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
-    let imageObj = {
-      uploadUrl: REVIEW_POST_URL,
-      method: 'POST',
-      fields: {
-        concert_id: this.props.concertId,
-        comment: this.comment,
-        rating: this.state.yellowCount,
-      },
-      files: [
-        {
-          name: 'image',
-          filename: this.props.imageUrl.split('/')[2],
-          filepath: this.props.imageUrl,
-        },
-      ]
-    };
-    NativeModules.FileUpload.upload(imageObj, (err, result) => {
-      console.log(result, 'posted by posted');
-      this.setState({
-        isLoading: false,
-      });
-      this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
-    });
+
+    /* need to put this in another function */
+    let imageOffset = {};
+    let imageSize = {};
+    imageSize.height = this.props.imageData.image.height - 
+      ((this.props.imageData.image.width / deviceWidth ) * 
+       (deviceHeight/ 4));
+       imageSize.width = this.props.imageData.image.width;
+       let headerBarHeight = 64;
+       imageOffset.x = 0;
+       imageOffset.y = (imageSize.width / deviceWidth) * headerBarHeight;;
+       let transformData = {
+         offset: imageOffset,
+         size: imageSize
+       };
+
+       ImageEditingManager.cropImage(
+         this.props.imageData.image.uri,
+         transformData,
+         (croppedImageURI) => {
+           console.log('inside editing manager');
+           CameraRoll.saveImageWithTag(
+             croppedImageURI,
+             (data) => {
+               let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
+               let imageObj = {
+                 uploadUrl: REVIEW_POST_URL,
+                 method: 'POST',
+                 fields: {
+                   concert_id: this.props.concertId,
+                   comment: this.comment,
+                   rating: this.state.yellowCount,
+                 },
+                 files: [
+                   {
+                     name: 'image',
+                     filename: data.split('/')[2],
+                     filepath: data,
+                   },
+                 ]
+               };
+               NativeModules.FileUpload.upload(imageObj, (err, result) => {
+                 console.log(result, 'posted by posted');
+                 this.setState({
+                   isLoading: false,
+                 });
+                 this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
+               });
+             }
+           )
+         },
+         () => undefined,
+       );
     
   }
 
