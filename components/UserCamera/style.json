@@ -8,14 +8,28 @@
     backgroundColor: 'transparent',
   },
   bottomView: {
-    flexDirection: 'row',
     flex: 1,
     paddingBottom: 20,
     backgroundColor: 'black',
-    alignItems: 'flex-end',
+    justifyContent: 'space-around',
+  },
+  uploadOptions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  uploadOption: {
+    padding: 8,
+  },
+  skip: {
+    padding: 8,
+  },
+  uploadOptionsText: {
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'AvenirNext-DemiBold',
   },
   btnContainer: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',

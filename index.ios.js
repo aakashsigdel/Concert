@@ -2,12 +2,13 @@
 
 import React from 'react-native';
 import {
-	AppRegistry,
-	Component,
+  AppRegistry,
+  Component,
   Navigator,
-	StyleSheet,
-	Text,
-	View,
+  StatusBarIOS,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 import Header from './components/Header';
 import InternalNavigation from './components/InternalNavigation';
@@ -40,6 +41,10 @@ class ConcertReview extends Component {
 	constructor() {
 		super();
 	}
+
+  componentDidMount () {
+    StatusBarIOS.setHidden(true);
+  }
 
 	_renderScene(route, navigator) {
 	  switch(route.name) {
@@ -169,7 +174,11 @@ class ConcertReview extends Component {
           navigator={navigator}
         />
       case 'cameraroll':
-        return <CameraRollPhotos />
+        return <CameraRollPhotos
+          navigator={navigator}
+          concertId={route.concertId}
+          review={route.review}
+        />
       default:
         return (
           <Intro

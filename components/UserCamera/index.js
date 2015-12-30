@@ -5,7 +5,6 @@ import React, {
   Component,
   Dimensions,
   Image,
-  NativeModules,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,7 +14,6 @@ import Camera from 'react-native-camera';
 import HeaderBar from '../HeaderBar';
 import CameraConfirmation from '../CameraConfirmation';
 
-var ImageEditingManager = NativeModules.ImageEditingManager;
 var deviceWidth = Dimensions.get('window').width;
 var deviceHeight = Dimensions.get('window').height;
 
@@ -69,6 +67,22 @@ export default class UserCamera extends Component {
     });
   }
 
+  _skip () {
+    this.props.navigator.push({
+      name: 'addReview',
+      concertId: this.props.concertId,
+      review: this.props.review,
+    });
+  }
+
+  _showCameraRoll () {
+    this.props.navigator.push({
+      name: 'cameraroll',
+      concertId: this.props.concertId,
+      review: this.props.review,
+    });
+  }
+
   render () {
     return (
       <View style={[styles.container, {height: deviceHeight}]}>
@@ -85,6 +99,28 @@ export default class UserCamera extends Component {
           type={this.state.cameraType}
         />
         <View style={styles.bottomView}>
+          {(() => {
+            if (this.props.review) {
+              return (
+                <View style={styles.uploadOptions}>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={this._showCameraRoll.bind(this)}
+                    style={styles.uploadOption}
+                    >
+                    <Text style={styles.uploadOptionsText}>Camera Roll</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={this._skip.bind(this)}
+                    style={styles.skip}
+                    >
+                    <Text style={styles.uploadOptionsText}>Skip</Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            }
+          })()}
           <View style={styles.btnContainer}>
             <TouchableOpacity
               activeOpacity={0.6}

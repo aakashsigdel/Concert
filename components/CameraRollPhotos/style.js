@@ -8,6 +8,10 @@ import {
 const VIEWPORT = Dimensions.get('window');
 
 let styles = {
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
   image: {
     width: VIEWPORT.width / 3.2,
     height: VIEWPORT.width / 3.2,

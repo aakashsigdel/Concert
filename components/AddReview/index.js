@@ -77,6 +77,8 @@ export default class AddReview extends Component {
       isLoading: true,
     });
 
+    if (this.props.imageData) {
+
     /* need to put this in another function */
     let imageOffset = {};
     let imageSize = {};
@@ -129,6 +131,26 @@ export default class AddReview extends Component {
          },
          () => undefined,
        );
+    } else {
+      let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
+      let imageObj = {
+        uploadUrl: REVIEW_POST_URL,
+        method: 'POST',
+        fields: {
+          concert_id: this.props.concertId,
+          comment: this.comment,
+          rating: this.state.yellowCount,
+        },
+      };
+      NativeModules.FileUpload.upload(imageObj, (err, result) => {
+        console.log(result, 'posted by posted');
+        this.setState({
+          isLoading: false,
+        });
+        this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
+      });
+
+    }
     
   }
 
