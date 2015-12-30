@@ -12,7 +12,10 @@ import {
 	Dimensions,
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
-import { callOnFetchError } from '../../utils.js';
+import {
+  callOnFetchError,
+  getAccessToken,
+} from '../../utils.js';
 import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
 
 var QUERY_URL = `http://api.revuzeapp.com:80/api/v1/concerts/concert_id?access_token=${ACCESS_TOKEN}`;
@@ -38,18 +41,23 @@ export default class Header extends Component {
 	}
 
   _fetchData() {
-    var query = QUERY_URL.replace('concert_id', this.props.concertId);
-    fetch(query)
-    .then((response) => response.json())
-    .then((responseData) => {
-      this.setState({
-        concertData: responseData,
-        isLoading: false
-      });
-    })
-    .catch((error) => {
-      callOnFetchError(error, query);
-    }).done();
+    getAccessToken().then( access_token => {
+      let query = QUERY_URL
+      .replace('concert_id', this.props.concertId)
+      .replace('abcde', access_token);
+
+      fetch(query)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          concertData: responseData,
+          isLoading: false
+        });
+      })
+      .catch((error) => {
+        callOnFetchError(error, query);
+      }).done();
+    } )
   }
 
 	_handelPress() {

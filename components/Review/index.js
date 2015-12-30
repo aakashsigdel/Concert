@@ -25,6 +25,7 @@ import heroElement from './heroElement';
 import { REVIEW } from '../../constants/ApiUrls.js'
 import {
   callOnFetchError,
+  getAccessToken,
   getUserDetailsFromAsyncStorage,
   serializeJSON ,
 } from '../../utils.js';
@@ -54,70 +55,74 @@ export default class Review extends Component {
   }
 
   _fetchData() {
-    const url = REVIEW.DETAILURL.replace('{review_id}', this.props.id);
-    console.log(url);
-    getUserDetailsFromAsyncStorage()
-    .then( res =>{
-      this.state.loggedInUserDetail = res;
-      fetch(url)
-      .then( res => res.json())
-      .then( res => {
-        res.data.userPic = res.data.user.profile_picture.trim().length > 0
-          ? {uri:res.data.user.profile_picture}
-          : require('../../assets/images/user_default.png');
-        res.data.artistPic = res.data.concert.artist.image.original.trim().length > 0
-          ? {uri:res.data.concert.artist.image.original}
-          : require('../../assets/images/default_artist_page.png');
+    getAccessToken().then( access_token => {
+      const url = REVIEW.DETAILURL
+        .replace('{review_id}', this.props.id)
+        .replace('abcde', access_token);
+      console.log(url);
+      getUserDetailsFromAsyncStorage()
+      .then( res =>{
+        this.state.loggedInUserDetail = res;
+        fetch(url)
+        .then( res => res.json())
+        .then( res => {
+          res.data.userPic = res.data.user.profile_picture.trim().length > 0
+            ? {uri:res.data.user.profile_picture}
+            : require('../../assets/images/user_default.png');
+            res.data.artistPic = res.data.concert.artist.image.original.trim().length > 0
+              ? {uri:res.data.concert.artist.image.original}
+              : require('../../assets/images/default_artist_page.png');
 
-          const artistName =
-            res.data.concert.artist.name.trim().length > 15
-              ? res.data.concert.artist.name.slice(0,15) + '...'
-              : res.data.concert.artist.name;
-        
-          this.state.optionsForFAB = [
-            {
-              name: `Go to  ${artistName}\'s page`,
-            }
-          ]
+              const artistName =
+                res.data.concert.artist.name.trim().length > 15
+                  ? res.data.concert.artist.name.slice(0,15) + '...'
+                  : res.data.concert.artist.name;
 
-          if (this.state.loggedInUserDetail.id === res.data.user.id){
-            this.state.optionsForFAB = [
-              ...this.state.optionsForFAB,
-              {
-                name: 'Edit',
-                action: () => this.props.navigator.replace({
-                  name: 'addReview',
-                  edit: true,
-                  concert_id: this.state.review.concert.id,
-                })
-              },
-              {
-                name: 'Delete',
-                action: () => {
-                  this.props.navigator.replace({
-                    name: 'customAlert',
-                    text: 'review',
+                  this.state.optionsForFAB = [
+                    {
+                      name: `Go to  ${artistName}\'s page`,
+                    }
+                  ]
+
+                  if (this.state.loggedInUserDetail.id === res.data.user.id){
+                    this.state.optionsForFAB = [
+                      ...this.state.optionsForFAB,
+                      {
+                        name: 'Edit',
+                        action: () => this.props.navigator.replace({
+                          name: 'addReview',
+                          edit: true,
+                          concert_id: this.state.review.concert.id,
+                        })
+                      },
+                      {
+                        name: 'Delete',
+                        action: () => {
+                          this.props.navigator.replace({
+                            name: 'customAlert',
+                            text: 'review',
+                          })
+                        } 
+                      },
+                    ]
+                  }
+
+                  this.setState({
+                    renderPlaceholderOnly: false,
+                    review: res.data,
+                    isLiked: (res.data.liked === 0)? false : true,
+                    total_likes: res.data.total_likes,
+                    heartImage: (res.data.liked === 0)
+                      ? require('../../assets/images/like.png' ) 
+                      : require('../../assets/images/liked.png'),
                   })
-                } 
-              },
-            ]
-          }
-
-        this.setState({
-          renderPlaceholderOnly: false,
-          review: res.data,
-          isLiked: (res.data.liked === 0)? false : true,
-          total_likes: res.data.total_likes,
-          heartImage: (res.data.liked === 0)
-            ? require('../../assets/images/like.png' ) 
-            : require('../../assets/images/liked.png'),
         })
+        .then(_=> console.log('got data', this.state))
+        .catch((error) => {
+          callOnFetchError(error, url);
+        }).done();
       })
-      .then(_=> console.log('got data', this.state))
-      .catch((error) => {
-        callOnFetchError(error, url);
-      }).done();
-    })
+    } )
   }
 
 	_sharePhoto () {
@@ -135,39 +140,42 @@ export default class Review extends Component {
   }
 
   _toggleLike() {
-    // action == 0 -> unlike
-    // action == 1 -> like
-    const action = this.state.isLiked ? '0': '1';
+    getAccessToken().then(access_token => {
+      // action == 0 -> unlike
+      // action == 1 -> like
+      const action = this.state.isLiked ? '0': '1';
 
-    const url = REVIEW.LIKEURL.replace(
-      '{review_id}',
-      this.state.review.id
-    ).replace( '{like}', action);
+      const url = REVIEW.LIKEURL.replace(
+        '{review_id}',
+        this.state.review.id
+      ).replace( '{like}', action)
+      .replace('abcde', access_token);
 
-    console.log(action, url)
-    fetch(url, {
-      method: 'POST',
-      body: serializeJSON({
-        like: action 
+      console.log(action, url)
+      fetch(url, {
+        method: 'POST',
+        body: serializeJSON({
+          like: action 
+        })
       })
-    })
       .then(res => {
         this.setState({
           isLiked: !this.state.isLiked,
-          
+
           total_likes: (action === '1')
             ? this.state.total_likes + 1
             : this.state.total_likes - 1,
 
-          heartImage: (action === '0')
-            ? require('../../assets/images/like.png' ) 
-            : require('../../assets/images/liked.png'),
+            heartImage: (action === '0')
+              ? require('../../assets/images/like.png' ) 
+              : require('../../assets/images/liked.png'),
         })
       })
       .then(_=> console.log('state', this.state))
       .catch((error) => {
         callOnFetchError(error, url);
       }).done();
+    })
   }
 
 	_getStars(yellowStars) {

@@ -15,7 +15,11 @@ import {
 import HeaderBar from '../HeaderBar';
 import styles from './style';
 import { CONCERTS } from '../../constants/ApiUrls.js'
-import { serializeJSON, callOnFetchError  } from '../../utils.js'
+import {
+  serializeJSON,
+  callOnFetchError,
+  getAccessToken,
+} from '../../utils.js'
 
 export default class Concert extends Component {
   constructor () {
@@ -46,28 +50,33 @@ export default class Concert extends Component {
   }
 
   _attendConcert(){
-    const url = CONCERTS.CHECKINURL.replace('{concert_id}', this.props.concertId);
-    console.log('before', this.state)
-    const params = {
-      checkin: this.state.concert.checked_in === 1 ? 0 : 1,
-    }
+    getAccessToken().then( access_token => {
+      const url = CONCERTS.CHECKINURL
+      .replace('{concert_id}', this.props.concertId)
+      .replace('abcde', access_token);
 
-    fetch(
-      url,
-      { 
-        method: 'POST',
-        json: true,
-        body: serializeJSON(params)
+      console.log('before', this.state)
+      const params = {
+        checkin: this.state.concert.checked_in === 1 ? 0 : 1,
       }
-    ).then( res => {
-      const c = this.state.concert.checked_in === 0? 1 : 0;
-      this.setState({
-        concert: Object.assign({}, this.state.concert, {checked_in: c})
+
+      fetch(
+        url,
+        { 
+          method: 'POST',
+          json: true,
+          body: serializeJSON(params)
+        }
+      ).then( res => {
+        const c = this.state.concert.checked_in === 0? 1 : 0;
+        this.setState({
+          concert: Object.assign({}, this.state.concert, {checked_in: c})
+        })
       })
-    })
-    .catch((error) => {
-      callOnFetchError(error);
-    }).done();
+      .catch((error) => {
+        callOnFetchError(error);
+      }).done();
+    } )
   }
 
   render () {

@@ -14,7 +14,10 @@ import {
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
 import Calander from '../Calander';
-import { callOnFetchError } from '../../utils.js';
+import {
+  callOnFetchError,
+  getAccessToken,
+} from '../../utils.js';
 import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
 
 let QUERY_URL = {
@@ -48,20 +51,24 @@ export default class Reviews extends Component {
   }
 
   _fetchData() {
-    console.log(this.props.fetchURL);
-    let query = this.props.fetchURL;
-    fetch(query)
-    .then((response) => response.json())
-    .then((responseData) => {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-        isLoading: false,
-        apiData: responseData.data,
-      });
-    })
-    .catch((error) => {
-      callOnFetchError(error, query);
-    }).done();
+    getAccessToken().then( access_token =>{
+      console.log(this.props.fetchURL);
+      let query = this.props.fetchURL
+      .replace('abcde', access_token);
+
+      fetch(query)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+          isLoading: false,
+          apiData: responseData.data,
+        });
+      })
+      .catch((error) => {
+        callOnFetchError(error, query);
+      }).done();
+    } )
   }
 
 	// this function sholud be in a global module

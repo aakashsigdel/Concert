@@ -9,7 +9,11 @@ import React, {
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
 import { USERS } from '../../constants/ApiUrls.js'
-import { serializeJSON, callOnFetchError } from '../../utils.js'
+import {
+  serializeJSON,
+  callOnFetchError,
+  getAccessToken,
+} from '../../utils.js'
 
 const styles = StyleSheet.create(require('./style.json'));
 
@@ -34,33 +38,35 @@ export default class EditProfile extends Component {
   }
 
   _postEdit() {
-    console.log('editing..',USERS.PROFILE_EDIT_URL, this.state.userData);
-    const params = {
-      fname: this.state.userData.full_name,
-      bio: this.state.userData.bio,
-    }
-
-    fetch(
-      USERS.PROFILE_EDIT_URL,
-      {
-        method: 'POST',
-        json: true,
-        body: serializeJSON(params)
-      }
-    ).then( res => {
-      console.log('params', params);
-      console.log('data-> ', res.text());
-      console.log('res->',res);
-      this.props.navigator.replace({
-        name: 'profile',
-        userId: this.state.userData.id,
-        userName: this.state.userData.full_name,
+    getAccessToken().then( access_token => {
+      console.log('editing..',USERS.PROFILE_EDIT_URL, this.state.userData);
+      const params = {
+        fname: this.state.userData.full_name,
         bio: this.state.userData.bio,
+      }
+
+      fetch(
+        USERS.PROFILE_EDIT_URL.replace('abcde', access_token),
+        {
+          method: 'POST',
+          json: true,
+          body: serializeJSON(params)
+        }
+      ).then( res => {
+        console.log('params', params);
+        console.log('data-> ', res.text());
+        console.log('res->',res);
+        this.props.navigator.replace({
+          name: 'profile',
+          userId: this.state.userData.id,
+          userName: this.state.userData.full_name,
+          bio: this.state.userData.bio,
+        })
       })
-    })
-    .catch((error) => {
-      callOnFetchError(error, USERS.PROFILE_EDIT_URL);
-    }).done();
+      .catch((error) => {
+        callOnFetchError(error, USERS.PROFILE_EDIT_URL);
+      }).done();
+    } )
   }
 
   render(){

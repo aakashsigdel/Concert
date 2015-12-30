@@ -1,6 +1,6 @@
 'use strict'
 import { AsyncStorage } from 'react-native';
-import { USER_DETAILS } from './constants/ApiUrls';
+import { USER_DETAILS, LOGIN_DETAILS } from './constants/ApiUrls';
 
 let userDetailsFromAsyncStorage = null;
 
@@ -52,4 +52,20 @@ export const getUserDetailsFromAsyncStorage = async ( refresh = false ) => {
     console.log('error in utilsjs', error)
     return 'there was an error fetching from asyncstorage';
   }
+}
+
+export const getAccessToken = async () => {
+  console.log( 'getAccessToken called.. ' );
+  return '1hNyU2D64CFchXbGicwca6JKIUCmxC';
+  // try {
+  //   await AsyncStorage.getItem(LOGIN_DETAILS)
+  //   .then(loginDetails => {
+  //     console.log('login details in utils.js', JSON.parse(loginDetails.access_token));
+  //     return JSON.parse(loginDetails.access_token);
+  //   })
+  // }catch(e){
+  //   console.log('error in utilsjs.there was an error fetching login details from asyncstorage', error)
+  //   return 'there was an error fetching login details from asyncstorage';
+  // }
+
 }

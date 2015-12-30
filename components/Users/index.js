@@ -10,7 +10,10 @@ import React, {
   View,
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
-import { callOnFetchError } from '../../utils.js';
+import {
+  callOnFetchError,
+  getAccessToken,
+} from '../../utils.js';
 import { USERS } from '../../constants/ApiUrls';
 
 
@@ -41,20 +44,22 @@ export default class Users extends Component {
   }
 
   _fetchData() {
-		let query = this.props.fetchURL;
-		console.log(query);
-    fetch(query)
-    .then((response) => response.json())
-    .then((responseData) => {
-      this.setState({
-        apiData: responseData.data,
-        dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-        isLoading: false,
-      });
+    getAccessToken().then( access_token => {
+      let query = this.props.fetchURL.replace('abcde', access_token);
+      console.log(query);
+      fetch(query)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          apiData: responseData.data,
+          dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+          isLoading: false,
+        });
+      })
+      .catch((error) => {
+        callOnFetchError(error, query);
+      }).done();
     })
-    .catch((error) => {
-      callOnFetchError(error, query);
-    }).done();
   }
 
   _handelGlobalNavPress(name, index, userId, userName) {

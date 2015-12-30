@@ -15,7 +15,10 @@ import Header from '../Header';
 import InternalNavigation from '../InternalNavigation';
 import Photos from '../Photos';
 import Reviews from '../Reviews';
-import { callOnFetchError } from '../../utils.js';
+import {
+  callOnFetchError,
+  getAccessToken,
+} from '../../utils.js';
 
 const QUERY_URL = "http://api.revuzeapp.com:80/api/v1/concerts/upcoming?access_token=abcde";
 export default class Concerts extends Component {
@@ -45,20 +48,23 @@ export default class Concerts extends Component {
   }
 
 	_fetchData() {
-		let query = this.props.fetchURL;
-		console.log(query);
-		fetch(query)
-			.then((response) => response.json())
-			.then((responseData) => {
-				this.setState({
+    getAccessToken().then( access_token => {
+      let query = this.props.fetchURL.replace('abcde', access_token);
+      console.log(query);
+      fetch(query)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
           isLoading: false,
           apiData: responseData.data,
           dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-				});
+        });
       })
-    .catch((error) => {
-      callOnFetchError(error, QUERY_URL);
-    }).done();
+      .catch((error) => {
+        callOnFetchError(error, QUERY_URL);
+      }).done();
+
+    })
 	}
 	
 	_handlePress(concertId, concert) {

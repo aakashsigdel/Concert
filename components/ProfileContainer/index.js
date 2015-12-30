@@ -23,7 +23,10 @@ import InternalNavigation from '../InternalNavigation';
 import HeaderBar from '../HeaderBar';
 import styles from './style';
 import { USERS } from '../../constants/ApiUrls.js'
-import { callOnFetchError } from '../../utils.js';
+import {
+  callOnFetchError,
+  getAccessToken,
+} from '../../utils.js';
 import { CONCERTS, REVIEWS, USER, USER_DETAILS, PHOTOS } from '../../constants/ApiUrls';
 
 const VIEWPORT = Dimensions.get('window');
@@ -76,29 +79,34 @@ export default class ProfileContainer extends Component {
   }
   
   _fetchData () {
-    let url = USERS.USER_DETAIL_URL.replace('{user_id}', this.props.userId);
-    fetch(url)
+    getAccessToken().then(access_token => {
+      let url = USERS.USER_DETAIL_URL
+        .replace('{user_id}', this.props.userId)
+        .replace('abcde', access_token);
+
+      fetch(url)
       .then ((response) => response.json())
       .then ((responseData) => {
         console.log(responseData.data, 'data ko lata');
         this.setState ({
-            bio: responseData.data.bio,
-            followersNum: responseData.data.followers_count,
-            following: responseData.data.following,
-            followingNum: responseData.data.following_count,
-            userData: responseData.data,
-            userId: responseData.data.id,
-            userName: responseData.data.full_name,
-            profilePic: 
-              responseData.data.profile_picture.trim() === ''
-                ?  require('../../assets/images/user_default.png')
-                : {uri: responseData.data.profile_picture},
+          bio: responseData.data.bio,
+          followersNum: responseData.data.followers_count,
+          following: responseData.data.following,
+          followingNum: responseData.data.following_count,
+          userData: responseData.data,
+          userId: responseData.data.id,
+          userName: responseData.data.full_name,
+          profilePic: 
+            responseData.data.profile_picture.trim() === ''
+              ?  require('../../assets/images/user_default.png')
+              : {uri: responseData.data.profile_picture},
         });
       })
       .catch((error) => {
         callOnFetchError(error, url);
         throw error;
       }).done();
+    })
   }
 
   _handlePress(type, userId=1) {
@@ -112,24 +120,26 @@ export default class ProfileContainer extends Component {
   }
 
   _followPress () {
-    console.log(this.state.following);
-    let query = '';
-    if(this.state.following === 1)
-      query = USER.UNFOLLOW_URL.replace('{user_id}', this.state.userId);
-    else
-      query = USER.FOLLOW_URL.replace('{user_id}', this.state.userId);
-    console.log(query);
+    getAccessToken().then( access_token => {
+      console.log(this.state.following);
+      let query = '';
+      if(this.state.following === 1)
+        query = USER.UNFOLLOW_URL.replace('{user_id}', this.state.userId);
+      else
+        query = USER.FOLLOW_URL.replace('{user_id}', this.state.userId);
+      console.log(query);
 
-    fetch(query, {method: 'POST'})
+      fetch(query.replace('abcde', access_token), {method: 'POST'})
       .then(response => {
         this.setState({
           following: this.state.following === 0 ? 1 : 0,
           followersNum: this.state.following === 0 ? 
-              this.state.followersNum + 1 : this.state.followersNum - 1
+            this.state.followersNum + 1 : this.state.followersNum - 1
         });
         console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
       })
       .done();
+    } )
     
   }
 

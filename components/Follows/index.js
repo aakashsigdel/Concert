@@ -13,7 +13,10 @@ import {
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
 import Reviews from '../Reviews';
-import { callOnFetchError } from '../../utils.js';
+import {
+  callOnFetchError,
+  getAccessToken,
+} from '../../utils.js';
 import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
 
 
@@ -31,23 +34,29 @@ export default class Follows extends Component {
   }
 
   _fetchData() {
-    let query_url = '';
-    if(this.props.type == 'followers')
-      query_url = USERS_URL.replace('following', 'followed-by')  ;
-    else
-      query_url = USERS_URL;
-    query_url = query_url.replace('userId', this.props.userId);
-    fetch(query_url)
-    .then((response) => response.json())
-    .then((responseData) => {
-      this.setState({
-        apiData: responseData.data,
-        dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-      });
+    getAccessToken().then( access_token =>{
+      let query_url = '';
+      if(this.props.type == 'followers')
+        query_url = USERS_URL.replace('following', 'followed-by')  ;
+      else
+        query_url = USERS_URL;
+
+      query_url = query_url
+        .replace('userId', this.props.userId)
+        .replace('abcde', access_token);
+
+      fetch(query_url)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          apiData: responseData.data,
+          dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+        });
+      })
+      .catch((error) => {
+        callOnFetchError(error, query_url);
+      }).done();
     })
-    .catch((error) => {
-      callOnFetchError(error, query_url);
-    }).done();
   }
 
   componentDidMount () {

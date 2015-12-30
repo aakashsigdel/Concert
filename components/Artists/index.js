@@ -9,7 +9,7 @@ import React, {
 } from 'react-native';
 
 import Loader from '../../components.ios/Loader';
-import { callOnFetchError } from '../../utils.js';
+import { callOnFetchError, getAccessToken } from '../../utils.js';
 
 const ARTISTS_URL = 'http://api.revuzeapp.com:80/api/v1/artists/search?name=ab&access_token=abcde';
 const styles = require('./style.json');
@@ -41,20 +41,22 @@ export default class Artists extends Component {
   }
 
   _fetchData() {
-    let query = this.props.fetchURL;
-    console.log(query);
-    fetch(query)
-    .then((response) => response.json())
-    .then((responseData) => {
-      this.setState({
-        isLoading: false,
-        dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-        apiData: responseData.data,
-      });
-    })
-    .catch((error) => {
-      callOnFetchError(error);
-    }).done();
+    getAccessToken().then( access_token => {
+      let query = this.props.fetchURL.replace('abcde', access_token);
+      console.log('artists page', query);
+      fetch(query)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          isLoading: false,
+          dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+          apiData: responseData.data,
+        });
+      })
+      .catch((error) => {
+        callOnFetchError(error);
+      }).done();
+    });
   }
 
   _handlePress(artistId) {
