@@ -54,11 +54,12 @@ export default class Reviews extends Component {
     getAccessToken().then( access_token =>{
       console.log(this.props.fetchURL);
       let query = this.props.fetchURL
-      .replace('abcde', access_token);
+        .replace('abcde', access_token);
 
       fetch(query)
       .then((response) => response.json())
       .then((responseData) => {
+        console.log(responseData);
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(responseData.data),
           isLoading: false,
@@ -120,8 +121,8 @@ export default class Reviews extends Component {
             {/*calendar Component*/}
             <View style={styles.calendarContainer}>
               <Calander 
-                month="sep"
-                day={17}
+                month={review.concert.date.month.toUpperCase()}
+                day={review.concert.date.day}
               />
             </View>
 
