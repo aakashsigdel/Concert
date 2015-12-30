@@ -26,11 +26,18 @@ import { USERS } from '../../constants/ApiUrls.js'
 import { callOnFetchError } from '../../utils.js';
 import { CONCERTS, REVIEWS, USER, USER_DETAILS, PHOTOS } from '../../constants/ApiUrls';
 
-
 const VIEWPORT = Dimensions.get('window');
 
 export default class ProfileContainer extends Component {
   constructor(props) {
+    /*
+     * not to confuse between isLoggedInUser and this.loggedInUser
+     * this resulted from multiple people trying to implement the same functionality.
+     * DEFINITELY NEEDS CLEANUP! :)
+     * for reference ->
+     * this.state.isLoggedInUser -> passed from homeScreen. to be removed
+     * this.loggedInUser -> has the id of loggedInUser
+    */
     super(props);
     this.state = {
       dataSource: new ListView.DataSource({
@@ -41,6 +48,7 @@ export default class ProfileContainer extends Component {
       bio: '',
       profilePic: '',
       isLoggedInUser: this.props.isLoggedInUser,
+      loggedInUserDetail: {},
       userName: this.props.userName, // not anti-pattern because it is not used for syncing data
       userId: 1,
       activeView: 'Photos',
@@ -126,11 +134,12 @@ export default class ProfileContainer extends Component {
   }
 
   async _getLoggedInUserId() {
+    /*
+     * sets this.loggedInUser with the id of logged in user from AsyncStorage
+    */
     await AsyncStorage.getItem(USER_DETAILS).then(
       (userDetails) => {
         this.loggedInUser = Number(JSON.parse(userDetails).id);
-        userDetails = JSON.parse(userDetails);
-        console.log(userDetails.id, userDetails, 'baldkjfa');
       }
     );
   }

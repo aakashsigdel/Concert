@@ -17,7 +17,9 @@ export default class ActionScreen extends Component {
   }
 
   _populateRows() {
-    this.props.links.map((child, index) => {
+    this.props.links
+    .sort((a, b) => a.name.length > b.name.length? 1 : -1 )
+    .map((child, index) => {
       this.rows.push(
         <TouchableHighlight
           key={index}

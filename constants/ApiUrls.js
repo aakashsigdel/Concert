@@ -39,7 +39,8 @@ const PHOTO = {
 const PHOTOS = {
   LIKEURL: API_BASE + '/photos/{photo_id}/likes' + SUFFIX + '&like={like}',
   LATEST_URL: API_BASE + '/photos/latest' + SUFFIX,
-}; 
+  GET_PHOTO_URL: API_BASE+ '/photos/{photo_id}' + SUFFIX,
+};
 
 const USER = {
   FOLLOW_URL: API_BASE + '/users/{user_id}/follow' + SUFFIX,

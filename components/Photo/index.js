@@ -20,11 +20,14 @@ import Calander from '../Calander';
 import FAB from '../FAB';
 import styles from './style'
 import { PHOTOS } from '../../constants/ApiUrls.js'
-import { callOnFetchError } from '../../utils.js';
+import {
+  callOnFetchError,
+  getUserDetailsFromAsyncStorage,
+  serializeJSON ,
+} from '../../utils.js';
 
-var Share = NativeModules.KDSocialShare;
+const Share = NativeModules.KDSocialShare;
 
-let QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/photos/photoId?access_token=abcde';
 export default class Photo extends Component {
   constructor() {
     super();
@@ -35,6 +38,8 @@ export default class Photo extends Component {
       total_likes: 0,
       isLiked: false,
       heartImage: null,
+      loggedInUserDetail: null,
+      optionsForFAB: null,
     };
   }
 
@@ -48,27 +53,59 @@ export default class Photo extends Component {
   }
 
   _fetchData() {
-    let query = QUERY_URL.replace('photoId', this.props.photoId);
-    fetch(query)
-    .then((response) => response.json())
-    .then((responseData) => {
-      console.log('photo res data', responseData);
-      this.setState({
-        photoDetail: responseData.data,
-        isLoading: false,
-        isLiked: (responseData.data.liked === 0)? false : true,
-        total_likes: responseData.data.total_likes,
-        profile_picture: responseData.data.user.profile_picture.trim().length === 0
-          ? require('../../assets/images/user_default.png')
-          : responseData.data.user.profile_picture,
-        heartImage: (responseData.data.liked === 0)
-          ? require('../../assets/images/like.png' ) 
-          : require('../../assets/images/liked.png'),
-      });
+    const query = PHOTOS.GET_PHOTO_URL.replace('{photo_id}', this.props.photoId);
+    getUserDetailsFromAsyncStorage()
+    .then(res=> {
+      this.state.loggedInUserDetail = res;
+      fetch(query)
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log('photo res data', responseData);
+
+        const artistName_truncated = responseData.data.concert.artist.name.trim().length > 15
+          ? responseData.data.concert.artist.name.slice(0, 15) + '...'
+          : responseData.data.concert.artist.name;
+        // es6 template strings FTW! :D
+        this.state.optionsForFAB = [{ name: `Go to ${artistName_truncated} page` }];
+
+        // if photo belongs to loggedIn user, 
+        // we need to add additional actions to FAB
+        if (this.state.loggedInUserDetail.id == responseData.data.user.id){
+          this.state.optionsForFAB = [
+            ...this.state.optionsForFAB,
+            {
+              name: 'Edit',
+              action: () => this.props.navigator.push({name: 'photoEditComment', index: 52}),
+            },
+            {
+              name: 'Delete',
+              action: () => this.props.navigator.replace({
+                name: 'customAlert',
+                text: 'photo',
+                sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+              })
+            }
+          ]
+        }
+
+        this.setState({
+          photoDetail: responseData.data,
+          isLoading: false,
+          isLiked: (responseData.data.liked === 0)? false : true,
+          total_likes: responseData.data.total_likes,
+          profile_picture: responseData.data.user.profile_picture.trim().length === 0
+            ? require('../../assets/images/user_default.png')
+            : responseData.data.user.profile_picture,
+            heartImage: (responseData.data.liked === 0)
+              ? require('../../assets/images/like.png' ) 
+              : require('../../assets/images/liked.png'),
+        });
+      })
+      .catch((error) => {
+        callOnFetchError(error, query);
+      }).done();
+
     })
-    .catch((error) => {
-      callOnFetchError(error, query);
-    }).done();
   }
 
 	_handelUserPress(userId) {
@@ -104,32 +141,41 @@ export default class Photo extends Component {
   _toggleLike() {
     // action == 0 -> unlike
     // action == 1 -> like
+    debugger;
     const action = this.state.isLiked ? '0': '1';
 
     const url = PHOTOS.LIKEURL
-      .replace( '{photo_id}', this.state.photoDetail.id)
-      .replace( '{like}', action);
+    .replace( '{photo_id}', this.state.photoDetail.id);
+    // .replace( '{like}', action);
 
     console.log(action, url)
 
-    fetch(url, {method: 'POST'})
-      .then(res => {
-        this.setState({
-          isLiked: !this.state.isLiked,
-          
-          total_likes: (action === '1')
-            ? this.state.total_likes + 1
-            : this.state.total_likes - 1,
+    fetch(
+      url,
+      { 
+        method: 'POST',
+        body: serializeJSON({
+          like: action
+        })
+      }
+    )
+    .then(res => {
+      this.setState({
+        isLiked: !this.state.isLiked,
+
+        total_likes: (action === '1')
+          ? this.state.total_likes + 1
+          : this.state.total_likes - 1,
 
           heartImage: (action === '0')
             ? require('../../assets/images/like.png' ) 
             : require('../../assets/images/liked.png'),
-        })
       })
-      .then(_=> console.log('state', this.state))
-      .catch((error) => {
-        callOnFetchError(error, url);
-      }).done();
+    })
+    .then(_=> console.log('state', this.state))
+    .catch((error) => {
+      callOnFetchError(error, url);
+    }).done();
   }
 
   render () {
@@ -218,23 +264,7 @@ export default class Photo extends Component {
 
         <FAB 
           navigator={this.props.navigator}
-          links={[
-            {
-              name: 'Edit',
-              action: () => this.props.navigator.push({name: 'photoEditComment', index: 52}),
-            },
-            {
-              name: 'Delete',
-              action: () => this.props.navigator.replace({
-                name: 'customAlert',
-                text: 'photo',
-                sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-              })
-            },
-            {
-              name: 'Go to SKO/TORP page',
-            }
-          ]}
+          links={this.state.optionsForFAB}
         />
       </View>
     );

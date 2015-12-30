@@ -23,7 +23,11 @@ import Loader from '../../components.ios/Loader';
 import HeaderBar from '../../components/HeaderBar';
 import heroElement from './heroElement';
 import { REVIEW } from '../../constants/ApiUrls.js'
-import { callOnFetchError } from '../../utils.js';
+import {
+  callOnFetchError,
+  getUserDetailsFromAsyncStorage,
+  serializeJSON ,
+} from '../../utils.js';
 
 
 const {deviceWidth, deviceHeight} = Dimensions.get('window');
@@ -31,15 +35,12 @@ const Share = NativeModules.KDSocialShare;
 const header = StyleSheet.create(require('./header.json'));
 const comment = StyleSheet.create(require('./comment.json'));
 
-// TODO: handle like image state
-// -> if liked, one image, 
-//   if not, other
-
 export default class Review extends Component {
   constructor() {
     super();
     this.state = {
       renderPlaceholderOnly: true,
+      loggedInUserDetail: null,
       isLoading: false,
       total_likes: 0,
       isLiked: false,
@@ -55,11 +56,52 @@ export default class Review extends Component {
   _fetchData() {
     const url = REVIEW.DETAILURL.replace('{review_id}', this.props.id);
     console.log(url);
-    fetch(url)
+    getUserDetailsFromAsyncStorage()
+    .then( res =>{
+      this.state.loggedInUserDetail = res;
+      fetch(url)
       .then( res => res.json())
       .then( res => {
-        res.data.userPic = (res.data.user.profile_picture.trim().length > 0) ? {uri:res.data.user.profile_picture}: require('../../assets/images/user_default.png');
-        res.data.artistPic = (res.data.concert.artist.image.original.trim().length > 0) ? {uri:res.data.concert.artist.image.original}: require('../../assets/images/default_artist_page.png');
+        res.data.userPic = res.data.user.profile_picture.trim().length > 0
+          ? {uri:res.data.user.profile_picture}
+          : require('../../assets/images/user_default.png');
+        res.data.artistPic = res.data.concert.artist.image.original.trim().length > 0
+          ? {uri:res.data.concert.artist.image.original}
+          : require('../../assets/images/default_artist_page.png');
+
+          const artistName =
+            res.data.concert.artist.name.trim().length > 15
+              ? res.data.concert.artist.name.slice(0,15) + '...'
+              : res.data.concert.artist.name;
+        
+          this.state.optionsForFAB = [
+            {
+              name: `Go to  ${artistName}\'s page`,
+            }
+          ]
+
+          if (this.state.loggedInUserDetail.id === res.data.user.id){
+            this.state.optionsForFAB = [
+              ...this.state.optionsForFAB,
+              {
+                name: 'Edit',
+                action: () => this.props.navigator.replace({
+                  name: 'addReview',
+                  edit: true,
+                  concert_id: this.state.review.concert.id,
+                })
+              },
+              {
+                name: 'Delete',
+                action: () => {
+                  this.props.navigator.replace({
+                    name: 'customAlert',
+                    text: 'review',
+                  })
+                } 
+              },
+            ]
+          }
 
         this.setState({
           renderPlaceholderOnly: false,
@@ -75,6 +117,7 @@ export default class Review extends Component {
       .catch((error) => {
         callOnFetchError(error, url);
       }).done();
+    })
   }
 
 	_sharePhoto () {
@@ -102,7 +145,12 @@ export default class Review extends Component {
     ).replace( '{like}', action);
 
     console.log(action, url)
-    fetch(url, {method: 'POST'})
+    fetch(url, {
+      method: 'POST',
+      body: serializeJSON({
+        like: action 
+      })
+    })
       .then(res => {
         this.setState({
           isLiked: !this.state.isLiked,
@@ -261,29 +309,7 @@ export default class Review extends Component {
 
         <FAB 
           navigator={this.props.navigator}
-          links={[
-            {
-              name: 'Edit',
-              action: () => this.props.navigator.replace({
-                name: 'addReview',
-                edit: true,
-                concert_id: this.state.review.concert.id,
-              })
-            },
-            {
-              name: 'Delete',
-              action: () => {
-                this.props.navigator.replace({
-                  name: 'customAlert',
-                  text: 'review',
-                })
-              } 
-            },
-            {
-              name: 'Go to ' + this.state.review.concert.artist.name + '\'s page',
-              action: () => this.props.navigator.pop()
-            }
-          ]}
+          links={this.state.optionsForFAB}
         />
       </View>
     ) ;
