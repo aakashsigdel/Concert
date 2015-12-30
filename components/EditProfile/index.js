@@ -48,11 +48,14 @@ export default class EditProfile extends Component {
         body: serializeJSON(params)
       }
     ).then( res => {
+      console.log('params', params);
       console.log('data-> ', res.text());
       console.log('res->',res);
       this.props.navigator.replace({
         name: 'profile',
         userId: this.state.userData.id,
+        userName: this.state.userData.full_name,
+        bio: this.state.userData.bio,
       })
     })
     .catch((error) => {
@@ -61,6 +64,7 @@ export default class EditProfile extends Component {
   }
 
   render(){
+    console.log('aakas ko lado', this.state.userData, this.props.userData);
     if ( this.state.renderPlaceholder )
       return (
         <View style={{flex: 1,
@@ -87,7 +91,7 @@ export default class EditProfile extends Component {
             style={[styles.text_input, {height: 44, borderBottomWidth: 1, borderBottomColor: 'rgb(51,51,52)' }]}
             multiline={true}
             onChangeText={ text => this.setState({
-              userData: {...this.state.userData, full_name: text}
+              userData: Object.assign({}, this.state.userData, {full_name: text})
             })}
             value={this.state.userData.full_name}
             defaultValue={this.props.userData.full_name}
@@ -97,7 +101,7 @@ export default class EditProfile extends Component {
             multiline={true}
             style={[styles.text_input, {height: 60}]}
             onChangeText={ text => this.setState({
-              userData: {...this.state.userData, bio: text}
+              userData: Object.assign({}, this.state.userData, {bio: text})
             })}
             value={this.state.userData.bio}
             defaultValue={this.props.userData.bio}>

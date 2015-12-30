@@ -24,7 +24,7 @@ import HeaderBar from '../HeaderBar';
 import styles from './style';
 import { USERS } from '../../constants/ApiUrls.js'
 import { callOnFetchError } from '../../utils.js';
-import { CONCERTS, REVIEWS, USER, ASYNC_STORAGE_KEY } from '../../constants/ApiUrls';
+import { CONCERTS, REVIEWS, USER, USER_DETAILS, PHOTOS } from '../../constants/ApiUrls';
 
 
 const VIEWPORT = Dimensions.get('window');
@@ -58,8 +58,11 @@ export default class ProfileContainer extends Component {
 	}
 
   componentDidMount() {
+    this._fetchData();
     InteractionManager.runAfterInteractions(() => {
-      this._fetchData();
+      this.setState({
+        renderPlaceholder: false,
+      });
       this._getLoggedInUserId();
     });
   }
@@ -69,15 +72,12 @@ export default class ProfileContainer extends Component {
     fetch(url)
       .then ((response) => response.json())
       .then ((responseData) => {
-        console.log(responseData.data);
+        console.log(responseData.data, 'data ko lata');
         this.setState ({
             bio: responseData.data.bio,
-            renderPlaceholder: false,
             followersNum: responseData.data.followers_count,
             following: responseData.data.following,
             followingNum: responseData.data.following_count,
-            profilePic: responseData.data.profile_picture,
-            renderPlaceholder: false,
             userData: responseData.data,
             userId: responseData.data.id,
             userName: responseData.data.full_name,
@@ -126,10 +126,15 @@ export default class ProfileContainer extends Component {
   }
 
   async _getLoggedInUserId() {
-    await AsyncStorage.getItem(ASYNC_STORAGE_KEY).then(
-      (value) => {this.loggedInUser = Number(value)}
+    await AsyncStorage.getItem(USER_DETAILS).then(
+      (userDetails) => {
+        this.loggedInUser = Number(JSON.parse(userDetails).id);
+        userDetails = JSON.parse(userDetails);
+        console.log(userDetails.id, userDetails, 'baldkjfa');
+      }
     );
   }
+
   _renderHeader() {
     return (
       <View style={styles.topView}>
@@ -157,7 +162,7 @@ export default class ProfileContainer extends Component {
             </View>
           </TouchableHighlight>
         </View>
-        <Text style={styles.bio}>{this.state.userData.bio}</Text>
+        <Text style={styles.bio}>{ this.props.bio? this.props.bio : this.state.userData.bio}</Text>
 
         <View style={styles.userBtn}>
           {(()=>{
@@ -227,6 +232,7 @@ export default class ProfileContainer extends Component {
                 sectionHeader={this._renderSectionHeader.bind(this)}
                 navigator={this.props.navigator}
                 concertId={this.props.concertId}
+                fetchURL={PHOTOS.LATEST_URL}
               />;
 
             case 'Reviews':

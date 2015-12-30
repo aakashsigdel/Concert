@@ -49,6 +49,7 @@ export default class Reviews extends Component {
   }
 
   _fetchData() {
+    console.log(this.props.fetchURL);
     let query = this.props.fetchURL;
     fetch(query)
     .then((response) => response.json())
@@ -141,6 +142,8 @@ export default class Reviews extends Component {
                       return this.props.userName.toUpperCase()
                     else if(this.props.fetchFor === 'latest')
                       return review.user.full_name.toUpperCase()
+                    else if(this.props.userName)
+                      return this.props.userName.toUpperCase()
                     else
                       return review.user.full_name.toUpperCase()
                   })()

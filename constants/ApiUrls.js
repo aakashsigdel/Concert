@@ -32,8 +32,13 @@ const REVIEWS = {
   USER_URL: API_BASE + '/users/{user_id}/reviews' + SUFFIX,
 }
 
+const PHOTO = {
+  POST_URL: API_BASE + '/concerts/{concert_id}/photos' + SUFFIX,
+};
+
 const PHOTOS = {
   LIKEURL: API_BASE + '/photos/{photo_id}/likes' + SUFFIX + '&like={like}',
+  LATEST_URL: API_BASE + '/photos/latest' + SUFFIX,
 }; 
 
 const USER = {
@@ -41,6 +46,7 @@ const USER = {
   UNFOLLOW_URL: API_BASE + '/users/{user_id}/un-follow' + SUFFIX,
   LOGIN_URL: API_BASE + '/auth/facebook',
   DETAIL_URL: API_BASE + '/users/me?access_token={access_token}',
+  PHOTOS_URL: API_BASE + '/users/{user_id}/photos' + SUFFIX,
 };
 
 const USERS = {
@@ -59,6 +65,7 @@ export {
   CONCERT,
   CONCERTS,
   LOGIN_DETAILS,
+  PHOTO,
   PHOTOS,
   REVIEW,
   REVIEWS,

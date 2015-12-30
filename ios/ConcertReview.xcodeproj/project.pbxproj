@@ -839,7 +839,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdklogin",
 				);
 				INFOPLIST_FILE = ConcertReview/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nlocate.concertview;
@@ -861,7 +861,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdklogin",
 				);
 				INFOPLIST_FILE = ConcertReview/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nlocate.concertview;

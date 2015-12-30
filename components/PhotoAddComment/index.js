@@ -9,18 +9,30 @@ import React, {
   TextInput,
   View,
 } from 'react-native';
+import Loader from '../../components.ios/Loader';
 import HeaderBar from '../HeaderBar';
+import { PHOTO } from '../../constants/ApiUrls';
 
 deviceHeight = Dimensions.get('window').height;
 
 export default class PhotoAddComment extends Component {
   constructor () {
     super();
+    this.state = {
+      isLoading: false,
+    };
     this.caption = '';
   }
 
   _handlePress() {
-    let POHOTO_POST_URL = 'http://api.revuzeapp.com/api/v1/concerts/12/photo?access_token=abcde';
+    if(this.caption.trim() === '') {
+      alert('ERROR: Please Input Photo Caption');
+      return;
+    }
+    this.setState({
+      isLoading: true,
+    });
+    let POHOTO_POST_URL = PHOTO.POST_URL.replace('{concert_id}', this.props.concertId);
     let imageObj = {
       uploadUrl: POHOTO_POST_URL,
       method: 'POST',
@@ -38,11 +50,16 @@ export default class PhotoAddComment extends Component {
     };
     NativeModules.FileUpload.upload(imageObj, (err, result) => {
       console.log('flex the bottle', err, result);
+      this.setState({
+        isLoading: false,
+      });
+      this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
     });
-    this.props.navigator.popToTop();
   }
 
   render () {
+    if (this.state.isLoading)
+      return <Loader />;
     return (
       <View style={styles.container}>
         <HeaderBar

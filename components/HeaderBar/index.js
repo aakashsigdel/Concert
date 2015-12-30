@@ -48,6 +48,8 @@ export default class HeaderBar extends Component {
 
   // check if image or text should be displayed in HeaderBar
   _formatHeaderBar (item, styleInitial, clickable, clickFunction=false, index, style) {
+    if(typeof(item) === 'string')
+      item = item.length < 15 ? item : item.slice(0, 15) + '...';
     if(item !== null) {
       if(typeof(item) === 'string') {
         if(clickable) {
