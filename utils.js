@@ -56,16 +56,14 @@ export const getUserDetailsFromAsyncStorage = async ( refresh = false ) => {
 
 export const getAccessToken = async () => {
   console.log( 'getAccessToken called.. ' );
-  return '1hNyU2D64CFchXbGicwca6JKIUCmxC';
-  // try {
-  //   await AsyncStorage.getItem(LOGIN_DETAILS)
-  //   .then(loginDetails => {
-  //     console.log('login details in utils.js', JSON.parse(loginDetails.access_token));
-  //     return JSON.parse(loginDetails.access_token);
-  //   })
-  // }catch(e){
-  //   console.log('error in utilsjs.there was an error fetching login details from asyncstorage', error)
-  //   return 'there was an error fetching login details from asyncstorage';
-  // }
-
+  try {
+   return await AsyncStorage.getItem(LOGIN_DETAILS)
+    .then(loginDetails => {
+      console.log('login details in utils.js', JSON.parse(loginDetails).access_token);
+      return JSON.parse(loginDetails).access_token;
+    })
+  }catch(e){
+    console.log('error in utilsjs.there was an error fetching login details from asyncstorage', error)
+    return 'there was an error fetching login details from asyncstorage';
+  }
 }
