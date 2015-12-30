@@ -6,6 +6,10 @@ const SUFFIX = "?access_token=" + ACCESS_TOKEN;
 const SEARCH_SUFFIX = SUFFIX + '&q={search_token}';
 const USER_DETAILS = '@Revuze:userDetails';
 
+const ARTISTS ={
+  SEARCH_ARTISTS_URL : API_BASE + '/artists/search' + SUFFIX + '&name={search_query}',
+}
+
 const CONCERT = {
   CHECKINURL: API_BASE + '/concerts/{concert_id}/checkin' + SUFFIX,
 };
@@ -63,6 +67,8 @@ const SEARCH = {
 };
 
 export {
+  ARTISTS,
+  ACCESS_TOKEN,
   CONCERT,
   CONCERTS,
   LOGIN_DETAILS,

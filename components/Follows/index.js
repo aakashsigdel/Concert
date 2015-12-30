@@ -14,9 +14,10 @@ import {
 import HeaderBar from '../HeaderBar';
 import Reviews from '../Reviews';
 import { callOnFetchError } from '../../utils.js';
+import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
 
 
-const USERS_URL = 'http://api.revuzeapp.com:80/api/v1/users/userId/following?access_token=abcde';
+const USERS_URL = `http://api.revuzeapp.com:80/api/v1/users/userId/following?access_token=${ACCESS_TOKEN}`;
 const styles = StyleSheet.create(require('./style.json'))
 
 export default class Follows extends Component {

@@ -15,13 +15,12 @@ import {
 import Loader from '../../components.ios/Loader';
 import Calander from '../Calander';
 import { callOnFetchError } from '../../utils.js';
-
-
+import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
 
 let QUERY_URL = {
-  latest: 'http://api.revuzeapp.com:80/api/v1/reviews/latest?access_token=abcde',
-  concertId: 'http://api.revuzeapp.com:80/api/v1/concerts/12/reviews?access_token=abcde',
-  userId: 'http://api.revuzeapp.com:80/api/v1/users/userId/reviews?access_token=abcde'
+  latest: `http://api.revuzeapp.com:80/api/v1/reviews/latest?access_token=${ACCESS_TOKEN}`,
+  concertId: `http://api.revuzeapp.com:80/api/v1/concerts/12/reviews?access_token=${ACCESS_TOKEN}`,
+  userId: `http://api.revuzeapp.com:80/api/v1/users/userId/reviews?access_token=${ACCESS_TOKEN}`
 }
 export default class Reviews extends Component {
 	constructor() {

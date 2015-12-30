@@ -13,8 +13,9 @@ import {
 } from 'react-native';
 import Loader from '../../components.ios/Loader';
 import { callOnFetchError } from '../../utils.js';
+import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
 
-var QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id?access_token=abcde';
+var QUERY_URL = `http://api.revuzeapp.com:80/api/v1/concerts/concert_id?access_token=${ACCESS_TOKEN}`;
 var navBtn = "http://aakashsigdel.github.io/Concert/navBtn.png";
 var shareBtn = "http://aakashsigdel.github.io/Concert/share.png";
 export default class Header extends Component {

@@ -16,8 +16,9 @@ import {
 import Loader from '../../components.ios/Loader';
 import styles from './style.js';
 import { callOnFetchError } from '../../utils.js';
+import { ACCESS_TOKEN } from '../../constants/ApiUrls.js';
 
-const QUERY_URL = 'http://api.revuzeapp.com:80/api/v1/concerts/concert_id/photos?access_token=abcde';
+const QUERY_URL = `http://api.revuzeapp.com:80/api/v1/concerts/concert_id/photos?access_token=${ACCESS_TOKEN}`;
 export default class Photos extends Component {
 	constructor(props) {
 		super(props);
