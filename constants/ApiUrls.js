@@ -27,7 +27,7 @@ const CONCERTS = {
 const REVIEW = {
   DETAILURL: API_BASE + '/reviews/{review_id}' + SUFFIX,
   ADD_URL: API_BASE + '/concerts/{concert_id}/reviews' + SUFFIX,
-  LIKEURL: API_BASE + '/reviews/{review_id}/likes' + SUFFIX + '&like={like}',
+  LIKEURL: API_BASE + '/reviews/{review_id}/likes' + SUFFIX,
 };
 
 const REVIEWS = {
@@ -41,7 +41,7 @@ const PHOTO = {
 };
 
 const PHOTOS = {
-  LIKEURL: API_BASE + '/photos/{photo_id}/likes' + SUFFIX + '&like={like}',
+  LIKEURL: API_BASE + '/photos/{photo_id}/likes' + SUFFIX,
   LATEST_URL: API_BASE + '/photos/latest' + SUFFIX,
   GET_PHOTO_URL: API_BASE+ '/photos/{photo_id}' + SUFFIX,
 };

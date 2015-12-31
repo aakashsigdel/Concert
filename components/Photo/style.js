@@ -38,6 +38,7 @@ let styles = {
   },
   userAndLikes: {
     flexDirection: 'row',
+    flex: 1,
     justifyContent: 'space-between',
     marginTop: 15,
   },

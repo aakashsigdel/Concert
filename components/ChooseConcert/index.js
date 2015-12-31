@@ -24,7 +24,6 @@ export default class ChooseConcert extends Component {
           clickableLeft={true}
           clickFunctionLeft={() => this.props.navigator.jumpBack()}
           mid={'SELECT CONCERT'}
-          right={'NEXT'}
         />
         <Concerts
           navigator={this.props.navigator}

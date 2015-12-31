@@ -139,17 +139,34 @@ export default class Review extends Component {
     });
   }
 
+  _renderPresentationalToggleLike(action){
+    this.setState({
+      isLiked: !this.state.isLiked,
+
+      total_likes: (action === '1')
+        ? this.state.total_likes + 1
+        : this.state.total_likes - 1,
+
+        heartImage: (action === '0')
+          ? require('../../assets/images/like.png' ) 
+          : require('../../assets/images/liked.png'),
+    })
+  }
+
   _toggleLike() {
     getAccessToken().then(access_token => {
       // action == 0 -> unlike
       // action == 1 -> like
       const action = this.state.isLiked ? '0': '1';
+      debugger;
 
       const url = REVIEW.LIKEURL.replace(
         '{review_id}',
         this.state.review.id
       ).replace( '{like}', action)
       .replace('abcde', access_token);
+
+      this._renderPresentationalToggleLike(action);
 
       console.log(action, url)
       fetch(url, {
@@ -159,21 +176,13 @@ export default class Review extends Component {
         })
       })
       .then(res => {
-        this.setState({
-          isLiked: !this.state.isLiked,
-
-          total_likes: (action === '1')
-            ? this.state.total_likes + 1
-            : this.state.total_likes - 1,
-
-            heartImage: (action === '0')
-              ? require('../../assets/images/like.png' ) 
-              : require('../../assets/images/liked.png'),
-        })
+        if (!res.ok)
+          this._renderPresentationalToggleLike(action === '0'? '1': '0')
       })
       .then(_=> console.log('state', this.state))
       .catch((error) => {
         callOnFetchError(error, url);
+        this._renderPresentationalToggleLike(action === '0'? '1': '0')
       }).done();
     })
   }
