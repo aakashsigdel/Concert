@@ -251,7 +251,7 @@ export default class ProfileContainer extends Component {
                 sectionHeader={this._renderSectionHeader.bind(this)}
                 navigator={this.props.navigator}
                 concertId={this.props.concertId}
-                fetchURL={PHOTOS.LATEST_URL}
+                fetchURL={USER.PHOTOS_URL.replace('{user_id}', this.props.userId)}
               />;
 
             case 'Reviews':

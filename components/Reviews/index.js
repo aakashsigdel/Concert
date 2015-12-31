@@ -59,7 +59,9 @@ export default class Reviews extends Component {
       fetch(query)
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData);
+        console.log(responseData, 'womaniya');
+        if (responseData.data.length === 0)
+          responseData.data = [{id: 0}];
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(responseData.data),
           isLoading: false,
@@ -104,6 +106,24 @@ export default class Reviews extends Component {
 	}
 
 	_renderReview(review) {
+    // Render No data if Id is 0
+    if (review.id === 0){
+      return (
+        <View style={
+          {
+            flex: 1,
+            marginTop: 10,
+            backgroundColor: '#1C1C1C',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }
+        }>
+          <Text style={{fontSize: 20, color: 'grey', fontStyle: 'italic'}}> 
+            No Data to Display
+          </Text>
+        </View>
+      )
+    }
     // artist image if there is no review image
 		let image = review.image ? review.image : review.concert.artist.image
 		return(

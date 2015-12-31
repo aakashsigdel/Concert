@@ -105,6 +105,7 @@ export default class SearchActive extends Component {
                 onChangeText={(text) => this.setState({filterText: text})}
                 placeholder="Search and you will find.."
                 placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                autoCorrect={false}
               />
             </View>
           </View>

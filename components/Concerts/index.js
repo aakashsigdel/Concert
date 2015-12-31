@@ -54,6 +54,8 @@ export default class Concerts extends Component {
       fetch(query)
       .then((response) => response.json())
       .then((responseData) => {
+        if (responseData.data.length === 0)
+          responseData.data = [{id: 0}];
         this.setState({
           isLoading: false,
           apiData: responseData.data,
@@ -86,6 +88,24 @@ export default class Concerts extends Component {
 	}
 
 	_renderConcert(concert) {
+    // Render No data if Id is 0
+    if (concert.id === 0){
+      return (
+        <View style={
+          {
+            flex: 1,
+            marginTop: 10,
+            backgroundColor: '#1C1C1C',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }
+        }>
+          <Text style={{fontSize: 20, color: 'grey', fontStyle: 'italic'}}> 
+            No Data to Display
+          </Text>
+        </View>
+      )
+    }
 		var backgroundStyle = null;
 		if(this.count % 2 === 0)
 			backgroundStyle = null

@@ -12,7 +12,6 @@ import {
 	Dimensions,
 	Component
 } from 'react-native';
-
 import Loader from '../../components.ios/Loader';
 import styles from './style.js';
 import {
@@ -20,6 +19,8 @@ import {
   getAccessToken,
 } from '../../utils.js';
 import { ACCESS_TOKEN } from '../../constants/ApiUrls.js';
+
+const deviceWidth = Dimensions.get('window').width;
 
 const QUERY_URL = `http://api.revuzeapp.com:80/api/v1/concerts/concert_id/photos?access_token=${ACCESS_TOKEN}`;
 export default class Photos extends Component {
@@ -53,6 +54,8 @@ export default class Photos extends Component {
 		fetch(query)
 			.then((response) => response.json())
 			.then((responseData) => {
+			  if(responseData.data.length === 0)
+			    responseData.data = [{id: 0}];
 				this.setState({
 					dataSource: this.state.dataSource.cloneWithRows(responseData.data),
 					isLoading: false
@@ -75,6 +78,22 @@ export default class Photos extends Component {
 	}
 
 	_renderPhotoThumbs(photo) {
+    // Render No data if Id is 0
+    if (photo.id === 0){
+      return (
+        <View style={
+          {
+            marginTop: 10,
+            backgroundColor: '#1C1C1C',
+            marginLeft: deviceWidth / 2 - deviceWidth / 4,
+          }
+        }>
+          <Text style={{fontSize: 20, color: 'grey', fontStyle: 'italic'}}> 
+            No Data to Display
+          </Text>
+        </View>
+      )
+    }
 	  let photoDetails = {
       photoId: photo.id,
 	  }
@@ -96,6 +115,7 @@ export default class Photos extends Component {
 		return(
 			<ListView
 				contentContainerStyle={styles.listView}
+				style={{backgroundColor: '#1C1C1C'}}
 				dataSource={this.state.dataSource}
         renderHeader={this.props.header}
         renderSectionHeader={this.props.sectionHeader || null}
