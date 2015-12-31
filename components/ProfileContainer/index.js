@@ -185,7 +185,6 @@ export default class ProfileContainer extends Component {
 
         <View style={styles.userBtn}>
           {(()=>{
-            console.log('boottle bhitra bottle', this.state.userId, this.loggedInUser)
             if(this.loggedInUser === this.state.userId){
               return (
                 <TouchableHighlight

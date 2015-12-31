@@ -27,6 +27,7 @@
     marginRight: 15,
     height: 43,
     width: 43,
+    borderRadius: 43/2,
   },
 
   text: {

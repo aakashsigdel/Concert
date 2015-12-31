@@ -89,7 +89,11 @@ export default class Follows extends Component {
                   style={styles.displayAsRow}>
                   <Image
                     style={styles.image}
-                    source={require('../../assets/images/userpicCopy.png')}
+                    source={
+                      user.profile_picture.trim().length > 0
+                        ? {uri: user.profile_picture}
+                        : require('../../assets/images/user_default.png')
+                    }
                   />
                   <Text
                     style={styles.text}>
