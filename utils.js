@@ -1,6 +1,7 @@
 'use strict'
 import { AsyncStorage } from 'react-native';
 import { USER_DETAILS, LOGIN_DETAILS } from './constants/ApiUrls';
+import Events from 'react-native-simple-events';
 
 let userDetailsFromAsyncStorage = null;
 
@@ -11,6 +12,7 @@ export const serializeJSON = ( json ) => {
 }
 
 export const callOnFetchError = (error, url="not specified") => {
+  Events.trigger('Ready', {message: 'My Error Message'});
   try {
     console.log('FETCH ERROR! url -> ', url, error);
   } catch (error) {

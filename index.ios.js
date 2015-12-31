@@ -36,14 +36,35 @@ import CustomAlert from './components/CustomAlert';
 import PhotoEditComment from './components/PhotoEditComment';
 import BlankLoader from './components/BlankLoader';
 import CameraRollPhotos from './components/CameraRollPhotos';
+import Events from 'react-native-simple-events';
+import FancyMessageBar from './components/FancyMessageBar';
 
 class ConcertReview extends Component {
 	constructor() {
 		super();
+    this.state = {
+      showFancy: {status: false, message: 'ERROR'},
+    };
 	}
 
   componentDidMount () {
     StatusBarIOS.setHidden(true);
+    let _this = this;
+    Events.on('Ready', 'myId', data => {
+      _this.setState({
+        showFancy: Object.assign({}, this.state.showFancy, {status: true, message: data.message}),
+      });
+      setTimeout(() => {
+        _this.setState({
+          showFancy: Object.assign({}, this.state.showFancy, {status: false}),
+        });
+      }, 2000);
+    });
+  }
+
+  componentWillUnmount () {
+    alert('bue');
+    Events.rm('Ready', 'myId');
   }
 
 	_renderScene(route, navigator) {
@@ -190,16 +211,26 @@ class ConcertReview extends Component {
 
 	render () {
 		return (
-		  <Navigator
-        initialRoute={{name: 'home', index: 0}}
-        renderScene={this._renderScene}
-        configureScene={(route) => {
-          if (route.sceneConfig) {
-            return route.sceneConfig;
-          }
-          return Navigator.SceneConfigs.FloatFromRight;
-        }}
-      />
+      <View style={{flex: 1}}>
+        <Navigator
+          initialRoute={{name: 'home', index: 0}}
+          renderScene={this._renderScene}
+          configureScene={(route) => {
+            if (route.sceneConfig) {
+              return route.sceneConfig;
+            }
+            return Navigator.SceneConfigs.FloatFromRight;
+          }}
+        />
+        {(() => {
+          if (this.state.showFancy.status)
+            return <FancyMessageBar
+              message={this.state.showFancy.message}
+              viewStyle={this.state.showFancy.viewStyle}
+              messageStyle={this.state.showFancy.messageStyle}
+            />
+        })()}
+      </View>
     );
   }
 }

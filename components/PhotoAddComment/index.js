@@ -14,6 +14,7 @@ import Loader from '../../components.ios/Loader';
 import HeaderBar from '../HeaderBar';
 import { PHOTO } from '../../constants/ApiUrls';
 import { getAccessToken } from '../../utils';
+import Events from 'react-native-simple-events';
 
 let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
@@ -113,6 +114,7 @@ export default class PhotoAddComment extends Component {
                    this.setState({
                      isLoading: false,
                    });
+                   Events.trigger('Ready', {message: 'Photo Posted'});
                    this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
                  });
                } )
@@ -121,30 +123,6 @@ export default class PhotoAddComment extends Component {
          },
          () => undefined,
        );
-
-    // let POHOTO_POST_URL = PHOTO.POST_URL.replace('{concert_id}', this.props.concertId);
-    // let imageObj = {
-    //   uploadUrl: POHOTO_POST_URL,
-    //   method: 'POST',
-    //   fields: {
-    //     concert_id: this.props.concertId,
-    //     caption: this.caption,
-    //   },
-    //   files: [
-    //     {
-    //       name: 'image',
-    //       filename: this.props.imageUrl.split('/')[2],
-    //       filepath: this.props.imageUrl,
-    //     },
-    //   ]
-    // };
-    // NativeModules.FileUpload.upload(imageObj, (err, result) => {
-    //   console.log('flex the bottle', err, result);
-    //   this.setState({
-    //     isLoading: false,
-    //   });
-    //   this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
-    // });
   }
 
   render () {

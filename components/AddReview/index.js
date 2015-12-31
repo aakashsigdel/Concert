@@ -14,6 +14,7 @@ import Loader from '../../components.ios/Loader';
 import HeaderBar from '../HeaderBar';
 import { REVIEW } from '../../constants/ApiUrls';
 import { getAccessToken } from '../../utils.js';
+import Events from 'react-native-simple-events';
 
 const styles = require('./style.json');
 
@@ -154,6 +155,7 @@ export default class AddReview extends Component {
         this.setState({
           isLoading: false,
         });
+        Events.trigger('Ready', {message: 'Review Posted'});
         this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
       });
 
