@@ -124,6 +124,7 @@ class ConcertReview extends Component {
           <ChooseConcert
             navigator={navigator}
             review={route.review}
+            fetchURL={route.fetchURL}
           />
         );
       case 'editProfile':
