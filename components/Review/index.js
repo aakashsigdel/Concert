@@ -69,53 +69,57 @@ export default class Review extends Component {
           res.data.userPic = res.data.user.profile_picture.trim().length > 0
             ? {uri:res.data.user.profile_picture}
             : require('../../assets/images/user_default.png');
-            res.data.artistPic = res.data.concert.artist.image.original.trim().length > 0
-              ? {uri:res.data.concert.artist.image.original}
-              : require('../../assets/images/default_artist_page.png');
+          res.data.artistPic = res.data.concert.artist.image.original.trim().length > 0?
+            {uri:res.data.concert.artist.image.original}
+            : require('../../assets/images/default_artist_page.png');
 
-              const artistName =
-                res.data.concert.artist.name.trim().length > 15
-                  ? res.data.concert.artist.name.slice(0,15) + '...'
-                  : res.data.concert.artist.name;
+          const artistName = res.data.concert.artist.name.trim().length > 15
+            ? res.data.concert.artist.name.slice(0,15) + '...'
+            : res.data.concert.artist.name;
 
-                  this.state.optionsForFAB = [
-                    {
-                      name: `Go to  ${artistName}\'s page`,
-                    }
-                  ]
+          this.state.optionsForFAB = [
+            {
+              name: `Go to  ${artistName}\'s page`,
+              action: () => this.props.navigator.replace({
+                name: 'artist',
+                index: 6,
+                artistId: res.data.concert.artist.id,
+              })
+            }
+          ]
 
-                  if (this.state.loggedInUserDetail.id === res.data.user.id){
-                    this.state.optionsForFAB = [
-                      ...this.state.optionsForFAB,
-                      {
-                        name: 'Edit',
-                        action: () => this.props.navigator.replace({
-                          name: 'addReview',
-                          edit: true,
-                          concert_id: this.state.review.concert.id,
-                        })
-                      },
-                      {
-                        name: 'Delete',
-                        action: () => {
-                          this.props.navigator.replace({
-                            name: 'customAlert',
-                            text: 'review',
-                          })
-                        } 
-                      },
-                    ]
-                  }
-
-                  this.setState({
-                    renderPlaceholderOnly: false,
-                    review: res.data,
-                    isLiked: (res.data.liked === 0)? false : true,
-                    total_likes: res.data.total_likes,
-                    heartImage: (res.data.liked === 0)
-                      ? require('../../assets/images/like.png' ) 
-                      : require('../../assets/images/liked.png'),
+          if (this.state.loggedInUserDetail.id === res.data.user.id){
+            this.state.optionsForFAB = [
+              ...this.state.optionsForFAB,
+              {
+                name: 'Edit',
+                action: () => this.props.navigator.replace({
+                  name: 'addReview',
+                  edit: true,
+                  concert_id: this.state.review.concert.id,
+                })
+              },
+              {
+                name: 'Delete',
+                action: () => {
+                  this.props.navigator.replace({
+                    name: 'customAlert',
+                    text: 'review',
                   })
+                } 
+              },
+            ]
+          }
+
+          this.setState({
+            renderPlaceholderOnly: false,
+            review: res.data,
+            isLiked: (res.data.liked === 0)? false : true,
+            total_likes: res.data.total_likes,
+            heartImage: (res.data.liked === 0)
+              ? require('../../assets/images/like.png' ) 
+              : require('../../assets/images/liked.png'),
+          })
         })
         .then(_=> console.log('got data', this.state))
         .catch((error) => {
@@ -125,12 +129,12 @@ export default class Review extends Component {
     } )
   }
 
-	_sharePhoto () {
-	  this.setState({
+  _sharePhoto () {
+    this.setState({
       isLoading: true,
     });
-	  Share.shareOnFacebook({
-        'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg',
+    Share.shareOnFacebook({
+      'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg',
     },
     (result) => {
       this.setState({
@@ -187,42 +191,42 @@ export default class Review extends Component {
     })
   }
 
-	_getStars(yellowStars) {
+  _getStars(yellowStars) {
     // TODO: this function should be in a global module
-		let stars = [];
-		for(let i = 0; i < yellowStars; i++) {
-			stars.push(
-			  <Image
-			    key={100 - i}
+    let stars = [];
+    for(let i = 0; i < yellowStars; i++) {
+      stars.push(
+        <Image
+          key={100 - i}
           source={require('../../assets/images/star_yellow.png')}
           style={header.yellowStar}
-			  />
-			);
-		}
-		for(let i = 0; i < (5 - yellowStars); i++) {
-			stars.push(
-			  <Image
-			    key={i}
+        />
+      );
+    }
+    for(let i = 0; i < (5 - yellowStars); i++) {
+      stars.push(
+        <Image
+          key={i}
           source={require('../../assets/images/star_white.png')}
           style={header.whiteStar}
-			  />
-			);
-		}
-		return stars;
-	}
+        />
+      );
+    }
+    return stars;
+  }
 
-	_handleBackPress() {
-	  this.props.navigator.pop();
-	}
+  _handleBackPress() {
+    this.props.navigator.pop();
+  }
 
-	_handleUserPress(userId, userName) {
+  _handleUserPress(userId, userName) {
     this.props.navigator.push({
       name: 'profile',
       index: 5,
       userId: this.state.review.user.id, 
       userName: this.state.review.user.full_name,
     });
-	}
+  }
 
   _renderPlaceholder() {
     return (
@@ -232,7 +236,7 @@ export default class Review extends Component {
     );
   }
 
-	render() {
+  render() {
     if(this.state.renderPlaceholderOnly)
       return this._renderPlaceholder();
 
@@ -266,69 +270,69 @@ export default class Review extends Component {
         </View>
       </View> 
 
-        <View style={comment.container} > 
-          <View style={comment.header} >
-            <TouchableOpacity
-              onPress={this._handleUserPress.bind(this, this.state.review.user.id , this.state.review.user.full_name )}
-              style={{flex: 1, flexDirection: 'row'}}>
-              <Image
-                style={comment.starImage}
-                source={this.state.review.userPic}
+      <View style={comment.container} > 
+        <View style={comment.header} >
+          <TouchableOpacity
+            onPress={this._handleUserPress.bind(this, this.state.review.user.id , this.state.review.user.full_name )}
+            style={{flex: 1, flexDirection: 'row'}}>
+            <Image
+              style={comment.starImage}
+              source={this.state.review.userPic}
 
-                onError={_=> {
-                  console.log('error getting image', _);
-                  console.log('url-=> ', this.state.review.userPic);
-                }}
-              />
-              <View style={comment.headerText}>
-                <Text style={comment.whiteText} > {this.state.review.user.full_name}</Text>
-                <View style={header.ratingStars} >
-                  {this._getStars(this.state.review.rating)}
-                </View>
+              onError={_=> {
+                console.log('error getting image', _);
+                console.log('url-=> ', this.state.review.userPic);
+              }}
+            />
+            <View style={comment.headerText}>
+              <Text style={comment.whiteText} > {this.state.review.user.full_name}</Text>
+              <View style={header.ratingStars} >
+                {this._getStars(this.state.review.rating)}
               </View>
-            </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={this._toggleLike.bind(this)}
-              style={comment.starContainer}>
-              <Image 
-                source={this.state.heartImage}
-                style={comment.likeImage}
-              />
-              <Text
-                style={comment.likesText}>
-                {this.state.total_likes} 
+          <TouchableOpacity
+            onPress={this._toggleLike.bind(this)}
+            style={comment.starContainer}>
+            <Image 
+              source={this.state.heartImage}
+              style={comment.likeImage}
+            />
+            <Text
+              style={comment.likesText}>
+              {this.state.total_likes} 
 
-                {this.state.total_likes === 1 ? ' LIKE' : ' LIKES ' }
-              </Text>
-            </TouchableOpacity>
+              {this.state.total_likes === 1 ? ' LIKE' : ' LIKES ' }
+            </Text>
+          </TouchableOpacity>
 
 
-          </View>
+        </View>
 
-          <View 
-            style={{ 
-              paddingTop: 13,
-              paddingBottom: 10.5,
-              paddingLeft: 15,
-              paddingRight: 15,
-            }}
-            >
-            <ScrollView style={comment.text}>
-              <Text 
-                style={comment.longText}>
-                {this.state.review.comment}
-              </Text>
-            </ScrollView>
-          </View>
+        <View 
+          style={{ 
+            paddingTop: 13,
+            paddingBottom: 10.5,
+            paddingLeft: 15,
+            paddingRight: 15,
+          }}
+          >
+          <ScrollView style={comment.text}>
+            <Text 
+              style={comment.longText}>
+              {this.state.review.comment}
+            </Text>
+          </ScrollView>
+        </View>
 
-        </View> 
+      </View> 
 
-        <FAB 
-          navigator={this.props.navigator}
-          links={this.state.optionsForFAB}
-        />
-      </View>
+      <FAB 
+        navigator={this.props.navigator}
+        links={this.state.optionsForFAB}
+      />
+    </View>
     ) ;
   }
 }

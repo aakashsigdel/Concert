@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
 import Concerts from '../Concerts';
-import { CONCERTS } from '../../constants/ApiUrls';
 const styles = require('./style.json');
 
 export default class ChooseConcert extends Component {
@@ -29,7 +28,7 @@ export default class ChooseConcert extends Component {
           navigator={this.props.navigator}
           select={true}
           review={this.props.review}
-          fetchURL={CONCERTS.PAST_URL}
+          fetchURL={this.props.fetchURL}
         />
       </View>
     )
