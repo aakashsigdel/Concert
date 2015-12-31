@@ -98,6 +98,7 @@ class ConcertReview extends Component {
           <Concert
           navigator={navigator}
           concertId={route.concertId}
+          toggleAttending={route.toggleAttending}
           concert={route.concert}
           />
         );
@@ -144,6 +145,7 @@ class ConcertReview extends Component {
           <ChooseConcert
             navigator={navigator}
             review={route.review}
+            fetchURL={route.fetchURL}
           />
         );
       case 'editProfile':

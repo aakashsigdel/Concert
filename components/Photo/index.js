@@ -71,7 +71,16 @@ export default class Photo extends Component {
             ? responseData.data.concert.artist.name.slice(0, 15) + '...'
             : responseData.data.concert.artist.name;
             // es6 template strings FTW! :D
-            this.state.optionsForFAB = [{ name: `Go to ${artistName_truncated} page` }];
+            this.state.optionsForFAB = [
+              {
+                name: `Go to ${artistName_truncated} page`,
+                action: () => this.props.navigator.replace({
+                  name: 'artist',
+                  index: 6,
+                  artistId: responseData.data.concert.artist.id,
+                })
+              }
+            ];
 
             // if photo belongs to loggedIn user, 
             // we need to add additional actions to FAB
@@ -144,8 +153,22 @@ export default class Photo extends Component {
     );
   }
 
+  _renderPresentationalToggleLike(action){
+    console.log('called..');
+    this.setState({
+      isLiked: !this.state.isLiked,
+
+      total_likes: (action === '1')
+        ? this.state.total_likes + 1
+        : this.state.total_likes - 1,
+
+        heartImage: (action === '0')
+          ? require('../../assets/images/like.png' ) 
+          : require('../../assets/images/liked.png'),
+    })
+  }
+
   _toggleLike() {
-    debugger;
     getAccessToken().then( access_token =>{
       // action == 0 -> unlike
       // action == 1 -> like
@@ -155,32 +178,23 @@ export default class Photo extends Component {
         .replace( '{photo_id}', this.state.photoDetail.id)
         .replace( 'abcde', access_token );
 
-      console.log(action, url)
+      console.log(action, url);
+      this._renderPresentationalToggleLike(action);
 
-      fetch(
-        url,
-        { 
-          method: 'POST',
-          body: serializeJSON({
-            like: action
-          })
-        }
-      )
-      .then(res => {
-        this.setState({
-          isLiked: !this.state.isLiked,
-
-          total_likes: (action === '1')
-            ? this.state.total_likes + 1
-            : this.state.total_likes - 1,
-
-            heartImage: (action === '0')
-              ? require('../../assets/images/like.png' ) 
-              : require('../../assets/images/liked.png'),
+      fetch( url, { 
+        method: 'POST',
+        body: serializeJSON({
+          like: action
         })
+      }).then(res => {
+        console.log('res-.;adfj', res);
+        if (!res.ok)
+          this._renderPresentationalToggleLike(action === '0'? '1': '0')
+          
       })
       .then(_=> console.log('state', this.state))
       .catch((error) => {
+        this._renderPresentationalToggleLike(action === '0'? '1': '0')
         callOnFetchError(error, url);
       }).done();
     } )
@@ -227,42 +241,44 @@ export default class Photo extends Component {
         </View>
 
         <View style={styles.bottomView}>
-          <View style={styles.userAndLikes}>
 
-            <View style={styles.user}>
-              <Image
-                source={this.state.profile_picture}
-                style={styles.profileImage}
-              />
-              <TouchableHighlight
-              onPress={this._handelUserPress.bind(this, this.state.photoDetail.user.id)}
-              >
-                <Text
-                style={styles.userName}
-                >
-                  {this.state.photoDetail.user.full_name.toUpperCase()}
-                </Text>
-              </TouchableHighlight>
-            </View>
+          <TouchableOpacity
+            onPress={this._handelUserPress.bind(this, this.state.photoDetail.user.id)}
+            activeOpacity={0.8}
+            >
+            <View style={styles.userAndLikes}>
 
-            <View style={styles.likes}>
-              <TouchableOpacity
-                onPress={this._toggleLike.bind(this)}
-                style={styles.starContainer}>
-                <Image 
-                  source={this.state.heartImage}
-                  style={styles.likeImage}
+              <View style={styles.user}>
+                <Image
+                  source={this.state.profile_picture}
+                  style={styles.profileImage}
                 />
                 <Text
-                  style={styles.likeCount}>
-                  {this.state.total_likes} 
-
-                  {this.state.total_likes === 1 ? ' LIKE' : ' LIKES ' }
+                  style={styles.userName}
+                  >
+                  {this.state.photoDetail.user.full_name.toUpperCase()}
                 </Text>
-              </TouchableOpacity>
-            </View>
+              </View>
 
-          </View>
+              <View style={styles.likes}>
+                <TouchableOpacity
+                  onPress={this._toggleLike.bind(this)}
+                  style={styles.starContainer}>
+                  <Image 
+                    source={this.state.heartImage}
+                    style={styles.likeImage}
+                  />
+                  <Text
+                    style={styles.likeCount}>
+                    {this.state.total_likes} 
+
+                    {this.state.total_likes === 1 ? ' LIKE' : ' LIKES ' }
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+            </View>
+          </TouchableOpacity>
           <Text
           style={styles.caption}
           >

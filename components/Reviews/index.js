@@ -74,6 +74,11 @@ export default class Reviews extends Component {
     } )
   }
 
+  _toggleAttending(id){
+    console.log(this.state.responseData);
+    this.state.responseData.data.filter(item => item.id === id)
+  }
+
 	// this function sholud be in a global module
 	_getStars(yellowStars) {
 		let stars = [];

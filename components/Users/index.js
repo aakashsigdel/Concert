@@ -79,7 +79,11 @@ export default class Users extends Component {
       >
         <View style={styles.listItem}>
           <Image
-          source={require('../../assets/images/userpicCopy.png')}
+            source={
+              rowData.profile_picture.trim().length > 0
+              ? {uri: rowData.profile_picture}
+              : require('../../assets/images/user_default.png')
+            }
           style={styles.listImage}
           />
           <Text

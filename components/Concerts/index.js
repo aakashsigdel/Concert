@@ -82,6 +82,7 @@ export default class Concerts extends Component {
         name: "concert",
         index: 3,
         concertId: concertId,
+        toggleAttending: this._toggleAttending.bind(this),
         concert: concert,
       });
     }
@@ -147,6 +148,14 @@ export default class Concerts extends Component {
       </TouchableHighlight>
 		);
 	}
+
+  _toggleAttending(id, c){
+    console.log('yehi ho boro!', this.state.apiData, typeof(this.state.apiData), id, c);
+
+    this.state.apiData.filter(c => c.id == id)[0].checked_in = c;
+    this.setState();
+    console.log('yehi ho boro!', this.state.apiData);
+  }
 
 	render() {
 		if(this.state.isLoading) {

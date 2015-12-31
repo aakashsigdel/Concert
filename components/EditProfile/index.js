@@ -70,7 +70,6 @@ export default class EditProfile extends Component {
   }
 
   render(){
-    console.log('aakas ko lado', this.state.userData, this.props.userData);
     if ( this.state.renderPlaceholder )
       return (
         <View style={{flex: 1,
@@ -86,7 +85,14 @@ export default class EditProfile extends Component {
         <HeaderBar
           left={require('../../assets/images/backIcon.png')}
           clickableLeft={true}
-          clickFunctionLeft={() => this.props.navigator.pop()}
+          clickFunctionLeft={() => {
+            this.props.navigator.replace({
+              name: 'profile',
+              userId: this.state.userData.id,
+              userName: this.state.userData.full_name,
+              bio: this.state.userData.bio,
+            })
+          }}
           mid={'EDIT PROFILE'}
           right={'POST'}
           clickableRight={true}

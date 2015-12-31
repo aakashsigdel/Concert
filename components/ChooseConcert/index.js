@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import HeaderBar from '../HeaderBar';
 import Concerts from '../Concerts';
-import { CONCERTS } from '../../constants/ApiUrls';
 const styles = require('./style.json');
 
 export default class ChooseConcert extends Component {
@@ -24,13 +23,12 @@ export default class ChooseConcert extends Component {
           clickableLeft={true}
           clickFunctionLeft={() => this.props.navigator.jumpBack()}
           mid={'SELECT CONCERT'}
-          right={'NEXT'}
         />
         <Concerts
           navigator={this.props.navigator}
           select={true}
           review={this.props.review}
-          fetchURL={CONCERTS.PAST_URL}
+          fetchURL={this.props.fetchURL}
         />
       </View>
     )

@@ -17,40 +17,34 @@ import {
   callOnFetchError,
   getAccessToken,
 } from '../../utils.js';
-import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
+import { USER } from '../../constants/ApiUrls.js';
 
-
-const USERS_URL = `http://api.revuzeapp.com:80/api/v1/users/userId/following?access_token=${ACCESS_TOKEN}`;
 const styles = StyleSheet.create(require('./style.json'))
+const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1.following !== r2.following })
 
 export default class Follows extends Component {
   constructor() {
     super()
     this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1.id !== row2.id
-      })
+      apiData: [],
+      dataSource: ds.cloneWithRows([]),
     };
   }
 
   _fetchData() {
     getAccessToken().then( access_token =>{
-      let query_url = '';
-      if(this.props.type == 'followers')
-        query_url = USERS_URL.replace('following', 'followed-by')  ;
-      else
-        query_url = USERS_URL;
+      let query_url = (this.props.type === 'followers') ?  USER.FOLLOWED_BY_URL: USER.FOLLOWING_URL;
 
       query_url = query_url
-        .replace('userId', this.props.userId)
+        .replace('{user_id}', this.props.userId)
         .replace('abcde', access_token);
 
       fetch(query_url)
       .then((response) => response.json())
       .then((responseData) => {
+        this.state.apiData = responseData.data;
         this.setState({
-          apiData: responseData.data,
-          dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+          dataSource: ds.cloneWithRows(this.state.apiData),
         });
       })
       .catch((error) => {
@@ -65,6 +59,40 @@ export default class Follows extends Component {
 
   _handlePress(userId) {
     this.props.navigator.push({name: 'profile', index: 7, userId: userId});
+  }
+
+  _renderPresentationalFollow(id, shouldFollow){
+    const refreshedData = this.state.apiData.map( user => {
+      if (user.id === id) user.following = shouldFollow ? 1 : 0;
+      return user;
+    })
+    this.setState({
+      dataSource: ds.cloneWithRows(refreshedData),
+    })
+  }
+
+  _followPress ( id, shouldFollow ) {
+    this._renderPresentationalFollow(id, shouldFollow);
+
+    getAccessToken().then( access_token => {
+      let query = shouldFollow
+        ? USER.FOLLOW_URL.replace('{user_id}', id)
+        : USER.UNFOLLOW_URL.replace('{user_id}', id);
+
+      query = query.replace('abcde', access_token); 
+      fetch(query, {method: 'POST'})
+      .then(r => r.json())
+      .then(response => {
+        // console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
+        debugger;
+        if (! response.success)
+          this._renderPresentationalFollow(id, !shouldFollow)
+      })
+      .catch( error => {
+        this._renderPresentationalFollow(id, !shouldFollow);
+        callOnFetchError(error, query);
+      }).done();
+    })
   }
 
   render () {
@@ -89,7 +117,11 @@ export default class Follows extends Component {
                   style={styles.displayAsRow}>
                   <Image
                     style={styles.image}
-                    source={require('../../assets/images/userpicCopy.png')}
+                    source={
+                      user.profile_picture.trim().length > 0
+                        ? {uri: user.profile_picture}
+                        : require('../../assets/images/user_default.png')
+                    }
                   />
                   <Text
                     style={styles.text}>
@@ -109,6 +141,7 @@ export default class Follows extends Component {
                   if (user.following === 1){
                     return(
                       <TouchableHighlight
+                        onPress={this._followPress.bind(this, user.id, false)}
                         style={[styles.button, styles.right]}>
                         <View
                           style={styles.displayAsRow}>
@@ -125,6 +158,7 @@ export default class Follows extends Component {
                       else {
                         return(
                           <TouchableHighlight
+                            onPress={this._followPress.bind(this, user.id, true)}
                             style={[styles.button, styles.follow, styles.right]}>
                             <View
                               style={styles.displayAsRow}>

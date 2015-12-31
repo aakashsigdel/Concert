@@ -27,7 +27,7 @@ const CONCERTS = {
 const REVIEW = {
   DETAILURL: API_BASE + '/reviews/{review_id}' + SUFFIX,
   ADD_URL: API_BASE + '/concerts/{concert_id}/reviews' + SUFFIX,
-  LIKEURL: API_BASE + '/reviews/{review_id}/likes' + SUFFIX + '&like={like}',
+  LIKEURL: API_BASE + '/reviews/{review_id}/likes' + SUFFIX,
 };
 
 const REVIEWS = {
@@ -41,7 +41,7 @@ const PHOTO = {
 };
 
 const PHOTOS = {
-  LIKEURL: API_BASE + '/photos/{photo_id}/likes' + SUFFIX + '&like={like}',
+  LIKEURL: API_BASE + '/photos/{photo_id}/likes' + SUFFIX,
   LATEST_URL: API_BASE + '/photos/latest' + SUFFIX,
   GET_PHOTO_URL: API_BASE+ '/photos/{photo_id}' + SUFFIX,
 };
@@ -49,6 +49,8 @@ const PHOTOS = {
 const USER = {
   FOLLOW_URL: API_BASE + '/users/{user_id}/follow' + SUFFIX,
   UNFOLLOW_URL: API_BASE + '/users/{user_id}/un-follow' + SUFFIX,
+  FOLLOWING_URL: API_BASE + '/users/{user_id}/following' + SUFFIX,
+  FOLLOWED_BY_URL: API_BASE + '/users/{user_id}/followed-by' + SUFFIX,
   LOGIN_URL: API_BASE + '/auth/facebook',
   DETAIL_URL: API_BASE + '/users/me?access_token={access_token}',
   PHOTOS_URL: API_BASE + '/users/{user_id}/photos' + SUFFIX,
