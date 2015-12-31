@@ -42,11 +42,7 @@ export const getUserDetailsFromAsyncStorage = async ( refresh = false ) => {
     return await AsyncStorage.getItem(USER_DETAILS)
     .then(userDetails => {
       console.log(' sending... ', userDetails)
-      console.warn(`DEV MODE: _>
-                   return Object.assign({},  JSON.parse(userDetails), {id: 2056});
-                   `)
-      // return JSON.parse(userDetails);
-      return Object.assign({},  JSON.parse(userDetails), {id: 2056});
+      return JSON.parse(userDetails);
     });
   } catch (error) {
     console.log('error in utilsjs', error)

@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 
 import React, {
   CameraRoll,
@@ -13,6 +13,7 @@ import React, {
 import Loader from '../../components.ios/Loader';
 import HeaderBar from '../HeaderBar';
 import { PHOTO } from '../../constants/ApiUrls';
+import { getAccessToken } from '../../utils';
 
 let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
@@ -88,29 +89,33 @@ export default class PhotoAddComment extends Component {
            CameraRoll.saveImageWithTag(
              croppedImageURI,
              (data) => {
-               let POHOTO_POST_URL = PHOTO.POST_URL.replace('{concert_id}', this.props.concertId);
-               let imageObj = {
-                 uploadUrl: POHOTO_POST_URL,
-                 method: 'POST',
-                 fields: {
-                   concert_id: this.props.concertId,
-                   caption: this.caption,
-                 },
-                 files: [
-                   {
-                     name: 'image',
-                     filename: data.split('/')[2] + '.JPG',
-                     filepath: data,
+               getAccessToken().then( access_token => {
+                 let PHOTO_POST_URL = PHOTO.POST_URL
+                   .replace('abcde', access_token)
+                   .replace('{concert_id}', this.props.concertId);
+                 let imageObj = {
+                   uploadUrl: PHOTO_POST_URL,
+                   method: 'POST',
+                   fields: {
+                     concert_id: this.props.concertId,
+                     caption: this.caption,
                    },
-                 ]
-               };
-               NativeModules.FileUpload.upload(imageObj, (err, result) => {
-                 console.log('flex the bottle', err, result);
-                 this.setState({
-                   isLoading: false,
+                   files: [
+                     {
+                       name: 'image',
+                       filename: data.split('/')[2] + '.JPG',
+                       filepath: data,
+                     },
+                   ]
+                 };
+                 NativeModules.FileUpload.upload(imageObj, (err, result) => {
+                   console.log('flex the bottle', err, result);
+                   this.setState({
+                     isLoading: false,
+                   });
+                   this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
                  });
-                 this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
-               });
+               } )
              }
            )
          },

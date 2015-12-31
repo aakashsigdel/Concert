@@ -13,6 +13,7 @@ import React, {
 import Loader from '../../components.ios/Loader';
 import HeaderBar from '../HeaderBar';
 import { REVIEW } from '../../constants/ApiUrls';
+import { getAccessToken } from '../../utils.js';
 
 const styles = require('./style.json');
 
@@ -72,6 +73,9 @@ export default class AddReview extends Component {
     if(this.comment.trim() === '') {
       alert('ERROR: Please Input Comment');
       return;
+    }else if( this.comment.trim().length <= 5){
+      alert('Comment too short!')
+      return;
     }
     this.setState({
       isLoading: true,
@@ -98,36 +102,39 @@ export default class AddReview extends Component {
          this.props.imageData.image.uri,
          transformData,
          (croppedImageURI) => {
-           console.log('inside editing manager');
-           CameraRoll.saveImageWithTag(
-             croppedImageURI,
-             (data) => {
-               let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
-               let imageObj = {
-                 uploadUrl: REVIEW_POST_URL,
-                 method: 'POST',
-                 fields: {
-                   concert_id: this.props.concertId,
-                   comment: this.comment,
-                   rating: this.state.yellowCount,
-                 },
-                 files: [
-                   {
-                     name: 'image',
-                     filename: data.split('/')[2],
-                     filepath: data,
+           getAccessToken()
+           .then( access_token => {
+             console.log('inside editing manager');
+             CameraRoll.saveImageWithTag(
+               croppedImageURI,
+               (data) => {
+                 let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
+                 let imageObj = {
+                   uploadUrl: REVIEW_POST_URL.replace('abcde', access_token),
+                   method: 'POST',
+                   fields: {
+                     concert_id: this.props.concertId,
+                     comment: this.comment,
+                     rating: this.state.yellowCount,
                    },
-                 ]
-               };
-               NativeModules.FileUpload.upload(imageObj, (err, result) => {
-                 console.log(result, 'posted by posted');
-                 this.setState({
-                   isLoading: false,
+                   files: [
+                     {
+                       name: 'image',
+                       filename: data.split('/')[2],
+                       filepath: data,
+                     },
+                   ]
+                 };
+                 NativeModules.FileUpload.upload(imageObj, (err, result) => {
+                   console.log(result, 'posted by posted');
+                   this.setState({
+                     isLoading: false,
+                   });
+                   this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
                  });
-                 this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
-               });
-             }
-           )
+               }
+             )
+           } )
          },
          () => undefined,
        );
