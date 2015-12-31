@@ -35,6 +35,7 @@ export default class Concert extends Component {
       this.setState({
         renderPlaceholder: false,
         concert: this.props.concert,
+        toggleAttending: this.props.toggleAttending,
       });
     })
   }
@@ -49,6 +50,13 @@ export default class Concert extends Component {
     );
   }
 
+  _renderPresentationalAttend(c){
+    console.log('was ', )
+    this.setState({
+      concert: Object.assign({}, this.state.concert, {checked_in: c})
+    })
+  }
+
   _attendConcert(){
     getAccessToken().then( access_token => {
       const url = CONCERTS.CHECKINURL
@@ -56,9 +64,10 @@ export default class Concert extends Component {
       .replace('abcde', access_token);
 
       console.log('before', this.state)
-      const params = {
-        checkin: this.state.concert.checked_in === 1 ? 0 : 1,
-      }
+      const params = { checkin: this.state.concert.checked_in === 1 ? 0 : 1 };
+
+      let c = this.state.concert.checked_in === 0? 1 : 0;
+      this._renderPresentationalAttend(c);
 
       fetch(
         url,
@@ -68,12 +77,13 @@ export default class Concert extends Component {
           body: serializeJSON(params)
         }
       ).then( res => {
-        const c = this.state.concert.checked_in === 0? 1 : 0;
-        this.setState({
-          concert: Object.assign({}, this.state.concert, {checked_in: c})
-        })
+        console.log(url, params, res);
+        this.props.toggleAttending(this.props.concertId, c);
+        if(!res.ok)
+          this._renderPresentationalAttend(c === 0? 1 : 0)
       })
       .catch((error) => {
+        this._renderPresentationalAttend(c === 0? 1 : 0)
         callOnFetchError(error);
       }).done();
     } )

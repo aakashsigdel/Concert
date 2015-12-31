@@ -77,6 +77,7 @@ class ConcertReview extends Component {
           <Concert
           navigator={navigator}
           concertId={route.concertId}
+          toggleAttending={route.toggleAttending}
           concert={route.concert}
           />
         );
