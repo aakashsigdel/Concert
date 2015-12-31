@@ -49,6 +49,8 @@ const PHOTOS = {
 const USER = {
   FOLLOW_URL: API_BASE + '/users/{user_id}/follow' + SUFFIX,
   UNFOLLOW_URL: API_BASE + '/users/{user_id}/un-follow' + SUFFIX,
+  FOLLOWING_URL: API_BASE + '/users/{user_id}/following' + SUFFIX,
+  FOLLOWED_BY_URL: API_BASE + '/users/{user_id}/followed-by' + SUFFIX,
   LOGIN_URL: API_BASE + '/auth/facebook',
   DETAIL_URL: API_BASE + '/users/me?access_token={access_token}',
   PHOTOS_URL: API_BASE + '/users/{user_id}/photos' + SUFFIX,

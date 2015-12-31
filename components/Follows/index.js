@@ -19,31 +19,24 @@ import {
 } from '../../utils.js';
 import { USER } from '../../constants/ApiUrls.js';
 
-
-const USERS_URL = `http://api.revuzeapp.com:80/api/v1/users/userId/following?access_token=abcde`;
 const styles = StyleSheet.create(require('./style.json'))
+const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1.following !== r2.following })
 
 export default class Follows extends Component {
   constructor() {
     super()
     this.state = {
       apiData: [],
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1.id !== row2.id || row1.following !== row2.following 
-      })
+      dataSource: ds.cloneWithRows([]),
     };
   }
 
   _fetchData() {
     getAccessToken().then( access_token =>{
-      let query_url = '';
-      if(this.props.type == 'followers')
-        query_url = USERS_URL.replace('following', 'followed-by')  ;
-      else
-        query_url = USERS_URL;
+      let query_url = (this.props.type === 'followers') ?  USER.FOLLOWED_BY_URL: USER.FOLLOWING_URL;
 
       query_url = query_url
-        .replace('userId', this.props.userId)
+        .replace('{user_id}', this.props.userId)
         .replace('abcde', access_token);
 
       fetch(query_url)
@@ -51,7 +44,7 @@ export default class Follows extends Component {
       .then((responseData) => {
         this.state.apiData = responseData.data;
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(this.state.apiData),
+          dataSource: ds.cloneWithRows(this.state.apiData),
         });
       })
       .catch((error) => {
@@ -69,37 +62,37 @@ export default class Follows extends Component {
   }
 
   _renderPresentationalFollow(id, shouldFollow){
-    console.log(this.state);
-    debugger;
     const refreshedData = this.state.apiData.map( user => {
-      if (user.id === id)
-        user.following = 0;
-        // user.following = shouldFollow ? 1 : 0;
-
+      if (user.id === id) user.following = shouldFollow ? 1 : 0;
       return user;
     })
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(refreshedData),
+      dataSource: ds.cloneWithRows(refreshedData),
     })
-    console.log(this.state);
   }
 
   _followPress ( id, shouldFollow ) {
     this._renderPresentationalFollow(id, shouldFollow);
-    return;
 
     getAccessToken().then( access_token => {
       let query = shouldFollow
-        ? USER.UNFOLLOW_URL.replace('{user_id}', id)
-        : USER.FOLLOW_URL.replace('{user_id}', id);
+        ? USER.FOLLOW_URL.replace('{user_id}', id)
+        : USER.UNFOLLOW_URL.replace('{user_id}', id);
 
-      fetch(query.replace('abcde', access_token), {method: 'POST'})
+      query = query.replace('abcde', access_token); 
+      fetch(query, {method: 'POST'})
+      .then(r => r.json())
       .then(response => {
         // console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
+        debugger;
+        if (! response.success)
+          this._renderPresentationalFollow(id, !shouldFollow)
       })
-      .done();
-    } )
-    
+      .catch( error => {
+        this._renderPresentationalFollow(id, !shouldFollow);
+        callOnFetchError(error, query);
+      }).done();
+    })
   }
 
   render () {
