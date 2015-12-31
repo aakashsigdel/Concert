@@ -17,18 +17,19 @@ import {
   callOnFetchError,
   getAccessToken,
 } from '../../utils.js';
-import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
+import { USER } from '../../constants/ApiUrls.js';
 
 
-const USERS_URL = `http://api.revuzeapp.com:80/api/v1/users/userId/following?access_token=${ACCESS_TOKEN}`;
+const USERS_URL = `http://api.revuzeapp.com:80/api/v1/users/userId/following?access_token=abcde`;
 const styles = StyleSheet.create(require('./style.json'))
 
 export default class Follows extends Component {
   constructor() {
     super()
     this.state = {
+      apiData: [],
       dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1.id !== row2.id
+        rowHasChanged: (row1, row2) => row1.id !== row2.id || row1.following !== row2.following 
       })
     };
   }
@@ -48,9 +49,9 @@ export default class Follows extends Component {
       fetch(query_url)
       .then((response) => response.json())
       .then((responseData) => {
+        this.state.apiData = responseData.data;
         this.setState({
-          apiData: responseData.data,
-          dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+          dataSource: this.state.dataSource.cloneWithRows(this.state.apiData),
         });
       })
       .catch((error) => {
@@ -65,6 +66,40 @@ export default class Follows extends Component {
 
   _handlePress(userId) {
     this.props.navigator.push({name: 'profile', index: 7, userId: userId});
+  }
+
+  _renderPresentationalFollow(id, shouldFollow){
+    console.log(this.state);
+    debugger;
+    const refreshedData = this.state.apiData.map( user => {
+      if (user.id === id)
+        user.following = 0;
+        // user.following = shouldFollow ? 1 : 0;
+
+      return user;
+    })
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(refreshedData),
+    })
+    console.log(this.state);
+  }
+
+  _followPress ( id, shouldFollow ) {
+    this._renderPresentationalFollow(id, shouldFollow);
+    return;
+
+    getAccessToken().then( access_token => {
+      let query = shouldFollow
+        ? USER.UNFOLLOW_URL.replace('{user_id}', id)
+        : USER.FOLLOW_URL.replace('{user_id}', id);
+
+      fetch(query.replace('abcde', access_token), {method: 'POST'})
+      .then(response => {
+        // console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
+      })
+      .done();
+    } )
+    
   }
 
   render () {
@@ -113,6 +148,7 @@ export default class Follows extends Component {
                   if (user.following === 1){
                     return(
                       <TouchableHighlight
+                        onPress={this._followPress.bind(this, user.id, false)}
                         style={[styles.button, styles.right]}>
                         <View
                           style={styles.displayAsRow}>
@@ -129,6 +165,7 @@ export default class Follows extends Component {
                       else {
                         return(
                           <TouchableHighlight
+                            onPress={this._followPress.bind(this, user.id, true)}
                             style={[styles.button, styles.follow, styles.right]}>
                             <View
                               style={styles.displayAsRow}>
