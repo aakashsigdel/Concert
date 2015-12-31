@@ -59,7 +59,6 @@ export default class Reviews extends Component {
       fetch(query)
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData);
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(responseData.data),
           isLoading: false,

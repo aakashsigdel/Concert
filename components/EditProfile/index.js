@@ -70,7 +70,6 @@ export default class EditProfile extends Component {
   }
 
   render(){
-    console.log('aakas ko lado', this.state.userData, this.props.userData);
     if ( this.state.renderPlaceholder )
       return (
         <View style={{flex: 1,

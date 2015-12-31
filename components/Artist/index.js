@@ -12,13 +12,18 @@ import Reviews from '../Reviews';
 import Concerts from '../Concerts';
 import InternalNavigation from '../InternalNavigation/';
 import FAB from '../FAB';
-import { PHOTOS, REVIEWS } from '../../constants/ApiUrls';
+import {
+  PHOTOS,
+  REVIEWS,
+  CONCERTS,
+} from '../../constants/ApiUrls';
 
 var viewConstants = {
 	photos: 'Photos',
 	reviews: 'Reviews',
 	concerts: 'Concerts'
 };
+
 export default class Artist extends Component {
 	constructor() {
 	  super();
@@ -74,6 +79,11 @@ export default class Artist extends Component {
           links={[
             {
               name: 'Add Review',
+              action: () => this.props.navigator.replace({
+                name: 'chooseConcert',
+                review: true,
+                fetchURL: CONCERTS.ARTIST_PAST_URL.replace('{artist_id}', this.props.artistId),
+              })
             },
             {
               name: 'Add Photo',

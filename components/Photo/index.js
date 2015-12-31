@@ -71,7 +71,16 @@ export default class Photo extends Component {
             ? responseData.data.concert.artist.name.slice(0, 15) + '...'
             : responseData.data.concert.artist.name;
             // es6 template strings FTW! :D
-            this.state.optionsForFAB = [{ name: `Go to ${artistName_truncated} page` }];
+            this.state.optionsForFAB = [
+              {
+                name: `Go to ${artistName_truncated} page`,
+                action: () => this.props.navigator.replace({
+                  name: 'artist',
+                  index: 6,
+                  artistId: responseData.data.concert.artist.id,
+                })
+              }
+            ];
 
             // if photo belongs to loggedIn user, 
             // we need to add additional actions to FAB
