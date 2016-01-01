@@ -192,7 +192,7 @@ class ConcertReview extends Component {
       case 'customAlert':
         return <CustomAlert
           navigator={navigator}
-          text={route.text}
+          params={route.params}
         />;
       case 'photoEditComment':
         return <PhotoEditComment

@@ -95,7 +95,12 @@ export default class Photo extends Component {
                   name: 'Delete',
                   action: () => this.props.navigator.replace({
                     name: 'customAlert',
-                    text: 'photo',
+                    params: {
+                      action :'DELETE',
+                      id: this.props.photoId,
+                      link: query,
+                      name: 'photo',
+                    },
                     sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
                   })
                 }

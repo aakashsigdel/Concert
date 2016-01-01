@@ -6,6 +6,7 @@ import React, {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { performAPIAction } from '../../utils.js'
 
 const styles = StyleSheet.create(require('./style.json'));
 
@@ -27,8 +28,9 @@ export default class CustomAlert extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigator.pop()
-                this.props.navigator.pop()
+                performAPIAction(this.props.params);
+                this.props.navigator.pop();
+                this.props.navigator.pop();
               }}
               style={styles.right}>
               <Text style={[styles.text, {
