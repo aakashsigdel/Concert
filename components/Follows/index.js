@@ -84,7 +84,6 @@ export default class Follows extends Component {
       .then(r => r.json())
       .then(response => {
         // console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
-        debugger;
         if (! response.success)
           this._renderPresentationalFollow(id, !shouldFollow)
       })

@@ -59,7 +59,6 @@ export default class Reviews extends Component {
       fetch(query)
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData, 'womaniya');
         if (responseData.data.length === 0)
           responseData.data = [{id: 0}];
         this.setState({
