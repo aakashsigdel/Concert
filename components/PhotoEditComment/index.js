@@ -33,6 +33,7 @@ export default class PhotoEditComment extends Component {
     })
     .then(response => response.json())
     .then(responseData => {
+      this.props.navigator.pop();
       this.props.navigator.replace({name: 'photo', photoId: this.props.photoId})
     })
     .catch(error => {
