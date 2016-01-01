@@ -4,6 +4,10 @@
     backgroundColor: '#1a1a1a',
   },
 
+  lightBackground: {
+    backgroundColor: '#222222',
+  },
+
   listItem: {
     flex: 1,
     backgroundColor: 'transparent',
