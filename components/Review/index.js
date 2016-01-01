@@ -95,9 +95,13 @@ export default class Review extends Component {
               {
                 name: 'Edit',
                 action: () => this.props.navigator.replace({
-                  name: 'addReview',
-                  edit: true,
+                  name: 'editReview',
                   concert_id: this.state.review.concert.id,
+                  params: {
+                    action: 'PUT',
+                    review: res.data,
+                    url: url,
+                  },
                 })
               },
               {

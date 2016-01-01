@@ -23,6 +23,7 @@ import Concert from './components/Concert';
 import Concerts from './components/Concerts';
 import CustomAlert from './components/CustomAlert';
 import EditProfile from './components/EditProfile';
+import EditReview from './components/EditReview';
 import FancyMessageBar from './components/FancyMessageBar';
 import Follows from './components/Follows';
 import Header from './components/Header';
@@ -163,6 +164,13 @@ class ConcertReview extends Component {
         return <AddReview 
           navigator={navigator}
           concertId={route.concertId}
+          imageData={route.imageData}
+        />;
+      case 'editReview':
+        return <EditReview 
+          navigator={navigator}
+          concertId={route.concertId}
+          params={route.params}
           imageData={route.imageData}
         />;
       case 'camera':
