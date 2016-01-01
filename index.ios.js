@@ -10,34 +10,34 @@ import {
   Text,
   View,
 } from 'react-native';
+import Events from 'react-native-simple-events';
+import ActionScreen from './components/ActionScreen';
+import AddReview from './components/AddReview';
+import Artist from './components/Artist';
+import BlankLoader from './components/BlankLoader';
+import ButtonsScreen from './components/ButtonScreen';
+import CameraConfirmation from './components/CameraConfirmation';
+import CameraRollPhotos from './components/CameraRollPhotos';
+import ChooseConcert from './components/ChooseConcert';
+import Concert from './components/Concert';
+import Concerts from './components/Concerts';
+import CustomAlert from './components/CustomAlert';
+import EditProfile from './components/EditProfile';
+import FancyMessageBar from './components/FancyMessageBar';
+import Follows from './components/Follows';
 import Header from './components/Header';
+import Home from './components/Home';
 import InternalNavigation from './components/InternalNavigation';
+import Intro from './components/Intro';
+import Photo from './components/Photo';
+import PhotoAddComment from './components/PhotoAddComment';
+import PhotoEditComment from './components/PhotoEditComment';
 import Photos from './components/Photos';
+import ProfileContainer from './components/ProfileContainer';
 import Review from './components/Review';
 import Reviews from './components/Reviews';
-import Concerts from './components/Concerts';
-import Home from './components/Home';
 import SearchActive from './components/SearchActive';
-import Artist from './components/Artist';
-import Intro from './components/Intro';
-import Concert from './components/Concert';
-import ChooseConcert from './components/ChooseConcert';
-import ProfileContainer from './components/ProfileContainer';
-import Photo from './components/Photo';
-import Follows from './components/Follows';
-import ButtonsScreen from './components/ButtonScreen';
-import AddReview from './components/AddReview';
-import PhotoAddComment from './components/PhotoAddComment';
-import ActionScreen from './components/ActionScreen';
 import UserCamera from './components/UserCamera';
-import CameraConfirmation from './components/CameraConfirmation';
-import EditProfile from './components/EditProfile';
-import CustomAlert from './components/CustomAlert';
-import PhotoEditComment from './components/PhotoEditComment';
-import BlankLoader from './components/BlankLoader';
-import CameraRollPhotos from './components/CameraRollPhotos';
-import Events from 'react-native-simple-events';
-import FancyMessageBar from './components/FancyMessageBar';
 
 class ConcertReview extends Component {
 	constructor() {

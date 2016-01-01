@@ -8,6 +8,7 @@ const USER_DETAILS = '@Revuze:userDetails';
 
 const ARTISTS ={
   SEARCH_ARTISTS_URL : API_BASE + '/artists/search' + SUFFIX + '&name={search_query}',
+  ARTIST_DETAIL_URL: API_BASE + '/artists/{artist_id}' + SUFFIX,
 }
 
 const CONCERT = {
@@ -34,6 +35,7 @@ const REVIEWS = {
   LATEST_URL: API_BASE + '/reviews/latest' + SUFFIX,
   CONCERT_URL: API_BASE + '/concerts/{concert_id}/reviews' + SUFFIX,
   USER_URL: API_BASE + '/users/{user_id}/reviews' + SUFFIX,
+  ARTIST_URL: API_BASE + '/artists/{artist_id}/reviews' + SUFFIX,
 }
 
 const PHOTO = {
@@ -43,7 +45,8 @@ const PHOTO = {
 const PHOTOS = {
   LIKEURL: API_BASE + '/photos/{photo_id}/likes' + SUFFIX,
   LATEST_URL: API_BASE + '/photos/latest' + SUFFIX,
-  GET_PHOTO_URL: API_BASE+ '/photos/{photo_id}' + SUFFIX,
+  GET_PHOTO_URL: API_BASE + '/photos/{photo_id}' + SUFFIX,
+  ARTIST_URL: API_BASE + '/artists/{artist_id}/photos' + SUFFIX,
 };
 
 const USER = {

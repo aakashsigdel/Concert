@@ -16,11 +16,8 @@ import {
   callOnFetchError,
   getAccessToken,
 } from '../../utils.js';
-import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
 
-var QUERY_URL = `http://api.revuzeapp.com:80/api/v1/concerts/concert_id?access_token=${ACCESS_TOKEN}`;
-var navBtn = "http://aakashsigdel.github.io/Concert/navBtn.png";
-var shareBtn = "http://aakashsigdel.github.io/Concert/share.png";
+let QUERY_URL = `http://api.revuzeapp.com:80/api/v1/concerts/concert_id?access_token=abcde`;
 export default class Header extends Component {
 	constructor() {
 		super();

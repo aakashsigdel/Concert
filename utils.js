@@ -12,7 +12,7 @@ export const serializeJSON = ( json ) => {
 }
 
 export const callOnFetchError = (error, url="not specified") => {
-  Events.trigger('Ready', {message: 'My Error Message'});
+  Events.trigger('Ready', {message: 'NETWORK ERROR! Limited or no internet connection.'});
   try {
     console.log('FETCH ERROR! url -> ', url, error);
   } catch (error) {

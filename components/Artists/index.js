@@ -54,7 +54,7 @@ export default class Artists extends Component {
         });
       })
       .catch((error) => {
-        callOnFetchError(error);
+        callOnFetchError(error, query);
       }).done();
     });
   }

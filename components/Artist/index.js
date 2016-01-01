@@ -3,34 +3,87 @@
 import React from 'react-native';
 import {
   Component,
-  StyleSheet,
   View,
+  Image,
+  Text,
+  InteractionManager,
 } from 'react-native';
-import Header from '../Header';
 import Photos from '../Photos';
 import Reviews from '../Reviews';
+import Loader from '../../components.ios/Loader';
 import Concerts from '../Concerts';
+import HeaderBar from '../HeaderBar';
 import InternalNavigation from '../InternalNavigation/';
 import FAB from '../FAB';
 import {
   PHOTOS,
   REVIEWS,
   CONCERTS,
+  ARTISTS,
 } from '../../constants/ApiUrls';
-
-var viewConstants = {
-	photos: 'Photos',
-	reviews: 'Reviews',
-	concerts: 'Concerts'
-};
+import {
+  getAccessToken,
+  callOnFetchError,
+} from '../../utils';
+import styles from './style.js';
 
 export default class Artist extends Component {
-	constructor() {
-	  super();
-	  this.state = {
-      activeView: viewConstants.photos
-	  };
-	}
+  constructor() {
+    super();
+
+    this.state = {
+      activeView:  'Photos',
+      artist: null, 
+      renderPlaceHolder: true,
+    };
+
+    this.optionsForFAB =[
+      {
+        name: 'Add Review',
+        action: () => this.props.navigator.replace({
+          name: 'chooseConcert',
+          review: true,
+          fetchURL: CONCERTS.ARTIST_PAST_URL.replace('{artist_id}', this.props.artistId),
+        })
+      },
+      {
+        name: 'Add Photo',
+        action: () => this.props.navigator.replace({
+          name: 'chooseConcert',
+          fetchURL: CONCERTS.ARTIST_PAST_URL.replace('{artist_id}', this.props.artistId),
+        })
+      },
+    ]
+  }
+
+  componentDidMount(){
+    InteractionManager.runAfterInteractions(_ => {
+      this._fetchData();
+    })
+  }
+
+  _fetchData(){
+    getAccessToken()
+    .then(access_token => {
+      const url = ARTISTS.ARTIST_DETAIL_URL
+      .replace('{artist_id}', this.props.artistId)
+      .replace('abcde', access_token);
+
+      fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        console.log('artist detail', res);
+        this.setState({
+          renderPlaceHolder: false,
+          artist: res.data,
+        });
+      })
+      .catch(error => {
+        callOnFetchError(error, url);
+      }).done();
+    })
+
+  }
 
 	setActiveView(view) {
 		this.setState({
@@ -39,60 +92,79 @@ export default class Artist extends Component {
 	}
 
   render() {
-		 return(
+    if (this.state.renderPlaceHolder)
+      return <Loader />
+    return(
 			<View style={styles.mainContainer}>
-				<Header
-				navigator={this.props.navigator}
-        concertId={this.props.concertId || 12}
-				/>
+        <HeaderBar
+          left={require('../../assets/images/backIcon.png')}
+          clickableLeft={true}
+          clickFunctionLeft={ _=> this.props.navigator.pop()}
+          mid={this.state.artist.name}
+          clickableRight={true}
+          right={require('../../assets/images/shareAlt.png')}
+        />
+
+        <View>
+          <Image
+            source={{uri: this.state.artist.image.original}}
+            style={styles.image}
+          />
+          <View style={styles.descPanel}>
+            <Text style={styles.descText}>
+              {
+                'Last Played at ' 
+                + this.state.artist.last_played.location 
+                + ' • '
+                + this.state.artist.last_played.time.split(',')[0]
+                + ' ago.'
+              }
+            </Text>
+            <View style={styles.ratingBox}>
+              <Text style={styles.ratingNum}>
+                {Number(this.state.artist.last_played.rating || 0).toFixed(1)}
+              </Text>
+              <Text style={styles.star}>★</Text>
+            </View>
+          </View>
+        </View>
+
 				<InternalNavigation 
 					setActiveView={this.setActiveView.bind(this)} 
 					activeView={this.state.activeView} />
 				{
 					(() => {
 						switch(this.state.activeView) {
-							case viewConstants.photos: 
-								return <Photos 
+              case 'Photos':
+                return <Photos 
                   navigator={this.props.navigator}
                   concertId={this.props.concertId}
-                  fetchURL={PHOTOS.LATEST_URL}
-								  />
-							case viewConstants.reviews:
-								return <Reviews 
+                  fetchURL={PHOTOS.ARTIST_URL.replace('{artist_id}', this.props.artistId)}
+                />;
+              case 'Reviews':
+                return <Reviews 
                   navigator={this.props.navigator}
                   concertId={this.props.concertId}
-                  fetchURL={REVIEWS.USER_URL.replace('{user_id}', this.props.userId)}
-                  />
-							case viewConstants.concerts:
+                  fetchURL={REVIEWS.ARTIST_URL.replace('{artist_id}', this.props.artistId)}
+                />;
+              case 'Concerts':
                 return <Concerts 
-                  fetchURL={CONCERTS.ARTIST_UPCOMING_URL.replace('{artist_id}',
-                                                                 this.props.artistId )}
                   calanderHeader={true}
                   navigator={this.props.navigator}
-                />
+                  fetchURL={
+                    CONCERTS.ARTIST_UPCOMING_URL
+                    .replace('{artist_id}', this.props.artistId )}
+                />;
 						}
 					})()
 				}
 
         <FAB 
           navigator={this.props.navigator}
-          links={[
-            {
-              name: 'Add Review',
-              action: () => this.props.navigator.replace({
-                name: 'chooseConcert',
-                review: true,
-                fetchURL: CONCERTS.ARTIST_PAST_URL.replace('{artist_id}', this.props.artistId),
-              })
-            },
-            {
-              name: 'Add Photo',
-            },
-          ]}
+          links={this.optionsForFAB}
         />
 			</View>
 		);
   }
 }
 
-var styles = StyleSheet.create(require('./style.json'));
