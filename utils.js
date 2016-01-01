@@ -16,12 +16,6 @@ export const serializeJSON = ( json ) => {
 
 export const callOnFetchError = (error, url="not specified") => {
   Events.trigger('Ready', {message: 'Limited or no internet connection.'});
-  try {
-    console.log('FETCH ERROR! url -> ', url, error);
-  } catch (error) {
-    console.log(error, 'utils error');
-    throw error;
-  }
 }
 
 export const refreshUserDataOnAsyncStorage = async() => {
@@ -42,45 +36,36 @@ export const getUserDetailsFromAsyncStorage = async ( refresh = false ) => {
    * (and reset `userDetailsFromAsyncStorage`) with data from API
   */
   // if (refresh) refreshUserDataOnAsyncStorage();
-  console.log('called');
   try {
     return await AsyncStorage.getItem(USER_DETAILS)
     .then(userDetails => {
-      console.log(' sending... ', userDetails)
       return JSON.parse(userDetails);
     });
   } catch (error) {
-    console.log('error in utilsjs', error)
     return 'there was an error fetching from asyncstorage';
   }
 }
 
 export const getAccessToken = async () => {
-  console.log( 'getAccessToken called.. ' );
   try {
    return await AsyncStorage.getItem(LOGIN_DETAILS)
     .then(loginDetails => {
-      console.log('login details in utils.js', JSON.parse(loginDetails).access_token);
       return JSON.parse(loginDetails).access_token;
     })
   }catch(e){
-    console.log('error in utilsjs.there was an error fetching login details from asyncstorage', error)
     return 'there was an error fetching login details from asyncstorage';
   }
 }
 
 export const performAPIAction = (params) => {
-  console.log(params);
   try{
     fetch( params.link, { method: params.action})
     .then(response => {
-      debugger;
       console.log(response);
     }).catch(e => {
-      debugger;
       callOnFetchError(e, params.link);
     }).done();
   }catch(e){
-    console.log('error on performAPIAction', e);
+    Events.trigger('Ready', {message: 'Limited or no internet connection.'});
   }
 }

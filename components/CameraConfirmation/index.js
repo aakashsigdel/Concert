@@ -38,7 +38,6 @@ export default class CameraConfirmation extends Component {
   }
 
   render () {
-    console.log('props is the drops', this.props.imageData);
     return (
       <View style={styles.container}>
         <Image 

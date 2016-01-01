@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 
 const VIEWPORT = Dimensions.get('window');
-console.log(VIEWPORT.height);
 const HEADERBAR_HEIGHT = 0.096 * VIEWPORT.height;
 
 let styles = {

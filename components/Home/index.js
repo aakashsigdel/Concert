@@ -38,19 +38,16 @@ export default class Home extends Component {
 
   componentDidMount () {
     InteractionManager.runAfterInteractions( async () => {
-      console.log('k ho ta userdetail', this.userDetails);
       await (async () => {
         try {
           await AsyncStorage.getItem(USER_DETAILS)
           .then(userDetails => {
-            console.log('khassai ta kehi hoina', userDetails);
             this.userDetails = JSON.parse(userDetails);
             this.setState({
               renderPlaceholder: false,
             });
           });
         } catch (error) {
-          console.log('lau aayo aayo error', error)
           this.props.navigator.replace({name: 'login'});
         }
       })();

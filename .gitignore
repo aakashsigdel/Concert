@@ -33,3 +33,6 @@ local.properties
 node_modules/
 npm-debug.log
 *.swp
+
+# add appdelegate.m remove when required
+ios/ConcertReview/AppDelegate.m

@@ -3,10 +3,11 @@
 import React from 'react-native';
 import {
   Component,
-  View,
   Image,
-  Text,
   InteractionManager,
+  NativeModules,
+  Text,
+  View,
 } from 'react-native';
 import Photos from '../Photos';
 import Reviews from '../Reviews';
@@ -26,6 +27,8 @@ import {
   callOnFetchError,
 } from '../../utils';
 import styles from './style.js';
+
+const Share = NativeModules.KDSocialShare;
 
 export default class Artist extends Component {
   constructor() {
@@ -62,6 +65,21 @@ export default class Artist extends Component {
     })
   }
 
+	_sharePhoto () {
+	  this.setState({
+      isLoading: true,
+    });
+
+	  Share.shareOnFacebook({
+      'imagelink': this.state.artist.image.original,
+    },
+    (result) => {
+      this.setState({
+        isLoading: false,
+      });
+    });
+  }
+
   _fetchData(){
     getAccessToken()
     .then(access_token => {
@@ -72,7 +90,6 @@ export default class Artist extends Component {
       fetch(url)
       .then(raw => raw.json())
       .then(res => {
-          console.log('artist detail', res);
         if(res.meta.status === 200){
           this.setState({
             renderPlaceHolder: false,
@@ -140,6 +157,11 @@ export default class Artist extends Component {
           mid={this.state.artist.name}
           clickableRight={true}
           right={require('../../assets/images/shareAlt.png')}
+          clickFunctionRight={
+            _ => {
+              this._sharePhoto();
+            }
+          }
         />
 
 				{

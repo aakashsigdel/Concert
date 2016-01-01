@@ -9,6 +9,7 @@ import React, {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Events from 'react-native-simple-events';
 import HeaderBar from '../HeaderBar';
 import styles from './style';
 
@@ -36,19 +37,19 @@ export default class CameraRollPhotos extends Component {
     CameraRoll.getPhotos(
       {first: this.props.batchSize},
       (data) => {
-        console.log(data);
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(data.edges),
         });
       },
       (error) => {
-        console.log(error);
+          Events.trigger('Ready', {
+            message: 'Couldn\'t get photos!',
+          });
       },
     );
   }
 
   _selectPhoto (edge) {
-    console.log(edge);
     this.props.navigator.push({
       name: 'addReview',
       imageData: edge.node,
@@ -58,7 +59,6 @@ export default class CameraRollPhotos extends Component {
   }
 
   _renderPhotosRow (edge) {
-    console.log('renderPhotosRow', edge);
     return (
       <TouchableOpacity style={styles.rowContainer}
         activeOpacity={0.7}

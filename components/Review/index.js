@@ -60,7 +60,6 @@ export default class Review extends Component {
       const url = REVIEW.DETAILURL
         .replace('{review_id}', this.props.id)
         .replace('abcde', access_token);
-      console.log(url);
       getUserDetailsFromAsyncStorage()
       .then( res =>{
         this.state.loggedInUserDetail = res;
@@ -132,7 +131,6 @@ export default class Review extends Component {
               : require('../../assets/images/liked.png'),
           })
         })
-        .then(_=> console.log('got data', this.state))
         .catch((error) => {
           callOnFetchError(error, url);
         }).done();
@@ -173,7 +171,6 @@ export default class Review extends Component {
       // action == 0 -> unlike
       // action == 1 -> like
       const action = this.state.isLiked ? '0': '1';
-      debugger;
 
       const url = REVIEW.LIKEURL.replace(
         '{review_id}',
@@ -183,7 +180,6 @@ export default class Review extends Component {
 
       this._renderPresentationalToggleLike(action);
 
-      console.log(action, url)
       fetch(url, {
         method: 'POST',
         body: serializeJSON({
@@ -194,7 +190,6 @@ export default class Review extends Component {
         if (!res.ok)
           this._renderPresentationalToggleLike(action === '0'? '1': '0')
       })
-      .then(_=> console.log('state', this.state))
       .catch((error) => {
         callOnFetchError(error, url);
         this._renderPresentationalToggleLike(action === '0'? '1': '0')
@@ -289,11 +284,6 @@ export default class Review extends Component {
             <Image
               style={comment.starImage}
               source={this.state.review.userPic}
-
-              onError={_=> {
-                console.log('error getting image', _);
-                console.log('url-=> ', this.state.review.userPic);
-              }}
             />
             <View style={comment.headerText}>
               <Text style={comment.whiteText} > {this.state.review.user.full_name}</Text>

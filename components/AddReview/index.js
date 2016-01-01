@@ -105,7 +105,6 @@ export default class AddReview extends Component {
          (croppedImageURI) => {
            getAccessToken()
            .then( access_token => {
-             console.log('inside editing manager');
              CameraRoll.saveImageWithTag(
                croppedImageURI,
                (data) => {
@@ -127,11 +126,13 @@ export default class AddReview extends Component {
                    ]
                  };
                  NativeModules.FileUpload.upload(imageObj, (err, result) => {
-                   console.log(result, 'posted by posted');
                    this.setState({
                      isLoading: false,
                    });
-                   this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
+                   this.props.navigator.immediatelyResetRouteStack([
+                     {name: 'home'},
+                     {name: 'review', review_id: JSON.parse(result.data).id}
+                   ]);
                  });
                }
              )
@@ -140,28 +141,35 @@ export default class AddReview extends Component {
          () => undefined,
        );
     } else {
-      let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
-      let imageObj = {
-        uploadUrl: REVIEW_POST_URL,
-        method: 'POST',
-        fields: {
-          concert_id: this.props.concertId,
-          comment: this.comment,
-          rating: this.state.yellowCount,
-        },
-      };
-      NativeModules.FileUpload.upload(imageObj, (err, result) => {
-        console.log(result, 'posted by posted');
-        this.setState({
-          isLoading: false,
+      getAccessToken()
+      .then( access_token => {
+        let REVIEW_POST_URL = REVIEW.ADD_URL
+          .replace('abcde', access_token)
+          .replace('{concert_id}', this.props.concertId);
+        let imageObj = {
+          uploadUrl: REVIEW_POST_URL,
+          method: 'POST',
+          fields: {
+            concert_id: this.props.concertId,
+            comment: this.comment,
+            rating: this.state.yellowCount,
+          },
+        };
+        NativeModules.FileUpload.upload(imageObj, (err, result) => {
+          this.setState({
+            isLoading: false,
+          });
+          Events.trigger('Ready', {
+            message: 'Review Posted',
+            viewStyle: {backgroundColor: '#F9B400'}
+          });
+          this.props.navigator.immediatelyResetRouteStack([
+            {name: 'home'},
+            {name: 'review', review_id: JSON.parse(result.data).id}
+          ]);
         });
-        Events.trigger('Ready', {
-          message: 'Review Posted',
-          viewStyle: {backgroundColor: '#F9B400'}
-        });
-        this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
-      });
 
+      } )
     }
     
   }

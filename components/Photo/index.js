@@ -65,8 +65,6 @@ export default class Photo extends Component {
         fetch(query)
         .then((response) => response.json())
         .then((responseData) => {
-          console.log('photo res data', responseData);
-
           const artistName_truncated = responseData.data.concert.artist.name.trim().length > 15
             ? responseData.data.concert.artist.name.slice(0, 15) + '...'
             : responseData.data.concert.artist.name;
@@ -89,7 +87,13 @@ export default class Photo extends Component {
                 ...this.state.optionsForFAB,
                 {
                   name: 'Edit',
-                  action: () => this.props.navigator.push({name: 'photoEditComment', index: 52}),
+                  action: () => this.props.navigator.push({
+                    name: 'photoEditComment',
+                    index: 52,
+                    fetchURL: query,
+                    photoId: this.props.photoId,
+                    caption: this.state.photoDetail.caption,
+                  }),
                 },
                 {
                   name: 'Delete',
@@ -159,7 +163,6 @@ export default class Photo extends Component {
   }
 
   _renderPresentationalToggleLike(action){
-    console.log('called..');
     this.setState({
       isLiked: !this.state.isLiked,
 
@@ -183,7 +186,6 @@ export default class Photo extends Component {
         .replace( '{photo_id}', this.state.photoDetail.id)
         .replace( 'abcde', access_token );
 
-      console.log(action, url);
       this._renderPresentationalToggleLike(action);
 
       fetch( url, { 
@@ -192,12 +194,10 @@ export default class Photo extends Component {
           like: action
         })
       }).then(res => {
-        console.log('res-.;adfj', res);
         if (!res.ok)
           this._renderPresentationalToggleLike(action === '0'? '1': '0')
           
       })
-      .then(_=> console.log('state', this.state))
       .catch((error) => {
         this._renderPresentationalToggleLike(action === '0'? '1': '0')
         callOnFetchError(error, url);

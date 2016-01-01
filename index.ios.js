@@ -138,6 +138,7 @@ class ConcertReview extends Component {
           navigator={navigator}
           type={route.type}
           userId={route.userId}
+          userName={route.userName}
           />
         );
       case 'artist':
@@ -204,6 +205,9 @@ class ConcertReview extends Component {
         />;
       case 'photoEditComment':
         return <PhotoEditComment
+          fetchURL={route.fetchURL}
+          photoId={route.photoId}
+          caption={route.caption}
           navigator={navigator}
         />
       case 'blankLoader':
@@ -239,7 +243,6 @@ class ConcertReview extends Component {
           }}
         />
         {(() => {
-          console.log(this.state.showFancy);
           if (this.state.showFancy.status)
             return <FancyMessageBar
               message={this.state.showFancy.message}

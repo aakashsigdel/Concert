@@ -87,7 +87,6 @@ export default class ProfileContainer extends Component {
       fetch(url)
       .then ((response) => response.json())
       .then ((responseData) => {
-        console.log(responseData.data, 'data ko lata');
         this.setState ({
           bio: responseData.data.bio,
           followersNum: responseData.data.followers_count,
@@ -110,7 +109,13 @@ export default class ProfileContainer extends Component {
   }
 
   _handlePress(type, userId=1) {
-    this.props.navigator.push({name: 'follows', index: 8, type: type, userId: userId});
+    this.props.navigator.replace({
+      name: 'follows',
+      index: 8,
+      type: type,
+      userId: userId,
+      userName: this.props.userName,
+    });
   }
 
   _renderPlaceholder () {
@@ -121,13 +126,11 @@ export default class ProfileContainer extends Component {
 
   _followPress () {
     getAccessToken().then( access_token => {
-      console.log(this.state.following);
       let query = '';
       if(this.state.following === 1)
         query = USER.UNFOLLOW_URL.replace('{user_id}', this.state.userId);
       else
         query = USER.FOLLOW_URL.replace('{user_id}', this.state.userId);
-      console.log(query);
 
       fetch(query.replace('abcde', access_token), {method: 'POST'})
       .then(response => {
@@ -136,7 +139,6 @@ export default class ProfileContainer extends Component {
           followersNum: this.state.following === 0 ? 
             this.state.followersNum + 1 : this.state.followersNum - 1
         });
-        console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
       })
       .done();
     } )
@@ -231,7 +233,6 @@ export default class ProfileContainer extends Component {
   }
 
   render () {
-    console.log(this.state.following);
     if(this.state.renderPlaceholder)
       return this._renderPlaceholder();
     return (

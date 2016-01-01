@@ -30,7 +30,7 @@ export default class SearchActive extends Component {
     super()
     this.navigator = null;
     this.state = {
-      filterText : 'abc',
+      filterText : '',
       activeView: 'reviews',
     };
   }

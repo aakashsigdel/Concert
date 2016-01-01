@@ -49,7 +49,6 @@ export default class PhotoAddComment extends Component {
       this.props.imageData.image.uri,
       transformData,
       (croppedImageURI) => {
-        console.log('inside editing manager');
         CameraRoll.saveImageWithTag(
           croppedImageURI,
         )
@@ -86,7 +85,6 @@ export default class PhotoAddComment extends Component {
          this.props.imageData.image.uri,
          transformData,
          (croppedImageURI) => {
-           console.log('inside editing manager');
            CameraRoll.saveImageWithTag(
              croppedImageURI,
              (data) => {
@@ -110,7 +108,6 @@ export default class PhotoAddComment extends Component {
                    ]
                  };
                  NativeModules.FileUpload.upload(imageObj, (err, result) => {
-                   console.log('flex the bottle', err, result);
                    this.setState({
                      isLoading: false,
                    });
@@ -118,7 +115,11 @@ export default class PhotoAddComment extends Component {
                      message: 'Photo Posted',
                      viewStyle: {backgroundColor: '#F9B400'}
                    });
-                   this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
+                   let resultData = JSON.parse(result.data);
+                   this.props.navigator.immediatelyResetRouteStack([
+                     {name: 'home'},
+                     {name: 'photo', photoId: resultData.data.id}
+                   ]);
                  });
                } )
              }

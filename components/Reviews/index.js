@@ -52,7 +52,6 @@ export default class Reviews extends Component {
 
   _fetchData() {
     getAccessToken().then( access_token =>{
-      console.log(this.props.fetchURL);
       let query = this.props.fetchURL
         .replace('abcde', access_token);
 
@@ -74,7 +73,6 @@ export default class Reviews extends Component {
   }
 
   _toggleAttending(id){
-    console.log(this.state.responseData);
     this.state.responseData.data.filter(item => item.id === id)
   }
 
