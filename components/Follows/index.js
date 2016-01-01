@@ -84,7 +84,6 @@ export default class Follows extends Component {
       .then(r => r.json())
       .then(response => {
         // console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
-        debugger;
         if (! response.success)
           this._renderPresentationalFollow(id, !shouldFollow)
       })
@@ -102,7 +101,11 @@ export default class Follows extends Component {
           left={require('../../assets/images/backIcon@2x.png')}
           mid={this.props.type.toUpperCase()}
           clickableLeft={true}
-          clickFunctionLeft={() => this.props.navigator.jumpBack()}
+          clickFunctionLeft={() => this.props.navigator.replace({
+            name: 'profile',
+            userId: this.props.userId,
+            userName: this.props.userName,
+          })}
         />
         <ListView
           style={styles.listView}

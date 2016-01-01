@@ -137,6 +137,7 @@ class ConcertReview extends Component {
           navigator={navigator}
           type={route.type}
           userId={route.userId}
+          userName={route.userName}
           />
         );
       case 'artist':

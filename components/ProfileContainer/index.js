@@ -110,7 +110,14 @@ export default class ProfileContainer extends Component {
   }
 
   _handlePress(type, userId=1) {
-    this.props.navigator.push({name: 'follows', index: 8, type: type, userId: userId});
+    console.log(this.props.userName, 'chamcha');
+    this.props.navigator.replace({
+      name: 'follows',
+      index: 8,
+      type: type,
+      userId: userId,
+      userName: this.props.userName,
+    });
   }
 
   _renderPlaceholder () {
