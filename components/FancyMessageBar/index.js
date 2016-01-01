@@ -56,6 +56,7 @@ export default class FancyMessageBar extends Component {
   render () {
     return (
       <View style={[
+          styles.container,
           this.props.viewStyle, 
           {
             width: this.state.width,
@@ -63,6 +64,7 @@ export default class FancyMessageBar extends Component {
           }
         ]}>
         <Text style={[
+          styles.text,
           this.props.messageStyle,
           {height: this.state.textHeight}
         ]}>
@@ -88,6 +90,6 @@ FancyMessageBar.propTypes = {
 
 FancyMessageBar.defaultProps = {
   message: 'ERROR',
-  viewStyle: styles.container,
-  messageStyle: styles.text,
+  viewStyle: undefined,
+  messageStyle: undefined,
 };

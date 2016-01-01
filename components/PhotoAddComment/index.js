@@ -114,7 +114,10 @@ export default class PhotoAddComment extends Component {
                    this.setState({
                      isLoading: false,
                    });
-                   Events.trigger('Ready', {message: 'Photo Posted'});
+                   Events.trigger('Ready', {
+                     message: 'Photo Posted',
+                     viewStyle: {backgroundColor: '#F9B400'}
+                   });
                    this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
                  });
                } )
@@ -127,7 +130,9 @@ export default class PhotoAddComment extends Component {
 
   render () {
     if (this.state.isLoading)
-      return <Loader />;
+      return <Loader
+        loadingMessage="Posting Photo..."
+      />;
     return (
       <View style={styles.container}>
         <HeaderBar
