@@ -15,6 +15,7 @@ export default styles = StyleSheet.create({
 		position: 'absolute',
 		flexDirection: 'row',
 		alignItems: 'center',
+    width: VIEWPORT.width,
 		backgroundColor: 'rgba(0, 0, 0, 0.5)',
 		left: 0,
 		right: 0,
@@ -38,7 +39,6 @@ export default styles = StyleSheet.create({
 		marginRight: 10,
 		borderRadius: 10,
 		backgroundColor: 'white',
-		flex: 1,
 	},
   star: {
     marginTop: -2,
