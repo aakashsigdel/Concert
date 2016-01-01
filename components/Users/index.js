@@ -21,6 +21,7 @@ const USERS_URL = 'http://api.revuzeapp.com:80/api/v1/users/1/following?access_t
 export default class Users extends Component {
   constructor() {
     super();
+    this.count = 0;
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1.id !== row2.id
@@ -73,9 +74,15 @@ export default class Users extends Component {
   }
 
   _renderRow (rowData) {
+    let backgroundStyle = null;
+    if(this.count % 2 === 0)
+      backgroundStyle = styles.lightBackground;
+
+    this.count += 1;
     return(
       <TouchableHighlight
       onPress={this._handelGlobalNavPress.bind(this, 'profile', 3, rowData.id, rowData.full_name)}
+      style={backgroundStyle}
       >
         <View style={styles.listItem}>
           <Image

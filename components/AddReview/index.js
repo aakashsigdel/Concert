@@ -155,7 +155,10 @@ export default class AddReview extends Component {
         this.setState({
           isLoading: false,
         });
-        Events.trigger('Ready', {message: 'Review Posted'});
+        Events.trigger('Ready', {
+          message: 'Review Posted',
+          viewStyle: {backgroundColor: '#F9B400'}
+        });
         this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
       });
 
@@ -165,7 +168,9 @@ export default class AddReview extends Component {
 
   render(){
     if (this.state.isLoading)
-      return <Loader />;
+      return <Loader
+        loadingMessage="Posting Review..."
+      />;
     return(
       <View style={styles.container}>
         <HeaderBar

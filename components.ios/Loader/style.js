@@ -1,4 +1,6 @@
-{
+import { StyleSheet } from 'react-native';
+
+let styles = {
 	loadingContainer: {
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -8,4 +10,6 @@
 	loadingText: {
 		color: 'white'
 	},
-}
+};
+
+export default styles = StyleSheet.create(styles);

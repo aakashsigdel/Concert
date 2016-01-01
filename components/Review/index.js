@@ -40,6 +40,7 @@ export default class Review extends Component {
   constructor() {
     super();
     this.state = {
+      isLoading: true,
       renderPlaceholderOnly: true,
       loggedInUserDetail: null,
       isLoading: false,
@@ -113,6 +114,7 @@ export default class Review extends Component {
 
           this.setState({
             renderPlaceholderOnly: false,
+            isLoading: false,
             review: res.data,
             isLiked: (res.data.liked === 0)? false : true,
             total_likes: res.data.total_likes,
@@ -231,7 +233,6 @@ export default class Review extends Component {
   _renderPlaceholder() {
     return (
       <View style={{flex:1, backgroundColor: 'black', alignItems: 'center', justifyContent:'center'}}>
-        <Text style={{color: 'lightgray'}}> Loading.. </Text>
       </View>
     );
   }
@@ -239,7 +240,8 @@ export default class Review extends Component {
   render() {
     if(this.state.renderPlaceholderOnly)
       return this._renderPlaceholder();
-
+    if(this.state.isLoading)
+      return <Loader />
     return (
       <View style={{ flex: 1}}>
 

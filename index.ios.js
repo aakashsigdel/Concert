@@ -52,13 +52,19 @@ class ConcertReview extends Component {
     let _this = this;
     Events.on('Ready', 'myId', data => {
       _this.setState({
-        showFancy: Object.assign({}, this.state.showFancy, {status: true, message: data.message}),
+        showFancy: Object.assign({}, this.state.showFancy,
+                                 {
+                                   status: true,
+                                   message: data.message,
+                                   viewStyle: data.viewStyle,
+                                   textStyle: data.textStyle,
+                                 }),
       });
       setTimeout(() => {
         _this.setState({
           showFancy: Object.assign({}, this.state.showFancy, {status: false}),
         });
-      }, 2000);
+      }, 5000);
     });
   }
 
@@ -225,6 +231,7 @@ class ConcertReview extends Component {
           }}
         />
         {(() => {
+          console.log(this.state.showFancy);
           if (this.state.showFancy.status)
             return <FancyMessageBar
               message={this.state.showFancy.message}
