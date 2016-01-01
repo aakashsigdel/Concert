@@ -91,6 +91,7 @@ export default class PhotoAddComment extends Component {
              croppedImageURI,
              (data) => {
                getAccessToken().then( access_token => {
+               debugger;
                  let PHOTO_POST_URL = PHOTO.POST_URL
                    .replace('abcde', access_token)
                    .replace('{concert_id}', this.props.concertId);
@@ -118,7 +119,11 @@ export default class PhotoAddComment extends Component {
                      message: 'Photo Posted',
                      viewStyle: {backgroundColor: '#F9B400'}
                    });
-                   this.props.navigator.immediatelyResetRouteStack([{name: 'home'}]);
+                   let resultData = JSON.parse(result.data);
+                   this.props.navigator.immediatelyResetRouteStack([
+                     {name: 'home'},
+                     {name: 'photo', photoId: resultData.data.id}
+                   ]);
                  });
                } )
              }

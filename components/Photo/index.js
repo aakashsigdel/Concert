@@ -54,6 +54,7 @@ export default class Photo extends Component {
   }
 
   _fetchData() {
+    console.log('photo ko id', this.props.photoId);
     getAccessToken().then( access_token => {
       const query = PHOTOS.GET_PHOTO_URL
         .replace('{photo_id}', this.props.photoId)
@@ -89,7 +90,13 @@ export default class Photo extends Component {
                 ...this.state.optionsForFAB,
                 {
                   name: 'Edit',
-                  action: () => this.props.navigator.push({name: 'photoEditComment', index: 52}),
+                  action: () => this.props.navigator.push({
+                    name: 'photoEditComment',
+                    index: 52,
+                    fetchURL: query,
+                    photoId: this.props.photoId,
+                    caption: this.state.photoDetail.caption,
+                  }),
                 },
                 {
                   name: 'Delete',

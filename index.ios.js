@@ -197,6 +197,9 @@ class ConcertReview extends Component {
         />;
       case 'photoEditComment':
         return <PhotoEditComment
+          fetchURL={route.fetchURL}
+          photoId={route.photoId}
+          caption={route.caption}
           navigator={navigator}
         />
       case 'blankLoader':
