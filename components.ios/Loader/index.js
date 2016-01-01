@@ -8,6 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import styles from './style';
 
 export default class Loader extends Component {
   render() {
@@ -16,10 +17,16 @@ export default class Loader extends Component {
         <ActivityIndicatorIOS
           hidden='true'
           size='large' />
-        <Text style={styles.loadingText}>Loading...</Text>
+        <Text style={styles.loadingText}>{this.props.loadingMessage}</Text>
       </View>
     );
   }
 }
 
-var styles = StyleSheet.create(require('./style.json'));
+Loader.propTypes = {
+  loadingMessage: React.PropTypes.string,
+};
+
+Loader.defaultProps = {
+  loadingMessage: 'Loading...',
+};
