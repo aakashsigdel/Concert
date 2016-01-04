@@ -140,7 +140,7 @@ export default class Reviews extends Component {
 
           {/*need to change this later*/}
           <Image 
-            source={{uri: image.original}}
+            source={{uri: image.small}}
             style={styles.profileImage} />
             
             {/*calendar Component*/}
@@ -182,6 +182,7 @@ export default class Reviews extends Component {
               </Text>
               <Text style={styles.comment}>
                 {
+                  review.comment.lenth < 40 ? review.comment : review.comment.slice(0, 40)
                 }
               </Text>
             </View>

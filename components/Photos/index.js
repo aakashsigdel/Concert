@@ -102,7 +102,7 @@ export default class Photos extends Component {
 			onPress={this._handlePress.bind(this, photo.id)}
 			style={styles.photoThumbContainer}
 			>
-				<Image source={{uri: photo.image.original}}
+				<Image source={{uri: photo.image.small}}
 					style={[styles.photoThumb, this._calculateImageSize()]} />
 			</TouchableOpacity>
 		);
