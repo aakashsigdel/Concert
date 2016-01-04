@@ -180,7 +180,10 @@ export default class Reviews extends Component {
                   })()
                 }
               </Text>
-              <Text style={styles.comment}>{review.comment}</Text>
+              <Text style={styles.comment}>
+                {
+                }
+              </Text>
             </View>
 
           </View>

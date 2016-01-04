@@ -122,7 +122,7 @@ export default class AddReview extends Component {
                    files: [
                      {
                        name: 'image',
-                       filename: data.split('/')[2],
+                       filename: data.split('/')[2]+ '.jpg',
                        filepath: data,
                      },
                    ]
