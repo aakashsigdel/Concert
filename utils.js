@@ -14,7 +14,8 @@ export const serializeJSON = ( json ) => {
   }).join('&');
 }
 
-export const callOnFetchError = (error, url="not specified") => {
+export const callOnFetchError = (error, url="url not specified") => {
+  console.log(error, url);
   Events.trigger('Ready', {message: 'Limited or no internet connection.'});
 }
 

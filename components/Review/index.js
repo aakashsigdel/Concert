@@ -69,9 +69,10 @@ export default class Review extends Component {
           res.data.userPic = res.data.user.profile_picture.trim().length > 0
             ? {uri:res.data.user.profile_picture}
             : require('../../assets/images/user_default.png');
-          res.data.artistPic = res.data.concert.artist.image.original.trim().length > 0?
-            {uri:res.data.concert.artist.image.original}
-            : require('../../assets/images/default_artist_page.png');
+            
+          res.data.artistPic = res.data.image.original.trim().length > 0
+            ? {uri:res.data.image.large}
+            : res.data.concert.artist.image.large;
 
           const artistName = res.data.concert.artist.name.trim().length > 15
             ? res.data.concert.artist.name.slice(0,15) + '...'
