@@ -105,8 +105,6 @@ export default class AddReview extends Component {
          (croppedImageURI) => {
            getAccessToken()
            .then( access_token => {
-               debugger;
-             console.log('inside editing manager');
              CameraRoll.saveImageWithTag(
                croppedImageURI,
                (data) => {
@@ -128,11 +126,9 @@ export default class AddReview extends Component {
                    ]
                  };
                  NativeModules.FileUpload.upload(imageObj, (err, result) => {
-                   console.log(result, 'posted by posted');
                    this.setState({
                      isLoading: false,
                    });
-                   console.log(JSON.parse(result.data).id, 'plain old');
                    this.props.navigator.immediatelyResetRouteStack([
                      {name: 'home'},
                      {name: 'review', review_id: JSON.parse(result.data).id}
@@ -160,7 +156,6 @@ export default class AddReview extends Component {
           },
         };
         NativeModules.FileUpload.upload(imageObj, (err, result) => {
-          console.log(result, 'posted by posted');
           this.setState({
             isLoading: false,
           });
@@ -168,7 +163,6 @@ export default class AddReview extends Component {
             message: 'Review Posted',
             viewStyle: {backgroundColor: '#F9B400'}
           });
-          console.log(JSON.parse(result.data).id, 'plain old');
           this.props.navigator.immediatelyResetRouteStack([
             {name: 'home'},
             {name: 'review', review_id: JSON.parse(result.data).id}

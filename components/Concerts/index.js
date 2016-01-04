@@ -50,7 +50,6 @@ export default class Concerts extends Component {
 	_fetchData() {
     getAccessToken().then( access_token => {
       let query = this.props.fetchURL.replace('abcde', access_token);
-      console.log(query);
       fetch(query)
       .then((response) => response.json())
       .then((responseData) => {
@@ -150,11 +149,8 @@ export default class Concerts extends Component {
 	}
 
   _toggleAttending(id, c){
-    console.log('yehi ho boro!', this.state.apiData, typeof(this.state.apiData), id, c);
-
     this.state.apiData.filter(c => c.id == id)[0].checked_in = c;
     this.setState();
-    console.log('yehi ho boro!', this.state.apiData);
   }
 
 	render() {

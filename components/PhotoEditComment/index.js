@@ -15,12 +15,6 @@ deviceHeight = Dimensions.get('window').height;
 
 export default class PhotoEditComment extends Component {
   _postEditedPhoto () {
-    console.log(serializeJSON({
-        photo_id: this.props.photoId,
-        caption: this.caption
-      })
-);
-    console.log(this.caption, 'kalooo');
     fetch(this.props.fetchURL, {
       method: 'PUT',
       headers: {

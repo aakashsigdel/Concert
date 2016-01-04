@@ -47,7 +47,6 @@ export default class Users extends Component {
   _fetchData() {
     getAccessToken().then( access_token => {
       let query = this.props.fetchURL.replace('abcde', access_token);
-      console.log(query);
       fetch(query)
       .then((response) => response.json())
       .then((responseData) => {

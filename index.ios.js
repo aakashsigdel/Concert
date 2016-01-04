@@ -23,6 +23,7 @@ import Concert from './components/Concert';
 import Concerts from './components/Concerts';
 import CustomAlert from './components/CustomAlert';
 import EditProfile from './components/EditProfile';
+import EditReview from './components/EditReview';
 import FancyMessageBar from './components/FancyMessageBar';
 import Follows from './components/Follows';
 import Header from './components/Header';
@@ -166,6 +167,13 @@ class ConcertReview extends Component {
           concertId={route.concertId}
           imageData={route.imageData}
         />;
+      case 'editReview':
+        return <EditReview 
+          navigator={navigator}
+          concertId={route.concertId}
+          params={route.params}
+          imageData={route.imageData}
+        />;
       case 'camera':
         return <UserCamera
           navigator={navigator}
@@ -193,7 +201,7 @@ class ConcertReview extends Component {
       case 'customAlert':
         return <CustomAlert
           navigator={navigator}
-          text={route.text}
+          params={route.params}
         />;
       case 'photoEditComment':
         return <PhotoEditComment
@@ -235,7 +243,6 @@ class ConcertReview extends Component {
           }}
         />
         {(() => {
-          console.log(this.state.showFancy);
           if (this.state.showFancy.status)
             return <FancyMessageBar
               message={this.state.showFancy.message}

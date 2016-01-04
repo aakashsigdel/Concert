@@ -18,11 +18,8 @@ import {
   callOnFetchError,
   getAccessToken,
 } from '../../utils.js';
-import { ACCESS_TOKEN } from '../../constants/ApiUrls.js';
-
 const deviceWidth = Dimensions.get('window').width;
 
-const QUERY_URL = `http://api.revuzeapp.com:80/api/v1/concerts/concert_id/photos?access_token=${ACCESS_TOKEN}`;
 export default class Photos extends Component {
 	constructor(props) {
 		super(props);
@@ -48,7 +45,6 @@ export default class Photos extends Component {
 
 	_fetchPhotos() {
     getAccessToken().then( access_token =>{
-		// var query = QUERY_URL.replace('concert_id', 12);
     let query = this.props.fetchURL
       .replace('abcde', access_token);
 		fetch(query)

@@ -88,13 +88,14 @@ export default class Artist extends Component {
       .replace('abcde', access_token);
 
       fetch(url)
-      .then(res => res.json())
+      .then(raw => raw.json())
       .then(res => {
-        console.log('artist detail', res);
-        this.setState({
-          renderPlaceHolder: false,
-          artist: res.data,
-        });
+        if(res.meta.status === 200){
+          this.setState({
+            renderPlaceHolder: false,
+            artist: res.data,
+          });
+        }
       })
       .catch(error => {
         callOnFetchError(error, url);
@@ -108,6 +109,41 @@ export default class Artist extends Component {
 			activeView: view
 		});
 	}
+
+  _renderHeader() {
+    return (
+      <View>
+        <Image
+          source={{uri: this.state.artist.image.original}}
+          style={styles.image}
+        />
+        <View style={styles.descPanel}>
+          <Text style={styles.descText}>
+            {
+              'Last Played at ' 
+              + this.state.artist.last_played.location 
+              + ' • '
+              + this.state.artist.last_played.time.split(',')[0]
+              + ' ago.'
+            }
+          </Text>
+          <View style={styles.ratingBox}>
+            <Text style={styles.ratingNum}>
+              {Number(this.state.artist.last_played.rating || 0).toFixed(1)}
+            </Text>
+            <Text style={styles.star}>★</Text>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
+  _renderSectionHeader(){
+    return <InternalNavigation 
+      setActiveView={this.setActiveView.bind(this)} 
+      activeView={this.state.activeView}
+    />
+  }
 
   render() {
     if (this.state.renderPlaceHolder)
@@ -128,51 +164,32 @@ export default class Artist extends Component {
           }
         />
 
-        <View>
-          <Image
-            source={{uri: this.state.artist.image.original}}
-            style={styles.image}
-          />
-          <View style={styles.descPanel}>
-            <Text style={styles.descText}>
-              {
-                'Last Played at ' 
-                + this.state.artist.last_played.location 
-                + ' • '
-                + this.state.artist.last_played.time.split(',')[0]
-                + ' ago.'
-              }
-            </Text>
-            <View style={styles.ratingBox}>
-              <Text style={styles.ratingNum}>
-                {Number(this.state.artist.last_played.rating || 0).toFixed(1)}
-              </Text>
-              <Text style={styles.star}>★</Text>
-            </View>
-          </View>
-        </View>
-
-				<InternalNavigation 
-					setActiveView={this.setActiveView.bind(this)} 
-					activeView={this.state.activeView} />
 				{
 					(() => {
 						switch(this.state.activeView) {
               case 'Photos':
                 return <Photos 
                   navigator={this.props.navigator}
+                  header={this._renderHeader.bind(this)}
+                  sectionHeader={this._renderSectionHeader.bind(this)}
                   concertId={this.props.concertId}
                   fetchURL={PHOTOS.ARTIST_URL.replace('{artist_id}', this.props.artistId)}
                 />;
               case 'Reviews':
                 return <Reviews 
                   navigator={this.props.navigator}
+                  header={this._renderHeader.bind(this)}
+                  sectionHeader={this._renderSectionHeader.bind(this)}
+                  concertId={this.props.concertId}
                   concertId={this.props.concertId}
                   fetchURL={REVIEWS.ARTIST_URL.replace('{artist_id}', this.props.artistId)}
                 />;
               case 'Concerts':
                 return <Concerts 
                   calanderHeader={true}
+                  header={this._renderHeader.bind(this)}
+                  sectionHeader={this._renderSectionHeader.bind(this)}
+                  concertId={this.props.concertId}
                   navigator={this.props.navigator}
                   fetchURL={
                     CONCERTS.ARTIST_UPCOMING_URL

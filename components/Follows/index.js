@@ -83,7 +83,6 @@ export default class Follows extends Component {
       fetch(query, {method: 'POST'})
       .then(r => r.json())
       .then(response => {
-        // console.log(response, this.state.following ? 'Unfollowed' : 'Followed');
         if (! response.success)
           this._renderPresentationalFollow(id, !shouldFollow)
       })

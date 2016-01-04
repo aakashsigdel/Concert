@@ -27,8 +27,6 @@ export default class EditProfile extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props.userData);
-
     InteractionManager.runAfterInteractions(() => {
       this.setState({
         userData: this.props.userData,
@@ -39,7 +37,6 @@ export default class EditProfile extends Component {
 
   _postEdit() {
     getAccessToken().then( access_token => {
-      console.log('editing..',USERS.PROFILE_EDIT_URL, this.state.userData);
       const params = {
         fname: this.state.userData.full_name,
         bio: this.state.userData.bio,
@@ -53,9 +50,6 @@ export default class EditProfile extends Component {
           body: serializeJSON(params)
         }
       ).then( res => {
-        console.log('params', params);
-        console.log('data-> ', res.text());
-        console.log('res->',res);
         this.props.navigator.replace({
           name: 'profile',
           userId: this.state.userData.id,

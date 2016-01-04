@@ -1,0 +1,45 @@
+{
+  container:{
+    flex: 1,
+    backgroundColor: 'rgb(33,33,33)',
+  },
+
+  bottomContainer: {
+  },
+
+	ratingStars: {
+		flexDirection: 'row',
+    flex: 1,
+    marginTop: 13,
+    borderBottomWidth: 1,
+    borderColor: 'rgba(255,255,255,0.05)',
+    paddingBottom: 15,
+    marginBottom: 14,
+    marginLeft: 25,
+    marginRight: 25,
+    justifyContent: 'space-around',
+	},
+
+	starsAndUser: {
+		flexDirection: 'row',
+    flex: 1,
+	},
+
+	yellowStar: {
+    width: 45,
+    height: 45,
+    marginLeft: 10,
+	},
+
+	whiteStar: {
+    width: 45,
+    height: 45,
+    marginLeft: 10,
+	},
+
+  text: {
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+}

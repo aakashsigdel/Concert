@@ -52,14 +52,12 @@ export default class Reviews extends Component {
 
   _fetchData() {
     getAccessToken().then( access_token =>{
-      console.log(this.props.fetchURL);
       let query = this.props.fetchURL
         .replace('abcde', access_token);
 
       fetch(query)
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData, 'womaniya');
         if (responseData.data.length === 0)
           responseData.data = [{id: 0}];
         this.setState({
@@ -75,7 +73,6 @@ export default class Reviews extends Component {
   }
 
   _toggleAttending(id){
-    console.log(this.state.responseData);
     this.state.responseData.data.filter(item => item.id === id)
   }
 

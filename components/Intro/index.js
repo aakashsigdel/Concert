@@ -27,11 +27,9 @@ export default class Intro extends Component {
         else {
           FBSDKAccessToken.getCurrentAccessToken(token => {
             if(token) {
-              console.log(USER.LOGIN_URL + '?access_token=' + token.tokenString);
               fetch(USER.LOGIN_URL + '?fb_access_token=' + token.tokenString)
               .then(response => response.json())
               .then(async responseData => {
-                console.log('aakash dai ko responseData', JSON.stringify(responseData));
                 try {
                   await AsyncStorage.setItem(LOGIN_DETAILS, JSON.stringify(responseData));
                   fetch(USER.DETAIL_URL.replace('{access_token}', responseData.access_token))

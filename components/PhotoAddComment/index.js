@@ -49,7 +49,6 @@ export default class PhotoAddComment extends Component {
       this.props.imageData.image.uri,
       transformData,
       (croppedImageURI) => {
-        console.log('inside editing manager');
         CameraRoll.saveImageWithTag(
           croppedImageURI,
         )
@@ -86,12 +85,10 @@ export default class PhotoAddComment extends Component {
          this.props.imageData.image.uri,
          transformData,
          (croppedImageURI) => {
-           console.log('inside editing manager');
            CameraRoll.saveImageWithTag(
              croppedImageURI,
              (data) => {
                getAccessToken().then( access_token => {
-               debugger;
                  let PHOTO_POST_URL = PHOTO.POST_URL
                    .replace('abcde', access_token)
                    .replace('{concert_id}', this.props.concertId);
@@ -111,7 +108,6 @@ export default class PhotoAddComment extends Component {
                    ]
                  };
                  NativeModules.FileUpload.upload(imageObj, (err, result) => {
-                   console.log('flex the bottle', err, result);
                    this.setState({
                      isLoading: false,
                    });

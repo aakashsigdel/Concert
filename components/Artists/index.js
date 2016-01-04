@@ -43,7 +43,6 @@ export default class Artists extends Component {
   _fetchData() {
     getAccessToken().then( access_token => {
       let query = this.props.fetchURL.replace('abcde', access_token);
-      console.log('artists page', query);
       fetch(query)
       .then((response) => response.json())
       .then((responseData) => {
