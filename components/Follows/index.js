@@ -57,8 +57,8 @@ export default class Follows extends Component {
     this._fetchData()
   }
 
-  _handlePress(userId) {
-    this.props.navigator.push({name: 'profile', index: 7, userId: userId});
+  _handlePress(userId, userName) {
+    this.props.navigator.push({name: 'profile', index: 7, userId: userId, userName: userName});
   }
 
   _renderPresentationalFollow(id, shouldFollow){
@@ -113,7 +113,7 @@ export default class Follows extends Component {
             <View
               style={[ styles.listItem, styles.displayAsRow ]}>
               <TouchableHighlight
-              onPress={this._handlePress.bind(this, user.id)}
+              onPress={this._handlePress.bind(this, user.id, user.full_name)}
               >
                 <View
                   style={styles.displayAsRow}>
