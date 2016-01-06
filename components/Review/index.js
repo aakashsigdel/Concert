@@ -33,6 +33,7 @@ import {
 
 const {deviceWidth, deviceHeight} = Dimensions.get('window');
 const Share = NativeModules.KDSocialShare;
+const Events = require('react-native-simple-events');
 const header = StyleSheet.create(require('./header.json'));
 const comment = StyleSheet.create(require('./comment.json'));
 
@@ -70,9 +71,9 @@ export default class Review extends Component {
             ? {uri:res.data.user.profile_picture}
             : require('../../assets/images/user_default.png');
             
-          res.data.artistPic = res.data.image.original.trim().length > 0
-            ? {uri:res.data.image.large}
-            : res.data.concert.artist.image.large;
+          res.data.artistPic = res.data.image
+            ? {uri: res.data.image.large}
+            : {uri: res.data.concert.artist.image.large};
 
           const artistName = res.data.concert.artist.name.trim().length > 15
             ? res.data.concert.artist.name.slice(0,15) + '...'
@@ -107,15 +108,27 @@ export default class Review extends Component {
               {
                 name: 'Delete',
                 action: () => {
-                  this.props.navigator.replace({
-                    name: 'customAlert',
-                    params: {
-                      action :'DELETE',
+                  console.log('firing event SHOW_CUSTOM_ALERT');
+                  Events.trigger(
+                    'SHOW_CUSTOM_ALERT',
+                    {
+                      view:   'Review',
+                      action: 'DELETE',
+                      params: this.props.params,
                       id: this.props.id,
-                      link: url,
-                      name: 'review',
-                    },
-                  })
+                      navigator: this.props.navigator,
+                      link:   url,
+                    }
+                  )
+                  // this.props.navigator.replace({
+                  //   name: 'customAlert',
+                  //   params: {
+                  //     action :'DELETE',
+                  //     id: this.props.id,
+                  //     link: url,
+                  //     name: 'review',
+                  //   },
+                  // })
                 } 
               },
             ]

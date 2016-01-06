@@ -124,6 +124,7 @@ export default class Home extends Component {
           <Reviews 
             concertId={12}
             calanderHeader={true}
+            dataFactory={this.props.dataFactory}
             navigator={this.props.navigator}
             header={_=> this._listHeader(1, 'HOT REVIEWS')} 
             fetchFor="latest"

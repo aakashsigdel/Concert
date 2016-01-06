@@ -17,6 +17,7 @@ import Calander from '../Calander';
 import {
   callOnFetchError,
   getAccessToken,
+  DataFactory,
 } from '../../utils.js';
 import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
 
@@ -25,23 +26,56 @@ let QUERY_URL = {
   concertId: `http://api.revuzeapp.com:80/api/v1/concerts/12/reviews?access_token=${ACCESS_TOKEN}`,
   userId: `http://api.revuzeapp.com:80/api/v1/users/userId/reviews?access_token=${ACCESS_TOKEN}`
 }
+const Events = require('react-native-simple-events');
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
+
 export default class Reviews extends Component {
 	constructor() {
 		super();
 		this.state = {
-			dataSource: new ListView.DataSource({
-				rowHasChanged: (row1, row2) => row1.id !== row2.id
-			}),
+      dataSource: ds.cloneWithRows([]),
 			isLoading: true,
-      apiData: null,
+      apiData: {},
 		};
 	}
 
 	componentDidMount() {
-		this._fetchData();
+    if ( this.props.dataFactory ){
+      alert('yes')
+    }
+    console.log('review component did mount');
+    this._fetchData();
+    if(DataFactory().shouldUpdate()){
+      console.log('What!!');
+      const data = DataFactory().getData();
+      this.setState({
+        dataSource: ds.cloneWithRows(data)
+      })
+    }
+    Events.on(
+      'RELOAD',
+      'RELOAD_ID',
+      data => {
+        console.log('caught');
+        console.log(this.state);
+        const newData = this.state.apiData.filter(row => row.id != data.id);
+        DataFactory().setData({reviews: newData});
+        DataFactory().toggleShouldUpdate();
+        this.setState({
+          apiData: newData,
+          dataSource: ds.cloneWithRows(newData)
+        })
+      }
+    )
 	}
 
   componentDidUpdate(prevProps) {
+    console.warn('multiline console.log here!!');
+    console.log(
+      DataFactory().shouldUpdate()
+        ? 'deleted. should reload'
+        : 'deleted, but didnot update'
+    )
     if (this.props.filterText 
        && (prevProps.filterText !== this.props.filterText) 
        && (!this.state.isLoading)
@@ -60,8 +94,11 @@ export default class Reviews extends Component {
       .then((responseData) => {
         if (responseData.data.length === 0)
           responseData.data = [{id: 0}];
+
+        // DataFactory.setData({reviews: responseData.data});
+
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+          dataSource: ds.cloneWithRows(responseData.data),
           isLoading: false,
           apiData: responseData.data,
         });

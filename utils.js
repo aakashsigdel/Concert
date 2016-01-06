@@ -59,14 +59,51 @@ export const getAccessToken = async () => {
 }
 
 export const performAPIAction = (params) => {
+  console.debug(params);
+  return ;
   try{
     fetch( params.link, { method: params.action})
     .then(response => {
-      console.log(response);
+      console.debug(response);
     }).catch(e => {
-      callOnFetchError(e, params.link);
+      console.debug('apiactionerroror: ', e);
+      callOnFetcherroror(e, params.link);
     }).done();
   }catch(e){
+    console.debug('apiactionerroror: ', e);
     Events.trigger('Ready', {message: 'Limited or no internet connection.'});
+  }
+}
+
+export let DataFactory = () => {
+  let apiData = {};
+  let shouldUpdate = false;
+  let populateApiData = ( data ) => {
+    apiData = Object.assign(
+      {},
+      apiData,
+      data
+    )
+  }
+
+  let sendApiData = () => {
+    if(Object.keys(apiData).length === 0 )
+      return false
+    else
+      return apiData
+  }
+
+  return {
+    setData: populateApiData,
+    getData: sendApiData,
+    toggleShouldUpdate: () => {
+      console.log('toggling shouldUpdate.. was -> ' + shouldUpdate)
+      shouldUpdate = !shouldUpdate
+      console.log('toggled to -> ' + shouldUpdate)
+    },
+    shouldUpdate: () => {
+      console.log('asked for shouldUpdate state. my state is shouldUpdate = ' + shouldUpdate)
+      return shouldUpdate
+    },
   }
 }
