@@ -19,10 +19,10 @@
 		flexDirection: 'row',
     flex: 1,
 	},
-	yellowStar: {
-    width: 13.7,
+	star: {
     height: 13.1,
-    marginRight: 2.8,
+	  width: 80,
+	  resizeMode: 'contain',
 	},
 	whiteStar: {
     width: 13.7,

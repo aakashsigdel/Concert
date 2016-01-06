@@ -78,8 +78,12 @@ export default class AddReview extends Component {
       alert('Comment too short!')
       return;
     }
-    this.setState({
-      isLoading: true,
+    this.props.navigator.popToTop();
+    Events.trigger('POST', {
+      data: {
+        message: 'Posting Review',
+        viewStyle: {backgroundColor: '#F9B400'},
+      }
     });
 
     if (this.props.imageData) {
@@ -126,13 +130,20 @@ export default class AddReview extends Component {
                    ]
                  };
                  NativeModules.FileUpload.upload(imageObj, (err, result) => {
-                   this.setState({
-                     isLoading: false,
+                   Events.trigger('POSTED', {
+                     data: {
+                       message: 'Review Posted',
+                       viewStyle: {backgroundColor: '#F9B400'},
+                       actionType: 'VIEW',
+                       actionFunction: () => {
+                         let resultData = JSON.parse(result.data);
+                         this.props.navigator.immediatelyResetRouteStack([
+                           {name: 'home'},
+                           {name: 'review', review_id: resultData.id}
+                         ]);
+                       }
+                     }
                    });
-                   this.props.navigator.immediatelyResetRouteStack([
-                     {name: 'home'},
-                     {name: 'review', review_id: JSON.parse(result.data).id}
-                   ]);
                  });
                }
              )
@@ -156,17 +167,20 @@ export default class AddReview extends Component {
           },
         };
         NativeModules.FileUpload.upload(imageObj, (err, result) => {
-          this.setState({
-            isLoading: false,
+          Events.trigger('POSTED', {
+            data: {
+              message: 'Review Posted',
+              viewStyle: {backgroundColor: '#F9B400'},
+              actionType: 'VIEW',
+              actionFunction: () => {
+                let resultData = JSON.parse(result.data);
+                this.props.navigator.immediatelyResetRouteStack([
+                  {name: 'home'},
+                  {name: 'review', review_id: resultData.id}
+                ]);
+              }
+            }
           });
-          Events.trigger('Ready', {
-            message: 'Review Posted',
-            viewStyle: {backgroundColor: '#F9B400'}
-          });
-          this.props.navigator.immediatelyResetRouteStack([
-            {name: 'home'},
-            {name: 'review', review_id: JSON.parse(result.data).id}
-          ]);
         });
 
       } )

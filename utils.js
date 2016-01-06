@@ -15,7 +15,11 @@ export const serializeJSON = ( json ) => {
 }
 
 export const callOnFetchError = (error, url="not specified") => {
-  Events.trigger('Ready', {message: 'Limited or no internet connection.'});
+  Events.trigger('Ready', {data:{message: 'Limited or no internet connection.'}});
+}
+
+export const callOnError = (error, message="Something weird happened") => {
+  Events.trigger('Ready', {data:{message: message}});
 }
 
 export const refreshUserDataOnAsyncStorage = async() => {
@@ -68,4 +72,48 @@ export const performAPIAction = (params) => {
   }catch(e){
     Events.trigger('Ready', {message: 'Limited or no internet connection.'});
   }
+}
+
+export const cropImage = (imageUri, transformData) => {
+  const {
+    CameraRoll,
+    NativeModules,
+  } = require('react-native');
+  const ImageEditingManager = NativeModules.ImageEditingManager;
+
+  let promise = new Promise ((resolve, reject) => {
+    ImageEditingManager.cropImage(
+      imageUri,
+      transformData,
+      croppedImage => {
+        CameraRoll.saveImageWithTag(
+          croppedImage,
+          data => {resolve(data)},
+            error => {reject('Count\'t save image to camera roll');}
+        )
+      },
+      (error) => {reject('Couldn\'t crop the image');}
+    );
+  })
+  return promise;
+}
+
+export const postToRevuze = (imageObj) => {
+  const {
+    NativeModules,
+  } = require('react-native');
+
+  let promise = new Promise ((resolve, reject) => {
+    NativeModules.FileUpload.upload(
+      imageObj,
+      (error, result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject('Error Occured while uploading photo');
+        }
+      }
+    );
+  });
+  return promise;
 }

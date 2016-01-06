@@ -92,7 +92,7 @@ export default class Concert extends Component {
       <View style={styles.container}>
 
         <Image
-          source={{uri:this.state.concert.artist.image.original}}
+          source={{uri:this.state.concert.artist.image.large}}
           style={styles.backgroundImage}
         />
 

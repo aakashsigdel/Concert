@@ -18,13 +18,44 @@ let styles ={
     flexDirection: 'row',
     paddingLeft: 20,
     paddingRight: 20,
-    opacity: 0.8,
   },
+
   text: {
     color: 'white',
     fontSize: 14,
     fontFamily: 'AvenirNext-DemiBold',
   },
+
+  viewStyle: {
+    borderWidth: 1,
+    borderColor: 'white',
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 5,
+    paddingBottom: 5,
+    borderRadius: 4,
+  },
+
+  dismiss: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+
+  showViewButton: {
+    flex: 4,
+    marginRight: 25,
+    justifyContent: 'center',
+  },
+
+  dismissPost: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
 }
 
 export default styles = StyleSheet.create(styles);

@@ -24,6 +24,7 @@ import HeaderBar from '../../components/HeaderBar';
 import heroElement from './heroElement';
 import { REVIEW } from '../../constants/ApiUrls.js'
 import {
+  callOnError,
   callOnFetchError,
   getAccessToken,
   getUserDetailsFromAsyncStorage,
@@ -69,9 +70,15 @@ export default class Review extends Component {
           res.data.userPic = res.data.user.profile_picture.trim().length > 0
             ? {uri:res.data.user.profile_picture}
             : require('../../assets/images/user_default.png');
-          res.data.artistPic = res.data.concert.artist.image.original.trim().length > 0?
-            {uri:res.data.concert.artist.image.original}
-            : require('../../assets/images/default_artist_page.png');
+            try {
+            res.data.artistPic =
+              res.data.image !== null ||
+              res.data.image.large.trim().length > 0
+              ? {uri:res.data.image.large}
+              : require('../../assets/images/default_artist_page.png');
+            } catch (error) {
+              res.data.artistPic = require('../../assets/images/default_artist_page.png');
+            }
 
           const artistName = res.data.concert.artist.name.trim().length > 15
             ? res.data.concert.artist.name.slice(0,15) + '...'

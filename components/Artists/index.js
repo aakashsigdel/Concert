@@ -75,7 +75,7 @@ export default class Artists extends Component {
         <View
           style={[styles.row, backgroundStyle]}>
           <Image
-            source={{uri:rowData.image.original}}
+            source={{uri:rowData.image.small}}
             style={styles.profile_image}/>
           <View
             style={styles.text_container}>

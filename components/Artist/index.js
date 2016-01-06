@@ -71,7 +71,7 @@ export default class Artist extends Component {
     });
 
 	  Share.shareOnFacebook({
-      'imagelink': this.state.artist.image.original,
+      'imagelink': this.state.artist.image.large,
     },
     (result) => {
       this.setState({
@@ -114,7 +114,7 @@ export default class Artist extends Component {
     return (
       <View>
         <Image
-          source={{uri: this.state.artist.image.original}}
+          source={{uri: this.state.artist.image.large}}
           style={styles.image}
         />
         <View style={styles.descPanel}>
