@@ -176,6 +176,7 @@ class ConcertReview extends Component {
         return (
           <Artist
             artistId={route.artistId}
+            artistName={route.artistName}
             navigator={navigator}
           />
         );

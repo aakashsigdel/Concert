@@ -58,8 +58,15 @@ export default class Artists extends Component {
     });
   }
 
-  _handlePress(artistId) {
-    this.props.navigator.push({name: 'artist', index: 6, artistId: artistId});
+  _handlePress(artistId, artistName) {
+    this.props.navigator.push(
+      {
+        name: 'artist',
+        index: 6,
+        artistId: artistId,
+        artistName: artistName,
+      }
+    );
   }
 
   _renderRow(rowData){
@@ -71,7 +78,7 @@ export default class Artists extends Component {
 
     return(
       <TouchableHighlight
-        onPress={this._handlePress.bind(this, rowData.id)}>
+        onPress={this._handlePress.bind(this, rowData.id, rowData.name)}>
         <View
           style={[styles.row, backgroundStyle]}>
           <Image

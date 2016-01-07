@@ -65,12 +65,12 @@ export default class Artist extends Component {
     })
   }
 
-	_sharePhoto () {
-	  this.setState({
+  _sharePhoto () {
+    this.setState({
       isLoading: true,
     });
 
-	  Share.shareOnFacebook({
+    Share.shareOnFacebook({
       'imagelink': this.state.artist.image.large,
     },
     (result) => {
@@ -104,11 +104,11 @@ export default class Artist extends Component {
 
   }
 
-	setActiveView(view) {
-		this.setState({
-			activeView: view
-		});
-	}
+  setActiveView(view) {
+    this.setState({
+      activeView: view
+    });
+  }
 
   _renderHeader() {
     return (
@@ -146,15 +146,13 @@ export default class Artist extends Component {
   }
 
   render() {
-    if (this.state.renderPlaceHolder)
-      return <Loader />
     return(
-			<View style={styles.mainContainer}>
+      <View style={styles.mainContainer}>
         <HeaderBar
           left={require('../../assets/images/backIcon.png')}
           clickableLeft={true}
           clickFunctionLeft={ _=> this.props.navigator.pop()}
-          mid={this.state.artist.name}
+          mid={this.props.artistName}
           clickableRight={true}
           right={require('../../assets/images/shareAlt.png')}
           clickFunctionRight={
@@ -163,48 +161,58 @@ export default class Artist extends Component {
             }
           }
         />
+        {(
+          _ => {
+            if (this.state.renderPlaceHolder)
+              return <Loader />
+              return(
+                <View style={styles.mainContainer}>
 
-				{
-					(() => {
-						switch(this.state.activeView) {
-              case 'Photos':
-                return <Photos 
-                  navigator={this.props.navigator}
-                  header={this._renderHeader.bind(this)}
-                  sectionHeader={this._renderSectionHeader.bind(this)}
-                  concertId={this.props.concertId}
-                  fetchURL={PHOTOS.ARTIST_URL.replace('{artist_id}', this.props.artistId)}
-                />;
-              case 'Reviews':
-                return <Reviews 
-                  navigator={this.props.navigator}
-                  header={this._renderHeader.bind(this)}
-                  sectionHeader={this._renderSectionHeader.bind(this)}
-                  concertId={this.props.concertId}
-                  concertId={this.props.concertId}
-                  fetchURL={REVIEWS.ARTIST_URL.replace('{artist_id}', this.props.artistId)}
-                />;
-              case 'Concerts':
-                return <Concerts 
-                  calanderHeader={true}
-                  header={this._renderHeader.bind(this)}
-                  sectionHeader={this._renderSectionHeader.bind(this)}
-                  concertId={this.props.concertId}
-                  navigator={this.props.navigator}
-                  fetchURL={
-                    CONCERTS.ARTIST_UPCOMING_URL
-                    .replace('{artist_id}', this.props.artistId )}
-                />;
-						}
-					})()
-				}
+                  {
+                    (() => {
+                      switch(this.state.activeView) {
+                        case 'Photos':
+                          return <Photos 
+                            navigator={this.props.navigator}
+                            header={this._renderHeader.bind(this)}
+                            sectionHeader={this._renderSectionHeader.bind(this)}
+                            concertId={this.props.concertId}
+                            fetchURL={PHOTOS.ARTIST_URL.replace('{artist_id}', this.props.artistId)}
+                          />;
+                        case 'Reviews':
+                          return <Reviews 
+                            navigator={this.props.navigator}
+                            header={this._renderHeader.bind(this)}
+                            sectionHeader={this._renderSectionHeader.bind(this)}
+                            concertId={this.props.concertId}
+                            concertId={this.props.concertId}
+                            fetchURL={REVIEWS.ARTIST_URL.replace('{artist_id}', this.props.artistId)}
+                          />;
+                        case 'Concerts':
+                          return <Concerts 
+                            calanderHeader={true}
+                            header={this._renderHeader.bind(this)}
+                            sectionHeader={this._renderSectionHeader.bind(this)}
+                            concertId={this.props.concertId}
+                            navigator={this.props.navigator}
+                            fetchURL={
+                              CONCERTS.ARTIST_UPCOMING_URL
+                              .replace('{artist_id}', this.props.artistId )}
+                            />;
+                      }
+                    })()
+                  }
 
-        <FAB 
-          navigator={this.props.navigator}
-          links={this.optionsForFAB}
-        />
-			</View>
-		);
+                  <FAB 
+                    navigator={this.props.navigator}
+                    links={this.optionsForFAB}
+                  />
+                </View>
+                );
+          }
+        )()}
+      </View>
+    );
   }
 }
 

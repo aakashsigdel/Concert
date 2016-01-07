@@ -87,7 +87,7 @@ export default class Photo extends Component {
                 ...this.state.optionsForFAB,
                 {
                   name: 'Edit',
-                  action: () => this.props.navigator.push({
+                  action: () => this.props.navigator.replace({
                     name: 'photoEditComment',
                     index: 52,
                     fetchURL: query,
