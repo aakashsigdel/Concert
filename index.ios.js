@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
 	}
 });
 
-const dataFactory = DataFactory();
 class ConcertReview extends Component {
 	constructor() {
 		super();

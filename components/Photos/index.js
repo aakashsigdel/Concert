@@ -19,6 +19,7 @@ import {
   getAccessToken,
 } from '../../utils.js';
 const deviceWidth = Dimensions.get('window').width;
+const RefreshableListView = require('react-native-refreshable-listview');
 
 export default class Photos extends Component {
 	constructor(props) {
@@ -44,23 +45,29 @@ export default class Photos extends Component {
 	}
 
 	_fetchPhotos() {
-    getAccessToken().then( access_token =>{
-    let query = this.props.fetchURL
-      .replace('abcde', access_token);
-		fetch(query)
-			.then((response) => response.json())
-			.then((responseData) => {
-			  if(responseData.data.length === 0)
-			    responseData.data = [{id: 0}];
-				this.setState({
-					dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-					isLoading: false
-				});
-      })
-      .catch((error) => {
-        callOnFetchError(error, query);
-      }).done();
-    } )
+    return new Promise ( (resolve, reject) => {
+      getAccessToken().then( access_token =>{
+        this.setState({isLoading: true})
+        let query = this.props.fetchURL
+        .replace('abcde', access_token);
+        fetch(query)
+        .then((response) => response.json())
+        .then((responseData) => {
+          if(responseData.data.length === 0)
+            responseData.data = [{id: 0}];
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+            isLoading: false
+          });
+          resolve(responseData.data);
+        })
+        .catch((error) => {
+          this.setState({isLoading: true})
+          callOnFetchError(error, query);
+          reject(error);
+        }).done();
+      } )
+    })
 	}
 
 	_handlePress (photoId) {
@@ -106,15 +113,18 @@ export default class Photos extends Component {
 
 	render() {
 		if(this.state.isLoading) {
-			return <Loader />
+      return <Loader 
+        loadingMessage='Loading Photos...'
+      />
 		}
 		return(
-			<ListView
+			<RefreshableListView
 				contentContainerStyle={styles.listView}
 				style={{backgroundColor: '#1C1C1C'}}
 				dataSource={this.state.dataSource}
-        renderHeader={this.props.header}
+        renderHeaderWrapper={this.props.header}
         renderSectionHeader={this.props.sectionHeader || null}
+        loadData={this._fetchPhotos.bind(this)}
 				renderRow={this._renderPhotoThumbs.bind(this)} />
 		);
 	}

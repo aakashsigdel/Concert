@@ -19,8 +19,8 @@ import {
   callOnFetchError,
   getAccessToken,
 } from '../../utils.js';
+const RefreshableListView = require('react-native-refreshable-listview');
 
-const QUERY_URL = "http://api.revuzeapp.com:80/api/v1/concerts/upcoming?access_token=abcde";
 export default class Concerts extends Component {
 	constructor() {
 		super();
@@ -48,24 +48,28 @@ export default class Concerts extends Component {
   }
 
 	_fetchData() {
-    getAccessToken().then( access_token => {
-      let query = this.props.fetchURL.replace('abcde', access_token);
-      fetch(query)
-      .then((response) => response.json())
-      .then((responseData) => {
-        if (responseData.data.length === 0)
-          responseData.data = [{id: 0}];
-        this.setState({
-          isLoading: false,
-          apiData: responseData.data,
-          dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-        });
+    return new Promise( (resolve, reject) => {
+      getAccessToken().then( access_token => {
+        let query = this.props.fetchURL.replace('abcde', access_token);
+        this.setState({isLoading: true});
+        fetch(query)
+        .then((response) => response.json())
+        .then((responseData) => {
+          if (responseData.data.length === 0)
+            responseData.data = [{id: 0}];
+          this.setState({
+            isLoading: false,
+            apiData: responseData.data,
+            dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+          });
+          resolve(responseData.data);
+        })
+        .catch((error) => {
+          callOnFetchError(error, query);
+          reject(error);
+        }).done();
       })
-      .catch((error) => {
-        callOnFetchError(error, QUERY_URL);
-      }).done();
-
-    })
+    });
 	}
 	
 	_handlePress(concertId, concert) {
@@ -160,16 +164,17 @@ export default class Concerts extends Component {
 					<ActivityIndicatorIOS
 						hidden="true"
 						size="large" />
-					<Text style={styles.loadingText}>Loading...</Text>
+					<Text style={styles.loadingText}>Loading Concerts...</Text>
 				</View>
 			);
 		}
 		return(
       <View style={styles.container}>
-        <ListView
+        <RefreshableListView
           dataSource={this.state.dataSource}
           renderRow={this._renderConcert.bind(this)}
-          renderHeader={this.props.header}
+          renderHeaderWrapper={this.props.header}
+          loadData={this._fetchData.bind(this)}
           renderSectionHeader={this.props.sectionHeader}
           style={styles.listView}	/>
       </View>

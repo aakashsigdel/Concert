@@ -43,6 +43,7 @@ export const getUserDetailsFromAsyncStorage = async ( refresh = false ) => {
       return JSON.parse(userDetails);
     });
   } catch (error) {
+    console.log(error);
     return 'there was an error fetching from asyncstorage';
   }
 }
@@ -54,20 +55,21 @@ export const getAccessToken = async () => {
       return JSON.parse(loginDetails).access_token;
     })
   }catch(e){
-    return 'there was an error fetching login details from asyncstorage';
+    console.log(e)
+    console.log( 'there was an error fetching login details from asyncstorage');
+    return false;
   }
 }
 
 export const performAPIAction = (params) => {
   console.debug(params);
-  return ;
   try{
     fetch( params.link, { method: params.action})
     .then(response => {
       console.debug(response);
     }).catch(e => {
       console.debug('apiactionerroror: ', e);
-      callOnFetcherroror(e, params.link);
+      callOnFetchError(e, params.link);
     }).done();
   }catch(e){
     console.debug('apiactionerroror: ', e);
@@ -97,12 +99,9 @@ export let DataFactory = () => {
     setData: populateApiData,
     getData: sendApiData,
     toggleShouldUpdate: () => {
-      console.log('toggling shouldUpdate.. was -> ' + shouldUpdate)
       shouldUpdate = !shouldUpdate
-      console.log('toggled to -> ' + shouldUpdate)
     },
     shouldUpdate: () => {
-      console.log('asked for shouldUpdate state. my state is shouldUpdate = ' + shouldUpdate)
       return shouldUpdate
     },
   }

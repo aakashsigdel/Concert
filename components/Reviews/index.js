@@ -19,15 +19,10 @@ import {
   getAccessToken,
   DataFactory,
 } from '../../utils.js';
-import { ACCESS_TOKEN } from '../../constants/ApiUrls.js'
 
-let QUERY_URL = {
-  latest: `http://api.revuzeapp.com:80/api/v1/reviews/latest?access_token=${ACCESS_TOKEN}`,
-  concertId: `http://api.revuzeapp.com:80/api/v1/concerts/12/reviews?access_token=${ACCESS_TOKEN}`,
-  userId: `http://api.revuzeapp.com:80/api/v1/users/userId/reviews?access_token=${ACCESS_TOKEN}`
-}
 const Events = require('react-native-simple-events');
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
+const RefreshableListView = require('react-native-refreshable-listview');
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id != r2.id})
 
 export default class Reviews extends Component {
 	constructor() {
@@ -40,9 +35,6 @@ export default class Reviews extends Component {
 	}
 
 	componentDidMount() {
-    if ( this.props.dataFactory ){
-      alert('yes')
-    }
     console.log('review component did mount');
     this._fetchData();
     if(DataFactory().shouldUpdate()){
@@ -56,11 +48,11 @@ export default class Reviews extends Component {
       'RELOAD',
       'RELOAD_ID',
       data => {
+        this.setState({isLoading: true});
+        this._fetchData();
         console.log('caught');
         console.log(this.state);
         const newData = this.state.apiData.filter(row => row.id != data.id);
-        DataFactory().setData({reviews: newData});
-        DataFactory().toggleShouldUpdate();
         this.setState({
           apiData: newData,
           dataSource: ds.cloneWithRows(newData)
@@ -70,12 +62,6 @@ export default class Reviews extends Component {
 	}
 
   componentDidUpdate(prevProps) {
-    console.warn('multiline console.log here!!');
-    console.log(
-      DataFactory().shouldUpdate()
-        ? 'deleted. should reload'
-        : 'deleted, but didnot update'
-    )
     if (this.props.filterText 
        && (prevProps.filterText !== this.props.filterText) 
        && (!this.state.isLoading)
@@ -85,28 +71,35 @@ export default class Reviews extends Component {
   }
 
   _fetchData() {
-    getAccessToken().then( access_token =>{
-      let query = this.props.fetchURL
+    const p = new Promise((resolve, reject) => {
+      getAccessToken().then( access_token =>{
+        console.log('working');
+        this.setState({isLoading: true});
+        let query = this.props.fetchURL
         .replace('abcde', access_token);
 
-      fetch(query)
-      .then((response) => response.json())
-      .then((responseData) => {
-        if (responseData.data.length === 0)
-          responseData.data = [{id: 0}];
+        fetch(query)
+        .then((response) => response.json())
+        .then((responseData) => {
+          console.log('responsedat-', responseData);
+          console.log('state-', this.state);
+          // if (responseData.data.length === 0)
+          //   responseData.data = [{id: 0}];
 
-        // DataFactory.setData({reviews: responseData.data});
-
-        this.setState({
-          dataSource: ds.cloneWithRows(responseData.data),
-          isLoading: false,
-          apiData: responseData.data,
-        });
-      })
-      .catch((error) => {
-        callOnFetchError(error, query);
-      }).done();
-    } )
+          this.setState({
+            dataSource: ds.cloneWithRows(responseData.data),
+            isLoading: false,
+            apiData: responseData.data,
+          });
+          resolve(responseData.data);
+        })
+        .catch((error) => {
+          callOnFetchError(error, query);
+          reject(error);
+        }).done();
+      } )
+    })
+    return p;
   }
 
   _toggleAttending(id){
@@ -230,13 +223,16 @@ export default class Reviews extends Component {
 
 	render() {
 		if(this.state.isLoading) {
-			return <Loader />;
+      return <Loader 
+        loadingMessage="Loading Reviews..."
+      />;
 		}
 		return(
-			<ListView
+      <RefreshableListView
         renderSectionHeader={this.props.sectionHeader}
-        renderHeader={this.props.header}
 				dataSource={this.state.dataSource}
+        renderHeaderWrapper={this.props.header}
+        loadData={this._fetchData.bind(this)}
 				renderRow={this._renderReview.bind(this)}
 				style={[styles.listView, this.props.styles]} />
 		)
