@@ -11,7 +11,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import Events from 'react-native-simple-events';
 import ActionScreen from './components/ActionScreen';
 import AddReview from './components/AddReview';
 import Artist from './components/Artist';
@@ -25,6 +24,7 @@ import Concerts from './components/Concerts';
 import CustomAlert from './components/CustomAlert';
 import EditProfile from './components/EditProfile';
 import EditReview from './components/EditReview';
+import Events from 'react-native-simple-events';
 import FancyMessageBar from './components/FancyMessageBar';
 import Follows from './components/Follows';
 import Home from './components/Home';
@@ -102,24 +102,6 @@ class ConcertReview extends Component {
         setTimeout(_=> this.state.navigator.pop(), 0);
     });
 
-    Events.on('Ready', 'myId', data => {
-      this.setState({
-        showFancy: Object.assign(
-          {},
-          this.state.showFancy,
-          {
-            status: true,
-            message: data.message,
-            viewStyle: data.viewStyle,
-            textStyle: data.textStyle,
-          }
-        ),
-      });
-      setTimeout(() => {
-        this.setState({
-          showFancy: Object.assign({}, this.state.showFancy, {status: false}),
-        });
-      }, 5000);
     // Action to throw errors
     Events.on('Ready', 'myId', data => {
       this.setState({
@@ -146,12 +128,15 @@ class ConcertReview extends Component {
     //Action triggered when photo or review begins posting
     Events.on('POST', 'postId', data => {
       this.setState({
-        showFancy: Object.assign({}, this.state.showFancy,
-                                 {
-                                   status: true,
-                                   data: Object.assign({}, this.state.showFancy.data, data.data, {actionType: undefined}),
-                                   isLoading: true,
-                                 }),
+        showFancy: Object.assign(
+          {},
+          this.state.showFancy,
+          {
+            status: true,
+            data: Object.assign({}, this.state.showFancy.data, data.data, {actionType: undefined}),
+            isLoading: true,
+          }
+        ),
       });
     });
 
@@ -171,12 +156,8 @@ class ConcertReview extends Component {
             }
           ),
         });
-      });
-  }
-
-  componentWillUnmount () {
-    alert('bue');
-    Events.rm('Ready', 'myId');
+      }
+    );
   }
 
 	_renderScene(route, navigator) {
