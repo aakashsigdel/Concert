@@ -72,10 +72,10 @@ export default class Review extends Component {
             : require('../../assets/images/user_default.png');
             try {
             res.data.artistPic =
-              res.data.image !== null ||
+              res.data.image !== null &&
               res.data.image.large.trim().length > 0
               ? {uri:res.data.image.large}
-              : require('../../assets/images/default_artist_page.png');
+              : {uri: res.data.concert.artist.image.large};
             } catch (error) {
               res.data.artistPic = require('../../assets/images/default_artist_page.png');
             }

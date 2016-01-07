@@ -124,6 +124,14 @@ export default class ProfileContainer extends Component {
     );
   }
 
+  _setFollows () {
+    this.setState({
+      following: this.state.following === 0 ? 1 : 0,
+      followersNum: this.state.following === 0 ? 
+        this.state.followersNum + 1 : this.state.followersNum - 1
+    });
+  }
+
   _followPress () {
     getAccessToken().then( access_token => {
       let query = '';
@@ -132,13 +140,15 @@ export default class ProfileContainer extends Component {
       else
         query = USER.FOLLOW_URL.replace('{user_id}', this.state.userId);
 
+      this._setFollows.call(this);
+
       fetch(query.replace('abcde', access_token), {method: 'POST'})
       .then(response => {
-        this.setState({
-          following: this.state.following === 0 ? 1 : 0,
-          followersNum: this.state.following === 0 ? 
-            this.state.followersNum + 1 : this.state.followersNum - 1
-        });
+        if(!response.ok)
+          this._setFollows.call(this);
+      })
+      .catch(error => {
+        this._setFollows.call(this);
       })
       .done();
     } )
