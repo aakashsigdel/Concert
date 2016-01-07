@@ -14,9 +14,12 @@ export const serializeJSON = ( json ) => {
   }).join('&');
 }
 
-export const callOnFetchError = (error, url="url not specified") => {
-  console.log(error, url);
-  Events.trigger('Ready', {message: 'Limited or no internet connection.'});
+export const callOnFetchError = (error, url="not specified") => {
+  Events.trigger('Ready', {data:{message: 'Limited or no internet connection.'}});
+}
+
+export const callOnError = (error, message="Something weird happened") => {
+  Events.trigger('Ready', {data:{message: message}});
 }
 
 export const refreshUserDataOnAsyncStorage = async() => {
@@ -77,32 +80,46 @@ export const performAPIAction = (params) => {
   }
 }
 
-export let DataFactory = () => {
-  let apiData = {};
-  let shouldUpdate = false;
-  let populateApiData = ( data ) => {
-    apiData = Object.assign(
-      {},
-      apiData,
-      data
-    )
-  }
+export const cropImage = (imageUri, transformData) => {
+  const {
+    CameraRoll,
+    NativeModules,
+  } = require('react-native');
+  const ImageEditingManager = NativeModules.ImageEditingManager;
 
-  let sendApiData = () => {
-    if(Object.keys(apiData).length === 0 )
-      return false
-    else
-      return apiData
-  }
+  let promise = new Promise ((resolve, reject) => {
+    ImageEditingManager.cropImage(
+      imageUri,
+      transformData,
+      croppedImage => {
+        CameraRoll.saveImageWithTag(
+          croppedImage,
+          data => {resolve(data)},
+            error => {reject('Count\'t save image to camera roll');}
+        )
+      },
+      (error) => {reject('Couldn\'t crop the image');}
+    );
+  })
+  return promise;
+}
 
-  return {
-    setData: populateApiData,
-    getData: sendApiData,
-    toggleShouldUpdate: () => {
-      shouldUpdate = !shouldUpdate
-    },
-    shouldUpdate: () => {
-      return shouldUpdate
-    },
-  }
+export const postToRevuze = (imageObj) => {
+  const {
+    NativeModules,
+  } = require('react-native');
+
+  let promise = new Promise ((resolve, reject) => {
+    NativeModules.FileUpload.upload(
+      imageObj,
+      (error, result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject('Error Occured while uploading photo');
+        }
+      }
+    );
+  });
+  return promise;
 }

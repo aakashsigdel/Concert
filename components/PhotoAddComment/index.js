@@ -13,7 +13,12 @@ import React, {
 import Loader from '../../components.ios/Loader';
 import HeaderBar from '../HeaderBar';
 import { PHOTO } from '../../constants/ApiUrls';
-import { getAccessToken } from '../../utils';
+import {
+  callOnError,
+  cropImage,
+  getAccessToken,
+  postToRevuze,
+} from '../../utils';
 import Events from 'react-native-simple-events';
 
 let deviceWidth = Dimensions.get('window').width;
@@ -33,13 +38,10 @@ export default class PhotoAddComment extends Component {
   _imageCrop () {
     let imageOffset = {};
     let imageSize = {};
-    imageSize.height = this.props.imageData.image.height - 
-      ((this.props.imageData.image.width / deviceWidth ) * 
-      (deviceHeight/ 4));
+    imageSize.height = this.props.imageData.image.width;
     imageSize.width = this.props.imageData.image.width;
-    let headerBarHeight = 64;
     imageOffset.x = 0;
-    imageOffset.y = (imageSize.width / deviceWidth) * headerBarHeight;;
+    imageOffset.y = 0;
     let transformData = {
       offset: imageOffset,
       size: imageSize
@@ -57,76 +59,77 @@ export default class PhotoAddComment extends Component {
     );
   }
 
-  _handlePress() {
+  async _handlePress() {
     if(this.caption.trim() === '') {
       alert('ERROR: Please Input Photo Caption');
       return;
     }
-    this.setState({
-      isLoading: true,
+    this.props.navigator.popToTop();
+    Events.trigger('POST', {
+      data: {
+        message: 'Posting Photo',
+        viewStyle: {backgroundColor: '#F9B400'},
+      }
     });
 
-    /* need to put this in another function */
     let imageOffset = {};
     let imageSize = {};
-    imageSize.height = this.props.imageData.image.height - 
-      ((this.props.imageData.image.width / deviceWidth ) * 
-       (deviceHeight/ 4));
-       imageSize.width = this.props.imageData.image.width;
-       let headerBarHeight = 64;
-       imageOffset.x = 0;
-       imageOffset.y = (imageSize.width / deviceWidth) * headerBarHeight;;
-       let transformData = {
-         offset: imageOffset,
-         size: imageSize
-       };
+    imageSize.height = this.props.imageData.image.width;
+    imageSize.width = this.props.imageData.image.width;
+    imageOffset.x = 0;
+    imageOffset.y = 0;
+    let transformData = {
+      offset: imageOffset,
+      size: imageSize
+    };
 
-       ImageEditingManager.cropImage(
-         this.props.imageData.image.uri,
-         transformData,
-         (croppedImageURI) => {
-           CameraRoll.saveImageWithTag(
-             croppedImageURI,
-             (data) => {
-               getAccessToken().then( access_token => {
-                 let PHOTO_POST_URL = PHOTO.POST_URL
-                   .replace('abcde', access_token)
-                   .replace('{concert_id}', this.props.concertId);
-                 let imageObj = {
-                   uploadUrl: PHOTO_POST_URL,
-                   method: 'POST',
-                   fields: {
-                     concert_id: this.props.concertId,
-                     caption: this.caption,
-                   },
-                   files: [
-                     {
-                       name: 'image',
-                       filename: data.split('/')[2] + '.JPG',
-                       filepath: data,
-                     },
-                   ]
-                 };
-                 NativeModules.FileUpload.upload(imageObj, (err, result) => {
-                   this.setState({
-                     isLoading: false,
-                   });
-                   Events.trigger('Ready', {
-                     message: 'Photo Posted',
-                     viewStyle: {backgroundColor: '#F9B400'}
-                   });
-                   let resultData = JSON.parse(result.data);
-                   this.props.navigator.immediatelyResetRouteStack([
-                     {name: 'home'},
-                     {name: 'photo', photoId: resultData.data.id}
-                   ]);
-                 });
-               } )
-             }
-           )
-         },
-         () => undefined,
-       );
+    cropImage(this.props.imageData.image.uri, transformData)
+    .then(res => {
+      getAccessToken()
+      .then(access_token => {
+        let PHOTO_POST_URL = PHOTO.POST_URL
+        .replace('abcde', access_token)
+        .replace('{concert_id}', this.props.concertId);
+        let imageObj = {
+          uploadUrl: PHOTO_POST_URL,
+          method: 'POST',
+          fields: {
+            concert_id: this.props.concertId,
+            caption: this.caption,
+          },
+          files: [
+            {
+              name: 'image',
+              filename: res.split('/')[2] + '.jpg',
+              filepath: res,
+            },
+          ]
+        };
+        postToRevuze(imageObj)
+        .then(result => {
+          Events.trigger('POSTED', {
+            data: {
+              message: 'Photo Posted',
+              viewStyle: {backgroundColor: '#F9B400'},
+              actionType: 'VIEW',
+              actionFunction: () => {
+                let resultData = JSON.parse(result.data);
+                this.props.navigator.immediatelyResetRouteStack([
+                  {name: 'home'},
+                  {name: 'photo', photoId: resultData.data.id}
+                ]);
+              }
+            }
+          });
+        })
+        .catch(error => {
+          throw(error);
+        })
+      })
+    })
+    .catch(error => {
+      callOnError(error);
+    })
   }
 
   render () {

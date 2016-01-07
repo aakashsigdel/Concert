@@ -100,26 +100,43 @@ export default class Reviews extends Component {
 
 	// this function sholud be in a global module
 	_getStars(yellowStars) {
-		let stars = [];
-		for(let i = 0; i < yellowStars; i++) {
-			stars.push(
-			  <Image
-			    key={100 - i}
-          source={require('../../assets/images/star_yellow.png')}
-          style={styles.yellowStar}
-			  />
-			);
-		}
-		for(let i = 0; i < (5 - yellowStars); i++) {
-			stars.push(
-			  <Image
-			    key={i}
-          source={require('../../assets/images/star_white.png')}
-          style={styles.whiteStar}
-			  />
-			);
-		}
-		return stars;
+    switch(yellowStars) {
+      case 0: 
+        return <Image
+          style={styles.star}
+          source={require('../../assets/images/0star.png')}
+        />
+      case 1:
+        return <Image
+          style={styles.star}
+          source={require('../../assets/images/1star.png')}
+        />
+      case 2:
+        return <Image
+          style={styles.star}
+          source={require('../../assets/images/2star.png')}
+        />
+      case 3:
+        return <Image
+          style={styles.star}
+          source={require('../../assets/images/3star.png')}
+        />
+      case 4:
+        return <Image
+          style={styles.star}
+          source={require('../../assets/images/4star.png')}
+        />
+      case 5:
+        return <Image
+          style={styles.star}
+          source={require('../../assets/images/5star.png')}
+        />
+      default:
+        return <Image
+          style={styles.star}
+          source={require('../../assets/images/5star.png')}
+        />
+    }
 	}
 
 	_handlePress(review) {
@@ -226,6 +243,7 @@ export default class Reviews extends Component {
         renderHeaderWrapper={this.props.header}
         loadData={this._fetchData.bind(this)}
 				renderRow={this._renderReview.bind(this)}
+				scrollRenderAheadDistance={50}
 				style={[styles.listView, this.props.styles]} />
 		)
 	}

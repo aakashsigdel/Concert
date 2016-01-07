@@ -4,6 +4,7 @@ import React from 'react-native';
 import {
   AppRegistry,
   Component,
+  Dimensions,
   Navigator,
   StatusBarIOS,
   StyleSheet,
@@ -26,7 +27,6 @@ import EditProfile from './components/EditProfile';
 import EditReview from './components/EditReview';
 import FancyMessageBar from './components/FancyMessageBar';
 import Follows from './components/Follows';
-import Header from './components/Header';
 import Home from './components/Home';
 import InternalNavigation from './components/InternalNavigation';
 import Intro from './components/Intro';
@@ -50,11 +50,12 @@ const styles = StyleSheet.create({
 	}
 });
 
+console.log(Dimensions.get('window'));
 class ConcertReview extends Component {
 	constructor() {
 		super();
     this.state = {
-      showFancy: {status: false, message: 'ERROR'},
+      showFancy: {status: false, data: {message: 'ERROR'}, isLoading: false},
       showCustomAlert: false,
     };
 	}
@@ -119,7 +120,58 @@ class ConcertReview extends Component {
           showFancy: Object.assign({}, this.state.showFancy, {status: false}),
         });
       }, 5000);
+    // Action to throw errors
+    Events.on('Ready', 'myId', data => {
+      this.setState({
+        showFancy: Object.assign(
+          {},
+          this.state.showFancy,
+          {
+            status: true,
+            data: Object.assign(
+              {},
+              this.state.showFancy.data,
+              data.data,
+              {
+                viewStyle: undefined,
+                actionType: undefined,
+                isLoading: undefined
+              }
+            ),
+          }
+        ),
+      });
     });
+
+    //Action triggered when photo or review begins posting
+    Events.on('POST', 'postId', data => {
+      this.setState({
+        showFancy: Object.assign({}, this.state.showFancy,
+                                 {
+                                   status: true,
+                                   data: Object.assign({}, this.state.showFancy.data, data.data, {actionType: undefined}),
+                                   isLoading: true,
+                                 }),
+      });
+    });
+
+    // Action triggered when photo or review finish posting
+    Events.on(
+      'POSTED',
+      'postedId',
+      data => {
+        this.setState({
+          showFancy: Object.assign(
+            {},
+            this.state.showFancy,
+            {
+              status: true,
+              data: Object.assign({}, this.state.showFancy.data, data.data),
+              isLoading: false,
+            }
+          ),
+        });
+      });
   }
 
   componentWillUnmount () {
@@ -200,6 +252,7 @@ class ConcertReview extends Component {
         return (
           <Artist
             artistId={route.artistId}
+            artistName={route.artistName}
             navigator={navigator}
           />
         );
@@ -305,9 +358,12 @@ class ConcertReview extends Component {
 
           if (this.state.showFancy.status)
             return <FancyMessageBar
-              message={this.state.showFancy.message}
-              viewStyle={this.state.showFancy.viewStyle}
-              messageStyle={this.state.showFancy.messageStyle}
+              message={this.state.showFancy.data.message}
+              viewStyle={this.state.showFancy.data.viewStyle}
+              messageStyle={this.state.showFancy.data.messageStyle}
+              actionType={this.state.showFancy.data.actionType}
+              actionFunction={this.state.showFancy.data.actionFunction}
+              isLoading={this.state.showFancy.isLoading}
             />
         })()}
       </View>

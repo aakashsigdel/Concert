@@ -11,7 +11,6 @@ import {
 	TouchableHighlight,
 	View,
 } from 'react-native';
-import Header from '../Header';
 import InternalNavigation from '../InternalNavigation';
 import Photos from '../Photos';
 import Reviews from '../Reviews';

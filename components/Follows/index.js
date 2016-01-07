@@ -62,8 +62,8 @@ export default class Follows extends Component {
     this._fetchData()
   }
 
-  _handlePress(userId) {
-    this.props.navigator.push({name: 'profile', index: 7, userId: userId});
+  _handlePress(userId, userName) {
+    this.props.navigator.push({name: 'profile', index: 7, userId: userId, userName: userName});
   }
 
   _renderPresentationalFollow(id, shouldFollow){

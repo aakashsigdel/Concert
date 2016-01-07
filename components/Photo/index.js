@@ -87,7 +87,7 @@ export default class Photo extends Component {
                 ...this.state.optionsForFAB,
                 {
                   name: 'Edit',
-                  action: () => this.props.navigator.push({
+                  action: () => this.props.navigator.replace({
                     name: 'photoEditComment',
                     index: 52,
                     fetchURL: query,
@@ -147,7 +147,7 @@ export default class Photo extends Component {
     });
 
 	  Share.shareOnFacebook({
-        'imagelink': this.state.photoDetail.image.original,
+        'imagelink': this.state.photoDetail.image.large,
     },
     (result) => {
       this.setState({
@@ -231,7 +231,7 @@ export default class Photo extends Component {
         />
         <View style={styles.topView}>
           <Image
-            source={{uri: this.state.photoDetail.image.original}}
+            source={{uri: this.state.photoDetail.image.large}}
             style={styles.mainPhoto}
           />
           <View style={styles.photoDetail}>
