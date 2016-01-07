@@ -30,6 +30,6 @@ export default heroElement = StyleSheet.create({
 
   image: {
     width: VIEWPORT.width,
-    height: VIEWPORT.height * 2/3,
+    height: VIEWPORT.height / 2.0,
   },
 });

@@ -11,7 +11,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import Events from 'react-native-simple-events';
 import ActionScreen from './components/ActionScreen';
 import AddReview from './components/AddReview';
 import Artist from './components/Artist';
@@ -25,6 +24,7 @@ import Concerts from './components/Concerts';
 import CustomAlert from './components/CustomAlert';
 import EditProfile from './components/EditProfile';
 import EditReview from './components/EditReview';
+import Events from 'react-native-simple-events';
 import FancyMessageBar from './components/FancyMessageBar';
 import Follows from './components/Follows';
 import Home from './components/Home';
@@ -39,6 +39,16 @@ import Review from './components/Review';
 import Reviews from './components/Reviews';
 import SearchActive from './components/SearchActive';
 import UserCamera from './components/UserCamera';
+import {
+  performAPIAction,
+  DataFactory,
+} from './utils';
+
+const styles = StyleSheet.create({
+	mainContainer: {
+		flex: 1
+	}
+});
 
 console.log(Dimensions.get('window'));
 class ConcertReview extends Component {
@@ -46,63 +56,108 @@ class ConcertReview extends Component {
 		super();
     this.state = {
       showFancy: {status: false, data: {message: 'ERROR'}, isLoading: false},
+      showCustomAlert: false,
     };
 	}
 
   componentDidMount () {
     StatusBarIOS.setHidden(true);
+    Events.on( 'SHOW_CUSTOM_ALERT',
+      'SHOW_CUSTOM_ALERT_LISTENER',
+      data => {
+        console.log(data)
+        this.setState({
+          showCustomAlert: true,
+          data: data,
+        })
+      }
+    );
+
+    Events.on( 'DELETE_OK',
+      'DELETE_OK_LISTENER',
+      data => {
+        const routes = this.state.data.navigator.getCurrentRoutes();
+        console.log(this.state.data);
+        performAPIAction(this.state.data);
+        this.state.data.navigator.popToRoute(routes[routes.length - 3]);
+        this.setState({
+          showCustomAlert: false,
+        });
+        Events.trigger(
+          'RELOAD',
+          {
+            message: 'Delete Successful',
+            id:      this.state.data.id,
+          }
+        )
+      });
+    
+    Events.on( 'DELETE_CANCEL',
+      'DELETE_CANCEL_LISTENER',
+      data => {
+        console.log(data);
+        this.setState({
+          showCustomAlert: false,
+        })
+        setTimeout(_=> this.state.navigator.pop(), 0);
+    });
+
     // Action to throw errors
     Events.on('Ready', 'myId', data => {
       this.setState({
-        showFancy: Object.assign({}, this.state.showFancy,
-                                 {
-                                   status: true,
-                                   data: Object.assign(
-                                     {},
-                                     this.state.showFancy.data,
-                                     data.data,
-                                     {
-                                       viewStyle: undefined,
-                                       actionType: undefined,
-                                       isLoading: undefined
-                                     }
-                                   ),
-                                 }),
+        showFancy: Object.assign(
+          {},
+          this.state.showFancy,
+          {
+            status: true,
+            data: Object.assign(
+              {},
+              this.state.showFancy.data,
+              data.data,
+              {
+                viewStyle: undefined,
+                actionType: undefined,
+                isLoading: undefined
+              }
+            ),
+          }
+        ),
       });
     });
 
     //Action triggered when photo or review begins posting
     Events.on('POST', 'postId', data => {
       this.setState({
-        showFancy: Object.assign({}, this.state.showFancy,
-                                 {
-                                   status: true,
-                                   data: Object.assign({}, this.state.showFancy.data, data.data, {actionType: undefined}),
-                                   isLoading: true,
-                                 }),
+        showFancy: Object.assign(
+          {},
+          this.state.showFancy,
+          {
+            status: true,
+            data: Object.assign({}, this.state.showFancy.data, data.data, {actionType: undefined}),
+            isLoading: true,
+          }
+        ),
       });
-      console.log(this.state);
-      debugger;
     });
 
     // Action triggered when photo or review finish posting
-    Events.on('POSTED', 'postedId', data => {
-      this.setState({
-        showFancy: Object.assign({}, this.state.showFancy,
-                                 {
-                                   status: true,
-                                   data: Object.assign({}, this.state.showFancy.data, data.data),
-                                   isLoading: false,
-                                 }),
-      });
-      console.log(this.state);
-      debugger;
-    });
-  }
-
-  componentWillUnmount () {
-    alert('bue');
-    Events.rm('Ready', 'myId');
+    Events.on(
+      'POSTED',
+      'postedId',
+      data => {
+        this.setState({
+          showFancy: Object.assign(
+            {},
+            this.state.showFancy,
+            {
+              status: true,
+              data: Object.assign({}, this.state.showFancy.data, data.data),
+              isLoading: false,
+            }
+          ),
+        });
+      }
+    );
   }
 
 	_renderScene(route, navigator) {
@@ -116,6 +171,7 @@ class ConcertReview extends Component {
       case 'home':
         return (
           <Home
+            dataFactory={DataFactory}
             navigator={navigator}
           />
         );
@@ -144,6 +200,7 @@ class ConcertReview extends Component {
         return (
          <Review 
            navigator={navigator}
+           dataFactory={DataFactory}
            id={route.review_id}
          />
         );
@@ -275,6 +332,11 @@ class ConcertReview extends Component {
           }}
         />
         {(() => {
+          if (this.state.showCustomAlert)
+            return <CustomAlert
+              style={{flex:1}}
+            />;
+
           if (this.state.showFancy.status)
             return <FancyMessageBar
               message={this.state.showFancy.data.message}
@@ -289,11 +351,5 @@ class ConcertReview extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-	mainContainer: {
-		flex: 1
-	}
-});
 
 AppRegistry.registerComponent('ConcertReview', () => ConcertReview);

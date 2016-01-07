@@ -23,7 +23,8 @@ import SearchActive from '../SearchActive';
 import styles from './style';
 import { CONCERTS, REVIEWS, USER_DETAILS, PHOTOS } from '../../constants/ApiUrls';
 
-var {width, height} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
+const Events = require('react-native-simple-events');
 
 export default class Home extends Component {
   constructor () {
@@ -37,6 +38,18 @@ export default class Home extends Component {
   }
 
   componentDidMount () {
+    Events.on(
+      'RELOAD',
+      'RELOAD_ID',
+      data => {
+        this.setState({renderPlaceholder: true});
+        console.log('here');
+        setTimeout(() => {
+          this.setState({renderPlaceholder: false});
+        }, 5000)
+        // this.forceUpdate;
+      }
+    )
     InteractionManager.runAfterInteractions( async () => {
       await (async () => {
         try {
@@ -124,6 +137,7 @@ export default class Home extends Component {
           <Reviews 
             concertId={12}
             calanderHeader={true}
+            dataFactory={this.props.dataFactory}
             navigator={this.props.navigator}
             header={_=> this._listHeader(1, 'HOT REVIEWS')} 
             fetchFor="latest"

@@ -7,10 +7,30 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 import { performAPIAction } from '../../utils.js'
-
-const styles = StyleSheet.create(require('./style.json'));
+import styles from './style';
+const Events = require('react-native-simple-events');
 
 export default class CustomAlert extends Component {
+  _okPress(){
+    Events.trigger(
+      'DELETE_OK',
+      {
+        data: this.props.params,
+        navigator: this.props.navigator,
+      }
+    )
+  }
+
+  _cancelPress(){
+    Events.trigger(
+      'DELETE_CANCEL',
+      {
+        data: this.props.params,
+        navigator: this.props.navigator,
+      }
+    )
+  }
+
   render(){
     return (
       <View style={styles.container}>
@@ -22,16 +42,12 @@ export default class CustomAlert extends Component {
           </View>
           <View style={styles.bottom}>
             <TouchableOpacity 
-              onPress={() => this.props.navigator.pop()}
+              onPress={this._cancelPress.bind(this)}
               style={styles.left}>
               <Text style={styles.text}> Cancel </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => {
-                performAPIAction(this.props.params);
-                this.props.navigator.pop();
-                this.props.navigator.pop();
-              }}
+              onPress={this._okPress.bind(this)}
               style={styles.right}>
               <Text style={[styles.text, {
                 color: 'red',

@@ -34,6 +34,7 @@ import {
 
 const {deviceWidth, deviceHeight} = Dimensions.get('window');
 const Share = NativeModules.KDSocialShare;
+const Events = require('react-native-simple-events');
 const header = StyleSheet.create(require('./header.json'));
 const comment = StyleSheet.create(require('./comment.json'));
 
@@ -113,15 +114,27 @@ export default class Review extends Component {
               {
                 name: 'Delete',
                 action: () => {
-                  this.props.navigator.replace({
-                    name: 'customAlert',
-                    params: {
-                      action :'DELETE',
+                  console.log('firing event SHOW_CUSTOM_ALERT');
+                  Events.trigger(
+                    'SHOW_CUSTOM_ALERT',
+                    {
+                      view:   'Review',
+                      action: 'DELETE',
+                      params: this.props.params,
                       id: this.props.id,
-                      link: url,
-                      name: 'review',
-                    },
-                  })
+                      navigator: this.props.navigator,
+                      link:   url,
+                    }
+                  )
+                  // this.props.navigator.replace({
+                  //   name: 'customAlert',
+                  //   params: {
+                  //     action :'DELETE',
+                  //     id: this.props.id,
+                  //     link: url,
+                  //     name: 'review',
+                  //   },
+                  // })
                 } 
               },
             ]

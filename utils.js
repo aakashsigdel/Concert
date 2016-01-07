@@ -46,6 +46,7 @@ export const getUserDetailsFromAsyncStorage = async ( refresh = false ) => {
       return JSON.parse(userDetails);
     });
   } catch (error) {
+    console.log(error);
     return 'there was an error fetching from asyncstorage';
   }
 }
@@ -57,19 +58,24 @@ export const getAccessToken = async () => {
       return JSON.parse(loginDetails).access_token;
     })
   }catch(e){
-    return 'there was an error fetching login details from asyncstorage';
+    console.log(e)
+    console.log( 'there was an error fetching login details from asyncstorage');
+    return false;
   }
 }
 
 export const performAPIAction = (params) => {
+  console.debug(params);
   try{
     fetch( params.link, { method: params.action})
     .then(response => {
-      console.log(response);
+      console.debug(response);
     }).catch(e => {
+      console.debug('apiactionerroror: ', e);
       callOnFetchError(e, params.link);
     }).done();
   }catch(e){
+    console.debug('apiactionerroror: ', e);
     Events.trigger('Ready', {message: 'Limited or no internet connection.'});
   }
 }
