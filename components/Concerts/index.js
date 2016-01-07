@@ -15,19 +15,19 @@ import Header from '../Header';
 import InternalNavigation from '../InternalNavigation';
 import Photos from '../Photos';
 import Reviews from '../Reviews';
+import Events from 'react-native-simple-events';
 import {
   callOnFetchError,
   getAccessToken,
 } from '../../utils.js';
 const RefreshableListView = require('react-native-refreshable-listview');
+const ds = new ListView.DataSource({ rowHasChanged:  (r1, r2) => r1 != r2 }); 
 
 export default class Concerts extends Component {
 	constructor() {
 		super();
 		this.state = {
-			dataSource: new ListView.DataSource({
-				rowHasChanged: (row1, row2) => row1.id !== row2.id
-			}),
+      dataSource: ds.cloneWithRows([]),
       isLoading: true,
       apiData: null,
 		};
@@ -36,6 +36,17 @@ export default class Concerts extends Component {
 
 	componentDidMount() {
 		this._fetchData();
+    Events.on(
+      'UPDATE_CONCERTS',
+      'UPDATE_CONCERTS_LISTENER',
+      eventData => {
+        const newData = this.state.apiData.filter(concert => concert.id != eventData.concert.id);
+        this.setState({
+          dataSource: ds.cloneWithRows(newData),
+          apiData: newData
+        })
+      }
+    )
 	}
 
   componentDidUpdate(prevProps) {
@@ -60,7 +71,7 @@ export default class Concerts extends Component {
           this.setState({
             isLoading: false,
             apiData: responseData.data,
-            dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+            dataSource: ds.cloneWithRows(responseData.data),
           });
           resolve(responseData.data);
         })
@@ -121,7 +132,7 @@ export default class Concerts extends Component {
 		  onPress={this._handlePress.bind(this, concert.id, concert)}
       >
         <View style={[styles.concertContainer, backgroundStyle]}>
-          <Image source={{uri: concert.artist.image.small}} style={styles.profilePicture} />
+          <Image source={{uri: concert.artist.image.small }} style={styles.profilePicture} />
           <View style={styles.detailContainer}>
             <Text style={styles.title}>
             {

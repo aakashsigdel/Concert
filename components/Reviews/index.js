@@ -38,19 +38,14 @@ export default class Reviews extends Component {
 	componentDidMount() {
     console.log('review component did mount');
     this._fetchData();
-    this.props.navigator.navigationContext.addListener( 'didfocus',() => {
-      this._fetchData()
-    })
     Events.on(
       'RELOAD',
       'RELOAD_ID',
       data => {
         this.setState({isLoading: true});
-        this._fetchData();
-        console.log('caught');
-        console.log(this.state);
         const newData = this.state.apiData.filter(row => row.id != data.id);
         this.setState({
+          isLoading: false,
           apiData: newData,
           dataSource: ds.cloneWithRows(newData)
         })

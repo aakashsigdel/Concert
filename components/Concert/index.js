@@ -21,6 +21,8 @@ import {
   getAccessToken,
 } from '../../utils.js'
 
+import Events from 'react-native-simple-events';
+
 export default class Concert extends Component {
   constructor () {
     super();
@@ -40,6 +42,16 @@ export default class Concert extends Component {
   }
 
   _handlePress() {
+    console.log(this.state.concert)
+    if (this.state.concert.checked_in === 0){
+      Events.trigger(
+        'UPDATE_CONCERTS',
+        {
+          concert: this.props.concert
+        }
+      );
+    }
+
     this.props.navigator.pop();
   }
 
