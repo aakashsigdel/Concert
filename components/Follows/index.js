@@ -21,6 +21,7 @@ import { USER } from '../../constants/ApiUrls.js';
 
 const styles = StyleSheet.create(require('./style.json'))
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1.following !== r2.following })
+const RefreshableListView = require('react-native-refreshable-listview');
 
 export default class Follows extends Component {
   constructor() {
@@ -32,24 +33,28 @@ export default class Follows extends Component {
   }
 
   _fetchData() {
-    getAccessToken().then( access_token =>{
-      let query_url = (this.props.type === 'followers') ?  USER.FOLLOWED_BY_URL: USER.FOLLOWING_URL;
+    return new Promise((resolve, reject) => {
+      getAccessToken().then( access_token =>{
+        let query_url = (this.props.type === 'followers') ?  USER.FOLLOWED_BY_URL: USER.FOLLOWING_URL;
 
-      query_url = query_url
+        query_url = query_url
         .replace('{user_id}', this.props.userId)
         .replace('abcde', access_token);
 
-      fetch(query_url)
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.state.apiData = responseData.data;
-        this.setState({
-          dataSource: ds.cloneWithRows(this.state.apiData),
-        });
+        fetch(query_url)
+        .then((response) => response.json())
+        .then((responseData) => {
+          this.state.apiData = responseData.data;
+          this.setState({
+            dataSource: ds.cloneWithRows(this.state.apiData),
+          });
+          resolve(responseData.data);
+        })
+        .catch((error) => {
+          reject(error)
+          callOnFetchError(error, query_url);
+        }).done();
       })
-      .catch((error) => {
-        callOnFetchError(error, query_url);
-      }).done();
     })
   }
 
@@ -93,6 +98,79 @@ export default class Follows extends Component {
     })
   }
 
+  _renderRow(user){
+    return <View
+      style={[ styles.listItem, styles.displayAsRow ]}>
+      <TouchableHighlight
+        onPress={this._handlePress.bind(this, user.id)}
+        >
+        <View
+          style={styles.displayAsRow}>
+          <Image
+            style={styles.image}
+            source={
+              user.profile_picture.trim().length > 0
+                ? {uri: user.profile_picture}
+                : require('../../assets/images/user_default.png')
+            }
+          />
+          <Text
+            style={styles.text}>
+            {
+              (() => {
+                if(user.full_name.length < 15)
+                  return user.full_name.toUpperCase();
+                else
+                  return user.full_name.toUpperCase().slice(0, 15) + '...';
+              })()
+            }
+          </Text>
+        </View>
+      </TouchableHighlight>
+      {(
+        ()=>{
+          if (user.following === 1){
+            return(
+              <TouchableHighlight
+                onPress={this._followPress.bind(this, user.id, false)}
+                style={[styles.button, styles.right]}>
+                <View
+                  style={styles.displayAsRow}>
+                  <Image
+                    style={styles.doneImage}
+                    source={require('../../assets/images/done_colored.png')}/>
+                  <Text style={[styles.text, styles.followText, { color: 'rgb(249,180,0)' }]}>
+                    FOLLOWING
+                  </Text>
+                </View>
+              </TouchableHighlight>
+              )
+          }
+          else {
+            return(
+              <TouchableHighlight
+                onPress={this._followPress.bind(this, user.id, true)}
+                style={[styles.button, styles.follow, styles.right]}>
+                <View
+                  style={styles.displayAsRow}>
+                  <Image 
+                    style={{
+                      marginRight: 12.5,
+                    }}
+                    source={require('../../assets/images/add.png')}/>
+                  <Text style={[styles.text, styles.followText]}>
+                    FOLLOW
+                  </Text>
+                </View>
+              </TouchableHighlight>
+              )  
+          }
+        }
+
+      )()}
+    </View>
+  }
+
   render () {
     return (
       <View style={styles.container}>
@@ -106,83 +184,13 @@ export default class Follows extends Component {
             userName: this.props.userName,
           })}
         />
-        <ListView
+        <RefreshableListView
           style={styles.listView}
+          loadData={this._fetchData.bind(this)}
           dataSource={ this.state.dataSource }
-          renderRow={(user) =>
-            <View
-              style={[ styles.listItem, styles.displayAsRow ]}>
-              <TouchableHighlight
-              onPress={this._handlePress.bind(this, user.id)}
-              >
-                <View
-                  style={styles.displayAsRow}>
-                  <Image
-                    style={styles.image}
-                    source={
-                      user.profile_picture.trim().length > 0
-                        ? {uri: user.profile_picture}
-                        : require('../../assets/images/user_default.png')
-                    }
-                  />
-                  <Text
-                    style={styles.text}>
-                    {
-                      (() => {
-                        if(user.full_name.length < 15)
-                          return user.full_name.toUpperCase();
-                        else
-                          return user.full_name.toUpperCase().slice(0, 15) + '...';
-                      })()
-                    }
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              {(
-                ()=>{
-                  if (user.following === 1){
-                    return(
-                      <TouchableHighlight
-                        onPress={this._followPress.bind(this, user.id, false)}
-                        style={[styles.button, styles.right]}>
-                        <View
-                          style={styles.displayAsRow}>
-                          <Image
-                            style={styles.doneImage}
-                            source={require('../../assets/images/done_colored.png')}/>
-                          <Text style={[styles.text, styles.followText, { color: 'rgb(249,180,0)' }]}>
-                            FOLLOWING
-                          </Text>
-                        </View>
-                      </TouchableHighlight>
-                      )
-                      }
-                      else {
-                        return(
-                          <TouchableHighlight
-                            onPress={this._followPress.bind(this, user.id, true)}
-                            style={[styles.button, styles.follow, styles.right]}>
-                            <View
-                              style={styles.displayAsRow}>
-                              <Image 
-                                style={{
-                                  marginRight: 12.5,
-                                }}
-                                source={require('../../assets/images/add.png')}/>
-                              <Text style={[styles.text, styles.followText]}>
-                                FOLLOW
-                              </Text>
-                            </View>
-                          </TouchableHighlight>
-                        )  
-                      }
-                }
-
-              )()}
-            </View>
-          }>
-          </ListView>
-        </View>
+          renderRow={this._renderRow.bind(this) }
+        />
+      </View>
     )
   }
 }

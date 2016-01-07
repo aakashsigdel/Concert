@@ -20,9 +20,10 @@ import {
   DataFactory,
 } from '../../utils.js';
 
-const Events = require('react-native-simple-events');
-const RefreshableListView = require('react-native-refreshable-listview');
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id != r2.id})
+const  Events = require('react-native-simple-events'),
+       RefreshableListView = require('react-native-refreshable-listview'),
+       ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id != r2.id}),
+       styles = StyleSheet.create(require('./style.json'));
 
 export default class Reviews extends Component {
 	constructor() {
@@ -37,13 +38,9 @@ export default class Reviews extends Component {
 	componentDidMount() {
     console.log('review component did mount');
     this._fetchData();
-    if(DataFactory().shouldUpdate()){
-      console.log('What!!');
-      const data = DataFactory().getData();
-      this.setState({
-        dataSource: ds.cloneWithRows(data)
-      })
-    }
+    this.props.navigator.navigationContext.addListener( 'didfocus',() => {
+      this._fetchData()
+    })
     Events.on(
       'RELOAD',
       'RELOAD_ID',
@@ -238,5 +235,3 @@ export default class Reviews extends Component {
 		)
 	}
 }
-
-const styles = StyleSheet.create(require('./style.json'));
