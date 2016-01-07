@@ -83,6 +83,7 @@ class ConcertReview extends Component {
         this.setState({
           showCustomAlert: false,
         });
+        console.log(this.state.data, data);
         Events.trigger(
           'RELOAD',
           {
