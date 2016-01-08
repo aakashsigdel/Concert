@@ -65,7 +65,6 @@ class ConcertReview extends Component {
     Events.on( 'SHOW_CUSTOM_ALERT',
       'SHOW_CUSTOM_ALERT_LISTENER',
       data => {
-        console.log(data)
         this.setState({
           showCustomAlert: true,
           data: data,
@@ -77,7 +76,6 @@ class ConcertReview extends Component {
       'DELETE_OK_LISTENER',
       data => {
         const routes = this.state.data.navigator.getCurrentRoutes();
-        console.log(this.state.data);
         performAPIAction(this.state.data);
         this.state.data.navigator.popToRoute(routes[routes.length - 3]);
         this.setState({
@@ -95,7 +93,6 @@ class ConcertReview extends Component {
     Events.on( 'DELETE_CANCEL',
       'DELETE_CANCEL_LISTENER',
       data => {
-        console.log(data);
         this.setState({
           showCustomAlert: false,
         })
@@ -104,7 +101,6 @@ class ConcertReview extends Component {
 
     // Action to throw errors
     Events.on('Ready', 'myId', data => {
-      debugger;
       this.setState({
         showFancy: Object.assign(
           {},
@@ -128,7 +124,6 @@ class ConcertReview extends Component {
 
     //Action triggered when photo or review begins posting
     Events.on('POST', 'postId', data => {
-      debugger;
       this.setState({
         showFancy: Object.assign(
           {},

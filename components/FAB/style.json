@@ -1,6 +1,7 @@
 {
   container: {
     position: 'absolute',
+    backgroundColor: 'transparent',
     bottom: 15,
     right: 15,
   },

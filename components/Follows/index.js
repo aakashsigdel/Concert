@@ -102,7 +102,7 @@ export default class Follows extends Component {
     return <View
       style={[ styles.listItem, styles.displayAsRow ]}>
       <TouchableHighlight
-        onPress={this._handlePress.bind(this, user.id)}
+        onPress={this._handlePress.bind(this, user.id, user.full_name)}
         >
         <View
           style={styles.displayAsRow}>

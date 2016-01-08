@@ -36,7 +36,6 @@ export default class Reviews extends Component {
 	}
 
 	componentDidMount() {
-    console.log('review component did mount');
     this._fetchData();
     Events.on(
       'RELOAD',
@@ -67,10 +66,6 @@ export default class Reviews extends Component {
   _fetchData() {
     const p = new Promise((resolve, reject) => {
       getAccessToken().then( access_token =>{
-<<<<<<< HEAD
-=======
-        console.log('working');
->>>>>>> origin/aakashBranch
         this.setState({isLoading: true});
         let query = this.props.fetchURL
         .replace('abcde', access_token);
@@ -78,18 +73,8 @@ export default class Reviews extends Component {
         fetch(query)
         .then((response) => response.json())
         .then((responseData) => {
-<<<<<<< HEAD
-          // if (responseData.data.length === 0)
-          //   responseData.data = [{id: 0}];
-
-=======
-          console.log('responsedat-', responseData);
-          console.log('state-', this.state);
-          // if (responseData.data.length === 0)
-          //   responseData.data = [{id: 0}];
           if (responseData.data.length === 0)
             responseData.data = [{id: 0}];
->>>>>>> origin/aakashBranch
           this.setState({
             dataSource: ds.cloneWithRows(responseData.data),
             isLoading: false,

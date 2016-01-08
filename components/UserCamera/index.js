@@ -55,7 +55,6 @@ export default class UserCamera extends Component {
             offset: imageOffset,
             size: imageSize
           };
-          console.log(data.edges);
           let photoURI = data.edges[0].node.image.uri;
           _this.props.navigator.push({
             name: 'cameraConfirmation',

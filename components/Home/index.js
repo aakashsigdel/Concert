@@ -43,7 +43,6 @@ export default class Home extends Component {
       'RELOAD_ID',
       data => {
         this.setState({renderPlaceholder: true});
-        console.log('here');
         setTimeout(() => {
           this.setState({renderPlaceholder: false});
         }, 5000)

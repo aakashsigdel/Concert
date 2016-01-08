@@ -30,9 +30,10 @@ export default class SearchActive extends Component {
     super()
     this.navigator = null;
     this.state = {
-      filterText : '',
+      submitText : '',
       activeView: 'reviews',
     };
+    this.filterText = '';
   }
 
   _renderScene (route, navigator)  {
@@ -41,35 +42,35 @@ export default class SearchActive extends Component {
       case 'reviews' :
         return (
           <Reviews 
-            filterText={this.state.filterText} 
+            filterText={this.state.submitText} 
             navigator={this.props.navigator}
             fetchFor="concertId"
-            fetchURL={SEARCH.REVIEWS_URL.replace('{search_token}', this.state.filterText)}
+            fetchURL={SEARCH.REVIEWS_URL.replace('{search_token}', this.state.submitText)}
           />
         );
       case 'concerts' :
         return(
           <Concerts 
             calanderHeader={true} 
-            filterText={this.state.filterText} 
+            filterText={this.state.submitText} 
             navigator={this.props.navigator} 
-            fetchURL={SEARCH.CONCERTS_URL.replace('{search_token}', this.state.filterText)}
+            fetchURL={SEARCH.CONCERTS_URL.replace('{search_token}', this.state.submitText)}
           /> 
         );
       case 'users':
         return (
           <Users
-            filterText={this.state.filterText}
+            filterText={this.state.submitText}
             navigator={this.props.navigator}
-            fetchURL={SEARCH.USERS_URL.replace('{search_token}', this.state.filterText)}
+            fetchURL={SEARCH.USERS_URL.replace('{search_token}', this.state.submitText)}
           />
         );
       case 'artists':
         return (
           <Artists
-            filterText={this.state.filterText} 
+            filterText={this.state.submitText} 
             navigator={this.props.navigator} 
-            fetchURL={SEARCH.ARTISTS_URL.replace('{search_token}', this.state.filterText)}
+            fetchURL={SEARCH.ARTISTS_URL.replace('{search_token}', this.state.submitText)}
           />
         );
       default:
@@ -102,7 +103,10 @@ export default class SearchActive extends Component {
               />
               <TextInput 
                 style={styles.inputBox}
-                onChangeText={(text) => this.setState({filterText: text})}
+                onChangeText={(text) => {
+                  this.filterText = text;
+                }}
+                onEndEditing={() => this.setState({submitText: this.filterText})}
                 placeholder="Search and you will find.."
                 autoCorrect={false}
                 placeholderTextColor="rgba(255, 255, 255, 0.5)"

@@ -42,7 +42,6 @@ export default class Concert extends Component {
   }
 
   _handlePress() {
-    console.log(this.state.concert)
     if (this.state.concert.checked_in === 0){
       Events.trigger(
         'UPDATE_CONCERTS',
