@@ -206,6 +206,7 @@ export default class Reviews extends Component {
               <Text style={styles.username}>
                 {
                   (() => {
+                    console.log(this);
                     if(this.props.fetchFor === 'concert')
                       return review.user.full_name.toUpperCase()
                     else if(this.props.fetchFor === 'user')
