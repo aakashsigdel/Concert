@@ -28,7 +28,6 @@ import {
 } from '../../utils.js';
 
 const Share = NativeModules.KDSocialShare;
-const Events = require('react-native-simple-events');
 
 export default class Photo extends Component {
   constructor() {
@@ -98,18 +97,16 @@ export default class Photo extends Component {
                 },
                 {
                   name: 'Delete',
-                  action: () => {
-                    Events.trigger(
-                      'SHOW_CUSTOM_ALERT',
-                      {
-                        view: 'Photo',
-                        action: 'DELETE',
-                        id: this.props.photoId,
-                        navigator: this.props.navigator,
-                        link: query,
-                      }
-                    )
-                  }
+                  action: () => this.props.navigator.replace({
+                    name: 'customAlert',
+                    params: {
+                      action :'DELETE',
+                      id: this.props.photoId,
+                      link: query,
+                      name: 'photo',
+                    },
+                    sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+                  })
                 }
               ]
             }

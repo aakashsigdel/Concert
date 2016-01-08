@@ -133,7 +133,7 @@ export default class Follows extends Component {
             return(
               <TouchableHighlight
                 onPress={this._followPress.bind(this, user.id, false)}
-                style={[styles.button, styles.right, {backgroundColor: '#1a1a1a'}]}>
+                style={[styles.button, styles.right]}>
                 <View
                   style={styles.displayAsRow}>
                   <Image

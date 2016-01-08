@@ -155,6 +155,7 @@ class ConcertReview extends Component {
         });
       }
     );
+
     Events.on(
       'DISMISS',
       'dismissId',

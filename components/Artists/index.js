@@ -29,7 +29,6 @@ export default class Artists extends Component {
 
   componentDidMount(){
     this._fetchData();
-    console.log('artists Component mounted');
   }
 
   componentDidUpdate(prevProps) {

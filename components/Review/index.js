@@ -124,6 +124,15 @@ export default class Review extends Component {
                       link:   url,
                     }
                   )
+                  // this.props.navigator.replace({
+                  //   name: 'customAlert',
+                  //   params: {
+                  //     action :'DELETE',
+                  //     id: this.props.id,
+                  //     link: url,
+                  //     name: 'review',
+                  //   },
+                  // })
                 } 
               },
             ]

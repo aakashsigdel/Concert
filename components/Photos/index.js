@@ -20,33 +20,20 @@ import {
 } from '../../utils.js';
 const deviceWidth = Dimensions.get('window').width;
 const RefreshableListView = require('react-native-refreshable-listview');
-const Events = require('react-native-simple-events');
-const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1.id != r2.id });
 
 export default class Photos extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-      dataSource: ds.cloneWithRows([]),
-      isLoading: true,
-      apiData: []
+			dataSource: new ListView.DataSource({
+				rowHasChanged: (row1, row2) => row1.id !== row2.id
+			}),
+			isLoading: true
 		};
 	}
 
 	componentDidMount() {
 		this._fetchPhotos();
-    Events.on(
-      'RELOAD',
-      'RELOAD_ID',
-      data => {
-        const newData = this.state.apiData.filter(photo => photo.id !== data.id); // filter
-        this.setState({
-          isLoading: false,
-          apiData: newData,
-          dataSource: ds.cloneWithRows(newData)
-        })
-      }
-    )
 	}
 
 	_calculateImageSize() {
@@ -69,9 +56,8 @@ export default class Photos extends Component {
           if(responseData.data.length === 0)
             responseData.data = [{id: 0}];
           this.setState({
-            dataSource: ds.cloneWithRows(responseData.data),
-            isLoading: false,
-            apiData: responseData.data,
+            dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+            isLoading: false
           });
           resolve(responseData.data);
         })
