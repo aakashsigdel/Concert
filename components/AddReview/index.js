@@ -5,6 +5,7 @@ import React, {
   Dimensions,
   View,
   Image,
+  PixelRatio,
   NativeModules,
   Text,
   TextInput,
@@ -91,13 +92,14 @@ export default class AddReview extends Component {
     /* need to put this in another function */
     let imageOffset = {};
     let imageSize = {};
-    imageSize.height = this.props.imageData.image.height - 
-      ((this.props.imageData.image.width / deviceWidth ) * 
-       (deviceHeight/ 4));
-       imageSize.width = this.props.imageData.image.width;
-       let headerBarHeight = 64;
+    imageSize.height = this.props.imageData.image.width;
+    imageSize.width = this.props.imageData.image.width;
+    const headerBarHeight = 0.096 * deviceHeight;
        imageOffset.x = 0;
-       imageOffset.y = (imageSize.width / deviceWidth) * headerBarHeight;;
+    const pixelRatio = PixelRatio.get();
+    imageOffset.y =
+      (this.props.imageData.image.height / deviceHeight)
+      * headerBarHeight * pixelRatio;
        let transformData = {
          offset: imageOffset,
          size: imageSize

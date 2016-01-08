@@ -43,7 +43,9 @@ export default class Reviews extends Component {
       'RELOAD_ID',
       data => {
         this.setState({isLoading: true});
-        const newData = this.state.apiData.filter(row => row.id != data.id);
+        let newData = this.state.apiData.filter(row => row.id != data.id);
+        if(newData.length === 0)
+          newData = [{id: 0}];
         this.setState({
           isLoading: false,
           apiData: newData,
@@ -77,7 +79,8 @@ export default class Reviews extends Component {
           console.log('state-', this.state);
           // if (responseData.data.length === 0)
           //   responseData.data = [{id: 0}];
-
+          if (responseData.data.length === 0)
+            responseData.data = [{id: 0}];
           this.setState({
             dataSource: ds.cloneWithRows(responseData.data),
             isLoading: false,

@@ -64,6 +64,7 @@ export default class FancyMessageBar extends Component {
       padding: 0,
       borderWidth: 0,
     });
+    Events.trigger('DISMISS');
   }
 
   render () {

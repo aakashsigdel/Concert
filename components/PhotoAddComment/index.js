@@ -5,6 +5,7 @@ import React, {
   Component,
   Dimensions,
   NativeModules,
+  PixelRatio,
   StyleSheet,
   Text,
   TextInput,
@@ -35,30 +36,6 @@ export default class PhotoAddComment extends Component {
     this.caption = '';
   }
 
-  _imageCrop () {
-    let imageOffset = {};
-    let imageSize = {};
-    imageSize.height = this.props.imageData.image.width;
-    imageSize.width = this.props.imageData.image.width;
-    imageOffset.x = 0;
-    imageOffset.y = 0;
-    let transformData = {
-      offset: imageOffset,
-      size: imageSize
-    };
-
-    ImageEditingManager.cropImage(
-      this.props.imageData.image.uri,
-      transformData,
-      (croppedImageURI) => {
-        CameraRoll.saveImageWithTag(
-          croppedImageURI,
-        )
-      },
-      () => undefined,
-    );
-  }
-
   async _handlePress() {
     if(this.caption.trim() === '') {
       alert('ERROR: Please Input Photo Caption');
@@ -77,11 +54,16 @@ export default class PhotoAddComment extends Component {
     imageSize.height = this.props.imageData.image.width;
     imageSize.width = this.props.imageData.image.width;
     imageOffset.x = 0;
-    imageOffset.y = 0;
+    const headerBarHeight = 0.096 * deviceHeight;
+    const pixelRatio = PixelRatio.get();
+    imageOffset.y =
+      (this.props.imageData.image.height / deviceHeight)
+      * headerBarHeight * pixelRatio;
     let transformData = {
       offset: imageOffset,
       size: imageSize
     };
+    debugger;
 
     cropImage(this.props.imageData.image.uri, transformData)
     .then(res => {
