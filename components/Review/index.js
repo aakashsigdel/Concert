@@ -45,7 +45,6 @@ export default class Review extends Component {
       isLoading: true,
       renderPlaceholderOnly: true,
       loggedInUserDetail: null,
-      isLoading: false,
       total_likes: 0,
       isLiked: false,
       heartImage: null,
@@ -265,7 +264,9 @@ export default class Review extends Component {
     if(this.state.renderPlaceholderOnly)
       return this._renderPlaceholder();
     if(this.state.isLoading)
-      return <Loader />
+      return <Loader
+        loadingMessage="Loading Review"
+      />
     return (
       <View style={{ flex: 1}}>
 

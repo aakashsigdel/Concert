@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Loader from '../../components.ios/Loader';
 import Photos from '../Photos';
 import Reviews from '../Reviews';
 import Concerts from '../Concerts';
@@ -46,6 +47,7 @@ export default class ProfileContainer extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1.id !== row2.id
       }),
+      isLoading: true,
       followersNum: 0,
       followingNum: 0,
       bio: '',
@@ -88,6 +90,7 @@ export default class ProfileContainer extends Component {
       .then ((response) => response.json())
       .then ((responseData) => {
         this.setState ({
+          isLoading: false,
           bio: responseData.data.bio,
           followersNum: responseData.data.followers_count,
           following: responseData.data.following,
@@ -245,7 +248,7 @@ export default class ProfileContainer extends Component {
   render () {
     if(this.state.renderPlaceholder)
       return this._renderPlaceholder();
-    return (
+    return(
       <View style={styles.container}>
         <HeaderBar 
           left={require('../../assets/images/backIcon.png')}
@@ -253,39 +256,50 @@ export default class ProfileContainer extends Component {
           clickableLeft={true}
           clickFunctionLeft={ _=> {this.props.navigator.pop()}}
         />
-        {( _ => {
-          switch(this.state.activeView) {
-            case 'Photos': 
-              return <Photos 
-                header={this._renderHeader.bind(this)}
-                sectionHeader={this._renderSectionHeader.bind(this)}
-                navigator={this.props.navigator}
-                concertId={this.props.concertId}
-                fetchURL={USER.PHOTOS_URL.replace('{user_id}', this.props.userId)}
-              />;
+        {(
+          _ => {
+            if (this.state.isLoading)
+              return <Loader />;
+            return (
+              <View style={styles.container}>
+                {( _ => {
+                  switch(this.state.activeView) {
+                    case 'Photos': 
+                      return <Photos 
+                        header={this._renderHeader.bind(this)}
+                        sectionHeader={this._renderSectionHeader.bind(this)}
+                        navigator={this.props.navigator}
+                        concertId={this.props.concertId}
+                        fetchURL={USER.PHOTOS_URL.replace('{user_id}', this.props.userId)}
+                      />;
 
-            case 'Reviews':
-              return <Reviews 
-                header={this._renderHeader.bind(this)}
-                sectionHeader={this._renderSectionHeader.bind(this)}
-                navigator={this.props.navigator}
-                concertId={this.props.concertId}
-                fetchFor='userId'
-                fetchURL={REVIEWS.USER_URL.replace('{user_id}', this.props.userId)}
-                userId={this.props.userId}
-                userName={this.props.userName}
-              />;
+                    case 'Reviews':
+                      return <Reviews 
+                        header={this._renderHeader.bind(this)}
+                        sectionHeader={this._renderSectionHeader.bind(this)}
+                        navigator={this.props.navigator}
+                        concertId={this.props.concertId}
+                        fetchFor='userId'
+                        fetchURL={REVIEWS.USER_URL.replace('{user_id}', this.props.userId)}
+                        userId={this.props.userId}
+                        userName={this.props.userName}
+                      />;
 
-            case 'Concerts':
-              return <Concerts 
-                header={this._renderHeader.bind(this)}
-                sectionHeader={this._renderSectionHeader.bind(this)}
-                calanderHeader={true}
-                fetchURL={CONCERTS.CHECKINS_URL.replace('{user_id}', this.props.userId)}
-                navigator={this.props.navigator}
-              />;
+                    case 'Concerts':
+                      return <Concerts 
+                        header={this._renderHeader.bind(this)}
+                        sectionHeader={this._renderSectionHeader.bind(this)}
+                        calanderHeader={true}
+                        fetchURL={CONCERTS.CHECKINS_URL.replace('{user_id}', this.props.userId)}
+                        navigator={this.props.navigator}
+                      />;
+                  }
+                })()}
+              </View>
+              );
+
           }
-        })()}
+        )()}
       </View>
     );
   }
