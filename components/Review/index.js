@@ -113,7 +113,6 @@ export default class Review extends Component {
               {
                 name: 'Delete',
                 action: () => {
-                  console.log('firing event SHOW_CUSTOM_ALERT');
                   Events.trigger(
                     'SHOW_CUSTOM_ALERT',
                     {

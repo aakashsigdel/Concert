@@ -104,7 +104,6 @@ export default class SearchActive extends Component {
               <TextInput 
                 style={styles.inputBox}
                 onChangeText={(text) => {
-                  console.log(text);
                   this.filterText = text;
                 }}
                 onEndEditing={() => this.setState({submitText: this.filterText})}
