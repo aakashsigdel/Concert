@@ -36,13 +36,14 @@ export default class Reviews extends Component {
 	}
 
 	componentDidMount() {
-    console.log('review component did mount');
     this._fetchData();
+    console.log('reviews Component mounted');
     Events.on(
       'RELOAD',
       'RELOAD_ID',
       data => {
         this.setState({isLoading: true});
+        console.log('reload event caught in reviews');
         const newData = this.state.apiData.filter(row => row.id != data.id);
         this.setState({
           isLoading: false,
@@ -65,7 +66,6 @@ export default class Reviews extends Component {
   _fetchData() {
     const p = new Promise((resolve, reject) => {
       getAccessToken().then( access_token =>{
-        console.log('working');
         this.setState({isLoading: true});
         let query = this.props.fetchURL
         .replace('abcde', access_token);
@@ -73,8 +73,6 @@ export default class Reviews extends Component {
         fetch(query)
         .then((response) => response.json())
         .then((responseData) => {
-          console.log('responsedat-', responseData);
-          console.log('state-', this.state);
           // if (responseData.data.length === 0)
           //   responseData.data = [{id: 0}];
 
