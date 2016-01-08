@@ -45,15 +45,17 @@ export default class UserCamera extends Component {
       CameraRoll.getPhotos(
         {first: 1},
         (data) => {
-          imageSize.height = data.edges[0].node.image.height - ((data.edges[0].node.image.width / deviceWidth ) * (deviceHeight/ 4));
+          // imageSize.height = data.edges[0].node.image.height - ((data.edges[0].node.image.width / deviceWidth ) * (deviceHeight 4));
+          imageSize.height = data.edges[0].node.image.width;
           imageSize.width = data.edges[0].node.image.width;
           let headerBarHeight = 64;
           imageOffset.x = 0;
-          imageOffset.y = (imageSize.width / deviceWidth) * headerBarHeight;;
+          imageOffset.y = (data.edges[0].node.image.height / deviceHeight) * headerBarHeight;;
           let transformData = {
             offset: imageOffset,
             size: imageSize
           };
+          console.log(data.edges);
           let photoURI = data.edges[0].node.image.uri;
           _this.props.navigator.push({
             name: 'cameraConfirmation',
@@ -95,7 +97,7 @@ export default class UserCamera extends Component {
         <Camera
           ref="cam"
           aspect={Camera.constants.Aspect.fill}
-          style={[styles.camera, {width: deviceWidth, height: deviceWidth}]}
+          style={[{width: deviceWidth, height: deviceWidth}]}
           type={this.state.cameraType}
         />
         <View style={styles.bottomView}>

@@ -83,7 +83,6 @@ class ConcertReview extends Component {
         this.setState({
           showCustomAlert: false,
         });
-        console.log(this.state.data, data);
         Events.trigger(
           'RELOAD',
           {
@@ -105,6 +104,7 @@ class ConcertReview extends Component {
 
     // Action to throw errors
     Events.on('Ready', 'myId', data => {
+      debugger;
       this.setState({
         showFancy: Object.assign(
           {},
@@ -128,6 +128,7 @@ class ConcertReview extends Component {
 
     //Action triggered when photo or review begins posting
     Events.on('POST', 'postId', data => {
+      debugger;
       this.setState({
         showFancy: Object.assign(
           {},
@@ -156,6 +157,16 @@ class ConcertReview extends Component {
               isLoading: false,
             }
           ),
+        });
+      }
+    );
+    Events.on(
+      'DISMISS',
+      'dismissId',
+      data => {
+        let newobj = {status: false, data: {message: 'ERROR'}, isLoading: false};
+        this.setState({
+          showFancy: newobj
         });
       }
     );

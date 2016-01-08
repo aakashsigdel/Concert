@@ -76,7 +76,7 @@ export const performAPIAction = (params) => {
     }).done();
   }catch(e){
     console.debug('apiactionerroror: ', e);
-    Events.trigger('Ready', {message: 'Limited or no internet connection.'});
+    Events.trigger('Ready', {data:{message: 'Limited or no internet connection.'}});
   }
 }
 

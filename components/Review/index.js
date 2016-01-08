@@ -45,7 +45,6 @@ export default class Review extends Component {
       isLoading: true,
       renderPlaceholderOnly: true,
       loggedInUserDetail: null,
-      isLoading: false,
       total_likes: 0,
       isLiked: false,
       heartImage: null,
@@ -71,19 +70,19 @@ export default class Review extends Component {
           res.data.userPic = res.data.user.profile_picture.trim().length > 0
             ? {uri:res.data.user.profile_picture}
             : require('../../assets/images/user_default.png');
-        try {
-          res.data.artistPic =
-            res.data.image !== null ||
-            res.data.image.large.trim().length > 0
-            ? {uri:res.data.image.large}
-            : require('../../assets/images/default_artist_page.png');
-        } catch (error) {
-          res.data.artistPic = require('../../assets/images/default_artist_page.png');
-        }
+            try {
+            res.data.artistPic =
+              res.data.image !== null &&
+              res.data.image.large.trim().length > 0
+              ? {uri:res.data.image.large}
+              : {uri: res.data.concert.artist.image.large};
+            } catch (error) {
+              res.data.artistPic = require('../../assets/images/default_artist_page.png');
+            }
 
-        const artistName = res.data.concert.artist.name.trim().length > 15
-          ? res.data.concert.artist.name.slice(0,15) + '...'
-          : res.data.concert.artist.name;
+          const artistName = res.data.concert.artist.name.trim().length > 15
+            ? res.data.concert.artist.name.slice(0,15) + '...'
+            : res.data.concert.artist.name;
 
           this.state.optionsForFAB = [
             {
@@ -256,7 +255,9 @@ export default class Review extends Component {
     if(this.state.renderPlaceholderOnly)
       return this._renderPlaceholder();
     if(this.state.isLoading)
-      return <Loader />
+      return <Loader
+        loadingMessage="Loading Review"
+      />
     return (
       <View style={{ flex: 1}}>
 

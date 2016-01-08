@@ -36,15 +36,16 @@ export default class Reviews extends Component {
 	}
 
 	componentDidMount() {
+    console.log('review component did mount');
     this._fetchData();
-    console.log('reviews Component mounted');
     Events.on(
       'RELOAD',
       'RELOAD_ID',
       data => {
         this.setState({isLoading: true});
-        console.log('reload event caught in reviews');
-        const newData = this.state.apiData.filter(row => row.id != data.id);
+        let newData = this.state.apiData.filter(row => row.id != data.id);
+        if(newData.length === 0)
+          newData = [{id: 0}];
         this.setState({
           isLoading: false,
           apiData: newData,
@@ -66,6 +67,10 @@ export default class Reviews extends Component {
   _fetchData() {
     const p = new Promise((resolve, reject) => {
       getAccessToken().then( access_token =>{
+<<<<<<< HEAD
+=======
+        console.log('working');
+>>>>>>> origin/aakashBranch
         this.setState({isLoading: true});
         let query = this.props.fetchURL
         .replace('abcde', access_token);
@@ -73,9 +78,18 @@ export default class Reviews extends Component {
         fetch(query)
         .then((response) => response.json())
         .then((responseData) => {
+<<<<<<< HEAD
           // if (responseData.data.length === 0)
           //   responseData.data = [{id: 0}];
 
+=======
+          console.log('responsedat-', responseData);
+          console.log('state-', this.state);
+          // if (responseData.data.length === 0)
+          //   responseData.data = [{id: 0}];
+          if (responseData.data.length === 0)
+            responseData.data = [{id: 0}];
+>>>>>>> origin/aakashBranch
           this.setState({
             dataSource: ds.cloneWithRows(responseData.data),
             isLoading: false,

@@ -39,7 +39,9 @@ export default class Concerts extends Component {
       'UPDATE_CONCERTS',
       'UPDATE_CONCERTS_LISTENER',
       eventData => {
-        const newData = this.state.apiData.filter(concert => concert.id != eventData.concert.id);
+        let newData = this.state.apiData.filter(concert => concert.id != eventData.concert.id);
+        if(newData.length === 0)
+          newData = [{id: 0}];
         this.setState({
           dataSource: ds.cloneWithRows(newData),
           apiData: newData
