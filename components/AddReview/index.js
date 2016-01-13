@@ -79,113 +79,122 @@ export default class AddReview extends Component {
       alert('Comment too short!')
       return;
     }
-    this.props.navigator.popToTop();
-    Events.trigger('POST', {
-      data: {
-        message: 'Posting Review',
-        viewStyle: {backgroundColor: '#F9B400'},
-      }
+
+    this.props.navigator.push({
+      name: 'camera',
+      index: 42,
+      concertId: this.props.concertId,
+      review: this.props.review,
+      comment: this.comment,
+      rating: this.state.yellowCount,
     });
 
+    // Events.trigger('POST', {
+    //   data: {
+    //     message: 'Posting Review',
+    //     viewStyle: {backgroundColor: '#F9B400'},
+    //   }
+    // });
+
     if (this.props.imageData) {
-
-    /* need to put this in another function */
-    let imageOffset = {};
-    let imageSize = {};
-    imageSize.height = this.props.imageData.image.width;
-    imageSize.width = this.props.imageData.image.width;
-    const headerBarHeight = 0.096 * deviceHeight;
-       imageOffset.x = 0;
-    const pixelRatio = PixelRatio.get();
-    imageOffset.y =
-      (this.props.imageData.image.height / deviceHeight)
-      * headerBarHeight * pixelRatio;
-       let transformData = {
-         offset: imageOffset,
-         size: imageSize
-       };
-
-       ImageEditingManager.cropImage(
-         this.props.imageData.image.uri,
-         transformData,
-         (croppedImageURI) => {
-           getAccessToken()
-           .then( access_token => {
-             CameraRoll.saveImageWithTag(
-               croppedImageURI,
-               (data) => {
-                 let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
-                 let imageObj = {
-                   uploadUrl: REVIEW_POST_URL.replace('abcde', access_token),
-                   method: 'POST',
-                   fields: {
-                     concert_id: this.props.concertId,
-                     comment: this.comment,
-                     rating: this.state.yellowCount,
-                   },
-                   files: [
-                     {
-                       name: 'image',
-                       filename: data.split('/')[2]+ '.jpg',
-                       filepath: data,
-                     },
-                   ]
-                 };
-                 NativeModules.FileUpload.upload(imageObj, (err, result) => {
-                   Events.trigger('POSTED', {
-                     data: {
-                       message: 'Review Posted',
-                       viewStyle: {backgroundColor: '#F9B400'},
-                       actionType: 'VIEW',
-                       actionFunction: () => {
-                         let resultData = JSON.parse(result.data);
-                         this.props.navigator.immediatelyResetRouteStack([
-                           {name: 'home'},
-                           {name: 'review', review_id: resultData.id}
-                         ]);
-                       }
-                     }
-                   });
-                 });
-               }
-             )
-           } )
-         },
-         () => undefined,
-       );
+    //
+    // #<{(| need to put this in another function |)}>#
+    // let imageOffset = {};
+    // let imageSize = {};
+    // imageSize.height = this.props.imageData.image.width;
+    // imageSize.width = this.props.imageData.image.width;
+    // const headerBarHeight = 0.096 * deviceHeight;
+    //    imageOffset.x = 0;
+    // const pixelRatio = PixelRatio.get();
+    // imageOffset.y =
+    //   (this.props.imageData.image.height / deviceHeight)
+    //   * headerBarHeight * pixelRatio;
+    //    let transformData = {
+    //      offset: imageOffset,
+    //      size: imageSize
+    //    };
+    //
+    //    ImageEditingManager.cropImage(
+    //      this.props.imageData.image.uri,
+    //      transformData,
+    //      (croppedImageURI) => {
+    //        getAccessToken()
+    //        .then( access_token => {
+    //          CameraRoll.saveImageWithTag(
+    //            croppedImageURI,
+    //            (data) => {
+    //              let REVIEW_POST_URL = REVIEW.ADD_URL.replace('{concert_id}', this.props.concertId);
+    //              let imageObj = {
+    //                uploadUrl: REVIEW_POST_URL.replace('abcde', access_token),
+    //                method: 'POST',
+    //                fields: {
+    //                  concert_id: this.props.concertId,
+    //                  comment: this.comment,
+    //                  rating: this.state.yellowCount,
+    //                },
+    //                files: [
+    //                  {
+    //                    name: 'image',
+    //                    filename: data.split('/')[2]+ '.jpg',
+    //                    filepath: data,
+    //                  },
+    //                ]
+    //              };
+    //              NativeModules.FileUpload.upload(imageObj, (err, result) => {
+    //                Events.trigger('POSTED', {
+    //                  data: {
+    //                    message: 'Review Posted',
+    //                    viewStyle: {backgroundColor: '#F9B400'},
+    //                    actionType: 'VIEW',
+    //                    actionFunction: () => {
+    //                      let resultData = JSON.parse(result.data);
+    //                      this.props.navigator.immediatelyResetRouteStack([
+    //                        {name: 'home'},
+    //                        {name: 'review', review_id: resultData.id}
+    //                      ]);
+    //                    }
+    //                  }
+    //                });
+    //              });
+    //            }
+    //          )
+    //        } )
+    //      },
+    //      () => undefined,
+    //    );
     } else {
-      getAccessToken()
-      .then( access_token => {
-        let REVIEW_POST_URL = REVIEW.ADD_URL
-          .replace('abcde', access_token)
-          .replace('{concert_id}', this.props.concertId);
-        let imageObj = {
-          uploadUrl: REVIEW_POST_URL,
-          method: 'POST',
-          fields: {
-            concert_id: this.props.concertId,
-            comment: this.comment,
-            rating: this.state.yellowCount,
-          },
-        };
-        NativeModules.FileUpload.upload(imageObj, (err, result) => {
-          Events.trigger('POSTED', {
-            data: {
-              message: 'Review Posted',
-              viewStyle: {backgroundColor: '#F9B400'},
-              actionType: 'VIEW',
-              actionFunction: () => {
-                let resultData = JSON.parse(result.data);
-                this.props.navigator.immediatelyResetRouteStack([
-                  {name: 'home'},
-                  {name: 'review', review_id: resultData.id}
-                ]);
-              }
-            }
-          });
-        });
-
-      } )
+      // getAccessToken()
+      // .then( access_token => {
+      //   let REVIEW_POST_URL = REVIEW.ADD_URL
+      //     .replace('abcde', access_token)
+      //     .replace('{concert_id}', this.props.concertId);
+      //   let imageObj = {
+      //     uploadUrl: REVIEW_POST_URL,
+      //     method: 'POST',
+      //     fields: {
+      //       concert_id: this.props.concertId,
+      //       comment: this.comment,
+      //       rating: this.state.yellowCount,
+      //     },
+      //   };
+      //   NativeModules.FileUpload.upload(imageObj, (err, result) => {
+      //     Events.trigger('POSTED', {
+      //       data: {
+      //         message: 'Review Posted',
+      //         viewStyle: {backgroundColor: '#F9B400'},
+      //         actionType: 'VIEW',
+      //         actionFunction: () => {
+      //           let resultData = JSON.parse(result.data);
+      //           this.props.navigator.immediatelyResetRouteStack([
+      //             {name: 'home'},
+      //             {name: 'review', review_id: resultData.id}
+      //           ]);
+      //         }
+      //       }
+      //     });
+      //   });
+      //
+      // } )
     }
     
   }
@@ -204,7 +213,7 @@ export default class AddReview extends Component {
 
           mid={'ADD REVIEW'}
 
-          right={'POST'}
+          right={'NEXT'}
           clickableRight={true}
           clickFunctionRight={this._handlePress.bind(this)}
         />

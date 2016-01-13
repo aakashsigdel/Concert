@@ -243,7 +243,7 @@ export default class Photo extends Component {
             day={this.state.photoDetail.date.day}
             />
             <Text style={styles.concertName}>
-              {this.state.photoDetail.concert.location}
+              {this.state.photoDetail.concert.location.toUpperCase()}
             </Text>
           </View>
         </View>

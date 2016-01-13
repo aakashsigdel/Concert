@@ -29,12 +29,14 @@
     width: 45,
     height: 45,
     marginLeft: 10,
+    resizeMode: 'contain',
 	},
 
 	whiteStar: {
     width: 45,
     height: 45,
     marginLeft: 10,
+    resizeMode: 'contain',
 	},
 
   text: {

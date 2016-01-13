@@ -262,6 +262,7 @@ class ConcertReview extends Component {
           navigator={navigator}
           concertId={route.concertId}
           imageData={route.imageData}
+          review={route.review}
         />;
       case 'editReview':
         return <EditReview 
@@ -275,6 +276,8 @@ class ConcertReview extends Component {
           navigator={navigator}
           concertId={route.concertId}
           review={route.review}
+          rating={route.rating}
+          comment={route.comment}
         />;
       case 'photoAddComment':
         return <PhotoAddComment
@@ -293,6 +296,8 @@ class ConcertReview extends Component {
           imageData={route.imageData}
           concertId={route.concertId}
           review={route.review}
+          comment={route.comment}
+          rating={route.rating}
         />;
       case 'customAlert':
         return <CustomAlert
@@ -315,6 +320,8 @@ class ConcertReview extends Component {
           navigator={navigator}
           concertId={route.concertId}
           review={route.review}
+          comment={route.comment}
+          rating={route.rating}
         />
       default:
         return (

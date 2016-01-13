@@ -86,12 +86,21 @@ export default class Concerts extends Component {
 	
 	_handlePress(concertId, concert) {
 	  if(this.props.select) {
-	    this.props.navigator.push({
-        name: 'camera',
-        index: 42,
-        concertId: concertId,
-        review: this.props.review,
-      });
+      if (this.props.review) {
+        this.props.navigator.push({
+          name: 'addReview',
+          index: 55,
+          concertId: concertId,
+          review: this.props.review,
+        });
+      } else {
+        this.props.navigator.push({
+          name: 'camera',
+          index: 42,
+          concertId: concertId,
+          review: this.props.review,
+        });
+      }
     } else {
       this.props.navigator.push({
         name: "concert",

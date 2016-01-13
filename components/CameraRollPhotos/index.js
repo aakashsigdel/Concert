@@ -51,10 +51,12 @@ export default class CameraRollPhotos extends Component {
 
   _selectPhoto (edge) {
     this.props.navigator.push({
-      name: 'addReview',
+      name: 'cameraConfirmation',
       imageData: edge.node,
       concertId: this.props.concertId,
       review: this.props.review,
+      comment: this.props.comment,
+      rating: this.props.rating,
     });
   }
 
