@@ -20,10 +20,10 @@ import {
   DataFactory,
 } from '../../utils.js';
 
-const  Events = require('react-native-simple-events'),
-       RefreshableListView = require('react-native-refreshable-listview'),
-       ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id != r2.id}),
-       styles = StyleSheet.create(require('./style.json'));
+const Events = require('react-native-simple-events'),
+      RefreshableListView = require('react-native-refreshable-listview'),
+      ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id != r2.id}),
+      styles = require('./style');
 
 export default class Reviews extends Component {
 	constructor() {

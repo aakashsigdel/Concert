@@ -24,6 +24,7 @@ import styles from './style';
 import { CONCERTS, REVIEWS, USER_DETAILS, PHOTOS } from '../../constants/ApiUrls';
 
 const {width, height} = Dimensions.get('window');
+const HEADERBAR_HEIGHT = 0.096 * height;
 const Events = require('react-native-simple-events');
 
 export default class Home extends Component {
@@ -126,7 +127,11 @@ export default class Home extends Component {
             userId: this.userDetails.id,
             userName: this.userDetails.full_name,
           })}
-          styleRight={{borderColor: '#F9B400', borderWidth: 1, borderRadius: 16}}
+          styleRight={{
+            borderColor: '#F9B400',
+            borderWidth: 1,
+            borderRadius: 0.27 * HEADERBAR_HEIGHT,
+          }}
         />
         <Swiper showButton={false}
           activeDot={this.state.disabledDot}

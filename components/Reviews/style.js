@@ -1,4 +1,12 @@
-{
+import {
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
+
+const VIEWPORT = Dimensions.get('window');
+const HEADERBAR_HEIGHT = 0.096 * VIEWPORT.height;
+
+let styles = {
 	reviewContainer: {
 		flexDirection: 'row',
 	},
@@ -45,6 +53,7 @@
 		fontFamily: 'AvenirNext-Regular',
     backgroundColor: 'transparent',
     marginRight: 5,
+    marginTop: 7.5,
 	},
 	listView: {
     flex: 1,
@@ -53,11 +62,12 @@
   userImage: {
     justifyContent: 'flex-end',
     marginRight: 15,
-    width: 30,
-    height: 30,
+    width: 0.54 * HEADERBAR_HEIGHT,
+    height: 0.54 * HEADERBAR_HEIGHT,
+    resizeMode: 'contain',
     borderColor: '#F9B400',
     borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 0.27 * HEADERBAR_HEIGHT,
   },
 	calendarContainer: {
     position: 'absolute',
@@ -67,4 +77,6 @@
     bottom: 0,
     left: 0,
 	},
-}
+};
+
+export default styles = StyleSheet.create(styles);

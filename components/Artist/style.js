@@ -35,7 +35,6 @@ export default styles = StyleSheet.create({
     justifyContent: 'center',
 		width: 50,
 		height: 20,
-		paddingLeft: 8,
 		marginRight: 10,
 		borderRadius: 10,
 		backgroundColor: 'white',
