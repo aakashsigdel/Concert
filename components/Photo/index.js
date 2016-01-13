@@ -121,7 +121,7 @@ export default class Photo extends Component {
               total_likes: responseData.data.total_likes,
               profile_picture: responseData.data.user.profile_picture.trim().length === 0
                 ? require('../../assets/images/user_default.png')
-                : responseData.data.user.profile_picture,
+                : {uri: responseData.data.user.profile_picture},
                 heartImage: (responseData.data.liked === 0)
                   ? require('../../assets/images/like.png' ) 
                   : require('../../assets/images/liked.png'),

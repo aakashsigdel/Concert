@@ -63,7 +63,6 @@ export default class PhotoAddComment extends Component {
       offset: imageOffset,
       size: imageSize
     };
-    debugger;
 
     cropImage(this.props.imageData.image.uri, transformData)
     .then(res => {

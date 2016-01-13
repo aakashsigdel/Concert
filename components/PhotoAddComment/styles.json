@@ -6,7 +6,7 @@
   textArea: {
     color: 'white',
     fontSize: 18,
-    fontFamily: 'AvenirNext-Regular',
+    fontFamily: 'AvenirNext-DemiBold',
     paddingLeft: 30,
     paddingRight: 30,
     marginTop: 20,

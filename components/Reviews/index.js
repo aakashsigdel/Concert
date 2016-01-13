@@ -164,6 +164,9 @@ export default class Reviews extends Component {
     }
     // artist image if there is no review image
 		let image = review.image ? review.image : review.concert.artist.image
+		let userPic = review.user.profile_picture
+		  ? {uri: review.user.profile_picture}
+      : require('../../assets/images/user_default.png');
 		return(
 			<TouchableOpacity
         activeOpacity={0.5}
@@ -192,7 +195,7 @@ export default class Reviews extends Component {
                 {this._getStars(Number(review.rating))}
               </View>
               <Image 
-              source={require('../../assets/images/user_default.png')}
+              source={userPic}
               style={styles.userImage} />
             </View>
             

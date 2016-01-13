@@ -42,7 +42,7 @@
   text: {
     color: 'white',
     fontSize: 18,
-    font:'AvenirNext-DemiBold',
+    fontFamily:'AvenirNext-DemiBold',
     textAlign: 'center',
   },
 }

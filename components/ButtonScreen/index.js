@@ -8,7 +8,7 @@ import React, {
   TouchableOpacity,
   View
 } from 'react-native';
-import { CONCERTS } from '../../constants/ApiUrls';
+import { CONCERTS, SEARCH } from '../../constants/ApiUrls';
 
 import HeaderBar from '../HeaderBar';
 import styles from './style';
@@ -59,7 +59,7 @@ export default class ButtonsScreen extends Component {
             onPress={() => this.props.navigator.push({
               name: 'chooseConcert',
               review: true,
-              fetchURL: CONCERTS.PAST_URL
+              fetchURL: SEARCH.CONCERTS_URL,
             })}
             activeOpacity={0.7}>
             <View
