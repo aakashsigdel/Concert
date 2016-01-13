@@ -127,6 +127,7 @@ export default class FancyMessageBar extends Component {
                       styles.dismissPost,
                       {
                         height: this.state.height,
+                        paddingLeft: 10,
                       }
                     ]}
                     onPress={this._cancelNotification.bind(this)}

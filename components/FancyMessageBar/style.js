@@ -40,8 +40,7 @@ let styles ={
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingRight: 0,
   },
 
   showViewButton: {
@@ -52,7 +51,7 @@ let styles ={
 
   dismissPost: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
   },
 
