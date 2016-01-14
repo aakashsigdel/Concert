@@ -115,12 +115,10 @@ let styles = {
   clear: {
     width: 23,
     height: 23,
-    marginLeft: 15,
   },
   shareAlt: {
     width: 22,
     height: 24,
-    marginRight: 15,
   },
   headerArtistContainer: {
     alignItems: 'center'

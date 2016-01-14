@@ -43,6 +43,7 @@ export default class Review extends Component {
     super();
     this.state = {
       isLoading: true,
+      loadingMessage: 'Loading Review',
       renderPlaceholderOnly: true,
       loggedInUserDetail: null,
       total_likes: 0,
@@ -151,13 +152,15 @@ export default class Review extends Component {
   _sharePhoto () {
     this.setState({
       isLoading: true,
+      loadingMessage: 'Share Review'
     });
     Share.shareOnFacebook({
-      'imagelink': 'http://api.revuzeapp.com/media/photos/2015/08/04/IMG_1438663957935.jpg',
+      'imagelink': this.state.review.artistPic.uri,
     },
     (result) => {
       this.setState({
         isLoading: false,
+        loadingMessage: 'Loading Review',
       });
     });
   }
@@ -256,7 +259,7 @@ export default class Review extends Component {
       return this._renderPlaceholder();
     if(this.state.isLoading)
       return <Loader
-        loadingMessage="Loading Review"
+        loadingMessage={this.state.loadingMessage}
       />
     return (
       <View style={{ flex: 1}}>

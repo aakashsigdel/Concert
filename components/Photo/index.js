@@ -36,6 +36,7 @@ export default class Photo extends Component {
     this.state = {
       photoDetail: null,
       isLoading: true,
+      loadingMessage: 'Loading Photo',
       renderPlaceholder: true,
       total_likes: 0,
       isLiked: false,
@@ -148,6 +149,7 @@ export default class Photo extends Component {
 	_sharePhoto () {
 	  this.setState({
       isLoading: true,
+      loadingMessage: 'Share Photo',
     });
 
 	  Share.shareOnFacebook({
@@ -156,6 +158,7 @@ export default class Photo extends Component {
     (result) => {
       this.setState({
         isLoading: false,
+        loadingMessage: 'Loading Photo',
       });
     });
   }
@@ -213,7 +216,9 @@ export default class Photo extends Component {
     if(this.state.renderPlaceholder)
       return this._renderPlaceHolder();
     if(this.state.isLoading)
-      return <Loader />
+      return <Loader
+        loadingMessage={this.state.loadingMessage}
+      />
     return (
       <View style={styles.container}>
         <HeaderBar

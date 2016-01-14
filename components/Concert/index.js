@@ -6,6 +6,7 @@ import {
   Image,
   InteractionManager,
   MapView,
+  NativeModules,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -20,14 +21,19 @@ import {
   callOnFetchError,
   getAccessToken,
 } from '../../utils.js'
+import Loader from '../../components.ios/Loader';
 
 import Events from 'react-native-simple-events';
+
+const Share = NativeModules.KDSocialShare;
 
 export default class Concert extends Component {
   constructor () {
     super();
     this.state = {
       renderPlaceholder: true,
+      isLoading: false,
+      loadingMessage: 'Share Concert',
     };
   }
 
@@ -52,6 +58,21 @@ export default class Concert extends Component {
     }
 
     this.props.navigator.pop();
+  }
+
+  _shareConcert () {
+    this.setState({
+      isLoading: true,
+      loadingMessage: 'Share Concert'
+    });
+    Share.shareOnFacebook({
+      'imagelink': this.state.concert.artist.image.large,
+    },
+    (result) => {
+      this.setState({
+        isLoading: false,
+      });
+    });
   }
 
   _renderPlaceHolder () {
@@ -99,6 +120,10 @@ export default class Concert extends Component {
   render () {
     if(this.state.renderPlaceholder)
       return this._renderPlaceHolder();
+    if(this.state.isLoading)
+      return <Loader
+        loadingMessage={this.state.loadingMessage}
+      />
     return (
       <View style={styles.container}>
 
@@ -133,10 +158,15 @@ export default class Concert extends Component {
           </Text>
         </View>
 
+        <TouchableHighlight
+          style={styles.clickable}
+          onPress={this._shareConcert.bind(this)}
+        >
         <Image
           source={require('../../assets/images/shareAlt.png')}
           style={styles.shareAlt}
         />
+      </TouchableHighlight>
       </View>
 
       {/*Calander module*/}
