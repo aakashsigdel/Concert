@@ -91,6 +91,7 @@ export default class Review extends Component {
                 name: 'artist',
                 index: 6,
                 artistId: res.data.concert.artist.id,
+                artistName: res.data.concert.artist.name,
               })
             }
           ]

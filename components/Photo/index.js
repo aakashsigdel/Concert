@@ -77,6 +77,7 @@ export default class Photo extends Component {
                   name: 'artist',
                   index: 6,
                   artistId: responseData.data.concert.artist.id,
+                  artistName: responseData.data.concert.artist.name,
                 })
               }
             ];
